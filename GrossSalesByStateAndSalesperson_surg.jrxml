@@ -67,7 +67,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
- stateconst.name AS STATE,
+ result.statename AS STATE,
  SysUser.username AS SALESPERSON,
  company.name AS COMPANY,
  currency.SYMBOL,
@@ -75,15 +75,20 @@
  sales2.SALES AS SALES2,
  sales1.SALES - sales2.SALES AS CNG,
  (sales1.SALES - sales2.SALES)/sales2.SALES AS PERCENTAGE
-FROM stateconst
-INNER JOIN countryconst ON stateconst.countryConstID = countryconst.id AND countryConst.abbreviation="US"
+FROM
+
+(SELECT stateconst.name AS statename FROM stateconst
+INNER JOIN countryConst ON stateconst.countryConstID = countryconst.id AND countryConst.abbreviation="US"
+UNION SELECT "International") AS result
 INNER JOIN SysUser ON 1=1
 LEFT OUTER JOIN company ON company.id = 1
 LEFT OUTER JOIN currency ON currency.homeCurrency = 1
 
 -- Sales 1
 LEFT OUTER JOIN (
-     SELECT stateconst.id AS stateId,
+    SELECT
+          if(CountryConst.name = "UNITED STATES", stateconst.name, "INTERNATIONAL") AS stateName,
+          if(CountryConst.name = "UNITED STATES", CountryConst.name,"INTERNATIONAL")  AS countryName,
           sysuser.username AS username,
 	SUM(SOItem.qtyFulfilled * (SOItem.unitPrice + (soitem.adjustamount / (CASE WHEN soitem.qtytofulfill = 0
                                                             THEN 1
@@ -91,7 +96,7 @@ LEFT OUTER JOIN (
     FROM SOItem
     JOIN SO ON SO.ID = SOItem.SOID
     JOIN StateConst ON so.billToStateId = StateConst.id
-    JOIN CountryConst ON so.billToCountryId = CountryConst.id AND CountryConst.abbreviation = "US"
+    JOIN CountryConst ON so.billToCountryId = CountryConst.id
     JOIN SysUser ON sysuser.userName = SO.salesman
 
 
@@ -99,29 +104,28 @@ WHERE soitem.datelastfulfillment BETWEEN $P{dateRange1GrossSales1} AND DATE_SUB(
   AND soitem.qtyfulfilled > 0
   AND soitem.typeid IN (10,11,12,$P{ckIncludeReturns},21,60,80)
 
-GROUP BY stateconst.id, sysuser.username ) AS sales1 ON sales1.stateid = stateconst.id AND sales1.username = sysuser.username
+GROUP BY 1,2, sysuser.username ) AS sales1 ON sales1.statename = result.statename AND sales1.username = sysuser.username
 
 -- Sales 2
 LEFT OUTER JOIN (
-     SELECT  stateconst.id AS stateid,
-             sysuser.username AS username,
-
+     SELECT
+          if(CountryConst.name = "UNITED STATES", stateconst.name, "INTERNATIONAL") AS stateName,
+          if(CountryConst.name = "UNITED STATES", CountryConst.name,"INTERNATIONAL")  AS countryName,
+          sysuser.username AS username,
 	SUM(SOItem.qtyFulfilled * (SOItem.unitPrice + (soitem.adjustamount / (CASE WHEN soitem.qtytofulfill = 0
                                                             THEN 1
                                                             ELSE soitem.qtytofulfill END)))) AS SALES
     FROM SOItem
     JOIN SO ON SO.ID = SOItem.SOID
     JOIN StateConst ON so.billToStateId = StateConst.id
-    JOIN CountryConst ON so.billToCountryId = CountryConst.id AND CountryConst.abbreviation = "US"
+    JOIN CountryConst ON so.billToCountryId = CountryConst.id
     JOIN SysUser ON sysuser.userName = SO.salesman
 
 WHERE soitem.datelastfulfillment BETWEEN $P{dateRange1GrossSales2} AND DATE_SUB($P{dateRange2GrossSales2}, INTERVAL 1 SECOND)
   AND soitem.qtyfulfilled > 0
   AND soitem.typeid IN (10,11,12,$P{ckIncludeReturns},21,60,80)
 
-GROUP BY stateconst.id, sysuser.username ) AS sales2 ON sales2.stateid = stateconst.id AND sales2.username = sysuser.username
-
-WHERE  (sales1.SALES > 0 OR sales2.SALES > 0)
+GROUP BY 1,2, sysuser.username ) AS sales2 ON sales2.statename = result.statename AND sales2.username = sysuser.username
 
 ORDER BY 1,2;]]>
 	</queryString>
