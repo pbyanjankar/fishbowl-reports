@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bom_subreport" pageWidth="130" pageHeight="18" columnWidth="130" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ec796d7e-3f2f-416d-b44e-5d51332d817b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="bomNum" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[with recursive bomitem_hierachy as
+( select bom.id as bomId, bom.num AS itemnum, 200 AS typeid, 1 AS qty, -1 AS partId from bom where num LIKE $P{bomNum}
+   UNION
+   select bomitem.stageBomId AS bomId, bomitem.description, bomitem.typeid, bomitem.quantity * bh.qty AS qty , bomitem.partid from bomitem_hierachy as bh
+   INNER JOIN bomitem ON bh.bomId = bomitem.bomid AND groupDefault=1
+)
+
+select sum( t.qty * partcost.avgcost) AS COST from (
+select * from bomitem_hierachy as k
+where  k.typeid>10 and bomid=-1) as t
+INNER JOIN partcost on t.partId = partcost.partId
+INNER JOIN part on part.id = partcost.partId
+LEFT JOIN currency ON currency.homeCurrency = 1;]]>
+	</queryString>
+	<field name="COST" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="CostDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+	</variable>
+	<summary>
+		<band height="18">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="130" height="18" uuid="20da3669-989d-40da-8655-69d94331865c"/>
+				<box topPadding="2" leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COST}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
