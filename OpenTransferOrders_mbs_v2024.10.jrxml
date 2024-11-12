@@ -213,10 +213,12 @@ ORDER BY product.num, $P!{cbOrderBy} $P!{cbSort}, $P!{cbThenOrderBy_1} $P!{cbSor
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="toNumTONumber2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="toNumTONumber3" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
