@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PickingListByDateNPB" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2751b915-eca4-4ef4-8443-ca48c10b8047">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<property name="Tooltip" value="Choose a date range to run the report for. This date range uses the date selection made in the Apply Date Filter To dropdown"/>
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[Today]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Choose the date for the date range to look at"/>
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[pick.datecreated,Pick Date Created,pick.datescheduled,Pick Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA["pick.datecreated"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Batch By Date - Customized Report of Pick Report for Sales Orders - A complete list of ALL items on the Pick with pick item status in Entered, Entered New and Committed."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./PickingListByDate_npb/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLogoAlignment" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[top,Top,left,Left]]></parameterDescription>
+		<defaultValueExpression><![CDATA["left"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCompanyName" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BlindShipment" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbContactToShow" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[address,Address Name,contact,SO Contact]]></parameterDescription>
+		<defaultValueExpression><![CDATA["address"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowMemos" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="Choose to show memos by checking this box."/>
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEntered" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[10,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckStarted" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckCommited" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[30,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT pick.id AS PICKID, PICK.NUM AS pickNum
+FROM pick
+WHERE
+ pick.statusid IN ($P{ckEntered},$P{ckStarted},$P{ckCommited})
+ AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+ORDER BY 1;
+]]>
+	</queryString>
+	<field name="pickNum" class="java.lang.String"/>
+	<field name="PICKID" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<subreport runToBottom="true">
+				<reportElement x="0" y="0" width="612" height="14" uuid="e17454a4-3e00-4eda-af97-6372fd1ca1db"/>
+				<subreportParameter name="module">
+					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbLogoAlignment">
+					<subreportParameterExpression><![CDATA[$P{cbLogoAlignment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pickNum">
+					<subreportParameterExpression><![CDATA[$F{pickNum}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BlindShipment">
+					<subreportParameterExpression><![CDATA[$P{BlindShipment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ReportTitle"/>
+				<subreportParameter name="pickId">
+					<subreportParameterExpression><![CDATA[$F{PICKID}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowMemos">
+					<subreportParameterExpression><![CDATA[$P{ShowMemos}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbContactToShow">
+					<subreportParameterExpression><![CDATA[$P{cbContactToShow}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="path">
+					<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORTDESCRIPTION"/>
+				<subreportParameter name="ShowCountry">
+					<subreportParameterExpression><![CDATA[$P{ShowCountry}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowBarcode">
+					<subreportParameterExpression><![CDATA[$P{ShowBarcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCompanyName">
+					<subreportParameterExpression><![CDATA[$P{ShowCompanyName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "NPB-PickReport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
