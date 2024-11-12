@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OpenTransferOrdersMBS" pageWidth="896" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="836" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="fce8cd8c-e768-4787-b4ee-74f2dde4e087">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="Zebra" fontName="Open Sans">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EAEAEA" pattern="" fontName="Open Sans"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Dataset" uuid="f98735ce-5801-4874-bc8d-de86a9e92ff3">
+		<parameter name="toNum" class="java.lang.String">
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Customer" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+			<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+			<property name="Group" value="Sorting"/>
+			<property name="Sort" value="3"/>
+			<parameterDescription><![CDATA[so.num,Sales Order #,so.customerPO,Customer PO #,product.num,Product Number,customer.name,"Customer Name",so.dateCreated,Sales Order Creation Date,so.dateFirstShip,Sales Order Date Scheduled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.num"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSort" class="java.lang.String" isForPrompting="false">
+			<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+			<property name="Group" value="Sorting"/>
+			<property name="Sort" value="4"/>
+			<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbThenOrderBy_1" class="java.lang.String" isForPrompting="false">
+			<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+			<property name="Group" value="Sorting"/>
+			<property name="Sort" value="5"/>
+			<parameterDescription><![CDATA[so.num,Sales Order #,so.customerPO,Customer PO #,product.num,Product Number,customer.name,Customer Name,so.dateCreated,Sales Order Creation Date,so.dateFirstShip,Sales Order Date Scheduled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.dateCreated"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSort_1" class="java.lang.String" isForPrompting="false">
+			<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+			<property name="Group" value="Sorting"/>
+			<property name="Sort" value="6"/>
+			<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbThenOrderBy_2" class="java.lang.String" isForPrompting="false">
+			<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+			<property name="Group" value="Sorting"/>
+			<property name="Sort" value="7"/>
+			<parameterDescription><![CDATA[so.num,Sales Order #,so.customerPO,Customer PO #,product.num,Product Number,customer.name,Customer Name,so.dateCreated,Sales Order Creation Date,so.dateFirstShip,Sales Order Date Scheduled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["product.num"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSort_2" class="java.lang.String" isForPrompting="false">
+			<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+			<property name="Group" value="Sorting"/>
+			<property name="Sort" value="8"/>
+			<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="toNumTONumber2" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="toNumTONumber3" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+so.num AS SONUMBER,
+so.customerPO AS CUSTOMERPO,
+so.dateCreated,
+so.dateFirstShip,
+product.num AS PRODUCTNUMBER,
+product.description AS PRODUCTDESCRIPTION,
+soitem.qtyOrdered AS QTYORDERED,
+customer.name AS CUSTOMER,
+(soItem.qtyOrdered - soItem.qtyFulfilled) AS QTYREMAINING,
+backorder.totalRequired AS TOTALREQUIRED,
+transfer.transferQTY AS TRANSFERQTY,
+    LOCATIONGROUP.NAME AS LG,
+    COALESCE(QTYONHAND.QTY, 0) AS QOH
+FROM (SELECT part.id AS partId, sum(xoitem.qtyToFulfill) AS transferQTY
+FROM xo
+INNER JOIN xoitem ON xo.id = xoitem.xoid
+INNER JOIN part ON part.id = xoitem.partid
+WHERE (xo.num =  $P{toNum} OR xo.num =  $P{toNumTONumber2} OR xo.num =  $P{toNumTONumber3}) AND xo.statusId < 70
+GROUP BY part.id) AS transfer
+INNER JOIN part ON part.id = transfer.partId
+INNER JOIN product ON product.partid = part.id
+INNER JOIN soitem ON soitem.productid = product.id AND soitem.statusId < 50
+INNER JOIN so ON so.id = soitem.soid AND so.statusId IN (10,20,25)
+INNER JOIN customer ON customer.id = so.customerId
+INNER JOIN (SELECT part.id AS partId, SUM(soItem.qtyOrdered - soItem.qtyFulfilled) totalRequired
+ 	FROM soitem
+	INNER JOIN so ON soitem.soid = so.id AND so.statusId IN (10,20,25)
+	INNER JOIN product ON product.id = soitem.productid
+          INNER JOIN part ON part.id = product.partid
+          INNER JOIN xoitem ON xoitem.partId = part.id
+	INNER JOIN xo ON xo.id = xoitem.xoid
+	WHERE (xo.num =  $P{toNum} OR xo.num =  $P{toNumTONumber2} OR xo.num =  $P{toNumTONumber3}) AND xo.statusId < 70 AND soitem.statusId < 50
+          GROUP BY part.id
+) AS backOrder ON backOrder.partid = part.id
+LEFT JOIN locationgroup ON locationgroup.id IN ($P!{locationGroupID})
+LEFT JOIN qtyonhand ON qtyonhand.partid = part.id AND qtyonhand.locationgroupid = locationgroup.id
+
+WHERE
+ customer.name LIKE concat($P{Customer},'%')
+ORDER BY product.num, $P!{cbOrderBy} $P!{cbSort}, $P!{cbThenOrderBy_1} $P!{cbSort_1}, $P!{cbThenOrderBy_2} $P!{cbSort_2}]]>
+		</queryString>
+		<field name="SONUMBER" class="java.lang.String"/>
+		<field name="PRODUCTNUMBER" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="QTYREMAINING" class="java.lang.Double"/>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="CUSTOMERPO" class="java.lang.String"/>
+		<field name="PRODUCTDESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="TOTALREQUIRED" class="java.lang.Double"/>
+		<field name="TRANSFERQTY" class="java.lang.Double"/>
+		<field name="LG" class="java.lang.String"/>
+		<field name="QOH" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="isAvailable" class="java.lang.Boolean">
+			<variableExpression><![CDATA[$F{TRANSFERQTY}>$F{TOTALREQUIRED}? true : false]]></variableExpression>
+		</variable>
+		<variable name="TotalRequired" class="java.lang.Double" resetType="Group" resetGroup="product" calculation="Sum">
+			<variableExpression><![CDATA[$F{QTYREMAINING}]]></variableExpression>
+		</variable>
+		<group name="product">
+			<groupExpression><![CDATA[$F{PRODUCTNUMBER}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl89/Server/reports/WorkOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["List open transfer orders and available to ship"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTimeStamp" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="toNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Customer" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+		<property name="Group" value="Sorting"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[so.num,Sales Order #,so.customerPO,Customer PO #,product.num,Product Number,customer.name,Customer Name,so.dateCreated,Sales Order Creation Date,so.dateFirstShip,Sales Order Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA["so.num"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSort" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+		<property name="Group" value="Sorting"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbThenOrderBy_1" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+		<property name="Group" value="Sorting"/>
+		<property name="Sort" value="5"/>
+		<parameterDescription><![CDATA[so.num,Sales Order #,so.customerPO,Customer PO #,product.num,Product Number,customer.name,Customer Name,so.dateCreated,Sales Order Creation Date,so.dateFirstShip,Sales Order Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA["so.dateCreated"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSort_1" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+		<property name="Group" value="Sorting"/>
+		<property name="Sort" value="6"/>
+		<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbThenOrderBy_2" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+		<property name="Group" value="Sorting"/>
+		<property name="Sort" value="7"/>
+		<parameterDescription><![CDATA[so.num,Sales Order #,so.customerPO,Customer PO #,product.num,Product Number,customer.name,Customer Name,so.dateCreated,Sales Order Creation Date,so.dateFirstShip,Sales Order Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA["product.num"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSort_2" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to order the report information by Order of Events or Event Date"/>
+		<property name="Group" value="Sorting"/>
+		<property name="Sort" value="8"/>
+		<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="toNumTONumber2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="toNumTONumber3" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    company.name AS company,
+    locationgroup.name AS LG
+FROM company
+LEFT JOIN locationgroup ON locationgroup.id IN ($P!{locationGroupID})
+WHERE company.id = 1;]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="LG" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<group name="part">
+		<groupHeader>
+			<band height="30">
+				<componentElement>
+					<reportElement key="table_company_wide" stretchType="RelativeToTallestObject" x="0" y="0" width="816" height="28" isPrintWhenDetailOverflows="true" printWhenGroupChanges="part" uuid="bcaaa06b-c549-45f2-bc64-b6b650450c87"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+						<datasetRun subDataset="Dataset" uuid="10781a18-8d59-49fb-8aa2-c2463d980079">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="Customer">
+								<datasetParameterExpression><![CDATA[$P{Customer}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="toNum">
+								<datasetParameterExpression><![CDATA[$P{toNum}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbOrderBy">
+								<datasetParameterExpression><![CDATA[$P{cbOrderBy}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbSort">
+								<datasetParameterExpression><![CDATA[$P{cbSort}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbThenOrderBy_1">
+								<datasetParameterExpression><![CDATA[$P{cbThenOrderBy_1}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbSort_1">
+								<datasetParameterExpression><![CDATA[$P{cbSort_1}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbThenOrderBy_2">
+								<datasetParameterExpression><![CDATA[$P{cbThenOrderBy_2}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbSort_2">
+								<datasetParameterExpression><![CDATA[$P{cbSort_2}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:columnGroup width="816" uuid="a3f291d2-017d-44cd-b864-83343bcf36fb">
+							<jr:column width="70" uuid="e161a2a3-5148-4ad7-b3a5-11a614538380">
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="70" height="32" backcolor="#EAEAEA" uuid="9bb387fe-705f-4311-8972-6ae6e8fdf44d"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Sales Order #]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="22" isRemoveLineWhenBlank="true" uuid="0ba538be-0599-4fe5-b787-bb237cca97b9"/>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Top">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{SONUMBER}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="75" uuid="a0489705-4e8c-421a-91b0-2768f721c5e9">
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="75" height="32" backcolor="#EAEAEA" uuid="c97a9262-cbd8-4f72-b3d9-f7c592fc4b70"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer PO #]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="75" height="22" uuid="6d25045f-5062-4a77-9db8-3555d989a1c5"/>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Top">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CUSTOMERPO}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="115" uuid="d593c972-319b-4063-8048-e97907c3c9dd">
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="115" height="32" backcolor="#EAEAEA" uuid="0b5de74a-61b0-40ed-8d66-ee3d18373017"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer Name]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="115" height="22" uuid="0deca181-45d0-4540-a9e3-fa1c9572cc20"/>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Top">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="75" uuid="532e0c23-02d5-4d2d-b27d-09a7bf288165">
+								<jr:columnHeader height="32" rowSpan="1">
+									<box leftPadding="0">
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="75" height="32" backcolor="#EAEAEA" uuid="ce845667-6f02-4a1f-8bbe-4a650c2d93e2"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Product Code]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="75" height="22" uuid="e8f443a0-4289-4b21-a603-82c899c23f12"/>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Top">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{PRODUCTNUMBER}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="147" uuid="fededaef-ca32-4c92-9a98-b4ed7cae1def">
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="147" height="32" backcolor="#EAEAEA" uuid="66d3c22a-4963-46a8-9823-42d08afb7a3f"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Item Description]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+									</box>
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="147" height="22" uuid="2bbfcc19-3554-4c43-96d9-2f33b3f123e2"/>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Top">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{PRODUCTDESCRIPTION}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="70" uuid="6f6675e5-bb14-4cce-9911-74f60a63b49c">
+								<jr:groupFooter groupName="product">
+									<jr:cell height="30" rowSpan="1">
+										<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+											<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="30" uuid="e2bad037-aaf3-48af-94fe-ddac18a3c7ed"/>
+											<box topPadding="3" leftPadding="3" rightPadding="3">
+												<topPen lineWidth="0.75"/>
+											</box>
+											<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+												<font fontName="Open Sans"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{TOTALREQUIRED}]]></textFieldExpression>
+											<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+										</textField>
+									</jr:cell>
+								</jr:groupFooter>
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="70" height="32" backcolor="#EAEAEA" uuid="e5036e1c-267e-4d59-b5f6-4659052407dc"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Backordered Quantity]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="22" uuid="26ffe8d9-c613-4232-b35d-6ad627bf1dbf">
+											<printWhenExpression><![CDATA[$V{isAvailable}]]></printWhenExpression>
+										</reportElement>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{QTYREMAINING}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									</textField>
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="22" forecolor="#FF3333" uuid="6d8723c6-4a6f-40ff-a9e3-59787f543c5a">
+											<printWhenExpression><![CDATA[!$V{isAvailable}]]></printWhenExpression>
+										</reportElement>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{QTYREMAINING}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="88" uuid="6f6675e5-bb14-4cce-9911-74f60a63b49c">
+								<jr:groupFooter groupName="product">
+									<jr:cell height="30" rowSpan="1">
+										<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+											<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="88" height="30" uuid="26ffe8d9-c613-4232-b35d-6ad627bf1dbf"/>
+											<box topPadding="3" leftPadding="3" rightPadding="3">
+												<topPen lineWidth="0.75"/>
+											</box>
+											<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+												<font fontName="Open Sans"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{QOH}]]></textFieldExpression>
+											<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+										</textField>
+									</jr:cell>
+								</jr:groupFooter>
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="88" height="32" backcolor="#EAEAEA" uuid="e5036e1c-267e-4d59-b5f6-4659052407dc"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Inventory Available in Stock]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="88" uuid="6f6675e5-bb14-4cce-9911-74f60a63b49c">
+								<jr:groupFooter groupName="product">
+									<jr:cell height="30" rowSpan="1">
+										<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+											<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="88" height="30" uuid="26ffe8d9-c613-4232-b35d-6ad627bf1dbf"/>
+											<box topPadding="3" leftPadding="3" rightPadding="3">
+												<topPen lineWidth="0.75"/>
+											</box>
+											<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+												<font fontName="Open Sans"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{TRANSFERQTY}]]></textFieldExpression>
+											<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+										</textField>
+									</jr:cell>
+								</jr:groupFooter>
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="88" height="32" backcolor="#EAEAEA" uuid="e5036e1c-267e-4d59-b5f6-4659052407dc"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Inventory Coming In]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="88" uuid="6f6675e5-bb14-4cce-9911-74f60a63b49c">
+								<jr:groupFooter groupName="product">
+									<jr:cell height="30" rowSpan="1">
+										<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+											<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="88" height="30" uuid="26ffe8d9-c613-4232-b35d-6ad627bf1dbf"/>
+											<box topPadding="3" leftPadding="3" rightPadding="3">
+												<topPen lineWidth="0.75"/>
+											</box>
+											<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+												<font fontName="Open Sans"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{TOTALREQUIRED} > ($F{TRANSFERQTY}+$F{QOH}) ? ($F{TRANSFERQTY}+$F{QOH}) : $F{TOTALREQUIRED}]]></textFieldExpression>
+											<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+										</textField>
+									</jr:cell>
+								</jr:groupFooter>
+								<jr:columnHeader height="32" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<staticText>
+										<reportElement mode="Opaque" x="0" y="0" width="88" height="32" backcolor="#EAEAEA" uuid="e5036e1c-267e-4d59-b5f6-4659052407dc"/>
+										<box leftPadding="3" bottomPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Quantity to Ship]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="22" rowSpan="1">
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.0"/>
+										<bottomPen lineWidth="0.5" lineColor="#999999"/>
+										<rightPen lineWidth="0.0"/>
+									</box>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="70" splitType="Stretch">
+			<textField>
+				<reportElement key="staticText-1" mode="Transparent" x="0" y="18" width="836" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="bb6ece43-7610-4e96-a0d1-06ae0465437b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%")
+? "Open Transfers and Sales Orders"
+: $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-5" mode="Transparent" x="0" y="40" width="836" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4d25071c-a7f0-4398-8795-7b4cf6a824a1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Transfer Order # " + $P{toNum}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-6" x="0" y="0" width="836" height="18" uuid="df3082e9-2fb3-4b1c-942b-70cae82fa178"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" x="0" y="54" width="836" height="16" uuid="d57fbfd9-c1b8-4aa1-a194-6723a464403d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Location Group: " + $F{LG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="670" y="0" width="134" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="985a9ce5-3521-47f4-afcb-1b0e56a287ed">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="804" y="0" width="32" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4cb8816e-113c-4ca3-95ca-f754d37546b0">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="260" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="6252936e-a0c9-43a4-bc53-0fea6bde92e6">
+					<printWhenExpression><![CDATA[$P{ShowTimeStamp}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="CP1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
