@@ -116,6 +116,7 @@ order by sortflag]]>
 		<parameter name="bomNum" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[select
+    -- customfieldbyid(part.Customfields, 77) as 'case packing instructions'
     customfieldbyid(fgpart.Customfields, 77) as 'instructions'
 from bom
 inner join bomitem fg on fg.bomid = bom.id and fg.typeid = 10
@@ -177,6 +178,10 @@ where bom.num = $P{bomNum}]]>
     round(coalesce(fgpart.len, 1), 3) as len,
     round(coalesce(fgpart.height, 1), 3) as height,
     round(coalesce(fgpart.width, 1), 3) as width,
+    -- customfieldbyid(part.customfields, 26) as Block,
+    -- customfieldbyid(part.customfields, 27) as Tiers,
+    -- customfieldbyid(part.customfields, 28) as casespallet,
+    -- customfieldbyid(part.customfields, 81) as casecode,
     customfieldbyid(fgpart.customfields, 26) as Block,
     customfieldbyid(fgpart.customfields, 27) as Tiers,
     customfieldbyid(fgpart.customfields, 28) as casespallet,
@@ -184,6 +189,8 @@ where bom.num = $P{bomNum}]]>
     bom.note as bomnote,
     1 as PALLETPATTERNID1,
     2 as PALLETPATTERNID2,
+    -- customfieldbyid(BOM.Customfields, 86) as 'Approved by Vince',
+    -- customfieldbyid(BOM.Customfields, 87) as 'Approved by Mitch',
     customfieldbyid(BOM.Customfields, 86) as 'Vince',
     customfieldbyid(BOM.Customfields, 87) as 'Mitch',
     stackingshipping.instructions as StackingAndShippingInsytuctions,
