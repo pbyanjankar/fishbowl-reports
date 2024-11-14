@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PickTicketByDateNPB" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="31667937-9a94-43a7-ae2f-c84c03f23c85">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri Oct 21 11:43:24 MDT 2022\ncallouts.1.text=Justin.Hartzog \nrevision 10/21/22\ncallouts.1.bounds=74,29,150,75"/>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<property name="Tooltip" value="Choose a date range to run the report for. This date range uses the date selection made in the Apply Date Filter To dropdown"/>
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[Today]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckCommitted" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[30,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckStarted" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<property name="Tooltip" value="Choose the date for the date range to look at"/>
+		<parameterDescription><![CDATA[pick.datescheduled,Date Scheduled,pick.datecreated,Date Created,pick.datestarted,Date Started,pick.datefinished,Date Fulfilled,pick.datelastmodified,Date Last Modified]]></parameterDescription>
+		<defaultValueExpression><![CDATA["pick.datescheduled"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbShowBarcodeAs" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Order,Order Num,Pick,Pick Num]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Order"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowAddress" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Batch By Date - A list of Parts to Pick, where to get them, and where to put them after picking."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Show SO Item Description" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbPrimarySortBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[mainlocation.sortorder,Location Sort Order,mainlocation.name,Location Name]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Location Name"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSecondarySortBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,Line Item,part.num,Part]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Line Item"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+    pick.num AS PICKNUM
+
+FROM
+    pick
+
+WHERE
+    pick.statusid IN ($P{ckStarted},$P{ckCommitted})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1}
+        AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+ORDER BY
+    $P!{cbApplyDateFilter}, pick.num]]>
+	</queryString>
+	<field name="PICKNUM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<subreport runToBottom="true">
+				<reportElement x="0" y="0" width="612" height="14" isPrintInFirstWholeBand="true" uuid="17d78adb-177e-427c-bace-0fc0084babe8"/>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<subreportParameter name="ShowAddress">
+					<subreportParameterExpression><![CDATA[$P{ShowAddress}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Show SO Item Description">
+					<subreportParameterExpression><![CDATA[$P{Show SO Item Description}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbSecondarySortBy">
+					<subreportParameterExpression><![CDATA[$P{cbSecondarySortBy}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="module">
+					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbShowBarcodeAs">
+					<subreportParameterExpression><![CDATA[$P{cbShowBarcodeAs}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ckShowCommitted">
+					<subreportParameterExpression><![CDATA[$P{ckCommitted}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbPrimarySortBy">
+					<subreportParameterExpression><![CDATA[$P{cbPrimarySortBy}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pickNum">
+					<subreportParameterExpression><![CDATA[$F{PICKNUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCountry">
+					<subreportParameterExpression><![CDATA[$P{ShowCountry}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowBarcode">
+					<subreportParameterExpression><![CDATA[$P{ShowBarcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./PickTicketByDate_npb/PickTicket.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subPickingOrdersAddress" pageWidth="540" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="540" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8617c28c-7bb6-4b54-aad8-8ca60fba1bf6">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="ISSUBREPORTONLY" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="pickID" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(-1)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowAddress" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSalesOrderContact" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,SO Contact,2,SO Customer]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowSlotNumber" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCustomerPO" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT PICKITEM.ORDERID AS ORDERID, PICKITEM.ORDERTYPEID AS ORDERTYPEID, ORDERTYPE.NAME AS ORDERTYPE,
+    PO.NUM AS PONUM, PO.VENDORCONTACT AS POEXTRA, PO.NOTE AS PONOTE, PO.VENDORSO AS POVENDORSO,
+    SO.NUM AS SONUM, SO.CUSTOMERCONTACT AS SOEXTRA, SO.NOTE AS SONOTE, SO.CUSTOMERPO AS SOCUSTOMERPO, SOCUSTOMER.NAME AS SOCUSTOMER,
+    WO.NUM AS WONUM, COALESCE(WOCUSTOMER.NAME, '') AS WOEXTRA, WO.NOTE AS WONOTE,
+    XO.NUM AS TONUM, CONCAT(FROMLG.NAME, ' -> ', TOLG.NAME) AS TOEXTRA, XO.NOTE AS TONOTE,
+    (CASE WHEN PICKITEM.ORDERTYPEID = 10 THEN PO.REMITADDRESS
+	  WHEN PICKITEM.ORDERTYPEID = 20 THEN SO.SHIPTOADDRESS
+          WHEN PICKITEM.ORDERTYPEID = 40 THEN XO.SHIPTOADDRESS
+     END) AS SHIPTOADDRESS,
+    (CASE WHEN PICKITEM.ORDERTYPEID = 10 THEN PO.REMITCITY
+	  WHEN PICKITEM.ORDERTYPEID = 20 THEN SO.SHIPTOCITY
+          WHEN PICKITEM.ORDERTYPEID = 40 THEN XO.SHIPTOCITY
+     END) AS SHIPTOCITY,
+    (CASE WHEN PICKITEM.ORDERTYPEID = 10 THEN PO.REMITZIP
+	  WHEN PICKITEM.ORDERTYPEID = 20 THEN SO.SHIPTOZIP
+          WHEN PICKITEM.ORDERTYPEID = 40 THEN XO.SHIPTOZIP
+     END) AS SHIPTOZIP,
+    (CASE WHEN PICKITEM.ORDERTYPEID = 10 THEN POSTATE.CODE
+	  WHEN PICKITEM.ORDERTYPEID = 20 THEN SOSTATE.CODE
+          WHEN PICKITEM.ORDERTYPEID = 40 THEN XOSTATE.CODE
+     END) AS SHIPSTATE,
+    (CASE WHEN PICKITEM.ORDERTYPEID = 10 THEN POCOUNTRY.NAME
+	  WHEN PICKITEM.ORDERTYPEID = 20 THEN SOCOUNTRY.NAME
+          WHEN PICKITEM.ORDERTYPEID = 40 THEN XOCOUNTRY.NAME
+     END) AS SHIPCOUNTRY, PICKITEM.SLOTNUM AS PICKSLOTNUM
+
+FROM pickitem
+    INNER JOIN ordertype ON (pickitem.ordertypeid = ordertype.id)
+    LEFT OUTER JOIN po ON (pickitem.orderid = po.id AND pickitem.ordertypeid = 10)
+    LEFT OUTER JOIN so ON (pickitem.orderid = so.id AND pickitem.ordertypeid = 20)
+    LEFT OUTER JOIN wo ON (pickitem.orderid = wo.id AND pickitem.ordertypeid = 30)
+    LEFT OUTER JOIN xo ON (pickitem.orderid = xo.id AND pickitem.ordertypeid = 40)
+    LEFT OUTER JOIN locationgroup AS fromlg ON (xo.fromlgid = fromlg.id)
+    LEFT OUTER JOIN locationgroup AS tolg ON (xo.shiptolgid = tolg.id)
+    LEFT JOIN stateconst AS postate ON po.remitstateid = postate.id
+    LEFT JOIN stateconst AS sostate ON so.shiptostateid = sostate.id
+    LEFT JOIN stateconst AS xostate ON xo.shiptostateid = xostate.id
+    LEFT JOIN countryconst AS pocountry ON po.remitcountryid = pocountry.id
+    LEFT JOIN countryconst AS socountry ON so.shiptocountryid = socountry.id
+    LEFT JOIN countryconst AS xocountry ON xo.shiptocountryid = xocountry.id
+    LEFT JOIN customer AS wocustomer ON wo.customerid = wocustomer.id
+    LEFT JOIN customer AS socustomer ON so.customerid = socustomer.id
+
+WHERE pickitem.pickid = $P{pickID}]]>
+	</queryString>
+	<field name="ORDERID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORDERTYPEID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORDERTYPE" class="java.lang.String"/>
+	<field name="PONUM" class="java.lang.String"/>
+	<field name="POEXTRA" class="java.lang.String"/>
+	<field name="PONOTE" class="java.lang.String"/>
+	<field name="POVENDORSO" class="java.lang.String"/>
+	<field name="SONUM" class="java.lang.String"/>
+	<field name="SOEXTRA" class="java.lang.String"/>
+	<field name="SONOTE" class="java.lang.String"/>
+	<field name="SOCUSTOMERPO" class="java.lang.String"/>
+	<field name="SOCUSTOMER" class="java.lang.String"/>
+	<field name="WONUM" class="java.lang.String"/>
+	<field name="WOEXTRA" class="java.lang.String"/>
+	<field name="WONOTE" class="java.lang.String"/>
+	<field name="TONUM" class="java.lang.String"/>
+	<field name="TOEXTRA" class="java.lang.String"/>
+	<field name="TONOTE" class="java.lang.String"/>
+	<field name="SHIPTOADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SHIPTOCITY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SHIPTOZIP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SHIPSTATE" class="java.lang.String"/>
+	<field name="SHIPCOUNTRY" class="java.lang.String"/>
+	<field name="SLOTNUM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Prevent"/>
+	</background>
+	<title>
+		<band height="16" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="14b" mode="Opaque" x="0" y="0" width="540" height="16" backcolor="#EAEAEA" uuid="366e4588-6fa8-4195-afbc-5db6d50779d4"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Orders 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-1" style="14b" x="121" y="0" width="50" height="16" uuid="f51ac2e7-9d77-4857-9d2e-d1880039d18a">
+					<printWhenExpression><![CDATA[$P{ShowSlotNumber} && !$P{ShowCustomerPO}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Slot #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-1" style="14b" x="202" y="0" width="50" height="16" uuid="9fcbc89c-5153-4b35-8801-b2528bf458c9">
+					<printWhenExpression><![CDATA[$P{ShowSlotNumber} && $P{ShowCustomerPO}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Slot #]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Prevent">
+			<frame>
+				<reportElement x="0" y="0" width="540" height="28" uuid="af8bd95a-2a00-4a0b-91eb-d0b2ef194926">
+					<printWhenExpression><![CDATA[!$P{ShowSlotNumber} && !$P{ShowCustomerPO}]]></printWhenExpression>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" positionType="Float" x="0" y="14" width="540" height="14" uuid="8ff88bb0-04ea-4530-9cd3-87ba0fd77a69"/>
+					<box leftPadding="40"/>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? $F{POEXTRA}
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($P{cbSalesOrderContact}.equals("1") ? $F{SOEXTRA} : $F{SOCUSTOMER})
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WOEXTRA}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TOEXTRA}
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="40" y="0" width="81" height="14" uuid="75821115-3584-4cf6-9a1e-4cbfcb5cc940"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{ORDERTYPEID}.intValue() == 10)
+	? $F{PONUM}
+	: (($F{ORDERTYPEID}.intValue() == 20)
+		? $F{SONUM}
+		: (($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WONUM}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TONUM}
+				: "ERROR")))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="121" y="0" width="419" height="14" uuid="186b1ca5-c377-4310-9e8e-5b2a8d2c9378"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? ($F{PONOTE}.equals("") ? "" : ("Notes: " + $F{PONOTE}))
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($F{SONOTE}.equals("") ? "" : ("Notes: " + $F{SONOTE}))
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? ($F{WONOTE}.equals("") ? "" : ("Notes: " + $F{WONOTE}))
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? ($F{TONOTE}.equals("") ? "" : ("Notes: " + $F{TONOTE}))
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="0" y="0" width="40" height="14" uuid="9d32e43b-b093-4090-8065-9e6e3bd3d6d2"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ORDERTYPE}+" #"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="0" width="540" height="28" uuid="ccaf3704-6686-4402-91f3-1c591237b966">
+					<printWhenExpression><![CDATA[$P{ShowSlotNumber} && !$P{ShowCustomerPO}]]></printWhenExpression>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" positionType="Float" x="0" y="14" width="540" height="14" uuid="720aeca5-e616-49e8-8f33-14780d551ba2"/>
+					<box leftPadding="40"/>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? $F{POEXTRA}
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($P{cbSalesOrderContact}.equals("1") ? $F{SOEXTRA} : $F{SOCUSTOMER})
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WOEXTRA}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TOEXTRA}
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="40" y="0" width="81" height="14" uuid="072fc31f-0789-4cce-bdfa-bd3088aabc31"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{ORDERTYPEID}.intValue() == 10)
+	? $F{PONUM}
+	: (($F{ORDERTYPEID}.intValue() == 20)
+		? $F{SONUM}
+		: (($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WONUM}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TONUM}
+				: "ERROR")))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="171" y="0" width="369" height="14" uuid="231fb98c-a4df-4d21-9f12-3fb9397567eb"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? ($F{PONOTE}.equals("") ? "" : ("Notes: " + $F{PONOTE}))
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($F{SONOTE}.equals("") ? "" : ("Notes: " + $F{SONOTE}))
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? ($F{WONOTE}.equals("") ? "" : ("Notes: " + $F{WONOTE}))
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? ($F{TONOTE}.equals("") ? "" : ("Notes: " + $F{TONOTE}))
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="0" y="0" width="40" height="14" uuid="106499e1-839b-48e8-b0e6-9e1568e5153e"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ORDERTYPE}+" #"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="121" y="0" width="50" height="14" uuid="18f274e7-1df0-4752-a932-d009b7ba2a90"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SLOTNUM}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="0" width="540" height="28" uuid="805fc9d0-7586-4e1b-b309-380fbd064107">
+					<printWhenExpression><![CDATA[!$P{ShowSlotNumber} && $P{ShowCustomerPO}]]></printWhenExpression>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" positionType="Float" x="0" y="14" width="540" height="14" uuid="a470ba98-c700-4a59-ab53-5f95a86d1450"/>
+					<box leftPadding="40"/>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? $F{POEXTRA}
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($P{cbSalesOrderContact}.equals("1") ? $F{SOEXTRA} : $F{SOCUSTOMER})
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WOEXTRA}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TOEXTRA}
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="40" y="0" width="81" height="14" uuid="5bf20276-7b70-4a22-ac0e-94fb603beddf"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{ORDERTYPEID}.intValue() == 10)
+	? $F{PONUM}
+	: (($F{ORDERTYPEID}.intValue() == 20)
+		? $F{SONUM}
+		: (($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WONUM}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TONUM}
+				: "ERROR")))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="202" y="0" width="338" height="14" uuid="3e2ebdca-21c0-4a99-853e-10646bbc9966"/>
+					<box leftPadding="15">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? ($F{PONOTE}.equals("") ? "" : ("Notes: " + $F{PONOTE}))
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($F{SONOTE}.equals("") ? "" : ("Notes: " + $F{SONOTE}))
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? ($F{WONOTE}.equals("") ? "" : ("Notes: " + $F{WONOTE}))
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? ($F{TONOTE}.equals("") ? "" : ("Notes: " + $F{TONOTE}))
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="0" y="0" width="40" height="14" uuid="f292121e-ce64-46ed-9dae-ea18ab77bfe1"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ORDERTYPE}+" #"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="121" y="0" width="81" height="14" uuid="e1959816-1e4f-4eb9-a9b7-4181a3a0448a">
+						<printWhenExpression><![CDATA[!$F{SOCUSTOMERPO}.equals("")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PO: " + $F{SOCUSTOMERPO}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="0" width="540" height="28" uuid="d363d91b-91c0-4e5e-9107-4f6d67ff3f1b">
+					<printWhenExpression><![CDATA[$P{ShowSlotNumber} && $P{ShowCustomerPO}]]></printWhenExpression>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" positionType="Float" x="0" y="14" width="540" height="14" uuid="23ae9f75-ea82-438d-a809-3c996e5ee391"/>
+					<box leftPadding="40"/>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? $F{POEXTRA}
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($P{cbSalesOrderContact}.equals("1") ? $F{SOEXTRA} : $F{SOCUSTOMER})
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WOEXTRA}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TOEXTRA}
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="40" y="0" width="81" height="14" uuid="fb1b6540-460f-4e79-b9a5-48253121b765"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{ORDERTYPEID}.intValue() == 10)
+	? $F{PONUM}
+	: (($F{ORDERTYPEID}.intValue() == 20)
+		? $F{SONUM}
+		: (($F{ORDERTYPEID}.intValue() == 30)
+			? $F{WONUM}
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? $F{TONUM}
+				: "ERROR")))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="252" y="0" width="288" height="14" uuid="983b8c0d-4339-4712-a63e-c0601ddb7f28"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ORDERTYPEID}.intValue() == 10)
+	? ($F{PONOTE}.equals("") ? "" : ("Notes: " + $F{PONOTE}))
+	: ($F{ORDERTYPEID}.intValue() == 20)
+		? ($F{SONOTE}.equals("") ? "" : ("Notes: " + $F{SONOTE}))
+		: ($F{ORDERTYPEID}.intValue() == 30)
+			? ($F{WONOTE}.equals("") ? "" : ("Notes: " + $F{WONOTE}))
+			: ($F{ORDERTYPEID}.intValue() == 40)
+				? ($F{TONOTE}.equals("") ? "" : ("Notes: " + $F{TONOTE}))
+				: "ERROR"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="0" y="0" width="40" height="14" uuid="2c2f0d6c-a303-4ac4-a3d5-6a096f889e60"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ORDERTYPE}+" #"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="202" y="0" width="50" height="14" uuid="68056012-1a1c-432e-ac17-b564aa6b8960"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SLOTNUM}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="12" x="121" y="0" width="81" height="14" uuid="ae7530ed-1296-4d54-a102-309227032942">
+						<printWhenExpression><![CDATA[!$F{SOCUSTOMERPO}.equals("")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PO: " + $F{SOCUSTOMERPO}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement x="0" y="28" width="540" height="1" uuid="87231c6b-f798-484d-9f7b-e544b49c1ac0">
+					<printWhenExpression><![CDATA[!$P{ShowAddress}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="28">
+			<printWhenExpression><![CDATA[new Boolean($P{ShowAddress}.booleanValue() && ($F{ORDERTYPEID}.intValue() != 30))]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" x="0" y="0" width="540" height="14" uuid="46beb3e6-c71c-4aa8-ba75-efb41a2ea88e"/>
+				<box leftPadding="40">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIPTOADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-1" style="note" positionType="Float" x="0" y="14" width="540" height="14" uuid="f611b68e-0168-4bf6-9f58-2f6ee7704d98"/>
+				<box leftPadding="40">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{SHIPTOCITY}==null) ? "" : $F{SHIPTOCITY})+ ", " +
+(($F{SHIPSTATE}==null) ? "" : $F{SHIPSTATE}) +" " +
+(($F{SHIPTOZIP}==null) ? "" : $F{SHIPTOZIP}) +
+($P{ShowCountry}.booleanValue() ? "\n" + $F{SHIPCOUNTRY} : "")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
