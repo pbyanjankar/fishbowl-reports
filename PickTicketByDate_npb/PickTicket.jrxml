@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="13"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -38,7 +38,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./PickTicketByDate_npb/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="module" class="java.lang.Object" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
@@ -288,7 +288,7 @@ ORDER BY IF($P{ShowKitHeaders} AND PICKITEM.ORDERTYPEID = 20,COALESCE(kitheader.
 		<band/>
 	</background>
 	<title>
-		<band height="180" splitType="Prevent">
+		<band height="169" splitType="Prevent">
 			<textField>
 				<reportElement key="staticText-1" style="24b" mode="Transparent" x="366" y="0" width="186" height="32" forecolor="#000000" backcolor="#FFFFFF" uuid="f46f1b4c-e31e-4107-9944-52f0de01bf0e"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
@@ -356,20 +356,6 @@ ORDER BY IF($P{ShowKitHeaders} AND PICKITEM.ORDERTYPEID = 20,COALESCE(kitheader.
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-16" style="12b" positionType="Float" mode="Transparent" x="285" y="90" width="69" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="c890e5c1-5877-4b45-89a1-1118b16da969"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
-					<font fontName="Open Sans" size="9"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{ORDERNUMBER}]]></textFieldExpression>
-			</textField>
 			<image scaleImage="RetainShape" hAlign="Left" vAlign="Bottom" isUsingCache="true">
 				<reportElement key="image-2" mode="Opaque" x="0" y="0" width="169" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="26613e81-a4b2-4188-9963-f1c3d653cff9">
 					<printWhenExpression><![CDATA[$P{module} != null]]></printWhenExpression>
@@ -386,7 +372,7 @@ ORDER BY IF($P{ShowKitHeaders} AND PICKITEM.ORDERTYPEID = 20,COALESCE(kitheader.
 				<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
 			</image>
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-5" positionType="Float" x="0" y="164" width="552" height="11" uuid="876b8014-4ba5-4546-9d00-3d00860a6139"/>
+				<reportElement key="subreport-5" positionType="Float" x="0" y="146" width="552" height="11" uuid="876b8014-4ba5-4546-9d00-3d00860a6139"/>
 				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 				<subreportParameter name="ShowAddress">
 					<subreportParameterExpression><![CDATA[$P{ShowAddress}]]></subreportParameterExpression>
@@ -398,7 +384,7 @@ ORDER BY IF($P{ShowKitHeaders} AND PICKITEM.ORDERTYPEID = 20,COALESCE(kitheader.
 					<subreportParameterExpression><![CDATA[$P{ShowCountry}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["subPickingOrders.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{path}+"subPickingOrders.jasper"]]></subreportExpression>
 			</subreport>
 			<componentElement>
 				<reportElement x="358" y="70" width="194" height="33" uuid="0aaa10e5-3658-4127-a109-6eeeddbab4bf">
@@ -408,12 +394,6 @@ ORDER BY IF($P{ShowKitHeaders} AND PICKITEM.ORDERTYPEID = 20,COALESCE(kitheader.
 					<jr:codeExpression><![CDATA[$V{ORDERNUMBER}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
-			<line>
-				<reportElement positionType="Float" x="0" y="86" width="552" height="1" uuid="d2dea85a-6004-47a3-8ffe-3cfcbfe5c152"/>
-				<graphicElement>
-					<pen lineColor="#FFFFFF"/>
-				</graphicElement>
-			</line>
 			<staticText>
 				<reportElement positionType="Float" mode="Opaque" x="483" y="32" width="69" height="17" backcolor="#EAEAEA" uuid="d41750ed-0019-45a2-a5a6-03d9e1bc383c"/>
 				<box>
@@ -443,7 +423,7 @@ ORDER BY IF($P{ShowKitHeaders} AND PICKITEM.ORDERTYPEID = 20,COALESCE(kitheader.
 				<textFieldExpression><![CDATA["Order #"]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="0" y="131" width="551" height="31" uuid="176aff72-999d-4079-a317-8b10119a1e77"/>
+				<reportElement positionType="Float" x="0" y="106" width="551" height="28" uuid="176aff72-999d-4079-a317-8b10119a1e77"/>
 				<staticText>
 					<reportElement key="staticText-6" style="12b" positionType="Float" mode="Opaque" x="330" y="0" width="80" height="14" forecolor="#000000" backcolor="#EAEAEA" uuid="9d6fd252-5dfa-4ad8-acaa-4c927f55674f"/>
 					<box leftPadding="3" rightPadding="3">
