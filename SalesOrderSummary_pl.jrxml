@@ -803,7 +803,7 @@ ORDER BY
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Prints a summary of sales orders issued during the time window given; no taxes are included."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Prints a summary of sales orders issued during the time window given; no taxes are included. Customized to exclude sales order numbers ending with -D#"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
