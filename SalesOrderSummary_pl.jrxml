@@ -294,7 +294,9 @@ FROM
             soitem.soid
         FROM
             soitem
+	  LEFT OUTER JOIN product ON product.id = soitem.productId
         WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+	  AND (product.num NOT LIKE "Deposit On Sales Order%" OR product.id IS NULL)
         GROUP BY soitem.soid
     ) AS sorder ON so.id = sorder.soid
 
@@ -310,6 +312,7 @@ WHERE
     AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
     AND COALESCE(UPPER($P!{cfFilter}),'') LIKE UPPER($P{cfFilterData})
     AND so.num NOT LIKE '%-D%'
+    AND (product.num NOT LIKE "Deposit On Sales Order%" OR product.id IS NULL)
 
 GROUP BY
     so.num, locationgroup.name, customer.name, so.dateissued, so.statusid,
@@ -677,7 +680,9 @@ FROM
             soitem.qbclassid
         FROM
             soitem
+	  LEFT OUTER JOIN product ON product.id = soitem.productId
         WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+	   AND (product.num NOT LIKE "Deposit On Sales Order%" OR product.id IS NULL)
         GROUP BY
             soitem.soid, soitem.qbclassid
     ) AS sorder ON so.id = sorder.soid AND sorder.qbclassid = soitem.qbclassid
@@ -694,6 +699,7 @@ WHERE
     AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
     AND COALESCE(UPPER($P!{cfFilter}),'') LIKE UPPER($P{cfFilterData})
     AND so.num NOT LIKE '%-D%'
+    AND (product.num NOT LIKE "Deposit On Sales Order%" OR product.id IS NULL)
 
 GROUP BY
     so.num, locationgroup.name, customer.name, so.dateissued, so.statusid,
