@@ -76,31 +76,41 @@
     stateconst.code AS state,
     address.zip AS zip,
     sysuser.username AS SALESREP,
-    sorder.ordered AS AMOUNTSOLD,
     CustomFieldByName(customer.customfields, 'Lead Source') AS LEADSOURCE,
-    currency.SYMBOL
+    currency.SYMBOL,
+    sum(sorder.ordered) AS AMOUNTSOLD
 FROM customer
 LEFT OUTER JOIN address ON customer.accountid = address.accountid AND address.defaultflag = true AND (address.typeid = 10)
 LEFT OUTER JOIN contact ON customer.accountid = contact.accountid AND contact.typeid = 60 AND contact.defaultflag = true
 LEFT OUTER JOIN stateconst ON address.stateid = stateconst.id
 LEFT OUTER JOIN sysuser ON customer.defaultsalesmanid = sysuser.id
 LEFT OUTER JOIN currency ON currency.homeCurrency = 1
+LEFT OUTER JOIN so ON so.customerId = customer.id
+
+LEFT JOIN (
+        SELECT
+            postso.soid AS soid,
+            MAX(postso.postdate) AS postdate
+        FROM
+            postso
+        WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+        GROUP BY postso.soid
+    ) AS postso ON so.id = postso.soid
 
 LEFT OUTER JOIN (
         SELECT
-	  customer.id AS customerId,
-            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered
+            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
+            soitem.soid
         FROM
             soitem
-        JOIN so ON so.id = soitem.soid
-        JOIN customer ON so.customerId = customer.id
+        INNER JOIN so ON so.id = soitem.soid
         WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
-            AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-        GROUP BY customer.id
-    ) AS sorder ON customer.id = sorder.customerId
+        GROUP BY soitem.soid
+    ) AS sorder ON so.id = sorder.soid
 
 WHERE customer.activeflag IN ($P{ckShowActive}, $P{ckShowInactive})
-AND customer.dateCreated BETWEEN $P{dateRange1DateCreated} AND DATE_SUB($P{dateRange2DateCreated}, INTERVAL 1 SECOND)
+AND customer.dateCreated BETWEEN $P{dateRange1DateCreated} AND DATE_SUB($P{dateRange2DateCreated}, INTERVAL 1 SECOND) AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+GROUP BY 1,2,3,4,5,6,7,8,9,10
 ORDER BY 1;]]>
 		</queryString>
 		<field name="CUSTOMERNAME" class="java.lang.String">
