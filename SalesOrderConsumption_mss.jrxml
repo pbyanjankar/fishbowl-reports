@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="15"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Thu Nov 28 10:43:19 NPT 2024"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -49,10 +49,6 @@
 		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
 			<parameterDescription><![CDATA[10,100]]></parameterDescription>
 			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
 			<parameterDescription><![CDATA[60,100]]></parameterDescription>
@@ -109,13 +105,16 @@
 product.num as PRODUCTNUM,
 product.description AS PRODUCTDESCRIPTION,
 so.num AS SONUM,
-sum(soitem.qtyOrdered) AS QTY,
+SUM(if(soitem.typeid=20,-1 * SOITEM.QTYFULFILLED, SOITEM.QTYFULFILLED )) AS QTY,
 so.dateCompleted AS DATECOMPLETED
 FROM so
 INNER JOIN soitem ON so.id = soitem.soid
 INNER JOIN product ON product.id = soitem.productid
+INNER JOIN part ON part.id = product.partid
 WHERE
-$P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+part.typeid = 10
+AND soitem.typeId IN (10, 11, 20)
+AND so.dateCompleted BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 AND so.customerid LIKE $P{customerID}
 
 GROUP BY 1,2,3;]]>
@@ -182,14 +181,8 @@ GROUP BY 1,2,3;]]>
 		<property name="Group" value="Filters"/>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbApplyDateFilter" class="java.lang.String">
-		<property name="Group" value="Select a date field and enter a date range"/>
-		<property name="Sort" value="2"/>
-		<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="dateRange1" class="java.util.Date">
-		<property name="Group" value="Select a date field and enter a date range"/>
+		<property name="Group" value="Enter a SO date completed range"/>
 		<parameterDescription><![CDATA[This Month]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
@@ -235,7 +228,7 @@ WHERE id = 1]]>
 	<pageHeader>
 		<band height="64" splitType="Prevent">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="0" y="40" width="207" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="250" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
 					<printWhenExpression><![CDATA[true]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="0">
@@ -249,12 +242,12 @@ WHERE id = 1]]>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{dateRange1}.getYear() <= -900 && $P{dateRange2}.getYear() >= 1100
-  ? "Date Range: All"
-  : "Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
+  ? "SO Date Completed: All"
+  : "SO Date Completed: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-129600000)]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="0" width="207" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
+				<reportElement key="" x="0" y="0" width="250" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
 				<box leftPadding="0" rightPadding="0"/>
 				<textElement>
 					<font fontName="Open Sans" size="13" isBold="true"/>
@@ -262,7 +255,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="54" width="207" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
+				<reportElement key="" x="0" y="54" width="250" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement>
 					<font fontName="Open Sans"/>
@@ -270,7 +263,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" mode="Transparent" x="0" y="18" width="207" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="250" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
 				<textElement verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -295,9 +288,6 @@ WHERE id = 1]]>
 							<datasetParameter name="dateRange2">
 								<datasetParameterExpression><![CDATA[$P{dateRange2}]]></datasetParameterExpression>
 							</datasetParameter>
-							<datasetParameter name="cbApplyDateFilter">
-								<datasetParameterExpression><![CDATA[$P{cbApplyDateFilter}]]></datasetParameterExpression>
-							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 					</dataset>
@@ -305,7 +295,7 @@ WHERE id = 1]]>
 				<crosstabHeaderCell>
 					<cellContents>
 						<staticText>
-							<reportElement x="207" y="0" width="100" height="30" uuid="90a955d1-e3ab-4e00-b2cb-96d032ca3e0e"/>
+							<reportElement x="250" y="0" width="100" height="30" uuid="90a955d1-e3ab-4e00-b2cb-96d032ca3e0e"/>
 							<box leftPadding="3" bottomPadding="3" rightPadding="3">
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.0"/>
@@ -317,7 +307,7 @@ WHERE id = 1]]>
 							<text><![CDATA[Product Number]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="0" y="0" width="207" height="30" uuid="a8c84f96-e895-4075-a7f8-5af390518f96"/>
+							<reportElement x="0" y="0" width="250" height="30" uuid="a8c84f96-e895-4075-a7f8-5af390518f96"/>
 							<box topPadding="0" leftPadding="3" bottomPadding="3" rightPadding="3">
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -330,14 +320,14 @@ WHERE id = 1]]>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
-				<rowGroup name="PRODUCTDESCRIPTION" width="207">
+				<rowGroup name="PRODUCTDESCRIPTION" width="250">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{PRODUCTDESCRIPTION}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
 						<cellContents>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="207" height="25" uuid="5d361cf4-8af7-4155-9f36-3a4f40ad0fbb"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="250" height="25" uuid="5d361cf4-8af7-4155-9f36-3a4f40ad0fbb"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3">
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -460,10 +450,10 @@ WHERE id = 1]]>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="ff294b63-8c6e-4937-a50e-db2758c3b8ab"/>
 							<box topPadding="3" leftPadding="3" rightPadding="3"/>
-							<textFieldExpression><![CDATA[$V{QTYMeasure}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{QTYMeasure} ]]></textFieldExpression>
 							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 						</textField>
 					</cellContents>
@@ -564,7 +554,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="0" y="3" width="207" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="be88ff9d-ce0a-4398-b59e-9e444a24b556">
+				<reportElement key="" mode="Transparent" x="0" y="3" width="250" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="be88ff9d-ce0a-4398-b59e-9e444a24b556">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
