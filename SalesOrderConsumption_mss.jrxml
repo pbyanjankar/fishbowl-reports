@@ -73,7 +73,7 @@
 			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 		</parameter>
 		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
-			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
 			<parameterDescription><![CDATA[20,900]]></parameterDescription>
@@ -105,12 +105,19 @@
 			<defaultValueExpression><![CDATA["85"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[SELECT product.num as PRODUCTNUM, product.description AS PRODUCTDESCRIPTION, so.num AS SONUM, sum(soitem.qtyOrdered) AS QTY
+			<![CDATA[SELECT
+product.num as PRODUCTNUM,
+product.description AS PRODUCTDESCRIPTION,
+so.num AS SONUM,
+sum(soitem.qtyOrdered) AS QTY,
+so.dateCompleted AS DATECOMPLETED
 FROM so
 INNER JOIN soitem ON so.id = soitem.soid
 INNER JOIN product ON product.id = soitem.productid
 WHERE
-so.datefirstship > "2024-01-01"
+$P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+AND so.customerid LIKE $P{customerID}
+
 GROUP BY 1,2,3;]]>
 		</queryString>
 		<field name="SONUM" class="java.lang.String"/>
@@ -123,6 +130,7 @@ GROUP BY 1,2,3;]]>
 		<field name="PRODUCTDESCRIPTION" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
+		<field name="DATECOMPLETED" class="java.sql.Timestamp"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -278,6 +286,18 @@ WHERE id = 1]]>
 				<crosstabDataset>
 					<dataset>
 						<datasetRun subDataset="SOInfo" uuid="eb6e6a88-b372-4bb4-852b-554b6905655b">
+							<datasetParameter name="customerID">
+								<datasetParameterExpression><![CDATA[$P{customerID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="dateRange1">
+								<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="dateRange2">
+								<datasetParameterExpression><![CDATA[$P{dateRange2}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbApplyDateFilter">
+								<datasetParameterExpression><![CDATA[$P{cbApplyDateFilter}]]></datasetParameterExpression>
+							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 					</dataset>
@@ -286,24 +306,24 @@ WHERE id = 1]]>
 					<cellContents>
 						<staticText>
 							<reportElement x="207" y="0" width="100" height="30" uuid="90a955d1-e3ab-4e00-b2cb-96d032ca3e0e"/>
-							<box leftPadding="3" rightPadding="3">
+							<box leftPadding="3" bottomPadding="3" rightPadding="3">
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.0"/>
 								<bottomPen lineWidth="0.0"/>
 							</box>
-							<textElement verticalAlignment="Middle">
+							<textElement verticalAlignment="Bottom">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Product Number]]></text>
 						</staticText>
 						<staticText>
 							<reportElement x="0" y="0" width="207" height="30" uuid="a8c84f96-e895-4075-a7f8-5af390518f96"/>
-							<box leftPadding="3" rightPadding="3">
+							<box topPadding="0" leftPadding="3" bottomPadding="3" rightPadding="3">
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement verticalAlignment="Middle">
+							<textElement verticalAlignment="Bottom">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Product Number]]></text>
@@ -355,7 +375,7 @@ WHERE id = 1]]>
 						<cellContents/>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="SONUM" height="30" totalPosition="End">
+				<columnGroup name="SONUM" height="17" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{SONUM}]]></bucketExpression>
 					</bucket>
@@ -363,10 +383,11 @@ WHERE id = 1]]>
 						<cellContents backcolor="#F0F8FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="30" uuid="070396fc-8196-420f-a3db-32df0968bb9d"/>
-								<box leftPadding="3" rightPadding="3"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="17" uuid="070396fc-8196-420f-a3db-32df0968bb9d"/>
+								<box topPadding="1" leftPadding="3" rightPadding="3"/>
 								<textElement>
 									<font isBold="true"/>
 								</textElement>
@@ -381,23 +402,45 @@ WHERE id = 1]]>
 							</box>
 							<staticText>
 								<reportElement x="70" y="0" width="64" height="30" uuid="1fd265e3-39a0-4e5d-a2ca-c271e589de6f"/>
-								<box leftPadding="2" rightPadding="2">
+								<box leftPadding="2" bottomPadding="3" rightPadding="2">
 									<leftPen lineWidth="0.5"/>
 								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
 									<font size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Difference]]></text>
 							</staticText>
 							<staticText>
 								<reportElement x="0" y="0" width="70" height="30" uuid="3b3978a2-46c1-4048-8a1e-c83c7715fb53"/>
-								<box leftPadding="1" rightPadding="1"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<box topPadding="0" leftPadding="1" bottomPadding="3" rightPadding="1"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
 									<font size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Total SONUM]]></text>
 							</staticText>
 						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="DATECOMPLETED" height="13">
+					<bucket class="java.sql.Timestamp">
+						<bucketExpression><![CDATA[$F{DATECOMPLETED}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField pattern="">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="13" uuid="ae256a7b-21b9-4652-9913-3eacb963d8d6"/>
+								<textFieldExpression><![CDATA[$V{DATECOMPLETED}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
 				<measure name="QTYMeasure" class="java.math.BigDecimal" calculation="Sum">
@@ -406,8 +449,11 @@ WHERE id = 1]]>
 				<measure name="DiffMeasure" class="java.math.BigDecimal" calculation="Sum">
 					<measureExpression><![CDATA[$F{SONUM}.equals( "10004-D1" ) ? 0 : $F{QTY}]]></measureExpression>
 				</measure>
-				<measure name="measure1" class="java.lang.String" calculation="Count">
+				<measure name="QtyDecimal" class="java.lang.String" calculation="Count">
 					<measureExpression><![CDATA[$V{QtyDecimal}]]></measureExpression>
+				</measure>
+				<measure name="DateFormat" class="java.lang.String">
+					<measureExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></measureExpression>
 				</measure>
 				<crosstabCell width="70" height="25">
 					<cellContents>
@@ -418,7 +464,7 @@ WHERE id = 1]]>
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="ff294b63-8c6e-4937-a50e-db2758c3b8ab"/>
 							<box topPadding="3" leftPadding="3" rightPadding="3"/>
 							<textFieldExpression><![CDATA[$V{QTYMeasure}]]></textFieldExpression>
-							<patternExpression><![CDATA[$V{measure1}]]></patternExpression>
+							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
@@ -442,7 +488,7 @@ WHERE id = 1]]>
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="8ccde10c-f0ef-4a82-a3c0-a29e196b0c3c"/>
 							<box topPadding="3" leftPadding="2" rightPadding="2"/>
 							<textFieldExpression><![CDATA[$V{QTYMeasure}]]></textFieldExpression>
-							<patternExpression><![CDATA[$V{measure1}]]></patternExpression>
+							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 						</textField>
 						<textField>
 							<reportElement style="Crosstab Data Text" x="70" y="0" width="64" height="25" uuid="c1faa534-8ffe-43ee-8531-dc8b9ab9f005"/>
@@ -450,7 +496,7 @@ WHERE id = 1]]>
 								<leftPen lineWidth="0.5"/>
 							</box>
 							<textFieldExpression><![CDATA[$V{DiffMeasure}]]></textFieldExpression>
-							<patternExpression><![CDATA[$V{measure1}]]></patternExpression>
+							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
@@ -469,6 +515,15 @@ WHERE id = 1]]>
 					<cellContents/>
 				</crosstabCell>
 				<crosstabCell rowTotalGroup="PRODUCTDESCRIPTION" columnTotalGroup="SONUM">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell columnTotalGroup="DATECOMPLETED">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="PRODUCTDESCRIPTION" columnTotalGroup="DATECOMPLETED">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="PRODUCTNUM" columnTotalGroup="DATECOMPLETED">
 					<cellContents/>
 				</crosstabCell>
 			</crosstab>
@@ -509,7 +564,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="0" y="3" width="501" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="be88ff9d-ce0a-4398-b59e-9e444a24b556">
+				<reportElement key="" mode="Transparent" x="0" y="3" width="207" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="be88ff9d-ce0a-4398-b59e-9e444a24b556">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
