@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderConsumptionMSS" pageWidth="7200" pageHeight="2380" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="7140" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CommercialJobSummaryMSS" pageWidth="7200" pageHeight="2380" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="7140" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -34,32 +34,8 @@
 	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<subDataset name="SOInfo" uuid="4b15957a-182e-4442-9265-e7e84736377e">
-		<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[25,100]]></parameterDescription>
-			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[20,100]]></parameterDescription>
-			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[70,100]]></parameterDescription>
-			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[10,100]]></parameterDescription>
-			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[60,100]]></parameterDescription>
-			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
-		</parameter>
 		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
 			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[80,100]]></parameterDescription>
-			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
 			<parameterDescription><![CDATA[This Month]]></parameterDescription>
@@ -71,55 +47,41 @@
 		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[20,900]]></parameterDescription>
-			<defaultValueExpression><![CDATA["900"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[90,900]]></parameterDescription>
-			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="colCustomerPO" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
-		</parameter>
-		<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
-			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="colShipToState/Province" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
-		</parameter>
-		<parameter name="colDateFulfilled" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[1,0]]></parameterDescription>
-			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
-		</parameter>
-		<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[85,0]]></parameterDescription>
-			<defaultValueExpression><![CDATA["85"]]></defaultValueExpression>
-		</parameter>
 		<queryString>
 			<![CDATA[SELECT
+so.num AS SONUM,
 product.num as PRODUCTNUM,
 product.description AS PRODUCTDESCRIPTION,
-so.num AS SONUM,
-SUM(if(soitem.typeid=20,-1 * SOITEM.QTYFULFILLED, SOITEM.QTYFULFILLED )) AS QTY,
-so.dateCompleted AS DATECOMPLETED
+so.dateCompleted AS DATECOMPLETED,
+locationgroup.name AS LG,
+sysuser.username AS FULFILLEDBY,
+SUM(if(soitem.typeid=20,-1 * SOITEM.QTYFULFILLED, SOITEM.QTYFULFILLED )) AS QTY
 FROM so
 INNER JOIN soitem ON so.id = soitem.soid
 INNER JOIN product ON product.id = soitem.productid
 INNER JOIN part ON part.id = product.partid
+LEFT OUTER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+LEFT OUTER JOIN (
+	SELECT so.id AS soid, max(ship.id) AS shipId from so
+	INNER JOIN ship ON ship.soid = so.id
+	WHERE
+		so.customerid LIKE $P{customerID}
+		AND so.dateCompleted BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+	GROUP BY so.id
+	) AS latestShip ON latestShip.soid = so.id
+LEFT OUTER JOIN ship ON ship.id = latestShip.shipId
+LEFT OUTER JOIN sysuser ON ship.shippedBy = sysuser.id
 WHERE
 part.typeid = 10
 AND soitem.typeId IN (10, 11, 20)
 AND so.dateCompleted BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 AND so.customerid LIKE $P{customerID}
 
-GROUP BY 1,2,3;]]>
+GROUP BY 1,2,3,4,5,6
+ORDER BY 1,2;]]>
 		</queryString>
-		<field name="SONUM" class="java.lang.String"/>
+		<field name="SONUM" class="java.lang.Long"/>
 		<field name="PRODUCTNUM" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
@@ -130,6 +92,8 @@ GROUP BY 1,2,3;]]>
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="DATECOMPLETED" class="java.sql.Timestamp"/>
+		<field name="LG" class="java.lang.String"/>
+		<field name="FULFILLEDBY" class="java.lang.String"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -145,37 +109,7 @@ GROUP BY 1,2,3;]]>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Prints a summary of sales orders issued during the time window given; no taxes are included."]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[10,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[20,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[25,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[60,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[70,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[80,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="customerID" class="java.lang.String">
 		<property name="Group" value="Filters"/>
@@ -189,25 +123,9 @@ GROUP BY 1,2,3;]]>
 	<parameter name="dateRange2" class="java.util.Date">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[90,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
-		<property name="Group" value="Other Settings"/>
-		<property name="Tooltip" value="When unchecked, items will show the current product name, even if it was changed after the item was placed on the order."/>
-		<parameterDescription><![CDATA[1,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
-	</parameter>
 	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
 		<property name="Group" value="Type an alternate title for this report"/>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="SO Status"/>
-		<parameterDescription><![CDATA[85,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -268,7 +186,7 @@ WHERE id = 1]]>
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Sales Order Summary" : $P{ReportTitle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Commercial Job Summary" : $P{ReportTitle}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -295,7 +213,7 @@ WHERE id = 1]]>
 				<crosstabHeaderCell>
 					<cellContents>
 						<staticText>
-							<reportElement x="250" y="0" width="100" height="30" uuid="90a955d1-e3ab-4e00-b2cb-96d032ca3e0e"/>
+							<reportElement x="250" y="0" width="100" height="56" uuid="90a955d1-e3ab-4e00-b2cb-96d032ca3e0e"/>
 							<box leftPadding="3" bottomPadding="3" rightPadding="3">
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.0"/>
@@ -304,10 +222,10 @@ WHERE id = 1]]>
 							<textElement verticalAlignment="Bottom">
 								<font size="10" isBold="true"/>
 							</textElement>
-							<text><![CDATA[Product Number]]></text>
+							<text><![CDATA[Part Number]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="0" y="0" width="250" height="30" uuid="a8c84f96-e895-4075-a7f8-5af390518f96"/>
+							<reportElement x="0" y="0" width="250" height="56" uuid="a8c84f96-e895-4075-a7f8-5af390518f96"/>
 							<box topPadding="0" leftPadding="3" bottomPadding="3" rightPadding="3">
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -316,7 +234,7 @@ WHERE id = 1]]>
 							<textElement verticalAlignment="Bottom">
 								<font size="10" isBold="true"/>
 							</textElement>
-							<text><![CDATA[Product Number]]></text>
+							<text><![CDATA[Description]]></text>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
@@ -327,7 +245,7 @@ WHERE id = 1]]>
 					<crosstabRowHeader>
 						<cellContents>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="250" height="25" uuid="5d361cf4-8af7-4155-9f36-3a4f40ad0fbb"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="250" height="20" uuid="5d361cf4-8af7-4155-9f36-3a4f40ad0fbb"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3">
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -347,12 +265,12 @@ WHERE id = 1]]>
 						<bucketExpression><![CDATA[$F{PRODUCTNUM}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents backcolor="#F0F8FF" mode="Opaque">
+						<cellContents backcolor="#FFFFFF" mode="Transparent">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="100" height="25" uuid="b9d9122f-e26a-4d0e-908a-3ea0c0624b27"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="100" height="20" uuid="b9d9122f-e26a-4d0e-908a-3ea0c0624b27"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3">
 									<leftPen lineWidth="0.5"/>
 								</box>
@@ -366,7 +284,7 @@ WHERE id = 1]]>
 					</crosstabTotalRowHeader>
 				</rowGroup>
 				<columnGroup name="SONUM" height="17" totalPosition="End">
-					<bucket class="java.lang.String">
+					<bucket class="java.lang.Long">
 						<bucketExpression><![CDATA[$F{SONUM}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
@@ -375,7 +293,7 @@ WHERE id = 1]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="0.0"/>
 							</box>
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="17" uuid="070396fc-8196-420f-a3db-32df0968bb9d"/>
 								<box topPadding="1" leftPadding="3" rightPadding="3"/>
 								<textElement>
@@ -391,22 +309,12 @@ WHERE id = 1]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="70" y="0" width="64" height="30" uuid="1fd265e3-39a0-4e5d-a2ca-c271e589de6f"/>
-								<box leftPadding="2" bottomPadding="3" rightPadding="2">
-									<leftPen lineWidth="0.5"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font size="10" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Difference]]></text>
-							</staticText>
-							<staticText>
-								<reportElement x="0" y="0" width="70" height="30" uuid="3b3978a2-46c1-4048-8a1e-c83c7715fb53"/>
+								<reportElement x="0" y="0" width="83" height="56" uuid="3b3978a2-46c1-4048-8a1e-c83c7715fb53"/>
 								<box topPadding="0" leftPadding="1" bottomPadding="3" rightPadding="1"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font size="10" isBold="true"/>
+									<font isBold="true"/>
 								</textElement>
-								<text><![CDATA[Total SONUM]]></text>
+								<text><![CDATA[Total Used]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalColumnHeader>
@@ -419,7 +327,7 @@ WHERE id = 1]]>
 						<cellContents backcolor="#F0F8FF" mode="Opaque">
 							<box>
 								<leftPen lineWidth="0.5"/>
-								<bottomPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.0"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField pattern="">
@@ -433,11 +341,49 @@ WHERE id = 1]]>
 						<cellContents/>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
+				<columnGroup name="LG" height="13">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{LG}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="13" uuid="e110eff0-a0bd-4d0f-9128-8abfec69ceb8"/>
+								<textFieldExpression><![CDATA[$V{LG}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="FULFILLEDBY" height="13">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{FULFILLEDBY}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="13" uuid="e5dfe339-4f6a-4876-9e37-c37fa19e77a9"/>
+								<textFieldExpression><![CDATA[$V{FULFILLEDBY}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
 				<measure name="QTYMeasure" class="java.math.BigDecimal" calculation="Sum">
 					<measureExpression><![CDATA[$F{QTY}]]></measureExpression>
-				</measure>
-				<measure name="DiffMeasure" class="java.math.BigDecimal" calculation="Sum">
-					<measureExpression><![CDATA[$F{SONUM}.equals( "10004-D1" ) ? 0 : $F{QTY}]]></measureExpression>
 				</measure>
 				<measure name="QtyDecimal" class="java.lang.String" calculation="Count">
 					<measureExpression><![CDATA[$V{QtyDecimal}]]></measureExpression>
@@ -445,15 +391,15 @@ WHERE id = 1]]>
 				<measure name="DateFormat" class="java.lang.String">
 					<measureExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></measureExpression>
 				</measure>
-				<crosstabCell width="70" height="25">
-					<cellContents>
+				<crosstabCell width="70" height="20">
+					<cellContents backcolor="#F0F8FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField isBlankWhenNull="true">
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="ff294b63-8c6e-4937-a50e-db2758c3b8ab"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="20" uuid="ff294b63-8c6e-4937-a50e-db2758c3b8ab"/>
 							<box topPadding="3" leftPadding="3" rightPadding="3"/>
-							<textFieldExpression><![CDATA[$V{QTYMeasure} ]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{QTYMeasure}]]></textFieldExpression>
 							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 						</textField>
 					</cellContents>
@@ -469,23 +415,15 @@ WHERE id = 1]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="134" height="25" columnTotalGroup="SONUM">
+				<crosstabCell width="83" height="20" columnTotalGroup="SONUM">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="8ccde10c-f0ef-4a82-a3c0-a29e196b0c3c"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="83" height="20" uuid="8ccde10c-f0ef-4a82-a3c0-a29e196b0c3c"/>
 							<box topPadding="3" leftPadding="2" rightPadding="2"/>
 							<textFieldExpression><![CDATA[$V{QTYMeasure}]]></textFieldExpression>
-							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
-						</textField>
-						<textField>
-							<reportElement style="Crosstab Data Text" x="70" y="0" width="64" height="25" uuid="c1faa534-8ffe-43ee-8531-dc8b9ab9f005"/>
-							<box leftPadding="3" rightPadding="2">
-								<leftPen lineWidth="0.5"/>
-							</box>
-							<textFieldExpression><![CDATA[$V{DiffMeasure}]]></textFieldExpression>
 							<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 						</textField>
 					</cellContents>
@@ -514,6 +452,24 @@ WHERE id = 1]]>
 					<cellContents/>
 				</crosstabCell>
 				<crosstabCell rowTotalGroup="PRODUCTNUM" columnTotalGroup="DATECOMPLETED">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell columnTotalGroup="LG">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="PRODUCTDESCRIPTION" columnTotalGroup="LG">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="PRODUCTNUM" columnTotalGroup="LG">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell columnTotalGroup="FULFILLEDBY">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="PRODUCTDESCRIPTION" columnTotalGroup="FULFILLEDBY">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="PRODUCTNUM" columnTotalGroup="FULFILLEDBY">
 					<cellContents/>
 				</crosstabCell>
 			</crosstab>
