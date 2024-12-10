@@ -55,7 +55,7 @@
 		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT so.salesman AS CUSTOMERCATEGORY,so.num, so.billtoname, soitem.datelastfulfillment AS datecompleted, postsoitem.postedtotalcost AS cogs,
+		<![CDATA[SELECT customset.info AS CUSTOMERCATEGORY,so.num, so.billtoname, soitem.datelastfulfillment AS datecompleted, postsoitem.postedtotalcost AS cogs,
     ((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0))) AS price, (((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))-postsoitem.postedtotalcost) AS grossmargins,
     (((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))-postsoitem.postedtotalcost) AS something, soitem.solineitem, so.id,
     soitem.productnum AS productnum, soitem.description AS soitemdescription,
@@ -78,6 +78,11 @@
     LEFT JOIN soitem AS discount on discount.soid = so.id and discount.typeid = 30 AND ( (csst.sstid+1 = discount.solineitem) OR (discount.solineitem = soitem.solineitem+1) )
     LEFT JOIN itemadjust ON itemadjust.id = discount.itemadjustid
 
+LEFT OUTER JOIN tablereference ON tablerefname = "customer"
+LEFT OUTER JOIN customfield ON tablereference.tableid = customfield.tableId AND customfield.name = "Customer Category"
+LEFT OUTER JOIN customset ON customset.recordId = customer.id AND customfield.id = customset.customfieldid
+
+
 WHERE UPPER(so.num) LIKE UPPER($P{soNum})
   AND UPPER(so.salesman) LIKE UPPER($P{salesPerson})
   AND so.customerid LIKE $P{customerID}
@@ -85,7 +90,14 @@ WHERE UPPER(so.num) LIKE UPPER($P{soNum})
   AND postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
   AND so.locationgroupid IN ($P!{locationGroupID})
 
-ORDER BY so.salesman desc, so.billtoname, so.num]]>
+
+ORDER BY CASE customset.info
+    WHEN "Standard" THEN 0
+    WHEN  "Maintenance" THEN 1
+    WHEN  "Prime" THEN 2
+    WHEN  "Prime maintenance" THEN 3
+    ELSE 4
+END ASC, so.billtoname, so.num]]>
 	</queryString>
 	<field name="NUM" class="java.lang.String"/>
 	<field name="BILLTONAME" class="java.lang.String"/>
