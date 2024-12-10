@@ -194,7 +194,7 @@ END ASC, so.billtoname, so.num]]>
 						<bottomPen lineWidth="1.0"/>
 					</box>
 					<textElement>
-						<font fontName="Arial" isBold="true"/>
+						<font fontName="Arial" size="11" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{CUSTOMERCATEGORY} +":"]]></textFieldExpression>
 				</textField>
