@@ -187,7 +187,7 @@ END ASC, so.billtoname, so.num]]>
 		<groupExpression><![CDATA[$F{CUSTOMERCATEGORY}]]></groupExpression>
 		<groupHeader>
 			<band height="23">
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="0" y="0" width="732" height="18" uuid="e4d3d54d-7419-4f28-b8a7-4d6de241e934"/>
 					<box topPadding="2" leftPadding="10">
 						<topPen lineWidth="0.0"/>
@@ -196,7 +196,7 @@ END ASC, so.billtoname, so.num]]>
 					<textElement>
 						<font fontName="Arial" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{CUSTOMERCATEGORY} +":"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CUSTOMERCATEGORY} == null? "" : $F{CUSTOMERCATEGORY} +":"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
