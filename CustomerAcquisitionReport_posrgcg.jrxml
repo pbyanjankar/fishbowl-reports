@@ -78,7 +78,7 @@
     sysuser.username AS SALESREP,
     CustomFieldByName(customer.customfields, 'Lead Source') AS LEADSOURCE,
     currency.SYMBOL,
-    sum(sorder.ordered) AS AMOUNTSOLD
+    sum(sorder.shipped) AS AMOUNTSOLD
 FROM customer
 LEFT OUTER JOIN address ON customer.accountid = address.accountid AND address.defaultflag = true AND (address.typeid = 10)
 LEFT OUTER JOIN contact ON customer.accountid = contact.accountid AND contact.typeid = 60 AND contact.defaultflag = true
@@ -97,18 +97,23 @@ LEFT JOIN (
         GROUP BY postso.soid
     ) AS postso ON so.id = postso.soid
 
-LEFT OUTER JOIN (
+LEFT JOIN (
         SELECT
-            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
+            SUM(
+                ROUND(
+                    ((soitem.qtyfulfilled * soitem.unitprice) +
+                        (IF(soitem.qtytofulfill = 0,0,soitem.adjustamount / soitem.qtytofulfill) * soitem.qtyfulfilled)) * 10
+                    ,1) / 10
+            ) AS shipped,
             soitem.soid
         FROM
             soitem
-        INNER JOIN so ON so.id = soitem.soid
         WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
         GROUP BY soitem.soid
     ) AS sorder ON so.id = sorder.soid
 
 WHERE customer.activeflag IN ($P{ckShowActive}, $P{ckShowInactive})
+AND so.statusid IN (25,60)
 AND customer.dateCreated BETWEEN $P{dateRange1DateCreated} AND DATE_SUB($P{dateRange2DateCreated}, INTERVAL 1 SECOND) AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 GROUP BY 1,2,3,4,5,6,7,8,9,10
 ORDER BY 1;]]>
@@ -163,10 +168,6 @@ ORDER BY 1;]]>
 	<parameter name="dateRange2DateCreated" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[20,100]]></parameterDescription>
-		<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="ckShowActive" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[1,100]]></parameterDescription>
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
@@ -188,6 +189,10 @@ ORDER BY 1;]]>
 	</parameter>
 	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
