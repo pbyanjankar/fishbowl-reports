@@ -44,20 +44,6 @@
 			<parameterDescription><![CDATA[20,100]]></parameterDescription>
 			<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
 		</parameter>
-		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-			<property name="Group" value="Select a date field and enter a date range for sales"/>
-			<property name="Sort" value="2"/>
-			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
-		</parameter>
-		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
-			<property name="Group" value="Select a date field and enter a date range for sales"/>
-			<parameterDescription><![CDATA[This Month]]></parameterDescription>
-			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
-		</parameter>
-		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
-			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
-		</parameter>
 		<parameter name="dateRange1DateCreated" class="java.util.Date" isForPrompting="false">
 			<property name="Group" value="Customer"/>
 			<parameterDescription><![CDATA[This Month]]></parameterDescription>
@@ -65,6 +51,56 @@
 		</parameter>
 		<parameter name="dateRange2DateCreated" class="java.util.Date" isForPrompting="false">
 			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckColdCall" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Cold Call','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Cold Call'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckColdEmail" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Cold Email','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Cold Email'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEcommerceSite" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Ecommerce Site','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Ecommerce Site'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckMarketingEmail" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Marketing Email','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Marketing Email'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckOrganicKeyWords" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Organic Key Words','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Organic Key Words'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckPaidKeyWords" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Paid Key Words','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Paid Key Words'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckPartnerProgram" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Partner Program','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Partner Program'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckReferral" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Referral','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Referral'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckTradeshow/Conference/Expo" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Tradeshow/Conference/Expo','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Tradeshow/Conference/Expo'"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckWebsite" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Website','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Website'"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
@@ -89,16 +125,6 @@ LEFT OUTER JOIN so ON so.customerId = customer.id
 
 LEFT JOIN (
         SELECT
-            postso.soid AS soid,
-            MAX(postso.postdate) AS postdate
-        FROM
-            postso
-        WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-        GROUP BY postso.soid
-    ) AS postso ON so.id = postso.soid
-
-LEFT JOIN (
-        SELECT
             SUM(
                 ROUND(
                     ((soitem.qtyfulfilled * soitem.unitprice) +
@@ -113,8 +139,9 @@ LEFT JOIN (
     ) AS sorder ON so.id = sorder.soid
 
 WHERE customer.activeflag IN ($P{ckShowActive}, $P{ckShowInactive})
+AND CustomFieldByName(customer.customfields, 'Lead Source') IN ($P!{ckColdCall}, $P!{ckColdEmail}, $P!{ckEcommerceSite}, $P!{ckMarketingEmail}, $P!{ckOrganicKeyWords}, $P!{ckPaidKeyWords}, $P!{ckPartnerProgram},$P!{ckReferral},$P!{ckTradeshow/Conference/Expo}, $P!{ckWebsite})
 AND so.statusid IN (25,60)
-AND customer.dateCreated BETWEEN $P{dateRange1DateCreated} AND DATE_SUB($P{dateRange2DateCreated}, INTERVAL 1 SECOND) AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+AND customer.dateCreated BETWEEN $P{dateRange1DateCreated} AND DATE_SUB($P{dateRange2DateCreated}, INTERVAL 1 SECOND)
 GROUP BY 1,2,3,4,5,6,7,8,9,10
 ORDER BY 1;]]>
 		</queryString>
@@ -150,6 +177,9 @@ ORDER BY 1;]]>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
+		<variable name="totalSold" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{AMOUNTSOLD}]]></variableExpression>
+		</variable>
 	</subDataset>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
@@ -158,7 +188,7 @@ ORDER BY 1;]]>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Displays customer acquisition within the selected date range and the total gross sales following acquisition."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Displays customer acquisition within the selected date range and the total sales following acquisition."]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateRange1DateCreated" class="java.util.Date" isForPrompting="false">
 		<property name="Group" value="Customer"/>
@@ -176,23 +206,59 @@ ORDER BY 1;]]>
 		<parameterDescription><![CDATA[0,100]]></parameterDescription>
 		<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-		<property name="Group" value="Sales Order"/>
-		<property name="Sort" value="2"/>
-		<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
-		<property name="Group" value="Sales Order"/>
-		<parameterDescription><![CDATA[This Month]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
-	</parameter>
-	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
-	</parameter>
 	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[20,100]]></parameterDescription>
 		<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckColdCall" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Cold Call','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Cold Call'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckColdEmail" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Cold Email','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Cold Email'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEcommerceSite" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Ecommerce Site','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Ecommerce Site'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckMarketingEmail" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Marketing Email','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Marketing Email'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckOrganicKeyWords" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Organic Key Words','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Organic Key Words'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckPaidKeyWords" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Paid Key Words','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Paid Key Words'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckPartnerProgram" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Partner Program','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Partner Program'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckReferral" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Referral','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Referral'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckTradeshow/Conference/Expo" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Tradeshow/Conference/Expo','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Tradeshow/Conference/Expo'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckWebsite" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Website','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Website'"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -207,7 +273,7 @@ FROM company WHERE id = 1;]]>
 	</variable>
 	<group name="CustomerList">
 		<groupHeader>
-			<band height="31">
+			<band height="30">
 				<componentElement>
 					<reportElement key="table_company_wide" x="0" y="0" width="552" height="28" uuid="33379b7d-2de3-4cc5-a9aa-84dadeb420e3"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -364,7 +430,17 @@ FROM company WHERE id = 1;]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="90" uuid="6b95aa82-6349-40bd-a00c-a7d8c2634c27">
+						<jr:column width="75" uuid="6b95aa82-6349-40bd-a00c-a7d8c2634c27">
+							<jr:tableFooter height="19" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="75" height="19" forecolor="#000000" uuid="194e8436-83b5-41f1-909e-6a7c6835024a"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+								</textField>
+							</jr:tableFooter>
 							<jr:columnHeader height="20" rowSpan="1">
 								<box>
 									<topPen lineWidth="0.0"/>
@@ -373,7 +449,7 @@ FROM company WHERE id = 1;]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="90" height="20" backcolor="#EAEAEA" uuid="d48e1a25-46e6-4bf0-bda4-848d278d065d"/>
+									<reportElement mode="Opaque" x="0" y="0" width="75" height="20" backcolor="#EAEAEA" uuid="d48e1a25-46e6-4bf0-bda4-848d278d065d"/>
 									<box leftPadding="3" bottomPadding="2" rightPadding="3"/>
 									<textElement textAlignment="Left" verticalAlignment="Bottom" markup="none">
 										<font fontName="Open Sans" isBold="true"/>
@@ -390,7 +466,7 @@ FROM company WHERE id = 1;]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="15" forecolor="#000000" uuid="f26c19ea-29ba-4901-9920-6b3c4975b7e2"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="75" height="15" forecolor="#000000" uuid="f26c19ea-29ba-4901-9920-6b3c4975b7e2"/>
 									<box leftPadding="3" rightPadding="3"/>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="8"/>
@@ -399,7 +475,21 @@ FROM company WHERE id = 1;]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="66" uuid="6b95aa82-6349-40bd-a00c-a7d8c2634c27">
+						<jr:column width="81" uuid="6b95aa82-6349-40bd-a00c-a7d8c2634c27">
+							<jr:tableFooter height="19" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="81" height="19" forecolor="#000000" uuid="a0214a54-ee67-4d84-a208-8ab481ac783c"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
+com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},$V{totalSold}, $V{PriceDecimal})
+:
+$V{totalSold}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+								</textField>
+							</jr:tableFooter>
 							<jr:columnHeader height="20" rowSpan="1">
 								<box>
 									<topPen lineWidth="0.0"/>
@@ -408,7 +498,7 @@ FROM company WHERE id = 1;]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="66" height="20" backcolor="#EAEAEA" uuid="d48e1a25-46e6-4bf0-bda4-848d278d065d"/>
+									<reportElement mode="Opaque" x="0" y="0" width="81" height="20" backcolor="#EAEAEA" uuid="d48e1a25-46e6-4bf0-bda4-848d278d065d"/>
 									<box leftPadding="3" bottomPadding="2" rightPadding="3"/>
 									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
 										<font fontName="Open Sans" isBold="true"/>
@@ -425,7 +515,7 @@ FROM company WHERE id = 1;]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="66" height="15" forecolor="#000000" uuid="f26c19ea-29ba-4901-9920-6b3c4975b7e2"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="81" height="15" forecolor="#000000" uuid="f26c19ea-29ba-4901-9920-6b3c4975b7e2"/>
 									<box leftPadding="3" rightPadding="3"/>
 									<textElement textAlignment="Right" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="8"/>
@@ -450,7 +540,7 @@ $F{AMOUNTSOLD}]]></textFieldExpression>
 		<band splitType="Prevent"/>
 	</title>
 	<pageHeader>
-		<band height="73" splitType="Prevent">
+		<band height="68" splitType="Prevent">
 			<staticText>
 				<reportElement key="staticText-1" mode="Transparent" x="0" y="18" width="552" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="747c252c-277c-4ef8-b408-ec551381272e"/>
 				<box>
@@ -486,19 +576,6 @@ $F{AMOUNTSOLD}]]></textFieldExpression>
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{cbApplyDateFilter}.equals("so.datefirstship") ? "SO Scheduled Fulfillment Date" :
-($P{cbApplyDateFilter}.equals("so.datecreated") ? "SO Date Created" :
-    ($P{cbApplyDateFilter}.equals( "so.dateissued") ? "SO Date Issued" :
-      ($P{cbApplyDateFilter}.equals("so.datecompleted") ? "SO Date Completed" :
-         ($P{cbApplyDateFilter}.equals( "so.datelastmodified") ? "SO Date Last Changed" :
-           ($P{cbApplyDateFilter}.equals("postso.postdate") ? "SO Item Date Fulfilled":""))))))
-
- + ": " +
-
-($P{dateRange1}.getYear() <= -900 && $P{dateRange2}.getYear() >= 1100
-  ? "All"
-  : "" + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
-(new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-129600000))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="" mode="Transparent" x="0" y="40" width="552" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="dcbf2846-ba7f-476f-b10f-7a3579632b16">
@@ -531,7 +608,7 @@ $F{AMOUNTSOLD}]]></textFieldExpression>
 	<pageFooter>
 		<band height="15" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="396" y="0" width="90" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="6d1bbafa-ddbe-44df-a538-e08a90bc2c6a"/>
+				<reportElement key="textField" mode="Transparent" x="396" y="0" width="75" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="6d1bbafa-ddbe-44df-a538-e08a90bc2c6a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -545,7 +622,7 @@ $F{AMOUNTSOLD}]]></textFieldExpression>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="486" y="0" width="66" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="40db656a-eca1-4e1b-bc25-95bb01995896"/>
+				<reportElement key="textField" mode="Transparent" x="471" y="0" width="81" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="40db656a-eca1-4e1b-bc25-95bb01995896"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
