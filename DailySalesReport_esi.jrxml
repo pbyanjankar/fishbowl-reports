@@ -155,7 +155,7 @@ END ASC, so.billtoname, so.num]]>
 		</groupHeader>
 		<groupFooter>
 			<band height="19">
-				<textField>
+				<textField isStretchWithOverflow="true">
 					<reportElement key="staticText-14" stretchType="RelativeToBandHeight" mode="Transparent" x="355" y="4" width="114" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="859d8628-bfe2-46e4-a524-a9e50a16d748"/>
 					<box topPadding="2">
 						<topPen lineWidth="1.0"/>
@@ -384,7 +384,7 @@ END ASC, so.billtoname, so.num]]>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<printWhenExpression><![CDATA[new Boolean($P{ckShowDetails}.equals("1"))]]></printWhenExpression>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="387" height="14" uuid="6c3fe884-9cc3-46e5-8e77-6518466984c0"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
