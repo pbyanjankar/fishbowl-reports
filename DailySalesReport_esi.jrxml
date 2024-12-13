@@ -51,7 +51,7 @@
 	<queryString>
 		<![CDATA[SELECT COALESCE(customset.info, "") AS CUSTOMERCATEGORY,so.num, so.billtoname, soitem.datelastfulfillment AS datecompleted, postsoitem.postedtotalcost AS cogs,
     ((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0))) AS price,
-    (((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))-postsoitem.postedtotalcost) AS something, soitem.solineitem, so.id,
+ soitem.solineitem, so.id,
     soitem.productnum AS productnum, soitem.description AS soitemdescription,
     (IF( ( soitem.typeid IN (20,21) ) ,-ABS(postsoitem.QTY), postsoitem.qty) ) AS "QtyToFulfill",
     company.name AS company
@@ -89,8 +89,9 @@ ORDER BY CASE customset.info
     WHEN "Standard" THEN 0
     WHEN  "Maintenance" THEN 1
     WHEN  "Prime" THEN 2
-    WHEN  "Prime maintenance" THEN 3
-    ELSE 4
+    WHEN  "Prime Maintenance" THEN 3
+    WHEN  "House" THEN 4
+    ELSE 5
 END ASC, so.billtoname, so.num]]>
 	</queryString>
 	<field name="NUM" class="java.lang.String"/>
@@ -98,7 +99,6 @@ END ASC, so.billtoname, so.num]]>
 	<field name="DATECOMPLETED" class="java.sql.Timestamp"/>
 	<field name="COGS" class="java.lang.Double"/>
 	<field name="PRICE" class="java.lang.Double"/>
-	<field name="SOMETHING" class="java.lang.Double"/>
 	<field name="SOLINEITEM" class="java.lang.Integer"/>
 	<field name="ID" class="java.lang.Integer"/>
 	<field name="PRODUCTNUM" class="java.lang.String"/>
