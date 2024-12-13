@@ -333,7 +333,7 @@ END ASC, so.billtoname, so.num]]>
 				<text><![CDATA[Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-13" mode="Transparent" x="0" y="0" width="300" height="16" forecolor="#000000" uuid="4c107a91-c43c-4e66-a425-65732cd1b4d7">
+				<reportElement key="staticText-13" mode="Transparent" x="0" y="0" width="387" height="16" forecolor="#000000" uuid="4c107a91-c43c-4e66-a425-65732cd1b4d7">
 					<printWhenExpression><![CDATA[new Boolean($P{ckShowDetails}.equals("1"))]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="100" rightPadding="3">
