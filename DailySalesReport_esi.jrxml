@@ -50,7 +50,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT COALESCE(customset.info, "") AS CUSTOMERCATEGORY,so.num, so.billtoname, soitem.datelastfulfillment AS datecompleted, postsoitem.postedtotalcost AS cogs,
-    ((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0))) AS price, (((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))-postsoitem.postedtotalcost) AS grossmargins,
+    ((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0))) AS price,
     (((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))-postsoitem.postedtotalcost) AS something, soitem.solineitem, so.id,
     soitem.productnum AS productnum, soitem.description AS soitemdescription,
     (IF( ( soitem.typeid IN (20,21) ) ,-ABS(postsoitem.QTY), postsoitem.qty) ) AS "QtyToFulfill",
@@ -109,14 +109,8 @@ END ASC, so.billtoname, so.num]]>
 	<variable name="Price" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
 	</variable>
-	<variable name="COGS" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{COGS}]]></variableExpression>
-	</variable>
 	<variable name="soPrice" class="java.lang.Double" resetType="Group" resetGroup="Sales Order" calculation="Sum">
 		<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
-	</variable>
-	<variable name="soCOGS" class="java.lang.Double" resetType="Group" resetGroup="Sales Order" calculation="Sum">
-		<variableExpression><![CDATA[$F{COGS}]]></variableExpression>
 	</variable>
 	<variable name="soPrice_1" class="java.lang.Double" resetType="Group" resetGroup="Sales Order" calculation="Sum">
 		<variableExpression><![CDATA[( $F{PRICE}.doubleValue() != 0 && $F{COGS}.doubleValue() != 0 ? $F{PRICE} : 0 )]]></variableExpression>
@@ -124,17 +118,8 @@ END ASC, so.billtoname, so.num]]>
 	<variable name="Price_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[( $F{PRICE}.doubleValue() != 0 && $F{COGS}.doubleValue() != 0 ? $F{PRICE} : 0 )]]></variableExpression>
 	</variable>
-	<variable name="COGS_1" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[( $F{PRICE}.doubleValue() != 0 && $F{COGS}.doubleValue() != 0 ? $F{COGS} : 0 )]]></variableExpression>
-	</variable>
-	<variable name="soCOGS_1" class="java.lang.Double" resetType="Group" resetGroup="Sales Order" calculation="Sum">
-		<variableExpression><![CDATA[( $F{PRICE}.doubleValue() != 0 && $F{COGS}.doubleValue() != 0 ? $F{COGS} : 0 )]]></variableExpression>
-	</variable>
 	<variable name="CategoryPrice" class="java.lang.Double" resetType="Group" resetGroup="CustomerCategory" calculation="Sum">
 		<variableExpression><![CDATA[( $F{PRICE}.doubleValue() != 0 && $F{COGS}.doubleValue() != 0 ? $F{PRICE} : 0 )]]></variableExpression>
-	</variable>
-	<variable name="CategoryCOGS" class="java.lang.Double" resetType="Group" resetGroup="CustomerCategory" calculation="Sum">
-		<variableExpression><![CDATA[( $F{PRICE}.doubleValue() != 0 && $F{COGS}.doubleValue() != 0 ? $F{COGS} : 0 )]]></variableExpression>
 	</variable>
 	<group name="CustomerCategory">
 		<groupExpression><![CDATA[$F{CUSTOMERCATEGORY}]]></groupExpression>
