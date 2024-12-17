@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="ireport.callouts" value="##Fri Oct 21 11:43:24 MDT 2022\ncallouts.1.text=Justin.Hartzog \nrevision 10/21/22\ncallouts.1.bounds=74,29,150,75"/>
+	<property name="ireport.callouts" value="##Tue Dec 10 08:54:28 NPT 2024"/>
 	<parameter name="module" class="java.lang.Object" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
@@ -49,12 +49,8 @@
 	<parameter name="Show SO Item Description" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbPrimarySortBy" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[mainlocation.sortorder,Location Sort Order,mainlocation.name,Location Name]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Location Name"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="cbSecondarySortBy" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[1,Line Item,part.num,Part]]></parameterDescription>
+		<parameterDescription><![CDATA[1,Line Item,PICKITEMPARTNUM,Part]]></parameterDescription>
 		<defaultValueExpression><![CDATA["Line Item"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
@@ -93,26 +89,23 @@ ORDER BY
 			<subreport runToBottom="true">
 				<reportElement x="0" y="0" width="612" height="14" isPrintInFirstWholeBand="true" uuid="17d78adb-177e-427c-bace-0fc0084babe8"/>
 				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
-				<subreportParameter name="ShowAddress">
-					<subreportParameterExpression><![CDATA[$P{ShowAddress}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="Show SO Item Description">
 					<subreportParameterExpression><![CDATA[$P{Show SO Item Description}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="cbSecondarySortBy">
-					<subreportParameterExpression><![CDATA[$P{cbSecondarySortBy}]]></subreportParameterExpression>
+				<subreportParameter name="ShowAddress">
+					<subreportParameterExpression><![CDATA[$P{ShowAddress}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="module">
 					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbSecondarySortBy">
+					<subreportParameterExpression><![CDATA[$P{cbSecondarySortBy}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="cbShowBarcodeAs">
 					<subreportParameterExpression><![CDATA[$P{cbShowBarcodeAs}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ckShowCommitted">
 					<subreportParameterExpression><![CDATA[$P{ckCommitted}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="cbPrimarySortBy">
-					<subreportParameterExpression><![CDATA[$P{cbPrimarySortBy}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pickNum">
 					<subreportParameterExpression><![CDATA[$F{PICKNUM}]]></subreportParameterExpression>
