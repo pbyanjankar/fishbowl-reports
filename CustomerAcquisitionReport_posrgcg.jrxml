@@ -102,6 +102,11 @@
 			<parameterDescription><![CDATA['Website','0']]></parameterDescription>
 			<defaultValueExpression><![CDATA["'Website'"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="ckExistingAccountRename" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Lead Source"/>
+			<parameterDescription><![CDATA['Existing Account Rename','0']]></parameterDescription>
+			<defaultValueExpression><![CDATA["'Existing Account Rename'"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
     customer.name AS CUSTOMERNAME,
@@ -139,7 +144,7 @@ LEFT JOIN (
     ) AS sorder ON so.id = sorder.soid
 
 WHERE customer.activeflag IN ($P{ckShowActive}, $P{ckShowInactive})
-AND CustomFieldByName(customer.customfields, 'Lead Source') IN ($P!{ckColdCall}, $P!{ckColdEmail}, $P!{ckEcommerceSite}, $P!{ckMarketingEmail}, $P!{ckOrganicKeyWords}, $P!{ckPaidKeyWords}, $P!{ckPartnerProgram},$P!{ckReferral},$P!{ckTradeshow/Conference/Expo}, $P!{ckWebsite})
+AND CustomFieldByName(customer.customfields, 'Lead Source') IN ($P!{ckColdCall}, $P!{ckColdEmail}, $P!{ckEcommerceSite}, $P!{ckMarketingEmail}, $P!{ckOrganicKeyWords}, $P!{ckPaidKeyWords}, $P!{ckPartnerProgram},$P!{ckReferral},$P!{ckTradeshow/Conference/Expo}, $P!{ckWebsite},$P!{ckExistingAccountRename})
 AND so.statusid IN (25,60)
 AND customer.dateCreated BETWEEN $P{dateRange1DateCreated} AND DATE_SUB($P{dateRange2DateCreated}, INTERVAL 1 SECOND)
 GROUP BY 1,2,3,4,5,6,7,8,9,10
@@ -259,6 +264,11 @@ ORDER BY 1;]]>
 		<property name="Group" value="Lead Source"/>
 		<parameterDescription><![CDATA['Website','0']]></parameterDescription>
 		<defaultValueExpression><![CDATA["'Website'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckExistingAccountRename" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Lead Source"/>
+		<parameterDescription><![CDATA['Existing Account Rename','0']]></parameterDescription>
+		<defaultValueExpression><![CDATA["'Existing Account Rename'"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
