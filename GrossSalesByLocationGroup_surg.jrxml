@@ -65,6 +65,10 @@
 	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SalesManager" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Sales Manager starts with "/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
  locationgroup.name AS LG,
@@ -123,6 +127,7 @@ GROUP BY so.locationgroupid, SALESMANAGER) AS sales2 ON sales2.SALESMANAGER = sm
 
 WHERE (sales1.sales > 0 OR sales2.sales>0)
 AND locationgroup.id IN ($P!{locationGroupID})
+AND UPPER(sm.SALESMANAGER) LIKE CONCAT(UPPER($P{SalesManager}),"%")
 
 ORDER BY 1, 2;]]>
 	</queryString>
