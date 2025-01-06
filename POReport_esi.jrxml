@@ -1224,7 +1224,7 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
 									<font fontName="Open Sans" size="10" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Bond Code]]></text>
+								<text><![CDATA[Vendor #]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
