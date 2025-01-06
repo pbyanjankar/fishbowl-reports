@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="141"/>
+	<property name="ireport.y" value="105"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1131,12 +1131,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</datasetRun>
 					<jr:column width="25" uuid="541f6bc0-2bfb-405d-b062-48fe4ab65bfa">
 						<printWhenExpression><![CDATA[$P{colItem#}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
 								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="25" height="31" backcolor="#EAEAEA" uuid="f9c71845-f5a3-4bfe-b9de-cf0707037584"/>
@@ -1148,6 +1148,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="25" height="15" uuid="74a681d5-7f66-4dd6-9b29-5afc55783e6e"/>
 								<box topPadding="1"/>
@@ -1160,12 +1166,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</jr:column>
 					<jr:column width="100" uuid="69070849-5050-4eb3-94ba-45a448d661e3">
 						<printWhenExpression><![CDATA[$P{colItemPart}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="100" height="31" backcolor="#EAEAEA" uuid="1ed235fd-9e45-42f2-9979-a133daca4de2"/>
@@ -1182,6 +1188,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="15" uuid="647f19b3-3087-44b3-82eb-b9fc02b23be7"/>
 								<box topPadding="1" leftPadding="3" rightPadding="3"/>
@@ -1194,12 +1206,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</jr:column>
 					<jr:column width="70" uuid="3567d595-0b9b-43f4-aea2-c8014af212fc">
 						<printWhenExpression><![CDATA[new Boolean(true)]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="1ed235fd-9e45-42f2-9979-a133daca4de2"/>
@@ -1216,6 +1228,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="15" uuid="647f19b3-3087-44b3-82eb-b9fc02b23be7"/>
 								<box topPadding="1" leftPadding="3" rightPadding="3"/>
@@ -1228,12 +1246,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</jr:column>
 					<jr:column width="176" uuid="fa0917dc-6f90-4628-8235-672d7be7a804">
 						<printWhenExpression><![CDATA[$P{colItemDescription}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="176" height="31" backcolor="#EAEAEA" uuid="e992c90d-7dd9-4243-b6f2-9c5bad56c4d6"/>
@@ -1244,6 +1262,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="176" height="15" uuid="0dfa96ea-25ff-42fe-9004-bd2fed9d6d9d"/>
 								<box topPadding="1" leftPadding="3" rightPadding="3"/>
@@ -1259,12 +1283,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</jr:column>
 					<jr:column width="70" uuid="add323c0-f57d-47f3-a39b-ff92f0f45784">
 						<printWhenExpression><![CDATA[$P{colItemFulfillmentDate}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="e23bcc0b-a70b-4c04-ba5c-aafaedc89eba"/>
@@ -1275,6 +1299,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="15" uuid="a550d699-5717-4593-b676-1a13a51c075c"/>
 								<box topPadding="1"/>
@@ -1288,12 +1318,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</jr:column>
 					<jr:column width="60" uuid="56ce94b5-73e6-4530-8ee2-47188bcbdfa3">
 						<printWhenExpression><![CDATA[$P{colItemUnitPrice}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="5333dc56-d0be-492a-956f-66f0a3d8ac5d"/>
@@ -1305,6 +1335,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="15" uuid="acbf5df9-eaae-4fe4-9e45-ed953c773c20"/>
 								<box topPadding="1" rightPadding="3"/>
@@ -1318,12 +1354,12 @@ GROUP BY po.vendorcontact, po.vendorso, po.vendorid, po.shiptozip, shipcountry.n
 					</jr:column>
 					<jr:column width="61" uuid="b1b28e67-007a-45f7-acc4-a8609637a762">
 						<printWhenExpression><![CDATA[$P{colItemOtyOrdered}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="61" height="31" backcolor="#EAEAEA" uuid="3cef931b-169a-4f4e-880e-d9ca129d2bea"/>
@@ -1335,6 +1371,12 @@ Ordered]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="40" y="0" width="21" height="15" uuid="58762299-d7bc-47a6-89e7-c077053fb55b"/>
 								<box topPadding="1" leftPadding="1"/>
@@ -1356,12 +1398,12 @@ Ordered]]></text>
 					</jr:column>
 					<jr:column width="60" uuid="a2423fe1-011f-4c9b-b21c-c58139ec58f4">
 						<printWhenExpression><![CDATA[$P{colItemExtendedPrice}]]></printWhenExpression>
-						<jr:columnHeader height="33" rowSpan="1">
+						<jr:columnHeader height="31" rowSpan="1">
 							<box>
-								<topPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<topPen lineWidth="0.5" lineColor="#000000"/>
+								<leftPen lineWidth="0.5" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineColor="#000000"/>
 							</box>
 							<staticText>
 								<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="abb123de-b839-4e28-ab3a-ce81055b257a"/>
@@ -1373,6 +1415,12 @@ Ordered]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="15" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="15" uuid="78fa7779-2ff2-4b46-b769-2bff6cbc195a"/>
 								<box topPadding="1" rightPadding="3"/>
@@ -1444,10 +1492,10 @@ Ordered]]></text>
 					<printWhenExpression><![CDATA[$P{colItemExtendedPrice}]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="3">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="10"/>
@@ -1460,10 +1508,10 @@ Ordered]]></text>
 					<printWhenExpression><![CDATA[$P{colItemExtendedPrice}]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="3">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="10"/>
@@ -1542,10 +1590,10 @@ Ordered]]></text>
 					<printWhenExpression><![CDATA[$P{colItemExtendedPrice}]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="3">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="10"/>
@@ -1559,10 +1607,10 @@ Ordered]]></text>
 					<printWhenExpression><![CDATA[$P{colItemExtendedPrice}]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="3">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="10"/>
