@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PickReport" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="3f23a98b-ed85-449d-a6d1-93ceeaa2cd5d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PickReport2EBARS" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="3f23a98b-ed85-449d-a6d1-93ceeaa2cd5d">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="102"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -64,23 +64,52 @@
 		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT PI1.ID AS PICKID, PI1.NUM AS PICKNUMBER, PICKTYPE.NAME AS PICKTYPE, PICKSTATUS.NAME AS PICKSTATUS,
-    PRIORITY.NAME AS PICKPRIORITY, PICKLG.NAME AS PICKLOCATIONGROUP, PICKLG.ID AS PICKLOCATIONGROUPID,
-    PI1.DATECREATED AS PICKDATECREATED, PI1.DATESCHEDULED AS PICKDATESCHEDULED, PI1.DATEFINISHED AS PICKDATEFINISHED,
-    PI1.DATELASTMODIFIED AS PICKDATELASTMODIFIED, PI1.DATESTARTED AS PICKDATESTARTED,
-    PICKITEM.ID AS PICKITEMID, PICKITEMSTATUS.NAME AS PICKITEMSTATUS, PICKITEMSTATUS.ID AS PICKITEMSTATUSID,
-    PART.NUM AS PICKITEMPARTNUM, PART.DESCRIPTION AS PICKITEMPARTDESC, round(PICKITEM.QTY,1) AS PICKITEMQTY, UOM.CODE AS PICKITEMUOM,
- MAINTAG.NUM AS PICKITEMTAGNUM,
+		<![CDATA[SELECT
+    PI1.ID AS PICKID,
+    PI1.NUM AS PICKNUMBER,
+    PICKTYPE.NAME AS PICKTYPE,
+    PICKSTATUS.NAME AS PICKSTATUS,
+    PRIORITY.NAME AS PICKPRIORITY,
+    PICKLG.NAME AS PICKLOCATIONGROUP,
+    PICKLG.ID AS PICKLOCATIONGROUPID,
+    PI1.DATECREATED AS PICKDATECREATED,
+    PI1.DATESCHEDULED AS PICKDATESCHEDULED,
+    PI1.DATEFINISHED AS PICKDATEFINISHED,
+    PI1.DATELASTMODIFIED AS PICKDATELASTMODIFIED,
+    PI1.DATESTARTED AS PICKDATESTARTED,
+    PICKITEM.ID AS PICKITEMID,
+    PICKITEMSTATUS.NAME AS PICKITEMSTATUS,
+    PICKITEMSTATUS.ID AS PICKITEMSTATUSID,
+    PART.NUM AS PICKITEMPARTNUM,
+    PART.DESCRIPTION AS PICKITEMPARTDESC,
+    round(PICKITEM.QTY,1) AS PICKITEMQTY,
+    UOM.CODE AS PICKITEMUOM,
+    MAINTAG.NUM AS PICKITEMTAGNUM,
     PICKITEM.SLOTNUM AS PICKITEMSLOTNUM, COMPANY.NAME AS COMPANY,
     (CASE
 	WHEN PICKITEM.ORDERTYPEID = 10 THEN POITEM.NOTE
 	WHEN PICKITEM.ORDERTYPEID = 20 THEN SOITEM.NOTE
 	WHEN PICKITEM.ORDERTYPEID = 40 THEN XOITEM.NOTE
-    END) AS PICKITEMNOTE, COALESCE(SOITEM.DESCRIPTION,PART.DESCRIPTION) AS SOITEMDESCRIPTION,
+    END) AS PICKITEMNOTE,
+    COALESCE(SOITEM.DESCRIPTION,PART.DESCRIPTION) AS SOITEMDESCRIPTION,
     kitHeader.productNum AS kitHeaderName, kitHeader.description AS kitHeaderDescription, kitHeader.id AS kitFlag,
-     lot.info AS LOTNUMBER,
-     expiration.info AS EXPIRATION,
-     internallot.info AS INTERNALLOTNUMBER
+    lotnumber.info AS LOTNUMBER,
+    expDate.infoDate AS EXPIRATION,
+    internallotnumber.info AS INTERNALLOTNUMBER,
+
+    (SELECT bom.num
+    FROM Mo
+        INNER JOIN MoItem ON Mo.id = MoItem.moId
+        INNER JOIN BOM ON BOM.id = MOitem.bomid
+        inner join wo on left(wo.num, 4) = mo.num
+        where PI1.num = Concat('W',wo.num) and moitem.typeid = 50) as orderitemid,
+        (SELECT  bom.description
+            FROM Mo
+                INNER JOIN MoItem ON Mo.id = MoItem.moId
+                INNER JOIN BOM ON BOM.id = MOitem.bomid
+                inner join wo on left(wo.num, 4)= mo.num
+                where PI1.num = Concat('W',wo.num) and moitem.typeid = 50) as orderDescription
+
 
 
 FROM pick PI1
@@ -103,16 +132,16 @@ FROM pick PI1
     LEFT OUTER JOIN objectToObject AS obo ON obo.recordid1 = soitem.id AND obo.typeid = 30
     LEFT OUTER JOIN soitem AS kitHeader ON kitHeader.id = obo.recordid2 AND kitheader.typeid = 80
 
-LEFT JOIN trackingtext AS lot ON lot.tagId = pickitem.tagId AND lot.partTrackingId = (SELECT id FROM parttracking where name='Lot Number')
+LEFT OUTER JOIN trackinginfo lotnumber ON lotnumber.recordid = pickitem.id AND lotnumber.tableid = -1515431424 AND lotnumber.parttrackingid IN (1)
+	LEFT OUTER JOIN trackinginfo expDate ON expDate.recordid = pickitem.id AND expDate.tableid = -1515431424 AND expDate.parttrackingid IN (3)
+	LEFT OUTER JOIN trackinginfo internallotnumber ON internallotnumber.recordid = pickitem.id AND internallotnumber.tableid = -1515431424 AND internallotnumber.parttrackingid IN (5)
 
-LEFT JOIN trackingDate AS expiration ON expiration.tagId = pickitem.tagId AND expiration.partTrackingId = (SELECT id FROM parttracking where name='Expiration Date')
 
-LEFT JOIN trackingtext AS internallot ON internallot.tagId = pickitem.tagId AND internallot.partTrackingId = (SELECT id FROM parttracking where name='Internal Lot Number')
+
 
 WHERE (PI1.num = $P{pickNum})
 
-ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
-]]>
+ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num]]>
 	</queryString>
 	<field name="PICKID" class="java.lang.Integer"/>
 	<field name="PICKNUMBER" class="java.lang.String"/>
@@ -143,6 +172,8 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 	<field name="LOTNUMBER" class="java.lang.String"/>
 	<field name="EXPIRATION" class="java.sql.Timestamp"/>
 	<field name="INTERNALLOTNUMBER" class="java.lang.String"/>
+	<field name="ORDERITEMID" class="java.lang.String"/>
+	<field name="ORDERDESCRIPTION" class="java.lang.String"/>
 	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 	</variable>
@@ -177,7 +208,7 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 		<band/>
 	</background>
 	<title>
-		<band height="128" splitType="Prevent">
+		<band height="157" splitType="Prevent">
 			<staticText>
 				<reportElement key="staticText-1" style="24b" mode="Transparent" x="0" y="0" width="552" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="444919d2-7799-4384-a6bc-0cc973024fb0"/>
 				<box>
@@ -250,7 +281,7 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement key="staticText-2" style="12b" positionType="Float" x="0" y="79" width="50" height="14" uuid="e43feca4-6cd2-4dd6-9090-a8402538f74c"/>
+				<reportElement key="staticText-2" style="12b" positionType="Float" x="0" y="93" width="77" height="14" uuid="e43feca4-6cd2-4dd6-9090-a8402538f74c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -263,7 +294,7 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				<text><![CDATA[Status:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-3" style="12b" positionType="Float" x="0" y="93" width="50" height="14" uuid="f57188c8-321c-47a0-80ba-dc58d53fd71f"/>
+				<reportElement key="staticText-3" style="12b" positionType="Float" x="0" y="107" width="77" height="14" uuid="f57188c8-321c-47a0-80ba-dc58d53fd71f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -276,7 +307,7 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				<text><![CDATA[Type:]]></text>
 			</staticText>
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-5" style="body" positionType="Float" x="0" y="115" width="552" height="11" uuid="5e7a593e-b3bc-4af5-be05-0c85d50f4680"/>
+				<reportElement key="subreport-5" style="body" positionType="Float" x="0" y="143" width="552" height="11" uuid="5e7a593e-b3bc-4af5-be05-0c85d50f4680"/>
 				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 				<subreportParameter name="pickID">
 					<subreportParameterExpression><![CDATA[$F{PICKID}]]></subreportParameterExpression>
@@ -291,13 +322,13 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				<subreportExpression><![CDATA[$P{path} + "./subPickingOrders.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement key="line-1" style="body" positionType="Float" x="0" y="113" width="552" height="1" uuid="ba7181c3-7673-482e-ba1e-6c84f9b00e96"/>
+				<reportElement key="line-1" style="body" positionType="Float" x="0" y="141" width="552" height="1" uuid="ba7181c3-7673-482e-ba1e-6c84f9b00e96"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-2" positionType="FixRelativeToBottom" x="0" y="127" width="552" height="1" uuid="fe70a908-e4b7-4a0e-aec4-06d6452cfdbd"/>
+				<reportElement key="line-2" positionType="FixRelativeToBottom" x="0" y="155" width="552" height="1" uuid="fe70a908-e4b7-4a0e-aec4-06d6452cfdbd"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</graphicElement>
@@ -311,7 +342,7 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				</jr:barbecue>
 			</componentElement>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="50" y="93" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3b48fe77-f445-46b0-b875-eafd72d5bbf0"/>
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="77" y="107" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3b48fe77-f445-46b0-b875-eafd72d5bbf0"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -325,7 +356,7 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				<textFieldExpression><![CDATA[$F{PICKTYPE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="50" y="79" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="aa72d519-0b0b-497d-aa17-758d055bd5a4"/>
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="77" y="93" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="aa72d519-0b0b-497d-aa17-758d055bd5a4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -337,6 +368,60 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PICKSTATUS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" style="12b" positionType="Float" x="0" y="121" width="77" height="14" uuid="45297572-a1c9-4949-9d55-98fc818b1b7a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[OrderItemID:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="77" y="121" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="520354c1-3cc5-49b8-b90d-1ff0871ea714"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDERITEMID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" style="12b" positionType="Float" x="339" y="93" width="213" height="14" uuid="df65d483-a252-4c3a-ab48-0bfd81407fb7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Description:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="339" y="107" width="213" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="de81a60e-1fcb-48aa-b644-875ec994b07b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDERDESCRIPTION}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -442,29 +527,29 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 					<font fontName="Open Sans" size="11" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Lot #"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Lot Number"]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="16" width="552" height="1" uuid="2c00d724-e9cc-400e-8961-f7756932d236"/>
+			</line>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" style="12b" mode="Transparent" x="339" y="0" width="100" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="d8a80069-b63d-4a1f-a49b-683bf9dc7bc2"/>
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="339" y="0" width="80" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="7d84547b-389e-4c7c-bfe1-a278f003307d"/>
 				<box leftPadding="3" rightPadding="3"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="11" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Expiration"]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-9" style="12b" mode="Transparent" x="439" y="0" width="113" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="8f7d6212-c68a-4dfb-b479-18e3dbd71e88"/>
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="419" y="0" width="133" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="97ff32cf-7203-4893-86e0-94b3a32cb15b"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="11" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Internal Lot#"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Internal Lot Number"]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="0" y="16" width="552" height="1" uuid="2c00d724-e9cc-400e-8961-f7756932d236"/>
-			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -513,35 +598,6 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 				<textFieldExpression><![CDATA[$F{LOTNUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="body" mode="Transparent" x="339" y="4" width="100" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="1bd2c7b9-41ed-489a-bac5-6a8b1017db61"/>
-				<box leftPadding="3" rightPadding="3">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="10"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{EXPIRATION}]]></textFieldExpression>
-				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="body" mode="Transparent" x="439" y="4" width="113" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="d739a585-d8da-47bb-a491-76e4ddbf871e"/>
-				<box leftPadding="3" rightPadding="3">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="10"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{INTERNALLOTNUMBER}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" style="body" mode="Transparent" x="0" y="4" width="150" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c0c3c553-9a5d-43f5-8b36-6ddca969536e">
 					<printWhenExpression><![CDATA[$P{ShowKitHeaders} && $F{kitFlag}!= null]]></printWhenExpression>
 				</reportElement>
@@ -582,6 +638,35 @@ ORDER BY IF($P!{ShowKitHeaders},COALESCE(kitheader.id,"ZZ"), part.num), part.num
 					<bottomPen lineWidth="0.5" lineColor="#666666"/>
 					<rightPen lineColor="#666666"/>
 				</box>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="339" y="4" width="80" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="aadee1c6-337a-4055-a90c-4a2c29afb02a"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXPIRATION}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="419" y="4" width="133" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="6b15e5c9-5be3-4aff-9d61-ed6da664e8a4"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INTERNALLOTNUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
