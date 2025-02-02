@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartSerialsAveryAB" columnCount="3" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="150" leftMargin="81" rightMargin="81" topMargin="22" bottomMargin="22" uuid="90e41a1c-e301-4ced-ba5a-5a75faf0a025">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="TopBarcode" hAlign="Center" vAlign="Top"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Part Barcodes for Avery 8160 Labels"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Labels/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+   part.num,
+   location.name AS location,
+   serialnum.serialnum
+FROM product
+    JOIN part ON product.partid = part.id
+    JOIN tag ON tag.partid = part.id
+    JOIN location ON tag.locationid = location.id
+    JOIN locationgroup ON locationgroup.id = location.locationgroupid
+    JOIN serial ON tag.id = serial.tagid
+    JOIN serialnum ON serial.id = serialnum.serialid
+    JOIN parttracking ON parttracking.id = serialnum.parttrackingid AND parttracking.name = 'Serial Number'
+WHERE
+  UPPER(product.num) LIKE UPPER($P{productNum})
+  AND locationgroup.id LIKE $P{locationGroupID}
+ORDER BY part.num, serialnum.serialnum]]>
+	</queryString>
+	<field name="serialnum" class="java.lang.String"/>
+	<detail>
+		<band height="62">
+			<frame>
+				<reportElement x="3" y="4" width="144" height="54" uuid="118107fa-8e4e-4030-abfb-1d1bbae4922f"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<image>
+					<reportElement x="2" y="0" width="140" height="30" uuid="71062292-8cb0-415b-b831-2d31ea1856f6"/>
+					<imageExpression><![CDATA["./Custom/ab-logo-full-color.png"]]></imageExpression>
+				</image>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="2" y="30" width="140" height="24" isPrintWhenDetailOverflows="true" uuid="e2421604-c271-4d52-9390-4a99c15be836"/>
+					<box leftPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["S/N: " + $F{serialnum}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
