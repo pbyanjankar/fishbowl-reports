@@ -12,7 +12,7 @@
 	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="TopBarcode" hAlign="Center" vAlign="Top"/>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Part Barcodes for Avery 8160 Labels"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Part Serials numbers for selected product and location group"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["../Labels/"]]></defaultValueExpression>
@@ -50,12 +50,12 @@ ORDER BY part.num, serialnum.serialnum]]>
 			<frame>
 				<reportElement x="3" y="4" width="144" height="54" uuid="118107fa-8e4e-4030-abfb-1d1bbae4922f"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<image>
+				<image hAlign="Center">
 					<reportElement x="2" y="0" width="140" height="30" uuid="71062292-8cb0-415b-b831-2d31ea1856f6"/>
 					<imageExpression><![CDATA["./Custom/ab-logo-full-color.png"]]></imageExpression>
 				</image>
