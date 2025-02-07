@@ -80,6 +80,9 @@
 		<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="DateRangeSixMonthsOutFromCurrentDate" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT PART.NUM AS PARTNUM, TAG.PARTID AS PARTID, TAG.LOCATIONID AS LOCATIONID, TAG.TRACKINGENCODING AS TRACKINGENCODING,
     PART.DESCRIPTION AS PARTDESC, PART.SERIALIZEDFLAG, UOM.CODE AS PARTUOM, TAGQTY,
@@ -108,7 +111,15 @@ WHERE part.typeid = 10
   AND part.num LIKE $P{partNum}
   AND (location.id LIKE $P{locationID} OR location.name IS NULL)
   AND (locationgroup.id IN ($P!{locationGroupID}) OR locationgroup.id IS NULL)
-  AND tagtrackingview.info BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+  AND
+  	CASE
+   	  WHEN $P{DateRangeSixMonthsOutFromCurrentDate} THEN
+		(tagtrackingview.info >= date_format(now(), '%Y-%m-%d')
+ 		 AND tagtrackingview.info < date_format(date_add(date_add(now(), INTERVAL 6 month), INTERVAL 1 day), '%Y-%m-%d') )
+	  ELSE
+		 tagtrackingview.info BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+	  END
   AND vendor.id LIKE $P{vendorID}
 
 GROUP BY part.num, tag.partID, tag.locationID, tag.trackingEncoding, part.description, part.serializedflag,
@@ -175,7 +186,7 @@ ORDER BY LocationGroup, UPPER($P!{cbOrderBy}), UPPER(part.num)]]>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Displays a list of parts with the current quantity on hand. Does not filter for serial numbers."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Displays a list of parts with the current quantity on hand. Does not filter for serial numbers. Allows next 6 months date range with checkbox"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
@@ -220,9 +231,11 @@ ORDER BY LocationGroup, UPPER($P!{cbOrderBy}), UPPER(part.num)]]>
 		<defaultValueExpression><![CDATA["All"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
-		<property name="Group" value="Filters"/>
-		<property name="Tooltip" value="Choose a specific vendor to run the report for. Leave this field blank in for to run the report for all vendors"/>
+		<property name="Tooltip" value="Choose Default Vendor for parts"/>
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DateRangeSixMonthsOutFromCurrentDate" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT company.name AS COMPANY
@@ -277,7 +290,7 @@ WHERE id = 1]]>
 			<componentElement>
 				<reportElement key="table" x="0" y="0" width="732" height="45" uuid="90396323-a69d-47a3-a86c-53eb38f169e0"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="OnHandInfo" uuid="4af5e9d7-2414-4963-a4e2-72e366c566ac">
+					<datasetRun subDataset="OnHandInfo" uuid="d8d7ade6-c20f-4c26-99ad-5ea75b03e359">
 						<datasetParameter name="locationGroupID">
 							<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -322,6 +335,9 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<datasetParameter name="vendorID">
 							<datasetParameterExpression><![CDATA[$P{vendorID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="DateRangeSixMonthsOutFromCurrentDate">
+							<datasetParameterExpression><![CDATA[$P{DateRangeSixMonthsOutFromCurrentDate}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
