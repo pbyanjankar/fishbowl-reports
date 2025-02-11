@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TrackingDetailMumms" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="b003c187-e1b5-4831-8c3d-4c0bcf247ef5">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.x" value="48"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Other/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TrackingValue" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT TRACKINGINFO.ID AS TRACKINGINFOID, TABLEREFERENCE.TABLEREFNAME AS TABLENAME, PICKITEM.ORDERID AS ISSOPICK,
+    SHIPITEM.ORDERID AS ISSOSHIP, RECEIPTITEM.SOITEMID AS ISSORECEIPT,
+    TRACKINGINFO.INFO AS TRACKVALUE, TRACKINGINFO.INFODATE AS TRACKDATE, ship.dateShipped AS DATESHIPPED,
+    COMPANY.NAME AS COMPANY
+
+FROM trackinginfo
+    INNER JOIN tablereference ON tablereference.tableid = trackinginfo.tableid
+    LEFT OUTER JOIN trackinginfosn ON trackinginfo.id = trackinginfosn.trackinginfoid
+    LEFT OUTER JOIN pickItem ON trackinginfo.recordid = pickItem.id AND pickitem.ordertypeid = 20
+    LEFT OUTER JOIN pick ON pickitem.pickid = pick.id
+    LEFT OUTER JOIN shipitem ON (trackinginfo.recordid = shipitem.id AND shipitem.ordertypeid = 20)
+    LEFT OUTER JOIN ship ON shipitem.shipid = ship.id
+
+    LEFT OUTER JOIN ReceiptItem ON trackinginfo.recordid = receiptitem.id
+    LEFT OUTER JOIN receipt ON (receiptitem.receiptid = receipt.id AND receipt.ordertypeid = 20)
+    JOIN company ON company.id = 1
+
+WHERE (UPPER(trackinginfo.info) LIKE CONCAT('%' , UPPER($P{TrackingValue}) , '%')
+       OR UPPER(trackinginfosn.serialnum) LIKE CONCAT('%' , UPPER($P{TrackingValue}) , '%')
+       OR trackinginfo.infodate LIKE CONCAT('%' , $P{TrackingValue} , '%'))
+AND trackinginfo.recordid != -1]]>
+	</queryString>
+	<field name="TRACKINGINFOID" class="java.lang.Integer"/>
+	<field name="TABLENAME" class="java.lang.String"/>
+	<field name="ISSOPICK" class="java.lang.Integer"/>
+	<field name="ISSOSHIP" class="java.lang.Integer"/>
+	<field name="ISSORECEIPT" class="java.lang.Integer"/>
+	<field name="TRACKVALUE" class="java.lang.String"/>
+	<field name="TRACKDATE" class="java.sql.Timestamp"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<variable name="DetailPass" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[($F{TABLENAME}.equals("WOPickDetail"))
+	? "WOPickDetail"
+	: ($F{TABLENAME}.equals("WOItem"))
+		? "WOItem"
+		: ($F{TABLENAME}.equals("WO"))
+			? "WO"
+			: ($F{TABLENAME}.equals("SOItem"))
+				? "SOItem"
+				: ($F{TABLENAME}.equals("ReceiptItem"))
+					? "ReceiptItem"
+					: ($F{TABLENAME}.equals("ShipItem"))
+						? "RMAItem"
+						: ($F{TABLENAME}.equals("PickItem"))
+							? "PickItem"
+							: ($F{TABLENAME}.equals("RMAItem"))
+								? "RMAItem"
+								: "UnknownTable"]]></variableExpression>
+	</variable>
+	<variable name="detailSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[($F{TABLENAME}.equals("WOItem")) ?
+    $V{WOItemSQL} :
+    ($F{TABLENAME}.equals("WO")) ?
+        $V{WOSQL} :
+        ($F{TABLENAME}.equals("SOItem")) ?
+            $V{SOItemSQL} :
+            ($F{TABLENAME}.equals("ReceiptItem")) ?
+                $V{ReceiptItemSQL} :
+                ($F{TABLENAME}.equals("ShipItem")) ?
+                    $V{ShipItemSQL} :
+                    ($F{TABLENAME}.equals("PickItem")) ?
+                        $V{PickItemlSQL} :
+                            ($F{TABLENAME}.equals("RMAItem")) ?
+                                $V{RMAItemSQL} :
+                                    $V{standardSQL}]]></variableExpression>
+	</variable>
+	<variable name="standardSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"	CONCAT('Unknown: Table-',tablereference.tablerefname,' ID-',trackinginfo.id) AS TITLE, 'Unknown Module' AS MODULE, 'Unknown' AS NUM, " +
+"	trackinginfo.recordid AS LINEITEM, trackinginfo.parttrackingid AS USEDID, null AS DATECOMPLETED, null AS CUSTOMERNAME  " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="WOPickDetailSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"	CONCAT(part.num,' - ',part.description,' Picked for WO: ') AS TITLE, 'WONum' AS MODULE, wo.num AS NUM, " +
+"	'' AS LINEITEM, woitem.id AS USEDID, null AS DATECOMPLETED, null AS CUSTOMERNAME " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"       INNER JOIN wopickdetail ON (trackinginfo.recordid = wopickdetail.id) " +
+"       INNER JOIN woitem ON (wopickdetail.woitemid = woitem.id) " +
+"       INNER JOIN wo ON (woitem.woid = wo.id) " +
+"       INNER JOIN part ON (WOITEM.PARTID = part.id) " +
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="WOItemSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"	CONCAT(woitem.description,' Item on WO: ') AS TITLE, 'WONum' AS MODULE, wo.num AS NUM, " +
+"	woitem.typeid AS LINEITEM, woitem.id AS USEDID, null AS DATECOMPLETED, null AS CUSTOMERNAME   " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"       INNER JOIN woitem ON ((trackinginfo.recordid = woitem.id) AND (woitem.typeid IN (10,20,30)))" +
+"       INNER JOIN wo ON (woitem.woid = wo.id) " +
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="WOSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"	CONCAT(part.num,' - ',part.description,' Created with WO: ') AS TITLE, 'WONum' AS MODULE, wo.num AS NUM, " +
+"	0 AS LINEITEM, wo.id AS USEDID, null AS DATECOMPLETED, null AS CUSTOMERNAME   " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"       INNER JOIN wo ON (trackinginfo.recordid = wo.id) " +
+"       INNER JOIN part ON (wo.partid = part.id) " +
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="ReceiptItemSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"    (CASE " +
+"        WHEN receipt.ordertypeid = 10 THEN CONCAT(poitem.partnum,' - ',poitem.description,' on PO: ')  " +
+"        WHEN receipt.ordertypeid = 20 THEN CONCAT(soitem.productnum,' - ',soitem.description,' on SO: ')  " +
+"        WHEN receipt.ordertypeid = 40 THEN CONCAT(xoitem.partnum,' - ',xoitem.description,' on TO: ')  " +
+"    END) as TITLE, " +
+"    (CASE  " +
+"        WHEN receipt.ordertypeid = 10 THEN 'PONUM' " +
+"        WHEN receipt.ordertypeid = 20 THEN 'SONUM' " +
+"        WHEN receipt.ordertypeid = 40 THEN 'TONUM' " +
+"    END) as MODULE, " +
+"    (CASE  " +
+"        WHEN receipt.ordertypeid = 10 THEN po.num " +
+"        WHEN receipt.ordertypeid = 20 THEN so.num " +
+"        WHEN receipt.ordertypeid = 40 THEN xo.num " +
+"    END) as NUM, " +
+"    (CASE  " +
+"        WHEN receipt.ordertypeid = 10 THEN poitem.polineitem " +
+"        WHEN receipt.ordertypeid = 20 THEN soitem.solineitem " +
+"        WHEN receipt.ordertypeid = 40 THEN xoitem.lineitem " +
+"    END) as LINEITEM, " +
+"    (CASE  " +
+"        WHEN receipt.ordertypeid = 10 THEN po.id " +
+"        WHEN receipt.ordertypeid = 20 THEN so.id " +
+"        WHEN receipt.ordertypeid = 40 THEN xo.id " +
+"    END) as USEDID, so.dateCompleted AS DATECOMPLETED, so.shipToName AS CUSTOMERNAME  " +
+"FROM trackinginfo  " +
+"    LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"    INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"    INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid)  " +
+"    INNER JOIN receiptitem ON (trackinginfo.recordid = receiptitem.id)  " +
+"    INNER JOIN receipt ON (receiptitem.receiptid = receipt.id) " +
+"    LEFT OUTER JOIN poitem ON (receiptitem.poitemId = poitem.id)  " +
+"    LEFT OUTER JOIN po ON (poitem.poid = po.id)  " +
+"    LEFT OUTER JOIN soitem ON (receiptitem.soitemId = soitem.id)  " +
+"    LEFT OUTER JOIN so ON (soitem.soid = so.id)  " +
+"    LEFT OUTER JOIN xoitem ON (receiptitem.xoitemId = xoitem.id)  " +
+"    LEFT OUTER JOIN xo ON (xoitem.xoid = xo.id)  " +
+
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="SOItemSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"	CONCAT(part.num,' - ',part.description,' on SO: ') AS TITLE, 'SONum' AS MODULE, so.num AS NUM, " +
+"	soitem.solineitem AS LINEITEM, soitem.id AS USEDID,  so.dateCompleted AS DATECOMPLETED, so.shipToName AS CUSTOMERNAME " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"       INNER JOIN soitem ON (trackinginfo.recordid = soitem.id) " +
+"       INNER JOIN so ON (soitem.soid = so.id) " +
+"       INNER JOIN product ON (soitem.productid = product.id) " +
+"       INNER JOIN part ON (product.partid = part.id) " +
+
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="ShipItemSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"    (CASE " +
+"        WHEN shipitem.ordertypeid = 10 THEN CONCAT(popart.num,' - ',popart.description,' on PO: ') " +
+"        WHEN shipitem.ordertypeid = 20 THEN CONCAT(sopart.num,' - ',sopart.description,' on SO: ') " +
+"        WHEN shipitem.ordertypeid = 40 THEN CONCAT(xopart.num,' - ',xopart.description,' on TO: ') " +
+"    END) as TITLE, " +
+"    (CASE  " +
+"        WHEN shipitem.ordertypeid = 10 THEN 'PONUM' " +
+"        WHEN shipitem.ordertypeid = 20 THEN 'SONUM' " +
+"        WHEN shipitem.ordertypeid = 40 THEN 'TONUM' " +
+"    END) as MODULE, " +
+"    (CASE  " +
+"        WHEN shipitem.ordertypeid = 10 THEN po.num " +
+"        WHEN shipitem.ordertypeid = 20 THEN so.num " +
+"        WHEN shipitem.ordertypeid = 40 THEN xo.num " +
+"    END) as NUM, " +
+"    (CASE  " +
+"        WHEN shipitem.ordertypeid = 10 THEN poitem.polineitem " +
+"        WHEN shipitem.ordertypeid = 20 THEN soitem.solineitem " +
+"        WHEN shipitem.ordertypeid = 40 THEN xoitem.lineitem " +
+"    END) as LINEITEM, " +
+"    (CASE  " +
+"        WHEN shipitem.ordertypeid = 10 THEN po.id " +
+"        WHEN shipitem.ordertypeid = 20 THEN so.id " +
+"        WHEN shipitem.ordertypeid = 40 THEN xo.id " +
+"    END) as USEDID, " +
+"    so.dateCompleted AS DATECOMPLETED, " +
+"    so.shipToName AS CUSTOMERNAME " +
+"FROM trackinginfo  " +
+"    LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"    INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id)  " +
+"    INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid)  " +
+"    INNER JOIN shipitem ON (trackinginfo.recordid = shipitem.id) " +
+"    LEFT OUTER JOIN soitem ON (shipitem.soitemid = soitem.id)  " +
+"    LEFT OUTER JOIN so ON (soitem.soid = so.id)  " +
+"    LEFT OUTER JOIN product ON (soitem.productid = product.id)  " +
+"    LEFT OUTER JOIN part sopart ON (product.partid = sopart.id)  " +
+"    LEFT OUTER JOIN poitem ON (shipitem.poitemid = poitem.id)  " +
+"    LEFT OUTER JOIN po ON (poitem.poid = po.id)  " +
+"    LEFT OUTER JOIN part popart ON (poitem.partid = popart.id)  " +
+"    LEFT OUTER JOIN xoitem ON (shipitem.xoitemid = xoitem.id)  " +
+"    LEFT OUTER JOIN xo ON (xoitem.xoid = xo.id)  " +
+"    LEFT OUTER JOIN part xopart ON (xoitem.partid = xopart.id)  " +
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="PickItemlSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"    (CASE" +
+"        WHEN pickitem.ordertypeid = 10 THEN CONCAT(part.num,' - ',part.description,' Picked for PO: ') " +
+"        WHEN pickitem.ordertypeid = 20 THEN CONCAT(part.num,' - ',part.description,' Picked for SO: ') " +
+"        WHEN pickitem.ordertypeid = 40 THEN CONCAT(part.num,' - ',part.description,' Picked for TO: ') " +
+"    END) as TITLE," +
+"    (CASE " +
+"        WHEN pickitem.ordertypeid = 10 THEN 'PONUM'" +
+"        WHEN pickitem.ordertypeid = 20 THEN 'SONUM'" +
+"        WHEN pickitem.ordertypeid = 40 THEN 'TONUM'" +
+"    END) as MODULE," +
+"    (CASE " +
+"        WHEN pickitem.ordertypeid = 10 THEN po.num" +
+"        WHEN pickitem.ordertypeid = 20 THEN so.num" +
+"        WHEN pickitem.ordertypeid = 40 THEN xo.num" +
+"    END) as NUM, " +
+"    (CASE  " +
+"        WHEN pickitem.ordertypeid = 10 THEN poitem.polineitem " +
+"        WHEN pickitem.ordertypeid = 20 THEN soitem.solineitem " +
+"        WHEN pickitem.ordertypeid = 40 THEN xoitem.lineitem " +
+"    END) as LINEITEM, " +
+"    (CASE  " +
+"        WHEN pickitem.ordertypeid = 10 THEN pickitem.id " +
+"        WHEN pickitem.ordertypeid = 20 THEN pickitem.id " +
+"        WHEN pickitem.ordertypeid = 40 THEN pickitem.id " +
+"    END) as USEDID, so.dateCompleted AS DATECOMPLETED, so.shipToName AS CUSTOMERNAME " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"       INNER JOIN pickitem ON (trackinginfo.recordid = pickitem.id)" +
+"       INNER JOIN part ON (pickitem.partid = part.id) " +
+"       LEFT OUTER JOIN soitem ON (pickitem.soitemid = soitem.id) " +
+"       LEFT OUTER JOIN so ON (soitem.soid = so.id) " +
+"       LEFT OUTER JOIN poitem ON (pickitem.poitemid = poitem.id) " +
+"       LEFT OUTER JOIN po ON (poitem.poid = po.id) " +
+"       LEFT OUTER JOIN xoitem ON (pickitem.xoitemid = xoitem.id) " +
+"       LEFT OUTER JOIN xo ON (xoitem.xoid = xo.id) " +
+
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"]]></variableExpression>
+	</variable>
+	<variable name="RMAItemSQL" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA["SELECT parttracking.name AS TRACKING, trackinginfosn.SERIALNUM, trackinginfo.info AS TRACKINGINFO, trackinginfo.infodate AS TRACKINGINFODATE, " +
+"	CONCAT(part.num,' - ',part.description,' on RMA: ') AS TITLE, 'RMANum' AS MODULE, rma.num AS NUM, " +
+"	rmaitem.linenum as LINEITEM, rma.id as USEDID, null AS DATECOMPLETED, null AS CUSTOMERNAME  " +
+"FROM trackinginfo " +
+"	LEFT JOIN trackinginfosn ON (trackinginfosn.trackinginfoid = trackinginfo.id) " +
+"	INNER JOIN parttracking ON (trackinginfo.parttrackingid = parttracking.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid) " +
+"       INNER JOIN rmaitem ON (trackinginfo.recordid = rmaitem.id) " +
+"       INNER JOIN rma ON (rmaitem.rmaid = rma.id) " +
+"       INNER JOIN product ON (rmaitem.productid = product.id) " +
+"       INNER JOIN part ON (product.partid = part.id) " +
+
+"WHERE trackinginfo.id = '" + $F{TRACKINGINFOID} + "'"
+]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Prevent"/>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" mode="Transparent" x="0" y="18" width="552" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="2fde70e0-100e-478d-bd01-481a42de4725"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Tracking Details]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" mode="Transparent" x="0" y="40" width="552" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="46a8be14-1b74-4537-a87f-4d03f15918d9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" x="0" y="0" width="552" height="18" uuid="14d0134e-89e6-432c-b11e-fb9a12632bbc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-3" x="0" y="54" width="552" height="10" uuid="ec19cb8d-5a4a-41aa-b794-f2a95795604b"/>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Prevent">
+			<staticText>
+				<reportElement key="element-90" mode="Transparent" x="0" y="0" width="100" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="ce3f4273-8804-4cf4-8d71-a8c31138f9ee"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TRACKING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-91" mode="Transparent" x="100" y="0" width="110" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="20249783-59d3-4005-9961-7a0d839b39f1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[VALUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-92" mode="Transparent" x="298" y="0" width="170" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a8d2f784-9372-4a30-81bc-28d03f8609ba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Order Details]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="16" width="552" height="1" uuid="91fc3fc8-8405-49f2-9c3b-ad60e541719d"/>
+			</line>
+			<staticText>
+				<reportElement key="element-91" mode="Transparent" x="210" y="0" width="88" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="193ad676-5766-4ce8-b5b7-9a3c72ee58cd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Date Completed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-91" mode="Transparent" x="468" y="0" width="84" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="d7bc9592-c331-4f07-b400-0d68a6c02651"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ Customer]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="4" splitType="Prevent">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-4" mode="Opaque" x="0" y="0" width="552" height="3" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="be234be5-f995-4144-a367-bc471f55c1d0"/>
+				<subreportParameter name="module">
+					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sql">
+					<subreportParameterExpression><![CDATA[$V{detailSQL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="path">
+					<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DetailPass">
+					<subreportParameterExpression><![CDATA[$V{DetailPass}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./TrackingDetail_mumms/subTrackingCustom_mumms.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Prevent"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Prevent">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="321" y="0" width="183" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="d525774c-dd31-4ed2-86fc-3530a4ee52a1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="504" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f7506951-ec72-4faa-bb3b-b790af65edb7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="321" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="04c16af4-17e4-4db0-8bfb-24cccf0ac8f2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Prevent"/>
+	</summary>
+</jasperReport>

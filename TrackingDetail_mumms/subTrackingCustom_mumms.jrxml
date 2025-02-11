@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subTrackingCustom" pageWidth="552" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="20a9b14b-9898-428e-864a-8de9d9ad3b5b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="sql" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SELECT trackinginfotype.name AS Tracking, trackinginfo.info AS TrackingInfo, trackinginfo.infodate AS TrackingInfoDate, " +
+"	'' AS title, 'Unknown Module' AS module, 'Unknown' AS num " +
+"FROM trackinginfo " +
+"	INNER JOIN trackinginfotype ON (trackinginfo.trackinginfotypeid = trackinginfotype.id) " +
+"	INNER JOIN tablereference ON (tablereference.tableid = trackinginfo.tableid)"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DetailPass" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Other/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{sql}]]>
+	</queryString>
+	<field name="TRACKING" class="java.lang.String"/>
+	<field name="SERIALNUM" class="java.lang.String"/>
+	<field name="TRACKINGINFO" class="java.lang.String"/>
+	<field name="TRACKINGINFODATE" class="java.sql.Timestamp"/>
+	<field name="TITLE" class="java.lang.String"/>
+	<field name="MODULE" class="java.lang.String"/>
+	<field name="NUM" class="java.lang.String"/>
+	<field name="LINEITEM" class="java.lang.Integer"/>
+	<field name="USEDID" class="java.lang.Integer"/>
+	<field name="DATECOMPLETED" class="java.sql.Timestamp"/>
+	<field name="CUSTOMERNAME" class="java.lang.String"/>
+	<variable name="value" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[$F{TRACKINGINFODATE} != null ?
+    (DateFormat.getDateInstance(DateFormat.SHORT)).format($F{TRACKINGINFODATE}) :
+    ($F{SERIALNUM} != null ?
+        $F{SERIALNUM} :
+        $F{TRACKINGINFO})]]></variableExpression>
+	</variable>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[new Boolean(
+    ($F{TITLE} != null && $F{NUM} != null)
+)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="100" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="cb0a88ba-cb27-44d9-aa9f-d0f288b076ec"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRACKING}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="100" y="0" width="110" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="bb2a314b-f942-4d32-8c33-64406affbcd9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{value}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="298" y="0" width="100" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="913e742b-3b28-409d-b10b-15e47eed3e96"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITLE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement key="textField" mode="Transparent" x="398" y="0" width="70" height="14" forecolor="#000099" backcolor="#FFFFFF" uuid="b0887542-c127-4322-a757-ce8902e1bd8f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+				<anchorNameExpression><![CDATA[$F{MODULE}]]></anchorNameExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{NUM}]]></hyperlinkReferenceExpression>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" style="note" positionType="Float" x="43" y="16" width="467" height="2" uuid="f46f2478-1405-4b4a-a89e-e5750e6dbc77">
+					<printWhenExpression><![CDATA[new Boolean(($P{DetailPass}.equals("WO")) || ($P{DetailPass}.equals("WOItem")))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="module">
+					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="woNum">
+					<subreportParameterExpression><![CDATA[$F{NUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TrackingValue">
+					<subreportParameterExpression><![CDATA[$V{value}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subTrackingWorkOrderCost.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement key="line-1" style="note" x="0" y="0" width="552" height="1" uuid="ba962239-86b1-4e0b-bb2a-0bef96bc3f67"/>
+			</line>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" style="note" positionType="Float" x="43" y="16" width="467" height="2" uuid="d6d13542-913c-4f7b-8dc7-b17fd0f4d516">
+					<printWhenExpression><![CDATA[new Boolean($P{DetailPass}.equals("SOShipItem"))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="soNum">
+					<subreportParameterExpression><![CDATA[$F{NUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="lineItem">
+					<subreportParameterExpression><![CDATA[$F{LINEITEM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="shipitemID">
+					<subreportParameterExpression><![CDATA[$F{USEDID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subTrackingSOItem.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-3" positionType="Float" x="43" y="16" width="467" height="2" uuid="f5ce3383-7d2f-4e59-b8d5-208447e70941">
+					<printWhenExpression><![CDATA[new Boolean(($P{DetailPass}.equals("POReceiptDetail")) )]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="lineItem">
+					<subreportParameterExpression><![CDATA[$F{LINEITEM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="poitemID">
+					<subreportParameterExpression><![CDATA[$F{USEDID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="poNum">
+					<subreportParameterExpression><![CDATA[$F{NUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subTrackingPOItem.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-4" positionType="Float" x="43" y="16" width="467" height="2" uuid="85cc8da1-d097-4233-af70-c57f1a94c468">
+					<printWhenExpression><![CDATA[new Boolean($P{DetailPass}.equals("SOReceiptDetail"))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="soNum">
+					<subreportParameterExpression><![CDATA[$F{NUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="lineItem">
+					<subreportParameterExpression><![CDATA[$F{LINEITEM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="receiptID">
+					<subreportParameterExpression><![CDATA[$F{USEDID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subTrackingSOItemReturn.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-5" positionType="Float" x="43" y="16" width="467" height="2" uuid="24bfb06e-73d5-43b8-a3c8-5cddee346b90">
+					<printWhenExpression><![CDATA[new Boolean(($P{DetailPass}.equals("POShipItem")) )]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="lineItem">
+					<subreportParameterExpression><![CDATA[$F{LINEITEM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="shipitemID">
+					<subreportParameterExpression><![CDATA[$F{USEDID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="poNum">
+					<subreportParameterExpression><![CDATA[$F{NUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subTrackingPOItemReturn.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="210" y="0" width="88" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a9eaa718-d43e-4bfd-9f8a-f4a310845718"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATECOMPLETED}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="468" y="0" width="84" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="25b571ea-5293-41dc-9c3e-0e0af2c7e87b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUSTOMERNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
