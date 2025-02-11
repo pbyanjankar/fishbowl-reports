@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartSerialsAB" pageWidth="283" pageHeight="175" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="283" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7d385386-6854-4b1f-8d04-a20463d0fc7b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Product Barcodes for one off Labels with Serial Numbers or Lot Numbers"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+   part.num,
+   location.name AS location,
+   serialnum.serialnum
+FROM product
+    JOIN part ON product.partid = part.id
+    JOIN tag ON tag.partid = part.id
+    JOIN location ON tag.locationid = location.id
+    JOIN locationgroup ON locationgroup.id = location.locationgroupid
+    JOIN serial ON tag.id = serial.tagid
+    JOIN serialnum ON serial.id = serialnum.serialid
+    JOIN parttracking ON parttracking.id = serialnum.parttrackingid AND parttracking.name = 'Serial Number'
+
+WHERE
+    UPPER(product.num) LIKE UPPER($P{productNum})
+    AND locationgroup.id LIKE $P{locationGroupID}
+
+
+ORDER BY part.num, serialnum.serialnum]]>
+	</queryString>
+	<field name="serialnum" class="java.lang.String"/>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="isMultiCurrency" class="java.lang.Boolean">
+		<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="50">
+			<staticText>
+				<reportElement x="37" y="23" width="100" height="20" uuid="aba3f3e5-e8d8-4d66-9488-89070fc16b14"/>
+				<text><![CDATA[serialnum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="137" y="23" width="100" height="20" uuid="65fea17d-15a9-4c96-b832-969e9f973385"/>
+				<textFieldExpression><![CDATA[$F{serialnum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
