@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TermsAndConditions" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4cbe809a-aceb-4e09-a884-0819150eeb83">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Zebra" fontName="Open Sans" fontSize="9">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#EAEAEA" pattern="" isBlankWhenNull="false" fontName="Open Sans" fontSize="9"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="132">
+			<break>
+				<reportElement x="0" y="0" width="100" height="1" uuid="befb0151-4b7d-42df-882a-d42c7e5b0b2d"/>
+			</break>
+			<image scaleImage="RealHeight">
+				<reportElement x="0" y="0" width="552" height="24" uuid="11d4a6ea-9eab-47a7-9ab5-6e7fe8e53e99"/>
+				<imageExpression><![CDATA["../Custom/DTI-POReport/INSTRUCTION1.jpg"]]></imageExpression>
+			</image>
+			<break>
+				<reportElement x="0" y="24" width="100" height="1" uuid="ca556356-acec-4e93-8c82-5e3ab1d7418b"/>
+			</break>
+			<image scaleImage="RealHeight">
+				<reportElement x="0" y="25" width="552" height="24" uuid="b8ca851d-6dc4-4cf3-9b77-7e1264dada86"/>
+				<imageExpression><![CDATA["../Custom/DTI-POReport/INSTRUCTION2.jpg"]]></imageExpression>
+			</image>
+			<break>
+				<reportElement x="0" y="49" width="100" height="1" uuid="dc3a3705-3297-471b-b7d6-44d9233cf07d"/>
+			</break>
+			<image scaleImage="RealHeight">
+				<reportElement x="0" y="50" width="552" height="24" uuid="8be93100-dd71-4766-b9da-dd036799ae5c"/>
+				<imageExpression><![CDATA["../Custom/DTI-POReport/INSTRUCTION3.jpg"]]></imageExpression>
+			</image>
+			<break>
+				<reportElement x="0" y="75" width="100" height="1" uuid="dc3a3705-3297-471b-b7d6-44d9233cf07d"/>
+			</break>
+			<image scaleImage="RealHeight">
+				<reportElement x="0" y="76" width="552" height="24" uuid="8be93100-dd71-4766-b9da-dd036799ae5c"/>
+				<imageExpression><![CDATA["../Custom/DTI-POReport/INSTRUCTION4.jpg"]]></imageExpression>
+			</image>
+			<break>
+				<reportElement x="0" y="100" width="100" height="1" uuid="dc3a3705-3297-471b-b7d6-44d9233cf07d"/>
+			</break>
+			<image scaleImage="RealHeight">
+				<reportElement x="0" y="101" width="552" height="24" uuid="8be93100-dd71-4766-b9da-dd036799ae5c"/>
+				<imageExpression><![CDATA["../Custom/DTI-POReport/INSTRUCTION5.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>
