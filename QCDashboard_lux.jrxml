@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QCDashboardLUX" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9955ccc0-971f-458f-b2ee-d1e14e6259c9">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="1"/>
 	<subDataset name="New Dataset 1" uuid="ed845f1a-a52a-44a6-9102-98d137390727">
 		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
 			<property name="Group" value="Select a date field and enter a date range"/>
@@ -526,7 +526,7 @@ WHERE ID = 1]]>
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Transfer Order Traveler" : $P{ReportTitle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "QC Dashboard" : $P{ReportTitle}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="" mode="Transparent" x="0" y="40" width="752" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="03009f08-c00d-4d4c-a464-90480e2d8f86">
