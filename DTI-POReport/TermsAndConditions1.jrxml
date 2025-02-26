@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subMemo" pageWidth="530" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="474" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="4cbe809a-aceb-4e09-a884-0819150eeb83">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="448"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Zebra" fontName="Open Sans" fontSize="9">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#EAEAEA" pattern="" isBlankWhenNull="false" fontName="Open Sans" fontSize="9"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="630">
+			<staticText>
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="474" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a5c60357-89d5-41d4-8ecc-65cc91a9b5d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Terms and Conditions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="15" width="474" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="87e9d10c-78a2-4bee-800c-0f5590e78e35"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[1. ACCEPTANCE OF PURCHASE ORDER ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="29" width="474" height="38" forecolor="#000000" backcolor="#FFFFFF" uuid="258986b6-89de-44d5-ab53-e136390c9c48"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Seller’s written acknowledgment of a Purchase Order, commencement of performance pursuant to the Purchase Order, or acceptance of any payment under a Purchase Order shall each, independently, constitute Seller’s acceptance of the Purchase Order subject to these Terms and Conditions of Purchase.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="67" width="474" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="d885249b-a855-46cd-b270-a3647206d830"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[2. PACKAGING, MARKING, AND SHIPMENT ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="80" width="474" height="141" forecolor="#000000" backcolor="#FFFFFF" uuid="cac6ebe0-8e7c-4692-b63c-59a85724436e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Seller shall follow all shipping instructions sent with the Purchase Order.
+
+Each line item (part) needs to be shipped in its own bag or box, labeled with Deep Trekkers part number, the PO number and the quantity within the box or bag.  The labels for the part number and PO number must be generated by a printer and include a 1D barcode.  Do not package multiple items loose in a box separate from the labels. Full packing instructions can be found at:
+
+https://
+
+Should the Sellers fail to comply with the Packaging, Marking and Shipment Terms, a $200 USD admin fee will apply.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="221" width="474" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="bd3e5827-8714-4058-8075-1b731902fca8"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[3. DELIVERY]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="234" width="474" height="96" forecolor="#000000" backcolor="#FFFFFF" uuid="0a7a2ac2-ef20-4535-b2d7-3edff76b5816"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Time is of the essence of this Agreement and each Purchase Order. Seller shall comply with the Ship By Date specified in the Purchase Order."
++"\n\n"+
+"Should the Sellers fail to make delivery on time as stipulated in the Contract, with exception of Force Majeure causes, the Buyers have the right to penalize the Sellers. Only in case the delay shipment is more than 1 week. The penalty, however, shall not exceed 20% of the goods involved in the late delivery. The rate of penalty is charged at 1% of original price for every day, starting counting from 8th day of the delay."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-2" style="9" positionType="Float" mode="Transparent" x="0" y="330" width="474" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="d706c7a5-bb80-4e59-a030-12e363d76359"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[4. INVOICING INSTRUCTIONS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" style="9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="343" width="474" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="c3b6fbbc-70e7-4063-9a3b-2991a363685b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Immediately upon shipment of product, Seller must submit an electronic invoice by email to jlotz@deeptrekker.com and ap@deeptrekker.com that contains all of the following:]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="368" width="474" height="104" uuid="6fef8114-fdde-4b08-85a2-b1a59e0bd67f"/>
+				<textField>
+					<reportElement style="9" mode="Opaque" x="0" y="0" width="247" height="102" uuid="c520ad09-4bee-4ac3-bf4c-963f57bf8eb0"/>
+					<textElement markup="html"/>
+					<textFieldExpression><![CDATA["<li>PO Number</li>"+
+"<li>Shipping terms (if applicable)</li>"+
+"<li>Shipping number or tracking number (if applicable)</li>"+
+"<li>Deep Trekker Part Number (P/N) and line item number</li>"+
+"<li>Description of the product or service exactly as it appears</li>"+
+"&nbsp; &nbsp; &nbsp; &nbsp;on the Deep Trekker PO"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="267" y="0" width="207" height="102" uuid="14683a29-261a-481d-adfb-deda9d449b71"/>
+					<textElement markup="html"/>
+					<textFieldExpression><![CDATA["<li>Unit of measure</li>"+
+"<li>Unit price</li>"+
+"<li>Currency type</li>"+
+"<li>Country of origin</li>"+
+"<li>Item quantity</li>"+
+"<li>Total pre-tax invoice value</li>"+
+"<li>VAT (if applicable)</li>"+
+"<li>Total invoice value</li>"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement key="textField-2" style="9" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="510" width="474" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="a2f4bb41-3183-47f9-9fc7-d0f712e1747a"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[6. Full Terms and Conditions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-2" style="9" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="472" width="474" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="56f1bfc8-c58f-40a9-812f-9319aa017df5"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[5. WARRANTY]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement key="textField-2" style="9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="523" width="474" height="31" forecolor="#000000" backcolor="#FFFFFF" uuid="6776ca73-8e72-46ca-b519-056230c3cdd1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Unless expressly stated otherwise in this Purchase Order, this Purchase Order is governed exclusively by Deep Trekker Inc’s full Terms and Conditions of Purchase, available at "+"\n\n"+
+"https:// "+"\n\n"+
+"and the applicable government contract flow down provisions referenced in the Compliance Statements section of this Purchase Order. Deep Trekker Inc objects to any additional or different terms provided by Seller and this Purchase Order is conditioned on Seller's agreement to these terms or the agreed terms referenced elsewhere on this Purchase Order."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement key="textField-2" style="9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="485" width="474" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="ff28e31e-c790-45fd-8683-9b4b13735a71"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["By accepting this order, Supplier warrants that the subject matter of this Order is free from defects in materials, workmanship and fabrication, and that all merchandise delivered shall be of the quality, quantity, size, description and dimensions specified and shall be strictly in accordance with the Buyers specifications, drawings and approved sample, if any, and suitable for the purpose designated. These warranties shall survive acceptance and payment, and shall ensure to the benefit of the Buyers, its successors, assigns, customers and the end user of its products and shall not be deemed to be exclusive.  This warranty is in addition to any warranties of additional scope given by Supplier to the Buyer."
++"\n\n"+
+"Defective parts must be replaced & shipped by the supplier at the suppliers cost within 10 days."]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
