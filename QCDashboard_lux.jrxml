@@ -1,0 +1,1005 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QCDashboardLUX" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9955ccc0-971f-458f-b2ee-d1e14e6259c9">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="New Dataset 1" uuid="ed845f1a-a52a-44a6-9102-98d137390727">
+		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+			<property name="Group" value="Select a date field and enter a date range"/>
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+			<property name="Group" value="Select a date field and enter a date range"/>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Type an alternate title for this report"/>
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbApplyDateFilterTo" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Select a date field and enter a date range"/>
+			<parameterDescription><![CDATA[xoitem.datescheduledfulfillment,Fulfillment Date,xo.datecreated,Date Created,xo.dateissued,Date Issued,xo.datecompleted,Date Fulfilled,xo.datelastmodified,Date Last Changed]]></parameterDescription>
+			<defaultValueExpression><![CDATA["Xoitem.datescheduledfulfillment"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[90,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[80,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[70,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckRequest" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[15,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["15"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[20,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEntered" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckPicking" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[30,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckPartial" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[40,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckPicked" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[50,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["50"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShipped" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[60,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[25,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Order Status"/>
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupIDToLocationGroup" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupIDFromLocationGroup" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<parameterDescription><![CDATA[xo.num,Order Number,fromlg.name,From LG,tolg.name,To LG,xo.dateissued,Date Issued,xo.statusid,Status]]></parameterDescription>
+			<defaultValueExpression><![CDATA["xo.num"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="TO#" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[TO #]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShipDates" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Ship Date]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Quantity" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="PartNumber" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Part Number]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ProductNumber" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Product Number]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ImpactedSOs" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Impacted SOs]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="CMPONumber" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[CM PO Number]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Trackin" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Tracking]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShippedVia" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Shipped Via]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="TOStatus" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[TO Status]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="TOCompleteDate" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[TO Complete Date]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="CM PO Number" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Shipped Via" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Tracking" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="UseShipDateFilter" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Group" value="Ship Date Filter"/>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Ship Date" class="java.util.Date" isForPrompting="false">
+			<property name="Group" value="Ship Date Filter"/>
+		</parameter>
+		<parameter name="DateScheduled" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Date Scheduled]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="OnHand" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[On Hand]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Customers" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Customers]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ContractManufacturer" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Show/Hide"/>
+			<parameterDescription><![CDATA[Contract Manufacturer]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT XO.NUM XONUM,
+       CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Ship Date") SHIPDATE,
+       COALESCE(SHIPITEM.QTYSHIPPED, 0) QT,
+       PART.NUM PARTNUM,
+       PRODUCT.NUM PRONUM,
+       result1.NUM AS SONUM,
+       IF(LOCATE(",",result1.NUM) > 0, 1, 0) SOMULTI,
+       CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "CM PO Number") CMPONUM,
+       CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Tracking") TRACKING,
+       CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Shipped Via") SHIPPEDVIA,
+       XOSTATUS.NAME STATUS,
+       XOITEM.DATELASTFULFILLMENT DATECOMPLETE,
+       result2.dateScheduled AS DATESCHEDULED,
+       COALESCE(qtyonhand.qty,0) AS qoh,
+       result3.customers AS CUSTOMERS,
+       result4.CONTRACTMANUFACTURER
+
+FROM XO
+     INNER JOIN XOITEM ON XOITEM.XOID = XO.ID
+     INNER JOIN XOITEMSTATUS XOSTATUS ON XOSTATUS.ID = XOITEM.STATUSID
+     LEFT OUTER JOIN PART ON PART.ID = XOITEM.PARTID
+     LEFT OUTER JOIN PRODUCT ON PRODUCT.PARTID = PART.ID
+     LEFT OUTER JOIN SHIPITEM ON SHIPITEM.XOITEMID = XOITEM.ID
+     LEFT OUTER JOIN (SELECT GROUP_CONCAT(DISTINCT SO.NUM) NUM, PRODUCT.PARTID
+                      FROM SO
+                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
+                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
+                      WHERE SO.STATUSID IN (20,25)
+                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
+                      GROUP BY 2) result1 ON result1.PARTID = PART.ID
+    LEFT OUTER JOIN (SELECT min(soitem.datescheduledfulfillment) AS dateScheduled, PRODUCT.PARTID
+                      FROM SO
+                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
+                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
+                      WHERE SO.STATUSID IN (20,25)
+                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
+                      GROUP BY 2) result2 ON result2.PARTID = PART.ID
+    LEFT OUTER JOIN qtyonhand ON qtyOnHand.partid = part.id
+    LEFT OUTER JOIN (SELECT GROUP_CONCAT(DISTINCT customer.name) customers, PRODUCT.PARTID
+                      FROM SO
+                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
+                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
+		      INNER JOIN customer ON so.customerId = customer.id
+                      WHERE SO.STATUSID IN (20,25)
+                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
+                      GROUP BY 2) result3 ON result3.PARTID = PART.ID
+     LEFT OUTER JOIN (SELECT GROUP_CONCAT(DISTINCT CUSTOMFIELDBYNAME(SO.CUSTOMFIELDS, "Contract Manufacturer")) CONTRACTMANUFACTURER, PRODUCT.PARTID
+                      FROM SO
+                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
+                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
+                      WHERE SO.STATUSID IN (20,25)
+                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
+                      GROUP BY 2) result4 ON result4.PARTID = PART.ID
+WHERE $P!{cbApplyDateFilterTo} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+  AND XO.FROMLGID IN ($P!{locationGroupIDFromLocationGroup})
+  AND XO.SHIPTOLGID IN ($P!{locationGroupIDToLocationGroup})
+  AND COALESCE(PRODUCT.NUM, "") LIKE $P{productNum}
+  AND COALESCE(PART.NUM, "") LIKE $P{partNum}
+  AND XO.STATUSID IN ($P{ckEntered}, $P{ckRequest}, $P{ckIssued}, $P{ckPicking}, $P{ckPartial}, $P{ckPicked}, $P{ckShipped}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided})
+  AND COALESCE(CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "CM PO Number"), "") LIKE $P{CM PO Number}
+  AND COALESCE(CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Shipped Via"), "") LIKE $P{Shipped Via}
+  AND COALESCE(CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Tracking"), "") LIKE $P{Tracking}
+  AND IF($P{UseShipDateFilter}, COALESCE(CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Tracking"), "") LIKE $P{Ship Date}, 1=1)
+
+ORDER BY $P!{cbSortBy}, XO.NUM, XOITEM.LINEITEM]]>
+		</queryString>
+		<field name="XONUM" class="java.lang.String"/>
+		<field name="SHIPDATE" class="java.sql.Timestamp"/>
+		<field name="QT" class="java.lang.Double"/>
+		<field name="PARTNUM" class="java.lang.String"/>
+		<field name="PRONUM" class="java.lang.String"/>
+		<field name="SONUM" class="java.lang.String"/>
+		<field name="SOMULTI" class="java.lang.Boolean"/>
+		<field name="CMPONUM" class="java.lang.String"/>
+		<field name="TRACKING" class="java.lang.String"/>
+		<field name="SHIPPEDVIA" class="java.lang.String"/>
+		<field name="STATUS" class="java.lang.String"/>
+		<field name="DATECOMPLETE" class="java.sql.Timestamp"/>
+		<field name="DATESCHEDULED" class="java.sql.Timestamp"/>
+		<field name="qoh" class="java.lang.Double"/>
+		<field name="CUSTOMERS" class="java.lang.String"/>
+		<field name="CONTRACTMANUFACTURER" class="java.lang.String"/>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Type an alternate title for this report"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbApplyDateFilterTo" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[xoitem.datescheduledfulfillment,Fulfillment Date,xo.datecreated,Date Created,xo.dateissued,Date Issued,xo.datecompleted,Date Fulfilled,xo.datelastmodified,Date Last Changed]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Xoitem.datescheduledfulfillment"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[90,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[80,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[70,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckRequest" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[15,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["15"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[20,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEntered" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[10,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckPicking" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[30,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckPartial" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[40,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckPicked" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[50,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["50"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShipped" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[60,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[25,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Order Status"/>
+		<parameterDescription><![CDATA[10,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupIDToLocationGroup" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupIDFromLocationGroup" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<parameterDescription><![CDATA[xo.num,Order Number,fromlg.name,From LG,tolg.name,To LG,xo.dateissued,Date Issued,xo.statusid,Status]]></parameterDescription>
+		<defaultValueExpression><![CDATA["xo.num"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TO#" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[TO #]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShipDates" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Ship Date]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Quantity" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PartNumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Part Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ProductNumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Product Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ImpactedSOs" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Impacted SOs]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CMPONumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[CM PO Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Trackin" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Tracking]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShippedVia" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Shipped Via]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOStatus" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[TO Status]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOCompleteDate" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[TO Complete Date]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CM PO Number" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Shipped Via" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Tracking" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Ship Date" class="java.util.Date" isForPrompting="false">
+		<property name="Group" value="Ship Date Filter"/>
+	</parameter>
+	<parameter name="UseShipDateFilter" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Ship Date Filter"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DateScheduled" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OnHand" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[On Hand]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Customers" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Customers]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ContractManufacturer" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Show/Hide"/>
+		<parameterDescription><![CDATA[Contract Manufacturer]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT NAME COMPANY
+FROM COMPANY
+WHERE ID = 1]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<variable name="CostDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+	</variable>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="0" width="752" height="18" uuid="55467fdd-a0cf-4b88-beb8-32b0afe8a3f8"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="54" width="752" height="10" uuid="4fdfd783-10cb-47d2-8c07-8dbd2b22f854"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="752" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="261d64a1-5bb5-4cb2-86eb-e76d81871c32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Transfer Order Traveler" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="752" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="03009f08-c00d-4d4c-a464-90480e2d8f86">
+					<printWhenExpression><![CDATA[true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange1}.getYear() <= -900 && $P{dateRange2}.getYear() >= 1100
+  ? "Date Range: All"
+  : "Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
+(new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-129600000)]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="0" y="0" width="752" height="50" uuid="9674e704-79fa-45be-b356-cfe736b60cee"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="New Dataset 1" uuid="67a136f1-da2e-4bee-bab8-6c722b117e52">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="65" uuid="0045db52-2abc-4448-9ce2-fd792ff0cb5e">
+						<printWhenExpression><![CDATA[$P{TO#}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="65" height="30" uuid="cb0bac7b-ef69-4f14-9a1a-39aaceb25617"/>
+								<box leftPadding="3" rightPadding="3"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TO #]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="65" height="13" uuid="644073bc-a0a1-414d-9e94-c00c3d4524fa"/>
+								<box leftPadding="3" rightPadding="3"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{XONUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="65" uuid="7efba90c-9301-427e-9189-540a8e5f4dec">
+						<printWhenExpression><![CDATA[$P{ShipDates}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="65" height="30" uuid="c2999b08-4e2a-4247-b42a-d6def7055066"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Ship Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="65" height="13" uuid="3a069474-bac1-48b6-9d0e-6bb511bffb8c"/>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SHIPDATE}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="f1ab0102-ab2b-466b-9da0-22bb853e4d6a">
+						<printWhenExpression><![CDATA[$P{Quantity}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="30" uuid="2c21814b-cad3-4116-84bc-3d156f24ce12"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Quantity]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="13" uuid="bcb26d52-37da-4af4-96d5-4ba8680572f7"/>
+								<box leftPadding="3" rightPadding="5"/>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{QT}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="5cf2be5f-ffdb-4f06-a46a-747798dee9a3">
+						<printWhenExpression><![CDATA[$P{PartNumber}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="d3db77be-90e3-4d03-9a8d-34859534fc56"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Part
+Number]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="7e1993f2-9093-43b7-9b2c-29861ea1d076"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PARTNUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="95fed8da-4118-408d-bf2d-2300e3fe42e9">
+						<printWhenExpression><![CDATA[$P{ProductNumber}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="4e07d34b-0f20-4c31-a716-5c76fb079467"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Product Number]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="5c202472-427a-4a47-9828-3b6b48520f51"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PRONUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="c93dbdef-12cb-4fba-b579-b0f5c842f050">
+						<printWhenExpression><![CDATA[$P{ImpactedSOs}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="d28dcc01-ce6c-41c6-945b-99bfa394ed8b"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Impacted SOs]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="17325a58-1638-44a2-a974-c8e8eb1d5122">
+									<printWhenExpression><![CDATA[$F{SOMULTI}]]></printWhenExpression>
+								</reportElement>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SONUM}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+								<reportElement x="0" y="0" width="80" height="13" forecolor="#000099" uuid="853391db-eee7-475d-8f7d-c3abc0923bd1">
+									<printWhenExpression><![CDATA[!$F{SOMULTI}]]></printWhenExpression>
+								</reportElement>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SONUM}]]></textFieldExpression>
+								<anchorNameExpression><![CDATA["SONum"]]></anchorNameExpression>
+								<hyperlinkReferenceExpression><![CDATA[$F{SONUM}]]></hyperlinkReferenceExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="95fed8da-4118-408d-bf2d-2300e3fe42e9">
+						<printWhenExpression><![CDATA[$P{Customers}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="4e07d34b-0f20-4c31-a716-5c76fb079467"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Customers]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="5c202472-427a-4a47-9828-3b6b48520f51"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CUSTOMERS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="95fed8da-4118-408d-bf2d-2300e3fe42e9">
+						<printWhenExpression><![CDATA[$P{ContractManufacturer}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="4e07d34b-0f20-4c31-a716-5c76fb079467"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Contract Manufacturer]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="5c202472-427a-4a47-9828-3b6b48520f51"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CONTRACTMANUFACTURER}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="e30f9891-1ee1-4591-9a55-1c887c8f3d7b">
+						<printWhenExpression><![CDATA[$P{DateScheduled}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="ad87bfa8-d7d1-48d8-bdbe-08e844210e54"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Date Scheduled]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="13" uuid="f6d675a4-afce-4de9-beb2-051000d60ec9"/>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DATESCHEDULED}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="1af05146-7333-45c1-a345-59ceffaa5446">
+						<printWhenExpression><![CDATA[$P{CMPONumber}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="510de013-3c46-47fc-874f-643055be7791"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CM PO Number]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="ab71b677-c0a0-4ae3-9ce9-47b45e3efc6b"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CMPONUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="75" uuid="5cf0de3a-828d-4c58-b9de-859aebf85287">
+						<printWhenExpression><![CDATA[$P{Trackin}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="75" height="30" uuid="5e94f791-4490-421e-a76c-1f268107942f"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tracking]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="75" height="13" uuid="db220a4a-905d-4208-8caa-38f857d6a8e3"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TRACKING}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="75" uuid="dc45a32b-0443-4f0b-bbc3-a8de044923d5">
+						<printWhenExpression><![CDATA[$P{ShippedVia}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="75" height="30" uuid="195cbe97-9e2f-49a3-a18d-71cf3fa64861"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Shipped Via]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="75" height="13" uuid="9d2253c1-8b8e-4a76-b43d-9075543c9536"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SHIPPEDVIA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="75" uuid="7e418740-4a9d-449b-a125-14a2610cd802">
+						<printWhenExpression><![CDATA[$P{TOStatus}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="75" height="30" uuid="6946938e-63b6-42c2-bde2-bd72d356275d"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TO Status]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="75" height="13" uuid="78fad62e-1df7-4cef-888e-d7f7d8f8aba2"/>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STATUS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="e30f9891-1ee1-4591-9a55-1c887c8f3d7b">
+						<printWhenExpression><![CDATA[$P{TOCompleteDate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="ad87bfa8-d7d1-48d8-bdbe-08e844210e54"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TO Complete Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="13" uuid="f6d675a4-afce-4de9-beb2-051000d60ec9"/>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DATECOMPLETE}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="e30f9891-1ee1-4591-9a55-1c887c8f3d7b">
+						<printWhenExpression><![CDATA[$P{OnHand}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="ad87bfa8-d7d1-48d8-bdbe-08e844210e54"/>
+								<box leftPadding="2" rightPadding="3"/>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[On Hand]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="13" uuid="f6d675a4-afce-4de9-beb2-051000d60ec9"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{qoh}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
