@@ -202,17 +202,17 @@
        COALESCE(SHIPITEM.QTYSHIPPED, 0) QT,
        PART.NUM PARTNUM,
        PRODUCT.NUM PRONUM,
-       result1.NUM AS SONUM,
-       IF(LOCATE(",",result1.NUM) > 0, 1, 0) SOMULTI,
+       SO.NUM AS SONUM,
+       IF(LOCATE(",",SO.NUM) > 0, 1, 0) SOMULTI,
        CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "CM PO Number") CMPONUM,
        CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Tracking") TRACKING,
        CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Shipped Via") SHIPPEDVIA,
        XOSTATUS.NAME STATUS,
        XOITEM.DATELASTFULFILLMENT DATECOMPLETE,
-       result2.dateScheduled AS DATESCHEDULED,
+       SO.dateScheduled AS DATESCHEDULED,
        COALESCE(qtyonhand.qty,0) AS qoh,
-       result3.customers AS CUSTOMERS,
-       result4.CONTRACTMANUFACTURER
+       SO.customers AS CUSTOMERS,
+       SO.CONTRACTMANUFACTURER
 
 FROM XO
      INNER JOIN XOITEM ON XOITEM.XOID = XO.ID
@@ -220,36 +220,22 @@ FROM XO
      LEFT OUTER JOIN PART ON PART.ID = XOITEM.PARTID
      LEFT OUTER JOIN PRODUCT ON PRODUCT.PARTID = PART.ID
      LEFT OUTER JOIN SHIPITEM ON SHIPITEM.XOITEMID = XOITEM.ID
-     LEFT OUTER JOIN (SELECT GROUP_CONCAT(DISTINCT SO.NUM) NUM, PRODUCT.PARTID
-                      FROM SO
-                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
-                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
-                      WHERE SO.STATUSID IN (20,25)
-                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
-                      GROUP BY 2) result1 ON result1.PARTID = PART.ID
-    LEFT OUTER JOIN (SELECT min(soitem.datescheduledfulfillment) AS dateScheduled, PRODUCT.PARTID
-                      FROM SO
-                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
-                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
-                      WHERE SO.STATUSID IN (20,25)
-                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
-                      GROUP BY 2) result2 ON result2.PARTID = PART.ID
-    LEFT OUTER JOIN qtyonhand ON qtyOnHand.partid = part.id
-    LEFT OUTER JOIN (SELECT GROUP_CONCAT(DISTINCT customer.name) customers, PRODUCT.PARTID
+     LEFT OUTER JOIN (SELECT
+			PRODUCT.PARTID,
+			GROUP_CONCAT(DISTINCT SO.NUM) NUM,
+			min(soitem.datescheduledfulfillment) AS dateScheduled,
+		          GROUP_CONCAT(DISTINCT customer.name) customers,
+		          GROUP_CONCAT(DISTINCT CUSTOMFIELDBYNAME(SO.CUSTOMFIELDS, "Contract Manufacturer")) CONTRACTMANUFACTURER
                       FROM SO
                            INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
                            INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
 		      INNER JOIN customer ON so.customerId = customer.id
                       WHERE SO.STATUSID IN (20,25)
                         AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
-                      GROUP BY 2) result3 ON result3.PARTID = PART.ID
-     LEFT OUTER JOIN (SELECT GROUP_CONCAT(DISTINCT CUSTOMFIELDBYNAME(SO.CUSTOMFIELDS, "Contract Manufacturer")) CONTRACTMANUFACTURER, PRODUCT.PARTID
-                      FROM SO
-                           INNER JOIN SOITEM ON SOITEM.SOID = SO.ID AND SOITEM.STATUSID IN (10,14,20,30,40)
-                           INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
-                      WHERE SO.STATUSID IN (20,25)
-                        AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
-                      GROUP BY 2) result4 ON result4.PARTID = PART.ID
+                      GROUP BY 1) SO ON SO.PARTID = PART.ID
+
+    LEFT OUTER JOIN qtyonhand ON qtyOnHand.partid = part.id
+
 WHERE $P!{cbApplyDateFilterTo} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
   AND XO.FROMLGID IN ($P!{locationGroupIDFromLocationGroup})
   AND XO.SHIPTOLGID IN ($P!{locationGroupIDToLocationGroup})
