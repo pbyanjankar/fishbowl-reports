@@ -150,6 +150,12 @@
 			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,soitem.dateLastFulfillment,SO Item Date Fulfilled]]></parameterDescription>
 			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="colPercentYOYChange" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colAccountStatus" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
     customer.id,
@@ -161,7 +167,13 @@
     grosssales1.SALES1,
     grosssales2.SALES2,
     ((grosssales1.SALES1 - grosssales2.SALES2) / grosssales2.SALES2) AS PERCENTCHANGE,
-    datediff(now(), result.LASTSOITEMFULFILLED)  AS LASTSOLDDAYS
+    CASE
+	WHEN datediff(now(), result.LASTSOITEMFULFILLED) <=90 THEN "ACTIVE"
+	WHEN datediff(now(), result.LASTSOITEMFULFILLED) > 90 AND datediff(now(), result.LASTSOITEMFULFILLED) <= 365 THEN "Dormant"
+	ELSE
+		"Inactive"
+    END AS ACCOUNTSTATUS
+
 FROM customer
 LEFT OUTER JOIN currency ON 1 = 1
 LEFT OUTER JOIN sysuser ON sysuser.id = customer.defaultSalesmanId
@@ -262,8 +274,8 @@ ORDER BY $P!{cbOrderBy} $P!{cbSortOrder}]]>
 		<field name="LASTSOITEMFULFILLED" class="java.sql.Timestamp"/>
 		<field name="SALES1" class="java.lang.Double"/>
 		<field name="SALES2" class="java.lang.Double"/>
-		<field name="LASTSOLDDAYS" class="java.lang.Integer"/>
 		<field name="PERCENTCHANGE" class="java.lang.Double"/>
+		<field name="ACCOUNTSTATUS" class="java.lang.String"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -286,11 +298,6 @@ ORDER BY $P!{cbOrderBy} $P!{cbSortOrder}]]>
 		<variable name="TotalGrossSales2" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{SALES2} == null ? 0 : $F{SALES2}]]></variableExpression>
 			<initialValueExpression><![CDATA[0]]></initialValueExpression>
-		</variable>
-		<variable name="accountStatus" class="java.lang.String">
-			<variableExpression><![CDATA[$F{LASTSOLDDAYS} < 90 ? "Active":
-$F{LASTSOLDDAYS} > 91 &&  $F{LASTSOLDDAYS} <= 365 ? "Dormant":
-"Inactive"]]></variableExpression>
 		</variable>
 	</subDataset>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
@@ -426,7 +433,7 @@ $F{LASTSOLDDAYS} > 91 &&  $F{LASTSOLDDAYS} <= 365 ? "Dormant":
 	</parameter>
 	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="Sorting"/>
-		<parameterDescription><![CDATA[2,Customer,3,Default Salesperson,5,Customer Type, 6,Last SO Item Date Fulfilled,7,Gross Sales 1,8,Gross Sales 2]]></parameterDescription>
+		<parameterDescription><![CDATA[2,Customer,3,Default Salesperson,5,Customer Type, 6,Last SO Item Date Fulfilled,7,Gross Sales 1,8,Gross Sales 2,9,Percent YOY Change,10,Account Status]]></parameterDescription>
 		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cbSortOrder" class="java.lang.String" isForPrompting="false">
@@ -441,6 +448,12 @@ $F{LASTSOLDDAYS} > 91 &&  $F{LASTSOLDDAYS} <= 365 ? "Dormant":
 		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowCustomersHavingNoGrossSales1" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colPercentYOYChange" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colAccountStatus" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -510,7 +523,7 @@ WHERE id = 1]]>
 					<printWhenExpression><![CDATA[true]]></printWhenExpression>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="SOInfo" uuid="ed83e18a-8ea2-41e6-a5b5-b404e30438f9">
+					<datasetRun subDataset="SOInfo" uuid="7cb403fe-72df-4fd9-b7da-5398bd2dbb71">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<datasetParameter name="ckInProgress">
 							<datasetParameterExpression><![CDATA[$P{ckInProgress}]]></datasetParameterExpression>
@@ -592,6 +605,12 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<datasetParameter name="cbCustomerType">
 							<datasetParameterExpression><![CDATA[$P{cbCustomerType}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colPercentYOYChange">
+							<datasetParameterExpression><![CDATA[$P{colPercentYOYChange}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colAccountStatus">
+							<datasetParameterExpression><![CDATA[$P{colAccountStatus}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
@@ -794,7 +813,7 @@ WHERE id = 1]]>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="80" uuid="4101b3df-ba66-490e-acd4-8570db904a43">
-							<printWhenExpression><![CDATA[$P{colGrossSales2}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{colPercentYOYChange}]]></printWhenExpression>
 							<jr:columnHeader height="30" rowSpan="1">
 								<staticText>
 									<reportElement x="0" y="0" width="80" height="30" uuid="5c30c342-d78e-4eb9-9c5d-a6d00b124389"/>
@@ -821,7 +840,7 @@ WHERE id = 1]]>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="69" uuid="4101b3df-ba66-490e-acd4-8570db904a43">
-							<printWhenExpression><![CDATA[$P{colGrossSales2}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{colAccountStatus}]]></printWhenExpression>
 							<jr:columnHeader height="30" rowSpan="1">
 								<staticText>
 									<reportElement x="0" y="0" width="69" height="30" uuid="5c30c342-d78e-4eb9-9c5d-a6d00b124389"/>
@@ -843,7 +862,7 @@ WHERE id = 1]]>
 									<reportElement x="0" y="0" width="69" height="16" uuid="4e6bc0c5-8dc3-4f3a-b503-8d58d7f9736e"/>
 									<box topPadding="3" leftPadding="3" rightPadding="3"/>
 									<textElement textAlignment="Center"/>
-									<textFieldExpression><![CDATA[$V{accountStatus}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{ACCOUNTSTATUS}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
