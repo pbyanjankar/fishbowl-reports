@@ -159,7 +159,7 @@ ORDER BY $P!{cbOrderBy} $P!{cbSortOrder}]]>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Print Products and corresponding sales summary"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Print Sales By Product Analysis/Reorder"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
