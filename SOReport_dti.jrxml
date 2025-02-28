@@ -708,7 +708,7 @@ WHERE $P{soId} = so.id]]>
 	</parameter>
 	<parameter name="cbBankAccount" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA["CA","CA Bank","US","US Bank","EUR","EUR Bank","GBP","GBP Bank"]]></parameterDescription>
-		<defaultValueExpression><![CDATA["CA"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["US"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowRMA#" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
