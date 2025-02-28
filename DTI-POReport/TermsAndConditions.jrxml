@@ -48,9 +48,6 @@
 	</background>
 	<summary>
 		<band height="132">
-			<break>
-				<reportElement x="0" y="0" width="100" height="1" uuid="befb0151-4b7d-42df-882a-d42c7e5b0b2d"/>
-			</break>
 			<image scaleImage="RealHeight">
 				<reportElement x="0" y="0" width="552" height="24" uuid="11d4a6ea-9eab-47a7-9ab5-6e7fe8e53e99"/>
 				<imageExpression><![CDATA["../Custom/DTI-POReport/INSTRUCTION1.jpg"]]></imageExpression>
