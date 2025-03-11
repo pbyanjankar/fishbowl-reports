@@ -107,7 +107,7 @@
 			<property name="Sort" value="9"/>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
-		<parameter name="Micro-Site" class="java.lang.Boolean" isForPrompting="false">
+		<parameter name="MIcro-Site" class="java.lang.Boolean" isForPrompting="false">
 			<property name="Sort" value="10"/>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
@@ -266,7 +266,7 @@ if($P{WayfairPlatform},CustomFieldByName(mproduct.customfields,'Wayfair Platform
 if($P{WorthingtonDirect},CustomFieldByName(mproduct.customfields,'Worthington Direct') = "true",false) OR
 if($P{ZoroPlatform},CustomFieldByName(mproduct.customfields,'Zoro Platform') = "true",false) OR
 if($P{FizzFurniture},CustomFieldByName(mproduct.customfields,'Fizz Furniture') = "true",false) OR
-if($P{Micro-Site},CustomFieldByName(mproduct.customfields,'Micro-Site') = "true",false) OR
+if($P{MIcro-Site},CustomFieldByName(mproduct.customfields,'MIcro-Site') = "true",false) OR
 if($P{WalmartItems},CustomFieldByName(mproduct.customfields,'Walmart Items') = "true",false) OR
 if($P{OFDSiteItems},CustomFieldByName(mproduct.customfields,'OFD Site Items') = "true",false) OR
 if($P{NewPlatform6},CustomFieldByName(mproduct.customfields,'New Platform 6') = "true",false) OR
@@ -398,7 +398,7 @@ ORDER BY mproduct.num;]]>
 		<property name="Sort" value="9"/>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Micro-Site" class="java.lang.Boolean" isForPrompting="false">
+	<parameter name="MIcro-Site" class="java.lang.Boolean" isForPrompting="false">
 		<property name="Sort" value="10"/>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
