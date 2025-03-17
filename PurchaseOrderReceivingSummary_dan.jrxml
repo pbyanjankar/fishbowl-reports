@@ -133,6 +133,30 @@
 			<parameterDescription><![CDATA[50,0]]></parameterDescription>
 			<defaultValueExpression><![CDATA["50"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="ckItemFulfilled" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Status"/>
+			<property name="Group" value="Receiving Item Status"/>
+			<parameterDescription><![CDATA[40,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckItemReceived" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Status"/>
+			<property name="Group" value="Receiving Item Status"/>
+			<parameterDescription><![CDATA[30,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckItemReconciled" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Status"/>
+			<property name="Group" value="Receiving Item Status"/>
+			<parameterDescription><![CDATA[20,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckItemEntered" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Status"/>
+			<property name="Group" value="Receiving Item Status"/>
+			<parameterDescription><![CDATA[10,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
    POITEM.DATESCHEDULEDFULFILLMENT AS POITEMDATESCHEDULEDFULFILLMENT,
@@ -154,6 +178,7 @@ WHERE
    COALESCE(part.num, '') LIKE $P{partNum}
    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND PO.statusID IN ($P!{ckBidRequest}, $P!{ckPendingApproval},$P!{ckIssued}, $P!{ckPicking}, $P!{ckPartial}, $P!{ckPicked}, $P!{ckFulfilled}, $P!{ckClosedShort}, $P!{ckVoided})
+AND receiptitem.statusid IN ($P!{ckItemEntered}, $P!{ckItemReconciled}, $P!{ckItemReceived}, $P!{ckItemFulfilled})
 ORDER BY $P!{cbSortBy}]]>
 		</queryString>
 		<field name="PONUM" class="java.lang.String"/>
@@ -283,6 +308,30 @@ ORDER BY $P!{cbSortBy}]]>
 		<property name="Group" value="Order Status"/>
 		<parameterDescription><![CDATA[50,0]]></parameterDescription>
 		<defaultValueExpression><![CDATA["50"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckItemFulfilled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Status"/>
+		<property name="Group" value="Receiving Item Status"/>
+		<parameterDescription><![CDATA[40,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckItemReceived" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Status"/>
+		<property name="Group" value="Receiving Item Status"/>
+		<parameterDescription><![CDATA[30,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckItemReconciled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Status"/>
+		<property name="Group" value="Receiving Item Status"/>
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckItemEntered" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Status"/>
+		<property name="Group" value="Receiving Item Status"/>
+		<parameterDescription><![CDATA[10,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
