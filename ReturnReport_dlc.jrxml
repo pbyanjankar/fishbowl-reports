@@ -229,6 +229,9 @@ ORDER BY
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
+		<variable name="TotalQtyFulfilled" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{QTYFULFILLED}]]></variableExpression>
+		</variable>
 	</subDataset>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
@@ -654,6 +657,15 @@ WHERE id = 1]]>
 							<box>
 								<topPen lineWidth="1.0"/>
 							</box>
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="69" height="20" isPrintWhenDetailOverflows="true" uuid="adc50124-a0af-4eb5-8fcb-df983b7efa4f"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{TotalQtyFulfilled}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
