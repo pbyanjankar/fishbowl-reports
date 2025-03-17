@@ -161,7 +161,7 @@
     soitem.qtyfulfilled AS QTYFULFILLED,
     CURRENCY.SYMBOL,
     soitemtype.name AS SOITEMTYPE,
-    CustomFieldByName(part.customfields, 'Part Type') AS PARTTYPE,
+    CustomFieldByName(part.customfields, 'Part Category') AS PARTCATEGORY,
     part.num AS PARTNUM
 
 FROM
@@ -207,7 +207,7 @@ ORDER BY
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="QTYFULFILLED" class="java.lang.Double"/>
-		<field name="PARTTYPE" class="java.lang.String"/>
+		<field name="PARTCATEGORY" class="java.lang.String"/>
 		<field name="PARTNUM" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
@@ -582,7 +582,7 @@ WHERE id = 1]]>
 								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{PARTTYPE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{PARTCATEGORY}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
