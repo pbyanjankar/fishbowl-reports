@@ -25,39 +25,32 @@
 			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[Select po.num AS poNum, vendor.name AS Vendor, postpo.postdate,
+			<![CDATA[Select
+po.num AS poNum,
+postpo.postdate,
     CASE WHEN poitem.typeid = 20
         THEN -1 *((postpoitem.qty * COALESCE(uomconversion.multiply,1)) / COALESCE(uomconversion.factor,1))
         ELSE ((postpoitem.qty * COALESCE(uomconversion.multiply,1)) / COALESCE(uomconversion.factor,1))
-    END AS qty, postpoitem.postedtotalcost,
-CURRENCY.SYMBOL
+    END AS qty,
+poitemstatus.name AS ITEMSTATUS
 
 from po
-JOIN vendor ON po.vendorid = vendor.id
 JOIN poitem ON po.id = poitem.poid
+LEFT JOIN poitemstatus ON poitem.statusid = poitemstatus.id
 JOIN postpoitem ON poitem.id = postpoitem.poitemid
 JOIN postpo ON postpoitem.postpoid = postpo.id
 JOIN part on poitem.partid = part.id
 LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = poitem.uomid)
-LEFT JOIN currency ON currency.homeCurrency = 1
-
-
 where part.id = $P{partId}
 and postpo.postdate between $P{dateRange1} and DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-and po.locationGroupId in ($P!{locationGroupID})
 AND poitem.typeid <> 30]]>
 		</queryString>
 		<field name="PONUM" class="java.lang.String"/>
-		<field name="VENDOR" class="java.lang.String"/>
+		<field name="ITEMSTATUS" class="java.lang.String"/>
 		<field name="POSTDATE" class="java.sql.Timestamp"/>
 		<field name="QTY" class="java.lang.Double"/>
-		<field name="POSTEDTOTALCOST" class="java.lang.Double"/>
-		<field name="SYMBOL" class="java.lang.Integer"/>
 		<variable name="TotalQty" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
-		</variable>
-		<variable name="TotalCost" class="java.lang.Double" calculation="Sum">
-			<variableExpression><![CDATA[$F{POSTEDTOTALCOST}]]></variableExpression>
 		</variable>
 		<variable name="DateFormat" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
@@ -74,17 +67,14 @@ AND poitem.typeid <> 30]]>
 		<variable name="TotalDateQty" class="java.lang.Double" resetType="Group" resetGroup="DatePo" calculation="Sum">
 			<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
 		</variable>
-		<variable name="TotalDateCost" class="java.lang.Double" resetType="Group" resetGroup="DatePo" calculation="Sum">
-			<variableExpression><![CDATA[$F{POSTEDTOTALCOST}]]></variableExpression>
-		</variable>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
 		<group name="DatePo">
-			<groupExpression><![CDATA[new SimpleDateFormat($V{DateFormat}).format($F{POSTDATE}) + $F{PONUM}]]></groupExpression>
+			<groupExpression><![CDATA[new SimpleDateFormat($V{DateFormat}).format($F{POSTDATE}) + $F{PONUM}+$F{ITEMSTATUS}]]></groupExpression>
 		</group>
 	</subDataset>
-	<subDataset name="SO History" uuid="28491788-9000-4988-ab74-a4d2cd8b5d56">
+	<subDataset name="Receiving History" uuid="28491788-9000-4988-ab74-a4d2cd8b5d56">
 		<parameter name="productId" class="java.lang.String">
 			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
 		</parameter>
@@ -102,43 +92,29 @@ AND poitem.typeid <> 30]]>
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[select so.dateCompleted as soDate, so.num as SoNum, customer.name as CustomerName,
-CASE WHEN soitem.typeid = 20
-     THEN ((postsoitem.qty * COALESCE(uomconversion.multiply,1)) / COALESCE(uomconversion.factor,1))
-     ELSE  -1 * ((postsoitem.qty * COALESCE(uomconversion.multiply,1)) / COALESCE(uomconversion.factor,1))
-END as Qty, postsoitem.totalprice as Price, postso.postdate as postDate,
-   CURRENCY.SYMBOL
-
-FROM part
-INNER JOIN product ON part.id = product.partid
-INNER JOIN soitem ON product.id = soitem.productid
-INNER JOIN postsoitem ON soitem.id = postsoitem.soitemid
-INNER JOIN postso ON postsoitem.postsoid = postso.id
-INNER JOIN so ON soitem.soid = so.id
-INNER JOIN customer on customer.id = so.customerId
-LEFT OUTER JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
-LEFT JOIN currency ON currency.homeCurrency = 1
-
-
-
-where part.num = $P{partNum}
-AND postso.postdate between $P{dateRange1} and $P{dateRange2}
-and so.locationGroupId in ($P!{locationGroupID})
-
--- ORDER BY so.datecompleted]]>
+			<![CDATA[SELECT
+RECEIPTITEM.ID AS RECEIPTITEMID,
+PO.NUM AS PONUM,
+receiptitem.qty AS QTY,
+RECEIPTITEM.DATERECEIVED AS RECEIPTITEMDATERECEIVED,
+trackinginfo.info AS LOTNUMBER
+FROM receiptitem
+    JOIN receipt ON receipt.id = receiptitem.receiptid
+    JOIN poitem ON poitem.id = receiptitem.poitemid
+    JOIN po ON po.id = poitem.poid
+    LEFT JOIN part ON part.id = poitem.partid
+    LEFT OUTER JOIN trackinginfo ON tableid = 1259138490 AND receiptitem.id = trackinginfo.recordid AND trackinginfo.parttrackingid = 1
+WHERE receiptitem.datereceived BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+  AND UPPER(part.num) LIKE UPPER($P{partNum})
+  AND receiptitem.typeid = 10
+  AND Receipt.ordertypeid = 10;]]>
 		</queryString>
-		<field name="SODATE" class="java.sql.Timestamp"/>
-		<field name="SONUM" class="java.lang.String"/>
-		<field name="CUSTOMERNAME" class="java.lang.String"/>
+		<field name="RECEIPTITEMDATERECEIVED" class="java.sql.Timestamp"/>
+		<field name="PONUM" class="java.lang.String"/>
 		<field name="QTY" class="java.lang.Double"/>
-		<field name="PRICE" class="java.lang.Double"/>
-		<field name="POSTDATE" class="java.sql.Timestamp"/>
-		<field name="SYMBOL" class="java.lang.Integer"/>
+		<field name="LOTNUMBER" class="java.lang.String"/>
 		<variable name="TotalQty" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
-		</variable>
-		<variable name="TotalPrice" class="java.lang.Double" calculation="Sum">
-			<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
 		</variable>
 		<variable name="DateFormat" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
@@ -152,17 +128,14 @@ and so.locationGroupId in ($P!{locationGroupID})
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
-		<variable name="TotalDateQty" class="java.lang.Double" resetType="Group" resetGroup="DateSo" calculation="Sum">
+		<variable name="TotalDateQty" class="java.lang.Double" resetType="Group" resetGroup="DateReceipt" calculation="Sum">
 			<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
-		</variable>
-		<variable name="TotalDatePrice" class="java.lang.Double" resetType="Group" resetGroup="DateSo" calculation="Sum">
-			<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
 		</variable>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
-		<group name="DateSo">
-			<groupExpression><![CDATA[new SimpleDateFormat($V{DateFormat}).format($F{POSTDATE}) + $F{SONUM}]]></groupExpression>
+		<group name="DateReceipt">
+			<groupExpression><![CDATA[new SimpleDateFormat($V{DateFormat}).format($F{RECEIPTITEMDATERECEIVED}) + $F{PONUM}+$F{LOTNUMBER}]]></groupExpression>
 		</group>
 	</subDataset>
 	<subDataset name="ItemAdjustHistory" uuid="4c2382f0-8806-4b18-ac70-9e5e8d493117">
@@ -405,8 +378,8 @@ order by part.num]]>
 		<groupExpression><![CDATA[$F{PARTNUMBER}]]></groupExpression>
 		<groupHeader>
 			<band height="19" splitType="Stretch">
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="90" height="14" backcolor="#EAEAEA" uuid="8f9e6cf5-2bcd-4cea-82b7-ad6220b9ab45"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="90" height="14" forecolor="#000099" backcolor="#EAEAEA" uuid="8f9e6cf5-2bcd-4cea-82b7-ad6220b9ab45"/>
 					<box>
 						<bottomPen lineWidth="0.0" lineColor="#999999"/>
 					</box>
@@ -414,6 +387,8 @@ order by part.num]]>
 						<font fontName="Open Sans"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{PARTNUMBER}]]></textFieldExpression>
+					<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
+					<hyperlinkReferenceExpression><![CDATA[$F{PARTNUMBER}]]></hyperlinkReferenceExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="90" y="0" width="150" height="14" backcolor="#EAEAEA" uuid="aa5c52bd-b0c3-4ef6-9055-b7bc784d2bc2"/>
@@ -680,20 +655,20 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="240" uuid="760900cb-49f7-44c0-8b52-1a7fcd30b7c3">
+					<jr:columnGroup width="235" uuid="760900cb-49f7-44c0-8b52-1a7fcd30b7c3">
 						<jr:tableHeader height="14" rowSpan="1">
 							<box>
 								<bottomPen lineWidth="1.0"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="240" height="14" uuid="150c202c-81b6-4a30-a496-ab76da5ed56d"/>
+								<reportElement x="0" y="0" width="235" height="14" uuid="150c202c-81b6-4a30-a496-ab76da5ed56d"/>
 								<textElement>
 									<font fontName="Open Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Purchase History]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:column width="44" uuid="ea21c42f-6fcd-415f-9e43-55312dd33152">
+						<jr:column width="52" uuid="ea21c42f-6fcd-415f-9e43-55312dd33152">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
@@ -705,7 +680,7 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="44" height="11" isRemoveLineWhenBlank="true" uuid="85715693-7ce4-49f2-bf5d-aa75b6a1f346"/>
+										<reportElement x="0" y="0" width="52" height="11" isRemoveLineWhenBlank="true" uuid="85715693-7ce4-49f2-bf5d-aa75b6a1f346"/>
 										<box leftPadding="0" rightPadding="0"/>
 										<textElement>
 											<font fontName="Open Sans" size="8"/>
@@ -720,7 +695,7 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="44" height="11" uuid="72c73597-4f20-43af-be9e-3b8464b1720a"/>
+									<reportElement x="0" y="0" width="52" height="11" uuid="72c73597-4f20-43af-be9e-3b8464b1720a"/>
 									<textElement>
 										<font fontName="Open Sans" size="8" isBold="true"/>
 									</textElement>
@@ -729,11 +704,19 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
 						</jr:column>
-						<jr:column width="48" uuid="940dd701-460e-4d09-bfa0-c2f0d987a4af">
+						<jr:column width="65" uuid="940dd701-460e-4d09-bfa0-c2f0d987a4af">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
+								<staticText>
+									<reportElement x="0" y="0" width="65" height="11" uuid="919294a8-ff87-4c78-9407-dc2fb3dece5c"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Total:]]></text>
+								</staticText>
 							</jr:tableFooter>
 							<jr:groupFooter groupName="DatePo">
 								<jr:cell height="11" rowSpan="1">
@@ -741,7 +724,7 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-										<reportElement x="0" y="0" width="48" height="11" isRemoveLineWhenBlank="true" forecolor="#000099" uuid="ea0db6c1-8c51-4851-8243-b819a5d44917"/>
+										<reportElement x="0" y="0" width="65" height="11" isRemoveLineWhenBlank="true" forecolor="#000099" uuid="ea0db6c1-8c51-4851-8243-b819a5d44917"/>
 										<box leftPadding="2" rightPadding="0"/>
 										<textElement>
 											<font fontName="Open Sans" size="8"/>
@@ -757,7 +740,7 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="48" height="11" uuid="1c8fff00-88b6-492f-9c83-2659457b3b90"/>
+									<reportElement x="0" y="0" width="65" height="11" uuid="1c8fff00-88b6-492f-9c83-2659457b3b90"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="Open Sans" size="8" isBold="true"/>
@@ -767,57 +750,13 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
 						</jr:column>
-						<jr:column width="69" uuid="9d66e570-1cb4-4763-92db-72edd2aeac89">
-							<jr:tableFooter height="11" rowSpan="1">
-								<box>
-									<topPen lineWidth="1.0"/>
-								</box>
-								<staticText>
-									<reportElement x="0" y="0" width="69" height="11" uuid="919294a8-ff87-4c78-9407-dc2fb3dece5c"/>
-									<box leftPadding="3" rightPadding="3"/>
-									<textElement textAlignment="Right">
-										<font fontName="Open Sans" size="8" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Total:]]></text>
-								</staticText>
-							</jr:tableFooter>
-							<jr:groupFooter groupName="DatePo">
-								<jr:cell height="11" rowSpan="1">
-									<box>
-										<bottomPen lineWidth="0.25"/>
-									</box>
-									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="69" height="11" isRemoveLineWhenBlank="true" uuid="fb50d609-58c9-47bb-b16a-05b90bfe1146"/>
-										<box leftPadding="2" rightPadding="0"/>
-										<textElement>
-											<font fontName="Open Sans" size="8"/>
-										</textElement>
-										<textFieldExpression><![CDATA[$F{VENDOR}]]></textFieldExpression>
-									</textField>
-								</jr:cell>
-							</jr:groupFooter>
-							<jr:columnHeader height="11" rowSpan="1">
-								<box>
-									<bottomPen lineWidth="1.0" lineColor="#999999"/>
-								</box>
-								<staticText>
-									<reportElement x="0" y="0" width="69" height="11" uuid="cfadf2d3-c9ae-48f8-b76c-2194e207d631"/>
-									<box leftPadding="2"/>
-									<textElement>
-										<font fontName="Open Sans" size="8" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Vendor]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="0" rowSpan="1"/>
-						</jr:column>
-						<jr:column width="34" uuid="0d6e67ae-7a0d-40d9-9a65-84eac3dbfe57">
+						<jr:column width="57" uuid="0d6e67ae-7a0d-40d9-9a65-84eac3dbfe57">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="34" height="11" isRemoveLineWhenBlank="true" uuid="5461afc1-f7c9-4494-ad1a-9dca8b647cab"/>
+									<reportElement x="0" y="0" width="57" height="11" isRemoveLineWhenBlank="true" uuid="5461afc1-f7c9-4494-ad1a-9dca8b647cab"/>
 									<box leftPadding="0" rightPadding="0"/>
 									<textElement textAlignment="Right">
 										<font fontName="Open Sans" size="8" isBold="true"/>
@@ -832,7 +771,7 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="34" height="11" isRemoveLineWhenBlank="true" uuid="3e3cc5b1-0c47-4dd8-8c94-82e8d05a3ae6"/>
+										<reportElement x="0" y="0" width="57" height="11" isRemoveLineWhenBlank="true" uuid="3e3cc5b1-0c47-4dd8-8c94-82e8d05a3ae6"/>
 										<box leftPadding="2" rightPadding="0"/>
 										<textElement textAlignment="Right">
 											<font fontName="Open Sans" size="8"/>
@@ -847,7 +786,7 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="34" height="11" uuid="e69e393e-5b4a-4abc-bcea-03ae7166cc71"/>
+									<reportElement x="0" y="0" width="57" height="11" uuid="e69e393e-5b4a-4abc-bcea-03ae7166cc71"/>
 									<textElement textAlignment="Right">
 										<font fontName="Open Sans" size="8" isBold="true"/>
 									</textElement>
@@ -856,23 +795,11 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
 						</jr:column>
-						<jr:column width="45" uuid="30464674-dd19-40f2-b251-05c6a396f998">
+						<jr:column width="61" uuid="30464674-dd19-40f2-b251-05c6a396f998">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
-								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="45" height="11" isRemoveLineWhenBlank="true" uuid="cf53b1d4-c3d6-492d-aefe-71405f486245"/>
-									<box leftPadding="2" rightPadding="0"/>
-									<textElement textAlignment="Right">
-										<font fontName="Open Sans" size="8" isBold="true"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{TotalCost}, $V{CostDecimal})
-:
-$V{TotalCost}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
-								</textField>
 							</jr:tableFooter>
 							<jr:groupFooter groupName="DatePo">
 								<jr:cell height="11" rowSpan="1">
@@ -880,15 +807,12 @@ $V{TotalCost}]]></textFieldExpression>
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="45" height="11" isRemoveLineWhenBlank="true" uuid="9db67774-5436-4964-a619-06a6f7bd6f1f"/>
-										<box leftPadding="2" rightPadding="0"/>
-										<textElement textAlignment="Right">
+										<reportElement x="0" y="0" width="61" height="11" isRemoveLineWhenBlank="true" uuid="9db67774-5436-4964-a619-06a6f7bd6f1f"/>
+										<box leftPadding="3" rightPadding="0"/>
+										<textElement>
 											<font fontName="Open Sans" size="8"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{TotalDateCost}, $V{CostDecimal})
-:
-$V{TotalDateCost}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$F{ITEMSTATUS}]]></textFieldExpression>
 										<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
 									</textField>
 								</jr:cell>
@@ -898,11 +822,12 @@ $V{TotalDateCost}]]></textFieldExpression>
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="45" height="11" uuid="5a6f2364-fa1a-4a29-b416-68d973b6380c"/>
-									<textElement textAlignment="Right">
+									<reportElement x="0" y="0" width="61" height="11" uuid="5a6f2364-fa1a-4a29-b416-68d973b6380c"/>
+									<box leftPadding="3"/>
+									<textElement>
 										<font fontName="Open Sans" size="8" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Cost]]></text>
+									<text><![CDATA[Status]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
@@ -915,7 +840,7 @@ $V{TotalDateCost}]]></textFieldExpression>
 					<printWhenExpression><![CDATA[$P{ShowSalesHistory}]]></printWhenExpression>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
-					<datasetRun subDataset="SO History" uuid="94c4aa46-9dc7-478b-9cf6-c56736e11dbc">
+					<datasetRun subDataset="Receiving History" uuid="94c4aa46-9dc7-478b-9cf6-c56736e11dbc">
 						<datasetParameter name="dateRange1">
 							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -930,17 +855,17 @@ $V{TotalDateCost}]]></textFieldExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="240" uuid="66c4820d-9c1b-4632-b04e-94eedb8bee93">
+					<jr:columnGroup width="233" uuid="66c4820d-9c1b-4632-b04e-94eedb8bee93">
 						<jr:tableHeader height="14" rowSpan="1">
 							<box bottomPadding="0">
 								<bottomPen lineWidth="1.0"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="240" height="14" uuid="ff462b1d-c0c4-44ac-83cb-5a00454c8836"/>
+								<reportElement x="0" y="0" width="233" height="14" uuid="ff462b1d-c0c4-44ac-83cb-5a00454c8836"/>
 								<textElement>
 									<font fontName="Open Sans" size="10" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Sales History]]></text>
+								<text><![CDATA[Receiving History]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:column width="44" uuid="2537409f-edb5-4f1a-87e5-54ae79b8eeec">
@@ -949,7 +874,7 @@ $V{TotalDateCost}]]></textFieldExpression>
 									<topPen lineWidth="1.0"/>
 								</box>
 							</jr:tableFooter>
-							<jr:groupFooter groupName="DateSo">
+							<jr:groupFooter groupName="DateReceipt">
 								<jr:cell height="11" rowSpan="1">
 									<box>
 										<bottomPen lineWidth="0.25"/>
@@ -960,7 +885,7 @@ $V{TotalDateCost}]]></textFieldExpression>
 										<textElement>
 											<font fontName="Open Sans" size="8"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$F{SODATE}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$F{RECEIPTITEMDATERECEIVED}]]></textFieldExpression>
 										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 									</textField>
 								</jr:cell>
@@ -981,26 +906,26 @@ $V{TotalDateCost}]]></textFieldExpression>
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
 						</jr:column>
-						<jr:column width="48" uuid="c16cf847-f323-4c6a-a4b1-c42acdf3dca3">
+						<jr:column width="57" uuid="c16cf847-f323-4c6a-a4b1-c42acdf3dca3">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
 							</jr:tableFooter>
-							<jr:groupFooter groupName="DateSo">
+							<jr:groupFooter groupName="DateReceipt">
 								<jr:cell height="11" rowSpan="1">
 									<box>
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-										<reportElement x="0" y="0" width="48" height="11" isRemoveLineWhenBlank="true" forecolor="#000099" uuid="2a33cf7c-d280-4cc0-8a74-9a6a6c3ce52a"/>
+										<reportElement x="0" y="0" width="57" height="11" isRemoveLineWhenBlank="true" forecolor="#000099" uuid="2a33cf7c-d280-4cc0-8a74-9a6a6c3ce52a"/>
 										<box leftPadding="2" rightPadding="0"/>
 										<textElement>
 											<font fontName="Open Sans" size="8"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$F{SONUM}]]></textFieldExpression>
-										<anchorNameExpression><![CDATA["SONum"]]></anchorNameExpression>
-										<hyperlinkReferenceExpression><![CDATA[$F{SONUM}]]></hyperlinkReferenceExpression>
+										<textFieldExpression><![CDATA[$F{PONUM}]]></textFieldExpression>
+										<anchorNameExpression><![CDATA["PONum"]]></anchorNameExpression>
+										<hyperlinkReferenceExpression><![CDATA[$F{PONUM}]]></hyperlinkReferenceExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupFooter>
@@ -1010,68 +935,23 @@ $V{TotalDateCost}]]></textFieldExpression>
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="48" height="11" uuid="a022d1b3-0277-4b34-9658-3054229eac34"/>
+									<reportElement x="0" y="0" width="57" height="11" uuid="a022d1b3-0277-4b34-9658-3054229eac34"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="Open Sans" size="8" isBold="true"/>
 									</textElement>
-									<text><![CDATA[SO #]]></text>
+									<text><![CDATA[PO #]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
 						</jr:column>
-						<jr:column width="69" uuid="a1f980c2-ac46-44aa-8b71-584a4092110e">
-							<jr:tableFooter height="11" rowSpan="1">
-								<box>
-									<topPen lineWidth="1.0"/>
-								</box>
-								<staticText>
-									<reportElement x="0" y="0" width="69" height="11" uuid="d70edc52-77fd-4745-9b9d-b23dbd68d5fd"/>
-									<box leftPadding="0" rightPadding="2"/>
-									<textElement textAlignment="Right">
-										<font fontName="Open Sans" size="8" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Total:]]></text>
-								</staticText>
-							</jr:tableFooter>
-							<jr:groupFooter groupName="DateSo">
-								<jr:cell height="11" rowSpan="1">
-									<box>
-										<bottomPen lineWidth="0.25"/>
-									</box>
-									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="69" height="11" isRemoveLineWhenBlank="true" uuid="b7bc7376-0783-46b1-8586-ef1532ec62dd"/>
-										<box leftPadding="2" rightPadding="2"/>
-										<textElement>
-											<font fontName="Open Sans" size="8"/>
-										</textElement>
-										<textFieldExpression><![CDATA[$F{CUSTOMERNAME}]]></textFieldExpression>
-									</textField>
-								</jr:cell>
-							</jr:groupFooter>
-							<jr:columnHeader height="11" rowSpan="1">
-								<box>
-									<topPen lineWidth="0.0"/>
-									<bottomPen lineWidth="1.0" lineColor="#999999"/>
-								</box>
-								<staticText>
-									<reportElement x="0" y="0" width="69" height="11" uuid="964890dd-4fa7-45d4-b1b9-57c06696efbc"/>
-									<box leftPadding="2"/>
-									<textElement>
-										<font fontName="Open Sans" size="8" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Customer]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="0" rowSpan="1"/>
-						</jr:column>
-						<jr:column width="34" uuid="d1fdccc7-34a8-4dcd-a334-b2e36f1ea150">
+						<jr:column width="56" uuid="d1fdccc7-34a8-4dcd-a334-b2e36f1ea150">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="34" height="11" isRemoveLineWhenBlank="true" uuid="98916aa0-547c-4742-b08e-edcd45a09477"/>
+									<reportElement x="0" y="0" width="56" height="11" isRemoveLineWhenBlank="true" uuid="98916aa0-547c-4742-b08e-edcd45a09477"/>
 									<box leftPadding="0" rightPadding="0"/>
 									<textElement textAlignment="Right">
 										<font fontName="Open Sans" size="8" isBold="true"/>
@@ -1080,13 +960,13 @@ $V{TotalDateCost}]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 								</textField>
 							</jr:tableFooter>
-							<jr:groupFooter groupName="DateSo">
+							<jr:groupFooter groupName="DateReceipt">
 								<jr:cell height="11" rowSpan="1">
 									<box>
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="34" height="11" isRemoveLineWhenBlank="true" uuid="b898783c-fe9e-46b1-96c6-b5b3e710e05e"/>
+										<reportElement x="0" y="0" width="56" height="11" isRemoveLineWhenBlank="true" uuid="b898783c-fe9e-46b1-96c6-b5b3e710e05e"/>
 										<box leftPadding="0" rightPadding="0"/>
 										<textElement textAlignment="Right">
 											<font fontName="Open Sans" size="8"/>
@@ -1102,7 +982,7 @@ $V{TotalDateCost}]]></textFieldExpression>
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="34" height="11" uuid="7ec55f8d-1436-4a28-8511-999ec7126e0d"/>
+									<reportElement x="0" y="0" width="56" height="11" uuid="7ec55f8d-1436-4a28-8511-999ec7126e0d"/>
 									<box leftPadding="2"/>
 									<textElement textAlignment="Right">
 										<font fontName="Open Sans" size="8" isBold="true"/>
@@ -1112,39 +992,24 @@ $V{TotalDateCost}]]></textFieldExpression>
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
 						</jr:column>
-						<jr:column width="45" uuid="c38e0a56-3ee2-44fd-ab85-0978eb5cc8c6">
+						<jr:column width="76" uuid="c38e0a56-3ee2-44fd-ab85-0978eb5cc8c6">
 							<jr:tableFooter height="11" rowSpan="1">
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
-								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="45" height="11" isRemoveLineWhenBlank="true" uuid="4fd25c8c-6e7d-466f-9381-001ee3ad525d"/>
-									<box leftPadding="2" rightPadding="0"/>
-									<textElement textAlignment="Right">
-										<font fontName="Open Sans" size="8" isBold="true"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{TotalPrice}, $V{CostDecimal})
-:
-$V{TotalPrice}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
-								</textField>
 							</jr:tableFooter>
-							<jr:groupFooter groupName="DateSo">
+							<jr:groupFooter groupName="DateReceipt">
 								<jr:cell height="11" rowSpan="1">
 									<box>
 										<bottomPen lineWidth="0.25"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement x="0" y="0" width="45" height="11" isRemoveLineWhenBlank="true" uuid="aa877e7a-1da3-4de3-a44a-74fa779de11b"/>
+										<reportElement x="0" y="0" width="76" height="11" isRemoveLineWhenBlank="true" uuid="aa877e7a-1da3-4de3-a44a-74fa779de11b"/>
 										<box leftPadding="2" rightPadding="0"/>
 										<textElement textAlignment="Right">
 											<font fontName="Open Sans" size="8"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{TotalDatePrice}, $V{CostDecimal})
-:
-$V{TotalDatePrice}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$F{LOTNUMBER}]]></textFieldExpression>
 										<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 									</textField>
 								</jr:cell>
@@ -1155,12 +1020,12 @@ $V{TotalDatePrice}]]></textFieldExpression>
 									<bottomPen lineWidth="1.0" lineColor="#999999"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="45" height="11" uuid="037a5c27-753c-4334-9f0f-db5dfc95c25e"/>
+									<reportElement x="0" y="0" width="76" height="11" uuid="037a5c27-753c-4334-9f0f-db5dfc95c25e"/>
 									<box leftPadding="2"/>
 									<textElement textAlignment="Right">
 										<font fontName="Open Sans" size="8" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Price]]></text>
+									<text><![CDATA[Lot #]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="0" rowSpan="1"/>
