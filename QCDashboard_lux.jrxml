@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QCDashboardLUX" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9955ccc0-971f-458f-b2ee-d1e14e6259c9">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="New Dataset 1" uuid="ed845f1a-a52a-44a6-9102-98d137390727">
 		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
 			<property name="Group" value="Select a date field and enter a date range"/>
@@ -210,7 +210,7 @@
        XOSTATUS.NAME STATUS,
        XOITEM.DATELASTFULFILLMENT DATECOMPLETE,
        SO.dateScheduled AS DATESCHEDULED,
-       COALESCE(qtyonhand.qty,0) AS qoh,
+       COALESCE(onhand.qty,0) AS qoh,
        SO.customers AS CUSTOMERS,
        SO.CONTRACTMANUFACTURER
 
@@ -234,7 +234,7 @@ FROM XO
                         AND (SOITEM.QTYTOFULFILL - SOITEM.QTYFULFILLED) > 0
                       GROUP BY 1) SO ON SO.PARTID = PART.ID
 
-    LEFT OUTER JOIN qtyonhand ON qtyOnHand.partid = part.id
+    LEFT OUTER JOIN (SELECT partId, sum(qtyonhand.qty) AS qty FROM qtyonhand GROUP BY partId) AS onhand ON onhand.partid = part.id
 
 WHERE $P!{cbApplyDateFilterTo} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
   AND XO.FROMLGID IN ($P!{locationGroupIDFromLocationGroup})
