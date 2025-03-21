@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartBarcodesOneOff-GFR_V5" pageWidth="283" pageHeight="175" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="283" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7d385386-6854-4b1f-8d04-a20463d0fc7b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="751"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<subDataset name="OneProduct" uuid="c934ce95-2c07-4b54-a62e-6092a60a28f2">
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationID" class="java.lang.String">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbPartTracking" class="java.lang.String">
+			<parameterDescription><![CDATA["Serial Number","Serial Number","Lot Number","Lot Number","No Serial No Lot","No Serial No Lot"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["Serial Number"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+   part.num,
+   product.description,
+   location.name AS location,
+   parttracking.typeid,
+   trackingtext.info AS lotnumber,
+   serialnum.serialnum,
+   parttracking.name AS  trackingname,
+   uom.code,
+   coalesce(part.upc,"") AS upc
+FROM
+tag
+    JOIN part ON tag.partid = part.id
+    JOIN location ON tag.locationid = location.id
+    INNER JOIN product ON product.partid = part.id
+    LEFT OUTER JOIN uom ON uom.id = part.uomid
+    LEFT OUTER JOIN parttotracking ON part.id = parttotracking.partid
+    LEFT OUTER JOIN parttracking ON parttotracking.parttrackingid = parttracking.id
+    LEFT OUTER JOIN trackingtext ON tag.id = trackingtext.tagid AND parttracking.id = trackingtext.parttrackingid
+    LEFT OUTER JOIN serial ON tag.id = serial.tagid
+    LEFT OUTER JOIN serialnum ON serial.id = serialnum.serialid AND parttracking.id = serialnum.parttrackingid
+
+WHERE part.id > 0
+    AND part.activeflag = 1
+    AND UPPER(part.num) LIKE UPPER($P{partNum})
+    AND location.id LIKE $P{locationID}
+    AND UPPER(parttracking.name) = UPPER($P{cbPartTracking})
+
+ORDER BY part.num, COALESCE(trackingtext.info, serialnum.serialnum)]]>
+		</queryString>
+		<field name="NUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="code" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="serialnum" class="java.lang.String"/>
+		<field name="upc" class="java.lang.String"/>
+		<field name="lotnumber" class="java.lang.String"/>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<group name="group1"/>
+	</subDataset>
+	<subDataset name="OneProductNoSerialNoLot" uuid="75d80ecb-a945-4d32-a426-7378867c7f51">
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationID" class="java.lang.String">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbPartTracking" class="java.lang.String">
+			<parameterDescription><![CDATA["Serial Number","Serial Number","Lot Number","Lot Number","No Serial No Lot","No Serial No Lot"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["Serial Number"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+   part.num,
+   product.description,
+   location.name AS location,
+   uom.code,
+   coalesce(part.upc,"") AS upc
+FROM
+tag
+    JOIN part ON tag.partid = part.id
+    JOIN location ON tag.locationid = location.id
+    INNER JOIN product ON product.partid = part.id
+    LEFT OUTER JOIN uom ON uom.id = part.uomid
+WHERE part.id > 0
+    AND part.activeflag = 1
+    AND UPPER(part.num) LIKE UPPER($P{partNum})
+    AND location.id LIKE $P{locationID}
+
+ORDER BY part.num;]]>
+		</queryString>
+		<field name="NUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="code" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="upc" class="java.lang.String"/>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<group name="group1"/>
+	</subDataset>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Product Barcodes for one off Labels with Serial Numbers or Lot Numbers"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbPartTracking" class="java.lang.String">
+		<parameterDescription><![CDATA["Serial Number","Serial Number","Lot Number","Lot Number","No Serial No Lot","No Serial No Lot"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Serial Number"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select id from company where id = 1]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="isMultiCurrency" class="java.lang.Boolean">
+		<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="175">
+			<printWhenExpression><![CDATA[!$P{cbPartTracking}.equals("No Serial No Lot")]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table" x="-1" y="0" width="283" height="175" uuid="ca93567f-d066-4b63-8646-3e18f2569ac9">
+					<printWhenExpression><![CDATA[!$P{cbPartTracking}.equals("No Serial No Lot")]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="OneProduct" uuid="30545f12-de96-4e64-b089-0b42bb80e947">
+						<datasetParameter name="partNum">
+							<datasetParameterExpression><![CDATA[$P{partNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="module">
+							<datasetParameterExpression><![CDATA[$P{module}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locationID">
+							<datasetParameterExpression><![CDATA[$P{locationID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cbPartTracking">
+							<datasetParameterExpression><![CDATA[$P{cbPartTracking}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="283" uuid="735948b0-f65a-42de-a05c-e9ce109effab">
+						<jr:detailCell height="174" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="0" y="76" width="283" height="38" uuid="f637a92d-2761-4654-bf82-58c1d64c0e8a"/>
+								<box>
+									<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Top">
+									<font fontName="Open Sans" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+							</textField>
+							<componentElement>
+								<reportElement style="18" x="149" y="130" width="134" height="25" uuid="c792d0c1-dea5-4bc7-9b5e-f2e4c664f4e4"/>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$F{NUM}]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<componentElement>
+								<reportElement style="18" x="11" y="115" width="137" height="20" uuid="c792d0c1-dea5-4bc7-9b5e-f2e4c664f4e4">
+									<printWhenExpression><![CDATA[($F{serialnum} !=null && $F{serialnum}.length()>0) ||
+($F{lotnumber} !=null && $F{lotnumber}.length()>0)]]></printWhenExpression>
+								</reportElement>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$P{cbPartTracking}.equals("Serial Number")? $F{serialnum} :
+$P{cbPartTracking}.equals("Lot Number")? $F{lotnumber} :
+""]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<componentElement>
+								<reportElement style="18" x="11" y="145" width="137" height="20" uuid="c792d0c1-dea5-4bc7-9b5e-f2e4c664f4e4">
+									<printWhenExpression><![CDATA[$F{upc} !=null && $F{upc}.length()>0]]></printWhenExpression>
+								</reportElement>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$F{upc}]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="11" y="134" width="137" height="10" uuid="93b04b06-248f-4782-8e72-79bd597bd3db"/>
+								<box leftPadding="3">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{cbPartTracking}.equals("Serial Number")? $F{serialnum} :
+$P{cbPartTracking}.equals("Lot Number")? $F{lotnumber} :
+""]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="0" y="54" width="283" height="22" uuid="ffabcd3c-fac1-4070-909b-1f0f6c444ba2"/>
+								<box>
+									<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="0" y="164" width="148" height="10" uuid="eadac9b6-b0e6-4195-9b6e-c4a652395ab0"/>
+								<box leftPadding="3">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+									<font fontName="Open Sans" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{upc}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement x="148" y="114" width="135" height="60" uuid="e6167926-3d2f-4365-a682-00fd88d21f89"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Justified"/>
+								<text><![CDATA[]]></text>
+							</staticText>
+							<image hAlign="Center" onErrorType="Blank">
+								<reportElement x="0" y="0" width="283" height="53" uuid="ce4ff9ad-99ee-4e27-a2d3-e06e0a894d86">
+									<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+								</reportElement>
+								<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
+							</image>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="175">
+			<printWhenExpression><![CDATA[$P{cbPartTracking}.equals("No Serial No Lot")]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table" x="0" y="0" width="283" height="175" uuid="996c6ebb-86dd-4c6a-b5a5-87929dc78ca4">
+					<printWhenExpression><![CDATA[$P{cbPartTracking}.equals("No Serial No Lot")]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="OneProductNoSerialNoLot" uuid="dc8313a8-d766-4769-bd00-73e6636d6e56">
+						<datasetParameter name="partNum">
+							<datasetParameterExpression><![CDATA[$P{partNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="module">
+							<datasetParameterExpression><![CDATA[$P{module}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locationID">
+							<datasetParameterExpression><![CDATA[$P{locationID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cbPartTracking">
+							<datasetParameterExpression><![CDATA[$P{cbPartTracking}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="283" uuid="478f6759-ed17-4ac9-a8bc-ad815abd0f5f">
+						<jr:detailCell height="174" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="0" y="76" width="283" height="38" uuid="446f14b8-881e-4af4-a8c5-b17acf097664"/>
+								<box>
+									<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Top">
+									<font fontName="Open Sans" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+							</textField>
+							<componentElement>
+								<reportElement style="18" x="149" y="130" width="134" height="25" uuid="46408076-0d6a-4dfc-81e5-c38ce8efd6c1"/>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$F{NUM}]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<componentElement>
+								<reportElement style="18" x="0" y="145" width="148" height="20" uuid="b9afa2b3-5785-4ff4-9a56-f8aca762475b">
+									<printWhenExpression><![CDATA[$F{upc} !=null && $F{upc}.length()>0]]></printWhenExpression>
+								</reportElement>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$F{upc}]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="0" y="54" width="283" height="22" uuid="e33f23c8-5114-4ac7-aade-19efa4fe7499"/>
+								<box>
+									<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="0" y="164" width="148" height="10" uuid="03fe7b57-c59b-433f-95e5-bd31fec55c67"/>
+								<box leftPadding="3">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+									<font fontName="Open Sans" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{upc}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement x="148" y="114" width="135" height="60" uuid="6b945aca-0607-4235-95b8-dfe3f4228c17"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Justified"/>
+								<text><![CDATA[]]></text>
+							</staticText>
+							<image hAlign="Center" onErrorType="Blank">
+								<reportElement x="0" y="0" width="283" height="53" uuid="0e2716f1-553c-4154-b491-077b25bda18d">
+									<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+								</reportElement>
+								<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
+							</image>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
