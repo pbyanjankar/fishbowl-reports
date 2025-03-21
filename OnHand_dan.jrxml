@@ -163,7 +163,7 @@ ORDER BY LocationGroup, UPPER($P!{cbOrderBy}), UPPER(part.num)]]>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Displays a list of parts with the current quantity on hand. Does not filter for serial numbers."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Displays a list of parts with the current quantity on hand with part's default location and default location barcode"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
