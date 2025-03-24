@@ -575,12 +575,12 @@ WHERE id = 1]]>
 									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
 								</box>
 								<componentElement>
-									<reportElement positionType="Float" x="0" y="1" width="126" height="15" uuid="59d47ca5-e143-4cd5-bb59-06f00baf18fb">
-										<printWhenExpression><![CDATA[!$F{DEFAULTLOCATION}.isEmpty() && $F{DEFAULTLOCATION}.length()>0]]></printWhenExpression>
+									<reportElement positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="0" y="1" width="126" height="15" uuid="59d47ca5-e143-4cd5-bb59-06f00baf18fb">
+										<printWhenExpression><![CDATA[!$F{DEFAULTLOCATION}.isEmpty()]]></printWhenExpression>
 									</reportElement>
-									<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barHeight="50" evaluationTime="Report">
-										<jr:codeExpression><![CDATA[$F{DEFAULTLOCATION}.isEmpty() && $F{DEFAULTLOCATION}.length()==0?
-"0":$F{DEFAULTLOCATION}]]></jr:codeExpression>
+									<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barHeight="50">
+										<jr:codeExpression><![CDATA[$F{DEFAULTLOCATION}.isEmpty() ?
+"0" : $F{DEFAULTLOCATION}]]></jr:codeExpression>
 									</jr:barbecue>
 								</componentElement>
 							</jr:detailCell>
