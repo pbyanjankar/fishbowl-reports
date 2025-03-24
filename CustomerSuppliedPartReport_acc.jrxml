@@ -3,7 +3,7 @@
 	<property name="ireport.callouts" value="##Fri Mar 08 14:18:20 MST 2019\ncallouts.1.text=PO \nTable1\ncallouts.3.pins=608,144;\ncallouts.3.bounds=489,330,150,75\ncallouts.2.text=SO \nTable 2\n\n\ncallouts.2.bounds=342,331,150,75\ncallouts.1.pins=179,134;\ncallouts.1.bounds=183,328,150,75\ncallouts.3.text=Inv Ajust\nTable3\ncallouts.2.pins=403,136;"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="33"/>
+	<property name="ireport.y" value="31"/>
 	<style name="Zebra" fontName="Open Sans">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
@@ -174,8 +174,7 @@ LEFT OUTER JOIN (
 
 
 where inventorylog.typeid in (CASE WHEN inventorylog.typeid = 10 AND inventorylog.tableid IS NULL THEN 10 ELSE 0 END,
-		         CASE WHEN inventorylog.typeid = 10 AND inventorylog.tableid = -1081854656 THEN 10 ELSE 0 END,
-		         CASE WHEN inventorylog.typeid = 10 AND inventorylog.tableid = -355941248 THEN 10 ELSE 0 END,30,40,50,60,64,65,67,90)
+		         CASE WHEN inventorylog.typeid = 10 AND inventorylog.tableid = -1081854656 THEN 10 ELSE 0 END,50,60,64,65,67,90)
 and inventorylog.partid = $P{partId}
 and inventorylog.eventdate between $P{dateRange1} and $P{dateRange2}
 and CASE
@@ -240,6 +239,20 @@ order by adjcategory, inventorylog.eventdate]]>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="cfFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Type" value="Custom Field"/>
+		<property name="Table" value="PART"/>
+		<property name="Group" value="Filter by Part Custom Field"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="cfFilterData" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filter by Part Custom Field"/>
+		<property name="Sort" value="2"/>
+		<property name="Tooltip" value="Type a value to filter by. Use % for wildcard searches. If the custom field is a checkbox, use true or false."/>
+		<parameterDescription><![CDATA[Enter filter data]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 company.name AS company,
@@ -313,6 +326,7 @@ LEFT JOIN (
 	GROUP BY partId ) AS startInventoryLog ON startInventoryLog.partId = part.id
 
 WHERE part.num LIKE $P{partNum}
+    AND COALESCE(UPPER($P!{cfFilter}),'') LIKE UPPER($P{cfFilterData})
 
 order by part.num]]>
 	</queryString>
@@ -389,7 +403,11 @@ order by part.num]]>
 					<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="640" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="98dd1fd1-46f2-4202-962d-9b008bfaa1d6"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="640" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="98dd1fd1-46f2-4202-962d-9b008bfaa1d6">
+						<printWhenExpression><![CDATA[!(($F{ALLOCATED} - (($F{ONHAND} - $F{UNAVAILABLE}) + $F{DROPSHIP}) >= 0 ?
+    $F{ALLOCATED} - (($F{ONHAND} - $F{UNAVAILABLE}) + $F{DROPSHIP})  :
+    new Double(0))<$F{ONORDER})]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Right">
 						<font fontName="Open Sans"/>
 					</textElement>
@@ -431,7 +449,19 @@ order by part.num]]>
 					<textFieldExpression><![CDATA[$F{UOM}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="560" y="0" width="80" height="14" backcolor="#EAEAEA" uuid="37437931-4448-4544-96e2-4871bcb89831"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="640" y="0" width="92" height="14" forecolor="#FF6666" backcolor="#EAEAEA" uuid="0f421939-1916-4e0e-ba57-6f8689298c80">
+						<printWhenExpression><![CDATA[($F{ALLOCATED} - (($F{ONHAND} - $F{UNAVAILABLE}) + $F{DROPSHIP}) >= 0 ?
+    $F{ALLOCATED} - (($F{ONHAND} - $F{UNAVAILABLE}) + $F{DROPSHIP})  :
+    new Double(0))<$F{ONORDER}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ONORDER}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="560" y="0" width="80" height="14" backcolor="#EAEAEA" uuid="62a0060d-fd26-4edb-a595-7d85f3663e7d"/>
 					<textElement textAlignment="Right">
 						<font fontName="Open Sans"/>
 					</textElement>
@@ -999,6 +1029,13 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 					</jr:columnGroup>
 				</jr:table>
 			</componentElement>
+			<staticText>
+				<reportElement x="0" y="14" width="732" height="14" uuid="10388569-5a41-4b22-834c-98dc47619048"/>
+				<textElement>
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
 			<componentElement>
 				<reportElement key="table" x="492" y="0" width="240" height="14" isRemoveLineWhenBlank="true" uuid="63e9a8fb-3abc-486c-8ebd-ade92ffcab6f">
 					<printWhenExpression><![CDATA[$P{ShowInventoryAdjustmentHistory}]]></printWhenExpression>
@@ -1246,13 +1283,6 @@ new SimpleDateFormat($V{DateFormat}).format($P{dateRange2}.getTime() - 86400000)
 					</jr:columnGroup>
 				</jr:table>
 			</componentElement>
-			<staticText>
-				<reportElement x="0" y="14" width="732" height="14" uuid="10388569-5a41-4b22-834c-98dc47619048"/>
-				<textElement>
-					<font fontName="Open Sans" size="10"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
