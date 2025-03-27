@@ -157,6 +157,10 @@
 			<parameterDescription><![CDATA[10,0]]></parameterDescription>
 			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="ShowOrderItemsIssuedBefore2Weeks" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
    POITEM.DATESCHEDULEDFULFILLMENT AS POITEMDATESCHEDULEDFULFILLMENT,
@@ -176,9 +180,16 @@ FROM po
    LEFT OUTER JOIN currency ON currency.homeCurrency = 1
 WHERE
    COALESCE(part.num, '') LIKE $P{partNum}
-   AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-    AND PO.statusID IN ($P!{ckBidRequest}, $P!{ckPendingApproval},$P!{ckIssued}, $P!{ckPicking}, $P!{ckPartial}, $P!{ckPicked}, $P!{ckFulfilled}, $P!{ckClosedShort}, $P!{ckVoided})
-AND receiptitem.statusid IN ($P!{ckItemEntered}, $P!{ckItemReconciled}, $P!{ckItemReceived}, $P!{ckItemFulfilled})
+   AND PO.statusID IN ($P!{ckBidRequest}, $P!{ckPendingApproval},$P!{ckIssued}, $P!{ckPicking}, $P!{ckPartial}, $P!{ckPicked}, $P!{ckFulfilled}, $P!{ckClosedShort}, $P!{ckVoided})
+   AND (($P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+  	 AND receiptitem.statusid IN ($P!{ckItemEntered}, $P!{ckItemReconciled}, $P!{ckItemReceived}, $P!{ckItemFulfilled}))
+
+    OR (if($P{ShowOrderItemsIssuedBefore2Weeks}, PO.statusID IN (20) AND po.dateIssued < date(now()) - INTERVAL 14 day, false))
+
+
+)
+
+
 ORDER BY $P!{cbSortBy}]]>
 		</queryString>
 		<field name="PONUM" class="java.lang.String"/>
@@ -332,6 +343,11 @@ ORDER BY $P!{cbSortBy}]]>
 		<property name="Group" value="Receiving Item Status"/>
 		<parameterDescription><![CDATA[10,0]]></parameterDescription>
 		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowOrderItemsIssuedBefore2Weeks" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<property name="Tooltip" value="When checked, shows items in purchase orders in issued status and date issued before 2 weeks."/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
