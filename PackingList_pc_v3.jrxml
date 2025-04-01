@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackingListPC v3" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b062b891-b6f7-46e5-8505-299eb37395a9">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackingListPC v2" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b062b891-b6f7-46e5-8505-299eb37395a9">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="45"/>
-	<property name="ireport.y" value="141"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -60,52 +60,68 @@
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
-p1.num AS itemno,
-CASE WHEN s3.customerpartnum IS NULL OR s3.customerpartnum ='' THEN p1.sku ELSE s3.customerpartnum END AS sku,p1.description,
+   product.num AS itemno,
+   product.description,
+   CASE
+       WHEN soitem.customerpartnum IS NULL OR soitem.customerpartnum ='' THEN
+	product.sku
+       ELSE
+	soitem.customerpartnum
+   END AS sku,
 
-CASE
-   WHEN LEFT(uomp.code , 2) = "MC" AND s1.qtyShipped%SUBSTR(uomp.code, 3, LENGTH(uomp.code) - 2) = 0 THEN
-     p1.weight
-   WHEN LEFT(uomp.code , 2) = "MC" AND s1.qtyShipped%SUBSTR(uomp.code, 3, LENGTH(uomp.code) - 2) <> 0 THEN
-     s1.qtyshipped*(p1.weight/SUBSTR(uomp.code, 3, LENGTH(uomp.code) - 2))
-   ELSE
-     s1.qtyshipped*p1.weight
-END AS weight,
-SUM(s1.qtyshipped) AS qtyshipped,uom.code AS uom,
-CAST(CustomFieldByName(p1.CUSTOMFIELDS, 'PPK') AS UNSIGNED) AS ppk,
-COUNT(s1.shipcartonid) AS
+   CASE
+      WHEN LEFT(ProductUom.code , 2) = "MC" AND LEFT(SoItemUOM.code , 2) = "MC" THEN
+          product.weight
+      WHEN LEFT(ProductUom.code , 2) = "MC" AND UPPER(LEFT(SoItemUOM.code , 2)) = "EA" THEN
+          result.qtyshipped*(product.weight/SUBSTR(ProductUom.code, 3, LENGTH(ProductUom.code) - 2))
+      ELSE
+          result.qtyshipped*product.weight
+   END AS weight,
 
- numcases,
+   SUM(result.qtyshipped) AS qtyshipped,
+   uom.code AS uom,
+   CAST(CustomFieldByName(product.CUSTOMFIELDS, 'PPK') AS UNSIGNED) AS ppk,
+   COUNT(result.shipcartonid) AS numcases,
 
-(p1.weight*CASE WHEN p1.cartoncount = 0 THEN 1 ELSE p1.cartoncount END) AS totweightpercase,
+  (product.weight*CASE WHEN product.cartoncount = 0 THEN 1 ELSE product.cartoncount END) AS totweightpercase,
 
-p1.weight*SUM(s1.qtyshipped)*COALESCE(u1.factor/u1.multiply, 1) AS totweight,
+   product.weight*SUM(result.qtyshipped)*COALESCE(uc.factor/uc.multiply, 1) AS totweight,
 
-CASE
-   WHEN LEFT(uomp.code , 2) = "MC" AND s1.qtyShipped%SUBSTR(uomp.code, 3, LENGTH(uomp.code) - 2) = 0 THEN
-     SUBSTR(uomp.code, 3, LENGTH(uomp.code) - 2)
-   ELSE
-     s1.qtyshipped*COALESCE(u1.factor/u1.multiply, 1)
-END AS pcase,
-uomp.code AS PRODUCTUOM,
-trackinginfo.info AS BATCHNUMBER
+   CASE
+       WHEN LEFT(ProductUom.code , 2) = "MC" AND LEFT(SoItemUOM.code , 2) = "MC" THEN
+           SUBSTR(ProductUom.code, 3, LENGTH(ProductUom.code) - 2)
+       ELSE
+           result.qtyshipped*COALESCE(uc.factor/uc.multiply, 1)
+   END AS pcase,
 
-  FROM ship
-INNER JOIN (SELECT SUM(qtyshipped) AS qtyshipped,itemid,shipid,soitemid,shipcartonid,uomid FROM shipitem s8 GROUP BY s8.shipcartonid,itemid,shipid,soitemid,uomid) s1 ON s1.shipid=ship.id
-
-INNER JOIN soitem s3 ON s3.id=s1.soitemid
-INNER JOIN product p1 ON p1.id=s1.itemid
-INNER JOIN shipcarton s2 ON s2.id=s1.shipcartonid
-INNER JOIN uom ON uom.id=s1.uomid
- LEFT OUTER JOIN UomConversion ON s1.uomid = uomConversion.fromUomId AND 19 = uomConversion.toUomId
- left JOIN UomConversion u1 ON s1.uomid =u1.toUomId  AND 1 = u1.fromUomId
-LEFT JOIN uom AS uomp on uomp.id = p1.uomId
-   LEFT OUTER JOIN shipitem ON shipitem.soItemId = s3.id
-   LEFT OUTER JOIN parttracking ON UPPER(parttracking.abbr)="BATCH#"
-   LEFT OUTER JOIN trackinginfo ON parttracking.id = trackinginfo.partTrackingId AND shipitem.id = trackinginfo.recordId AND trackinginfo.tableid = 1555030112
+   ProductUom.code AS PRODUCTUOM,
+   SoItemUOM.code AS SOITEMUOM,
+   trackinginfo.info AS BATCHNUMBER
+FROM ship
+INNER JOIN (
+	SELECT
+		SUM(qtyshipped) AS qtyshipped,
+		itemid,
+        		shipid,
+        		soitemid,
+        		shipcartonid,
+        		uomid
+       	FROM shipitem
+	GROUP BY shipitem.shipcartonid, itemid, shipid, soitemid, uomid) result ON result.shipid=ship.id
+INNER JOIN soitem ON soitem.id=result.soitemid
+INNER JOIN product ON product.id=result.itemid
+INNER JOIN shipcarton ON shipcarton.id=result.shipcartonid
+INNER JOIN uom ON uom.id=result.uomid
+LEFT OUTER JOIN UomConversion ON result.uomid = uomConversion.fromUomId AND 19 = uomConversion.toUomId
+LEFT OUTER JOIN UomConversion uc ON result.uomid = uc.toUomId  AND 1 = uc.fromUomId
+LEFT OUTER JOIN uom AS ProductUom on ProductUom.id = product.uomId
+LEFT OUTER JOIN uom AS SoItemUOM ON SoItemUOM.id = result.uomid
+LEFT OUTER JOIN shipitem ON shipitem.soItemId = soitem.id
+LEFT OUTER JOIN parttracking ON UPPER(parttracking.abbr)="BATCH#"
+LEFT OUTER JOIN trackinginfo ON parttracking.id = trackinginfo.partTrackingId AND shipitem.id = trackinginfo.recordId AND trackinginfo.tableid = 1555030112
 WHERE ship.id= $P{shipID}
-group by p1.num,s1.qtyshipped
-ORDER BY 2;]]>
+group by product.num, result.qtyshipped,result.uomid
+ORDER BY product.num, numcases desc;]]>
 		</queryString>
 		<field name="itemno" class="java.lang.String"/>
 		<field name="sku" class="java.lang.String">
@@ -153,7 +169,7 @@ $F{weight}.doubleValue()*$F{numcases}:
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Packing List for a selected order. Show Batch# from Ship Items"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Packing List for a selected order"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -339,7 +355,7 @@ WHERE
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true"/>
 									</textElement>
-									<text><![CDATA[Sku #]]></text>
+									<text><![CDATA[UPC]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
