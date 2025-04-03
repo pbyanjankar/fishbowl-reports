@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ATSSingleSKULookup" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="00048106-d7a7-4138-aee9-3c5eab99a222">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Product Availabile to Sale"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HideTitle" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./ATS/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT	company,
+	partNum AS PARTNUM,
+	partDescription AS PARTDESCRIPTION,
+	t.byday AS DAYDATE,
+	t.nextDelivery AS NEXTDELIVERYDATE,
+	t.vlt AS vlt,
+	t.sales AS sales ,
+	t.purchasing AS purchase,
+      	t.sales + t.purchasing AS SOPO,
+	@running_total:= if(@part = partNum,@running_total, (t.qtyOnHand - t.qtyNotAvailable + outstandingSales + outstandingPurchasing)) + t.sales + t.purchasing AS RUNNINGSUM,
+	@part :=  partNum AS PNUM
+FROM
+ (select
+    (select name from company) as company,
+    date(v.selected_date) as byday,
+    part.num as partNum,
+    part.description as partDescription,
+    coalesce(qtyonhand.qty,0) as qtyOnHand,
+    coalesce(qtynotavailable.qty,0) as qtyNotAvailable,
+    min(purchasing.day) as nextDelivery,
+    curdate() as todaysDate,
+    coalesce(outstandingSales.qty * -1,0) as outstandingSales,
+    coalesce(outstandingPurchasing.qty,0) as outstandingPurchasing,
+    coalesce(sales.qty * -1,0) as sales,
+    coalesce(purchasing.qty,0) as purchasing,
+    CustomFieldByName(part.customfields,'Default Vendor Lead Time') AS vlt
+from
+    (select adddate(date(now()),t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selected_date from
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
+
+    inner join part on 1 = 1
+
+    inner join product on product.partid = part.id
+
+    left outer join qtyonhand on qtyonhand.partid = part.id AND qtyonhand.locationgroupid = 1
+    left outer join qtynotavailable on qtynotavailable.partId = part.id AND qtynotavailable.locationgroupid = 1
+
+    left outer join (
+		SELECT part.id  AS partId,
+			sum(poitem.qtyToFulfill-poitem.qtyfulfilled) AS qty
+		FROM po
+		INNER JOIN poitem ON poitem.poId = po.id
+		INNER JOIN part ON part.id=poitem.partId
+		INNER JOIN product ON product.partId = part.id
+		WHERE UPPER(product.num) = UPPER($P{productNum})
+			AND part.typeid =10 AND
+			poitem.statusid IN (10, 20, 30, 40, 45)
+			AND po.statusid IN (20, 30, 40, 45, 50, 55)
+			AND poitem.dateScheduledFulfillment < date(now())
+		GROUP BY part.id
+		) AS outstandingPurchasing ON outstandingPurchasing.partId = part.id
+
+    left outer join ( SELECT part.id AS partId,
+		        sum(soitem.qtyToFulfill) AS qty
+		FROM so
+		INNER JOIN soitem ON soitem.soid = so.id
+		INNER JOIN product ON product.id = soitem.productId
+		INNER JOIN part ON part.id=product.partId
+		WHERE UPPER(product.num) = UPPER($P{productNum})
+			AND soitem.statusid < 50
+			AND so.statusid IN (20, 25)
+			AND part.typeid =10
+			AND soitem.dateScheduledFulfillment < date(now())
+		GROUP BY part.id
+		) AS outstandingSales ON outstandingSales.partId = part.id
+
+    left outer join (
+
+    select coalesce(sum(if(soitem.typeId=20, -1 * (soitem.qtyToFulfill-soitem.qtyFulfilled), (soitem.qtyToFulfill-soitem.qtyFulfilled))),0) as qty, date(soitem.datescheduledfulfillment) as day, product.partid
+                from soitem
+                join so on soitem.soid = so.id
+                join product on soitem.productid = product.id
+                where soitem.statusid < 50
+		AND so.statusid in (20, 25)
+                and soitem.datescheduledfulfillment between date(now()) and date(adddate(now(), INTERVAL 6 MONTH))
+                group by day, product.partid
+            ) as sales on sales.day = date(v.selected_date) and sales.partid = part.id
+
+    left outer join (
+
+
+    select coalesce(sum(poitem.qtyToFulfill-poitem.qtyfulfilled),0) as qty, date(poitem.datescheduledfulfillment) as day, poitem.partid
+                from poitem
+                join po on poitem.poid = po.id
+                where poitem.statusid in (10, 20, 30, 40, 45)
+		and po.statusid in (20,30,40,45,50,55)
+                and poitem.datescheduledfulfillment between date(now()) and date(adddate(now(), INTERVAL 6 MONTH) )
+                group by day, poitem.partid
+            ) as purchasing on purchasing.day = date(v.selected_date) and purchasing.partid = part.id
+
+where
+	part.typeid = 10
+	AND product.activeFlag = true
+	AND UPPER(product.num) = UPPER($P{productNum}) AND
+     v.selected_date between date(now()) and date(adddate(now(), INTERVAL 6 MONTH) )
+group by 2,3
+order by 3,2) as t
+JOIN (SELECT @part:='',@running_total:=0) r
+ORDER BY t.partNum,t.byday;]]>
+	</queryString>
+	<field name="DAYDATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PARTNUM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PARTDESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RUNNINGSUM" class="java.math.BigDecimal"/>
+	<field name="NEXTDELIVERYDATE" class="java.sql.Date"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="Sales" class="java.lang.Integer"/>
+	<field name="Purchase" class="java.lang.Integer"/>
+	<field name="vlt" class="java.lang.Integer"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<variable name="CostDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+	</variable>
+	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+	</variable>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="NextDeliveryDay" class="java.sql.Date" resetType="Group" resetGroup="ATS" calculation="Lowest">
+		<variableExpression><![CDATA[$F{NEXTDELIVERYDATE}]]></variableExpression>
+	</variable>
+	<group name="ATS">
+		<groupExpression><![CDATA[$F{PARTNUM}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="25"/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="127" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{HideTitle} == false]]></printWhenExpression>
+			<image scaleImage="RetainShape" vAlign="Bottom" isUsingCache="true">
+				<reportElement key="Logo" mode="Opaque" x="0" y="0" width="356" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="c8396f5d-2b22-47ee-835d-b76da95051ca">
+					<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+				<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="CompanyName" mode="Transparent" x="0" y="40" width="358" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2f15231b-bcdf-48a3-8121-c2b9baa2ad39">
+					<printWhenExpression><![CDATA[]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" bottomPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-7" mode="Opaque" x="0" y="65" width="559" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="7f73a1cb-9873-418e-97d4-f6993ec1a8ea"/>
+				<subreportParameter name="productNum">
+					<subreportParameterExpression><![CDATA[$P{productNum}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "./MinATS.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="105" width="321" height="20" uuid="5b1476d6-f3bc-4618-8c1b-17ae143f568f">
+					<printWhenExpression><![CDATA[$F{vlt} == null]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[The vendor lead time has not been set to this part.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="20" uuid="4dd856b2-7623-4ee6-87f2-4d8c3d7cdd06"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Day]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="75" height="20" uuid="e8412fa8-dd17-49b1-a3b2-6bef8d1cebea"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="297" height="20" uuid="57dd2f17-5442-452e-8b64-40ac2a676a58"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Open Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="0" width="107" height="20" uuid="de43e22f-201d-4ff2-8b42-6611f0b5b2f4"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="0" width="75" height="20" uuid="9b21bdab-9432-45d1-a592-4c6f9dbfb1b8"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SO ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="0" width="75" height="20" uuid="9b9b0f93-a4db-4b0a-8e30-dab215f8aa6d"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PO ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="20" uuid="b6dba8b4-7542-4c73-8bb0-acf1aa43db13"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DAYDATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="80" y="0" width="75" height="20" uuid="06eb3b31-4773-4aed-9094-cd9c81278606"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTNUM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="155" y="0" width="297" height="20" uuid="910d0dac-2858-4c0b-b86f-da76066582f4"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTDESCRIPTION}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="602" y="0" width="107" height="20" uuid="8316922c-ce5b-4cbb-844f-206c72437c5c"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RUNNINGSUM}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="452" y="0" width="75" height="20" uuid="3f8bb8d0-6850-4959-8f7d-a6d4163efb05"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sales}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="527" y="0" width="75" height="20" uuid="c554251c-8d8f-47ae-913c-ffbcd0acffcb"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Purchase}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

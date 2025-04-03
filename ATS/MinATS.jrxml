@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subMemo" pageWidth="552" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4cbe809a-aceb-4e09-a884-0819150eeb83">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Zebra" fontName="Open Sans" fontSize="9">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#EAEAEA" pattern="" isBlankWhenNull="false" fontName="Open Sans" fontSize="9"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ISSUBREPORTONLY" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="productNum" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+date(now()) as TodaysDate,
+PARTNUM,
+PARTDESCRIPTION,
+(SELECT vendor.name from part
+inner join product on product.partid = part.id
+inner join vendorparts on vendorparts.partid = part.id
+inner join vendor on vendor.id = vendorparts.vendorId
+WHERE
+UPPER(product.num) = UPPER($P{productNum}) AND vendorparts.defaultFlag = 1
+limit 1) AS DefaultVendor,
+qoh AS QOH,
+qtyNotAvailable AS QTYNOTAVAILABLE,
+outstandingPOSO AS OUTSTANDINGPOSO,
+vlt,
+(SELECT CustomFieldByName(product.customfields,'Category') FROM product WHERE UPPER(product.num) = UPPER($P{productNum}))  AS CATEGORY,
+(SELECT CustomFieldByName(product.customfields,'Discontinued') FROM product WHERE UPPER(product.num) = UPPER($P{productNum})) AS Discontinued,
+t2.runningsum AS MINATS,
+t2.daydate AS DateATSHappens,
+(select min(poitem.datescheduledfulfillment)
+                from poitem
+                join po ON poitem.poid = po.id
+                join product ON product.partid =poitem.partid
+	      LEFT JOIN receiptitem ON receiptitem.poitemid = poitem.id
+                where
+		UPPER(product.num) = UPPER($P{productNum})
+		AND poitem.statusid in (10, 20, 30, 40, 45)
+	 	AND po.statusid in (20,30,40,45,50,55)
+		AND receiptitem.statusId NOT IN (20, 30, 40)
+) AS NextDeliveryDay
+FROM (SELECT
+	partNum AS PARTNUM,
+	partDescription AS PARTDESCRIPTION,
+	t.byday AS DAYDATE,
+	t.vlt AS vlt,
+	t.nextDelivery AS NEXTDELIVERYDATE,
+      	t.sales + t.purchasing AS SOPO,
+	t.qtyOnHand AS qoh,
+           t.qtyNotAvailable AS qtyNotAvailable,
+          outstandingSales + outstandingPurchasing AS outstandingPOSO,
+	@running_total:= if(@part = partNum,@running_total, (t.qtyOnHand - t.qtyNotAvailable + outstandingSales + outstandingPurchasing)) + t.sales + t.purchasing AS RUNNINGSUM,
+	@part :=  partNum AS PNUM
+FROM
+ (select
+    (select name from company) as company,
+    date(v.selected_date) as byday,
+    part.num as partNum,
+    part.description as partDescription,
+    coalesce(qtyonhand.qty,0) as qtyOnHand,
+    coalesce(qtynotavailable.qty,0) as qtyNotAvailable,
+    min(purchasing.day) as nextDelivery,
+    curdate() as todaysDate,
+    coalesce(outstandingSales.qty * -1,0) as outstandingSales,
+    coalesce(outstandingPurchasing.qty,0) as outstandingPurchasing,
+    coalesce(sales.qty * -1,0) as sales,
+    coalesce(purchasing.qty,0) as purchasing,
+    CustomFieldByName(part.customfields,'Default Vendor Lead Time') AS vlt
+from
+    (select adddate(date(now()),t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selected_date from
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
+
+    inner join part on 1 = 1
+
+    inner join product on product.partid = part.id
+
+    left outer join qtyonhand on qtyonhand.partid = part.id AND qtyonhand.locationgroupid = 1
+    left outer join qtynotavailable on qtynotavailable.partId = part.id AND qtynotavailable.locationgroupid = 1
+
+    left outer join (
+		SELECT part.id  AS partId,
+			sum(poitem.qtyToFulfill-poitem.qtyfulfilled) AS qty
+		FROM po
+		INNER JOIN poitem ON poitem.poId = po.id
+		INNER JOIN part ON part.id=poitem.partId
+		INNER JOIN product ON product.partId = part.id
+		WHERE UPPER(product.num) = UPPER($P{productNum})
+			AND part.typeid =10 AND
+			poitem.statusid IN (10, 20, 30, 40, 45)
+			AND po.statusid IN (20, 30, 40, 45, 50, 55)
+			AND poitem.dateScheduledFulfillment < date(now())
+		GROUP BY part.id
+		) AS outstandingPurchasing ON outstandingPurchasing.partId = part.id
+
+    left outer join ( SELECT part.id AS partId,
+		        sum(soitem.qtyToFulfill) AS qty
+		FROM so
+		INNER JOIN soitem ON soitem.soid = so.id
+		INNER JOIN product ON product.id = soitem.productId
+		INNER JOIN part ON part.id=product.partId
+		WHERE UPPER(product.num) = UPPER($P{productNum})
+			AND soitem.statusid < 50
+			AND so.statusid IN (20, 25)
+			AND part.typeid =10
+			AND soitem.dateScheduledFulfillment < date(now())
+		GROUP BY part.id
+		) AS outstandingSales ON outstandingSales.partId = part.id
+
+
+    left outer join (
+
+    select coalesce(sum(if(soitem.typeId=20, -1 * (soitem.qtyToFulfill-soitem.qtyFulfilled), (soitem.qtyToFulfill-soitem.qtyFulfilled))),0) as qty, date(soitem.datescheduledfulfillment) as day, product.partid
+                from soitem
+                join so on soitem.soid = so.id
+                join product on soitem.productid = product.id
+                where soitem.statusid < 50
+		AND so.statusid in (20, 25)
+                and soitem.datescheduledfulfillment between date(now()) and date(adddate(now(), INTERVAL 6 MONTH))
+                group by day, product.partid
+            ) as sales on sales.day = date(v.selected_date) and sales.partid = part.id
+
+    left outer join (
+
+
+    select coalesce(sum(poitem.qtyToFulfill-poitem.qtyfulfilled),0) as qty, date(poitem.datescheduledfulfillment) as day, poitem.partid
+                from poitem
+                join po on poitem.poid = po.id
+                where poitem.statusid in (10, 20, 30, 40, 45)
+		and po.statusid in (20,30,40,45,50,55)
+                and poitem.datescheduledfulfillment between date(now()) and date(adddate(now(), INTERVAL 6 MONTH) )
+                group by day, poitem.partid
+            ) as purchasing on purchasing.day = date(v.selected_date) and purchasing.partid = part.id
+
+where
+	part.typeid = 10
+	AND UPPER(product.num) = UPPER($P{productNum}) AND
+     v.selected_date between date(now()) and date(adddate(now(), INTERVAL 6 MONTH) )
+group by 2,3
+order by 3,2) as t
+JOIN (SELECT @part:='',@running_total:=0) r
+ORDER BY t.partNum,t.byday) AS t2
+WHERE t2.DAYDATE between date(now()) and date(adddate(now(), INTERVAL vlt DAY))
+ORDER BY t2.runningsum,t2.daydate
+LIMIT 1;]]>
+	</queryString>
+	<field name="MINATS" class="java.lang.Integer"/>
+	<field name="NextDeliveryDay" class="java.sql.Date"/>
+	<field name="PARTNUM" class="java.lang.String"/>
+	<field name="vlt" class="java.lang.String"/>
+	<field name="CATEGORY" class="java.lang.String"/>
+	<field name="TodaysDate" class="java.sql.Date"/>
+	<field name="PARTDESCRIPTION" class="java.lang.String"/>
+	<field name="DateATSHappens" class="java.sql.Date"/>
+	<field name="QOH" class="java.lang.Integer"/>
+	<field name="DefaultVendor" class="java.lang.String"/>
+	<field name="Discontinued" class="java.lang.String"/>
+	<field name="OUTSTANDINGPOSO" class="java.lang.Integer"/>
+	<field name="QTYNOTAVAILABLE" class="java.lang.Integer"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="228" splitType="Stretch">
+			<textField pattern="MM/dd/yyyy" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="113" y="165" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="1c5f0db0-c2af-47c0-8c86-71a3aa7bfd3b"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NextDeliveryDay} == null ? "None" : $F{NextDeliveryDay}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="183" width="113" height="18" backcolor="#FFFFFF" uuid="99251fe0-3b3f-4edf-a30b-a89e523f7085"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ATS]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="183" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="2f3b8334-5ff4-4544-bde4-8b86c4a0727d"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MINATS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="75" width="113" height="18" backcolor="#FFFFFF" uuid="50eca0f0-17c7-4067-8e61-4778d80fdfa1"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SKU]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="75" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="311859fd-9fe1-4032-89f8-7555b7cfca18"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTNUM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="39" width="113" height="18" backcolor="#FFFFFF" uuid="fdcbffdd-3791-4fc4-9a9c-f0959976bb79"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="39" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="4765e047-a3da-4b5d-870c-6c6017dda535"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CATEGORY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="165" width="113" height="18" backcolor="#FFFFFF" uuid="595fbd03-cb4a-4be3-bcee-9fdb5de99631"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Next Deliver Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="201" width="113" height="18" backcolor="#FFFFFF" uuid="022b67aa-69cc-48e9-8e53-2be3cf116e19"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date ATS Happens]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="201" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="c5f1de67-8a57-4e4f-8ef4-77dd8477b1de"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DateATSHappens}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="93" width="113" height="18" backcolor="#FFFFFF" uuid="2b951a2f-678c-4c3b-8a51-e2793a14597b"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Part Description]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="93" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="9ae1fbe5-fd0a-45d6-8188-8e500832b870"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTDESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="111" width="113" height="18" backcolor="#FFFFFF" uuid="29347bd6-0b2e-47bf-8165-0676c7fbaa3a"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QOH]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="111" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="975921f5-0d41-4da1-a165-c050a5d201c9"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QOH}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="21" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="04cbcc98-feb4-4e42-95ee-6bb4dbed87d3"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vlt} + " days"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="21" width="113" height="18" backcolor="#FFFFFF" uuid="710a682b-59da-4c19-be3f-0958e4226066"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vendor Lead Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="57" width="113" height="18" backcolor="#FFFFFF" uuid="1a34d0e1-e2a1-4f1c-88cb-c63a25cbb2ac"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discontinued]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="57" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="84fe6b94-cd6c-45fd-9fd4-5a47bf28c8f3"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Discontinued}.equals("true")? "Yes":"No"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="3" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="c4059022-2028-4204-9964-6daf77a9df84"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DefaultVendor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="3" width="113" height="18" backcolor="#FFFFFF" uuid="6f1832c6-4878-4506-b830-05fd123e898a"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Default Vendor]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="147" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="4b7b329e-8be7-49d4-b3d2-911da59d72ed"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUTSTANDINGPOSO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="147" width="113" height="18" backcolor="#FFFFFF" uuid="31fb08ec-dc03-4a70-8453-24c0a413c96d"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outstanding PO/SO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" stretchType="RelativeToBandHeight" mode="Transparent" x="113" y="129" width="212" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="d5c90e6d-3a2d-4fc2-9d8e-7aad509bb984"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTYNOTAVAILABLE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-3" style="note" mode="Opaque" x="0" y="129" width="113" height="18" backcolor="#FFFFFF" uuid="2c7c7d4f-c37a-4419-b16d-a30d8d585485"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement markup="none">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty Not Available]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
