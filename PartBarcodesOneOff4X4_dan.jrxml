@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartBarcodesOneOff4x4 DAN" pageWidth="288" pageHeight="288" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7d385386-6854-4b1f-8d04-a20463d0fc7b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="center" hAlign="Center" vAlign="Middle"/>
+	<subDataset name="OneProduct" uuid="c934ce95-2c07-4b54-a62e-6092a60a28f2">
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowDescription" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Skip" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Count" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[90]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[CALL CreateList($P!{Count}, 'createlist');
+SELECT part.NUM, part.DESCRIPTION, part.upc AS UPC
+FROM tmp_createlist CL, part
+    LEFT JOIN defaultlocation ON part.id = defaultlocation.partID
+WHERE part.id > 0
+  AND part.activeflag = 1
+  AND UPPER(part.num) LIKE UPPER($P{partNum})
+LIMIT $P!{Count} OFFSET $P!{Skip}]]>
+		</queryString>
+		<field name="NUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="UPC" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="AllProducts" uuid="09e79869-3422-4ed0-b059-8a187044a447">
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowDescription" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Skip" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="Count" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[90]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[part.num,Part Number,part.description,Part Description,part.datecreated,Date Created]]></parameterDescription>
+			<defaultValueExpression><![CDATA["part.num"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT part.NUM, part.DESCRIPTION, part.upc AS UPC
+FROM part
+    LEFT JOIN defaultlocation ON part.id = defaultlocation.partID
+WHERE part.id > 0
+  AND part.activeflag = 1
+  AND UPPER(part.num) LIKE UPPER($P{partNum})
+ORDER BY $P!{cbOrderBy}
+LIMIT $P!{Count} OFFSET $P!{Skip}]]>
+		</queryString>
+		<field name="NUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="UPC" class="java.lang.String"/>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Part barcodes for one-off labels - 4x4."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowDescription" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Skip" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Count" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[90]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[part.num,Part Number,part.description,Part Description,part.datecreated,Date Created]]></parameterDescription>
+		<defaultValueExpression><![CDATA["part.num"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select id from company where id = 1]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="isMultiCurrency" class="java.lang.Boolean">
+		<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="286">
+			<componentElement>
+				<reportElement key="table" x="0" y="0" width="141" height="70" uuid="ca93567f-d066-4b63-8646-3e18f2569ac9">
+					<printWhenExpression><![CDATA[!$P{partNum}.equals("%")]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="OneProduct" uuid="cf68a891-ab4c-400a-9f31-0c32a14ad5ac">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="partNum">
+							<datasetParameterExpression><![CDATA[$P{partNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ShowDescription">
+							<datasetParameterExpression><![CDATA[$P{ShowDescription}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="Skip">
+							<datasetParameterExpression><![CDATA[$P{Skip}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="Count">
+							<datasetParameterExpression><![CDATA[$P{Count}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="289" uuid="735948b0-f65a-42de-a05c-e9ce109effab">
+						<jr:detailCell height="286" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="26" y="234" width="239" height="30" uuid="33d00df7-1698-4b9a-b792-39207161d1ec">
+									<printWhenExpression><![CDATA[$P{ShowDescription}]]></printWhenExpression>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+							</textField>
+							<componentElement>
+								<reportElement style="center" x="26" y="118" width="239" height="53" uuid="7bfcbc3d-fb02-4bee-b33d-cf0a9586bd2e"/>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$F{NUM}]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-2" style="default" x="26" y="174" width="239" height="30" uuid="b505eea9-e7d9-4124-bc37-235edb715b22"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{UPC}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-2" style="default" x="26" y="204" width="239" height="30" uuid="f920f1bd-f76e-4f0d-bb70-ee39de80157c"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+							</textField>
+							<image>
+								<reportElement x="26" y="12" width="239" height="107" uuid="05577ea2-5d69-45bb-847f-08dd7cba0fc8"/>
+								<imageExpression><![CDATA["./PartBarcodesByPOOneOff4x4_dan/Davis Distributing Logo Lockup Horizontal.png"]]></imageExpression>
+							</image>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="1" uuid="0c1387ca-1901-45a2-80d0-5582ca0b5ba1">
+						<jr:detailCell height="286" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table" x="0" y="0" width="141" height="70" uuid="3607e29c-e640-4747-8f38-e6e9b4785655">
+					<printWhenExpression><![CDATA[$P{partNum}.equals("%")]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="AllProducts" uuid="17833f3e-d081-43fd-bf3a-0508842b7e6b">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="Count">
+							<datasetParameterExpression><![CDATA[$P{Count}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="partNum">
+							<datasetParameterExpression><![CDATA[$P{partNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ShowDescription">
+							<datasetParameterExpression><![CDATA[$P{ShowDescription}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="Skip">
+							<datasetParameterExpression><![CDATA[$P{Skip}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="289" uuid="d10629c1-4e29-4e25-9896-607409be2380">
+						<jr:detailCell height="286" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-1" style="default" x="26" y="234" width="239" height="30" uuid="0a717dd2-1d5b-4385-8fe6-1a49b0616909">
+									<printWhenExpression><![CDATA[$P{ShowDescription}]]></printWhenExpression>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+							</textField>
+							<componentElement>
+								<reportElement style="center" x="26" y="118" width="239" height="53" uuid="501f1557-d725-4284-855c-12b0a042d1dd"/>
+								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
+									<jr:codeExpression><![CDATA[$F{NUM}]]></jr:codeExpression>
+								</jr:barbecue>
+							</componentElement>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-2" style="default" x="26" y="204" width="239" height="30" uuid="055c756b-9d82-46b3-92ea-e7433b0a0832"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+							</textField>
+							<image>
+								<reportElement x="26" y="12" width="239" height="107" uuid="1b94b21a-089a-40ae-9129-de4ff8828a61"/>
+								<imageExpression><![CDATA["./PartBarcodesByPOOneOff4x4_dan/Davis Distributing Logo Lockup Horizontal.png"]]></imageExpression>
+							</image>
+							<textField isBlankWhenNull="true">
+								<reportElement key="textField-2" style="default" x="26" y="174" width="239" height="30" uuid="98438cfd-eb70-4944-bf9c-9cfe79710e4e"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans" size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{UPC}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="1" uuid="4f67a22a-8db4-4caa-90e9-85a1574c61ce">
+						<jr:detailCell height="286" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
