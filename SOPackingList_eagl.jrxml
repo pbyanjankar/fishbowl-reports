@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="112"/>
+	<property name="ireport.y" value="66"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -123,7 +123,7 @@ FROM soitem
    INNER JOIN company ON company.id = 1
 WHERE
     so.id = $P{SOID}
-    AND soitem.typeid IN (10,30,50)]]>
+    AND soitem.typeid IN (10,12,30,50)]]>
 		</queryString>
 		<field name="SOLINEITEM" class="java.lang.Integer">
 			<fieldDescription><![CDATA[]]></fieldDescription>
