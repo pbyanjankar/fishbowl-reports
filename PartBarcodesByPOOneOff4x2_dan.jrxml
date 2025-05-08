@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartBarcodesByPOOneOff4x2 DAN" pageWidth="288" pageHeight="144" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b864ca17-671a-4ccd-ad7f-78f09902fafe">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Prints All Product Barcodes for a given PO.  Formatted for One Off 4 x 2 labels"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowDescription" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="poNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./PartBarcodesByPOOneOff_dan/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,Part Num,2,Line Item]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT PO.NUM AS PONUMBER, POITEM.PARTID AS PARTID, POITEM.QTYTOFULFILL AS QTY,
+    PART.NUM  AS PARTNUMBER, UOMCONVERSION.FACTOR AS UOMFACTOR,
+    UOMCONVERSION.MULTIPLY AS UOMMULTI, POITEM.POLINEITEM
+FROM PO
+    LEFT JOIN poitem ON po.id = poitem.poid
+    LEFT JOIN part ON poitem.partid = part.id
+    JOIN uom ON part.uomid = uom.id
+    LEFT JOIN uomconversion ON (part.uomid = uomconversion.touomid AND poitem.uomid = uomconversion.fromuomid)
+
+WHERE UPPER(po.num) LIKE UPPER($P{poNum})
+
+Order By (CASE WHEN $P{cbOrderBy} = 1 THEN part.num ELSE poitem.polineitem END), po.num]]>
+	</queryString>
+	<field name="PONUMBER" class="java.lang.String"/>
+	<field name="PARTID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QTY" class="java.lang.Double"/>
+	<field name="PARTNUMBER" class="java.lang.String"/>
+	<field name="UOMFACTOR" class="java.lang.Double"/>
+	<field name="UOMMULTI" class="java.lang.Double"/>
+	<field name="POLINEITEM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="CountSub" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{UOMMULTI} != null)
+	? new Double(($F{QTY}.doubleValue() * $F{UOMMULTI}.doubleValue())/$F{UOMFACTOR}.doubleValue())
+	: $F{QTY}]]></variableExpression>
+	</variable>
+	<variable name="Count" class="java.lang.Integer">
+		<variableExpression><![CDATA[new Integer($V{CountSub}.intValue())]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="142" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" x="0" y="0" width="288" height="142" uuid="e965efc2-9c97-4849-a5fc-15042f267758"/>
+				<subreportParameter name="Count">
+					<subreportParameterExpression><![CDATA[$V{Count}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="partNum">
+					<subreportParameterExpression><![CDATA[$F{PARTNUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowDescription">
+					<subreportParameterExpression><![CDATA[$P{ShowDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subSinglePartBarcodesOneOff4x2_dan.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
