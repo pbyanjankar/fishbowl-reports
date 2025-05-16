@@ -72,31 +72,43 @@ LEFT OUTER JOIN (
 	INNER JOIN part ON product.partId = part.id
 	INNER JOIN so ON so.id = soitem.soid
 	WHERE  so.statusId IN (20,25,60, 70) AND $P!{cbApplyDateFilter} BETWEEN DATE_SUB(CURDATE(), INTERVAL 180 DAY) AND NOW()
+	AND part.activeFlag = 1
+	 AND UPPER(CustomFieldByName(part.customfields, 'Reorder Levels')) = 'YES'
 	GROUP BY product.id, part.id
 ) AS soldResult ON soldResult.partId = part.id
 
 LEFT OUTER JOIN (
 	SELECT poitem.partid, sum(poitem.qtyToFulfill) AS QTYONBID FROM po
 	INNER JOIN poitem ON poitem.poid = po.id
+	INNER JOIN part ON poitem.partid = part.id
 	WHERE po.statusId = 10
+          AND part.activeFlag = 1
+ 	AND UPPER(CustomFieldByName(part.customfields, 'Reorder Levels')) = 'YES'
 	GROUP BY poitem.partid
 ) AS bidResult ON bidResult.partid = part.id
 
 
 LEFT OUTER JOIN (
 	SELECT qtyonorderpo.partid, sum(qty) AS QTYONPO FROM qtyonorderpo
+	INNER JOIN part ON part.id = qtyonorderpo.partid
+	 WHERE part.activeFlag = 1
+	  AND UPPER(CustomFieldByName(part.customfields, 'Reorder Levels')) = 'YES'
 	GROUP BY qtyonorderpo.partid
 ) AS poResult ON poResult.partId = part.id
 
 
 LEFT OUTER JOIN (
 	SELECT qtyinventorytotals.partid AS partId,
-(SUM(QTYINVENTORYTOTALS.QTYONHAND) - SUM(QTYINVENTORYTOTALS.QTYALLOCATED) - SUM(QTYINVENTORYTOTALS.QTYNOTAVAILABLE) + SUM(QTYINVENTORYTOTALS.QTYDROPSHIP)) AS QTYAVAILABLE
-FROM qtyinventorytotals
-INNER JOIN part ON part.id = qtyinventorytotals.partid
-WHERE part.activeFlag = 1
-GROUP BY partId) AS qtyAvailableResult ON qtyAvailableResult.partId = part.id
-WHERE part.activeFlag = 1 AND part.typeId = 10
+		(SUM(QTYINVENTORYTOTALS.QTYONHAND) - SUM(QTYINVENTORYTOTALS.QTYALLOCATED) - SUM(QTYINVENTORYTOTALS.QTYNOTAVAILABLE) + SUM(QTYINVENTORYTOTALS.QTYDROPSHIP)) AS QTYAVAILABLE
+	FROM qtyinventorytotals
+	INNER JOIN part ON part.id = qtyinventorytotals.partid
+	WHERE part.activeFlag = 1
+	  AND UPPER(CustomFieldByName(part.customfields, 'Reorder Levels')) = 'YES'
+	GROUP BY partId) AS qtyAvailableResult ON qtyAvailableResult.partId = part.id
+WHERE
+ part.activeFlag = 1
+ AND part.typeId = 10
+ AND UPPER(CustomFieldByName(part.customfields, 'Reorder Levels')) = 'YES'
 ORDER BY 1;]]>
 		</queryString>
 		<field name="PART" class="java.lang.String"/>
