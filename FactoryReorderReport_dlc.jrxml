@@ -56,7 +56,7 @@
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
-product.num AS PRODUCT,
+part.num AS PART,
 soldResult.QTYSOLD,
 bidResult.QTYONBID,
 poResult.QTYONPO,
@@ -65,46 +65,41 @@ COALESCE(soldResult.QTYSOLD,0) -
 COALESCE(bidResult.QTYONBID,0) -
 COALESCE(poResult.QTYONPO,0) -
 COALESCE(qtyAvailableResult.QTYAVAILABLE,0) AS QTYREORDER
-FROM product
-INNER JOIN part ON part.id = product.partId
+FROM part
 LEFT OUTER JOIN (
-  	select soitem.productid, sum(soitem.qtyOrdered) AS QTYSOLD from soitem
+  	select product.id AS productId, part.id AS partId, sum(soitem.qtyOrdered) AS QTYSOLD from soitem
+	INNER JOIN product ON product.id = soitem.productId
+	INNER JOIN part ON product.partId = part.id
 	INNER JOIN so ON so.id = soitem.soid
-	WHERE  so.statusId IN (20,25,60, 70) AND $P!{cbApplyDateFilter} BETWEEN DATE_SUB(CURDATE(), INTERVAL 180 DAY) AND CURDATE()
-	GROUP BY soitem.productId
-) AS soldResult ON soldResult.productId = product.id
+	WHERE  so.statusId IN (20,25,60, 70) AND $P!{cbApplyDateFilter} BETWEEN DATE_SUB(CURDATE(), INTERVAL 180 DAY) AND NOW()
+	GROUP BY product.id, part.id
+) AS soldResult ON soldResult.partId = part.id
 
 LEFT OUTER JOIN (
-	SELECT product.id AS productId, poitem.partid, sum(poitem.qtyToFulfill) AS QTYONBID FROM po
+	SELECT poitem.partid, sum(poitem.qtyToFulfill) AS QTYONBID FROM po
 	INNER JOIN poitem ON poitem.poid = po.id
-	INNER JOIN product ON product.partId = poitem.partid
 	WHERE po.statusId = 10
-	GROUP BY productId, poitem.partid
-) AS bidResult ON bidResult.productId = product.id
+	GROUP BY poitem.partid
+) AS bidResult ON bidResult.partid = part.id
 
 
 LEFT OUTER JOIN (
-	SELECT product.id AS productId, qtyonorderpo.partid, sum(qty) AS QTYONPO FROM qtyonorderpo
-	INNER JOIN product ON product.partId = qtyonorderpo.partid
-	GROUP BY productId, partid
-) AS poResult ON poResult.productId = product.id
+	SELECT qtyonorderpo.partid, sum(qty) AS QTYONPO FROM qtyonorderpo
+	GROUP BY qtyonorderpo.partid
+) AS poResult ON poResult.partId = part.id
 
 
 LEFT OUTER JOIN (
-	SELECT product.id AS productId, qtyinventorytotals.partid AS partId,
+	SELECT qtyinventorytotals.partid AS partId,
 (SUM(QTYINVENTORYTOTALS.QTYONHAND) - SUM(QTYINVENTORYTOTALS.QTYALLOCATED) - SUM(QTYINVENTORYTOTALS.QTYNOTAVAILABLE) + SUM(QTYINVENTORYTOTALS.QTYDROPSHIP)) AS QTYAVAILABLE
 FROM qtyinventorytotals
 INNER JOIN part ON part.id = qtyinventorytotals.partid
-INNER JOIN product ON product.partId = part.id
 WHERE part.activeFlag = 1
-GROUP BY productId, partId) AS qtyAvailableResult ON qtyAvailableResult.productId = product.id
-WHERE product.activeFlag = 1 AND part.typeId = 10
-ORDER BY 1;
-
-
-]]>
+GROUP BY partId) AS qtyAvailableResult ON qtyAvailableResult.partId = part.id
+WHERE part.activeFlag = 1 AND part.typeId = 10
+ORDER BY 1;]]>
 		</queryString>
-		<field name="PRODUCT" class="java.lang.String"/>
+		<field name="PART" class="java.lang.String"/>
 		<field name="QTYSOLD" class="java.lang.Double"/>
 		<field name="QTYONBID" class="java.lang.Double"/>
 		<field name="QTYONPO" class="java.lang.Double"/>
@@ -164,7 +159,7 @@ FROM company WHERE company.id = 1]]>
 									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="10" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Product]]></text>
+									<text><![CDATA[Part]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="13" rowSpan="1">
@@ -174,7 +169,7 @@ FROM company WHERE company.id = 1]]>
 									<textElement>
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{PRODUCT}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{PART}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
