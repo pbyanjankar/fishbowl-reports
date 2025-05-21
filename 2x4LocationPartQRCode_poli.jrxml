@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="2x4LocationPartQRCodePOLI" pageWidth="288" pageHeight="144" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="90e41a1c-e301-4ced-ba5a-5a75faf0a025">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="50"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="style1" hAlign="Center" vAlign="Middle"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Generates Part QR Code for selected Location"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./Custom/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="StartFrom" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLogo" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["Logo1.png","Logo 1","Logo2.png", "Logo 2", "Logo3.png","Logo 3"]]></parameterDescription>
+	</parameter>
+	<parameter name="ShowSerialNumber" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbWebsite" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["www.lumiprolighting.com","www.lumiprolighting.com","www.poliled.com","www.poliled.com","www.poliledsigns.com","www.poliledsigns.com"]]></parameterDescription>
+	</parameter>
+	<parameter name="PrintAllQuantity" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowLogo" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *, t.record AS record
+FROM (SELECT
+part.NUM AS NUM,
+part.DESCRIPTION AS DESCRIPTION,
+sum(tag.qty) AS TAGQTY,
+tag.locationId AS LOCATIONID,
+location.name AS LOCATIONNAME
+FROM part
+LEFT JOIN tag ON part.id = tag.partId
+LEFT JOIN location ON location.id = tag.locationId
+WHERE
+  Location.ID LIKE $P{locationID}
+GROUP BY part.num) AS result
+LEFT JOIN (SELECT @row := @row + 1 AS record FROM
+(select 0 union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) t,
+(select 0 union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) t2,
+(select 0 union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) t3,
+(select 0 union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) t4,
+(SELECT @row:=0) numbers) as t ON t.record <=result.TAGQTY AND if($P{PrintAllQuantity}=true, true, t.record=0)
+ORDER BY result.NUM, t.record;]]>
+	</queryString>
+	<field name="NUM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="record" class="java.lang.Integer"/>
+	<field name="LOCATIONNAME" class="java.lang.String"/>
+	<variable name="sequence" class="java.lang.Integer" resetType="Column">
+		<variableExpression><![CDATA[$P{StartFrom}+$F{record}]]></variableExpression>
+	</variable>
+	<group name="Part">
+		<groupExpression><![CDATA[$F{NUM}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<detail>
+		<band height="144">
+			<textField hyperlinkType="Reference">
+				<reportElement x="130" y="64" width="152" height="22" uuid="5218d0aa-377d-47a7-8baa-ee04973c2802"/>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Built Titling Rg" size="16" isBold="true" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cbWebsite}]]></textFieldExpression>
+				<anchorNameExpression><![CDATA[$P{cbWebsite}]]></anchorNameExpression>
+			</textField>
+			<image>
+				<reportElement x="130" y="86" width="120" height="40" uuid="487d9280-2578-4118-b914-a97ff4c0357c">
+					<printWhenExpression><![CDATA[$P{ShowLogo}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{path}+$P{cbLogo}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" hAlign="Left" vAlign="Middle">
+				<reportElement x="0" y="20" width="124" height="124" uuid="0332af7b-212c-4e6e-a1fd-55ed4bd01b3a"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+new com.google.zxing.qrcode.QRCodeWriter().encode(
+$F{NUM},
+com.google.zxing.BarcodeFormat.QR_CODE, 300, 300))]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="130" y="42" width="152" height="22" uuid="e38d5ce1-c6b6-4397-8d39-c1d3c609bb2e">
+					<printWhenExpression><![CDATA[$P{ShowSerialNumber} && $P{PrintAllQuantity}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Built Titling Rg" size="16" isBold="true" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SN: "+$V{sequence}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="288" height="32" uuid="68978ece-ca33-4c8b-8482-e7d312b7de8e"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Built Titling Rg" size="26" isBold="true" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
