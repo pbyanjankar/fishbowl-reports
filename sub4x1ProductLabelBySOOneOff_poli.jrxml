@@ -61,7 +61,7 @@ LIMIT 0, $P!{Count}]]>
 		<band height="72">
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" style="default" x="71" y="18" width="213" height="15" uuid="67f8b564-a95c-409f-9214-f24c56129db8"/>
-				<box leftPadding="1">
+				<box leftPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -74,7 +74,7 @@ LIMIT 0, $P!{Count}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement key="textField" style="default" x="71" y="1" width="213" height="17" uuid="157d0ef0-a046-4fdf-b098-0daabc98bf14"/>
-				<box leftPadding="1">
+				<box leftPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -101,7 +101,7 @@ LIMIT 0, $P!{Count}]]>
 (new java.text.DecimalFormat($V{PriceDecimal})).format($P{soItemPrice}))]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement style="center" x="71" y="54" width="213" height="16" uuid="b2656608-1e15-4951-966f-0bde91f8a205"/>
+				<reportElement style="default" x="71" y="54" width="213" height="16" uuid="b2656608-1e15-4951-966f-0bde91f8a205"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
 					<jr:codeExpression><![CDATA[$F{SKU}]]></jr:codeExpression>
 				</jr:barbecue>
@@ -115,7 +115,7 @@ com.google.zxing.BarcodeFormat.QR_CODE, 300, 300))]]></imageExpression>
 			</image>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" style="default" mode="Opaque" x="71" y="34" width="71" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="f56aadf8-0bd4-4c1f-b12a-15e22dfdb3b5"/>
-				<box leftPadding="1">
+				<box leftPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
