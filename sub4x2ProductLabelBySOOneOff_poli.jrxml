@@ -60,7 +60,7 @@ LIMIT 0, $P!{Count}]]>
 	<detail>
 		<band height="144">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="default" x="36" y="32" width="248" height="18" uuid="67f8b564-a95c-409f-9214-f24c56129db8"/>
+				<reportElement key="textField" style="default" x="36" y="31" width="248" height="18" uuid="67f8b564-a95c-409f-9214-f24c56129db8"/>
 				<box leftPadding="5">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -86,7 +86,7 @@ LIMIT 0, $P!{Count}]]>
 				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="default" mode="Opaque" x="41" y="65" width="165" height="15" forecolor="#FFFFFF" backcolor="#333333" uuid="61902bed-2ae1-44b2-99d7-d7870fa4f5c3"/>
+				<reportElement key="textField" style="default" mode="Opaque" x="41" y="55" width="165" height="15" forecolor="#FFFFFF" backcolor="#333333" uuid="61902bed-2ae1-44b2-99d7-d7870fa4f5c3"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
