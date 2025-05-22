@@ -101,7 +101,7 @@ LIMIT 0, $P!{Count}]]>
 (new java.text.DecimalFormat($V{PriceDecimal})).format($P{soItemPrice}))]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement style="default" x="71" y="54" width="213" height="16" uuid="b2656608-1e15-4951-966f-0bde91f8a205"/>
+				<reportElement x="71" y="54" width="213" height="16" uuid="b2656608-1e15-4951-966f-0bde91f8a205"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
 					<jr:codeExpression><![CDATA[$F{SKU}]]></jr:codeExpression>
 				</jr:barbecue>
