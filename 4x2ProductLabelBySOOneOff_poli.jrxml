@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="4x2ProductLabelBySOOneOffPOLI" pageWidth="288" pageHeight="144" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f0ba4a39-58ac-49df-9a64-d007453d41dd">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="soNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Custom/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,Product Num,2,Line Item]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckDon&apos;tShowShippingAndService" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[and, --]]></parameterDescription>
+		<defaultValueExpression><![CDATA["and"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="URLPrefix" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["https://poliledsigns.com/?sku="]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SO.NUM AS SONUMBER, SOITEM.PRODUCTID AS PRODUCTID, SOITEM.QTYTOFULFILL AS QTY,
+    PRODUCT.NUM AS PRODUCTNUMBER, UOMCONVERSION.FACTOR AS UOMFACTOR,
+    UOMCONVERSION.MULTIPLY AS UOMMULTI, SOITEM.SOLINEITEM, SOITEM.UNITPRICE, product.price AS PRODUCTPRICE
+
+FROM so
+    LEFT JOIN soitem ON so.id = soitem.soid
+    JOIN product ON soitem.productid = product.id
+    JOIN part on product.partid = part.id
+    JOIN uom ON product.uomid = uom.id
+    LEFT JOIN uomconversion ON (product.uomid = uomconversion.touomid AND soitem.uomid = uomconversion.fromuomid)
+
+WHERE UPPER(so.num) LIKE UPPER($P{soNum})
+$P!{ckDon'tShowShippingAndService} part.typeid in (10,30)
+
+Order By (CASE WHEN $P{cbOrderBy} = 1 THEN product.num ELSE soitem.solineitem END), so.num]]>
+	</queryString>
+	<field name="SONUMBER" class="java.lang.String"/>
+	<field name="PRODUCTID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QTY" class="java.lang.Double"/>
+	<field name="PRODUCTNUMBER" class="java.lang.String"/>
+	<field name="UOMFACTOR" class="java.lang.Double"/>
+	<field name="UOMMULTI" class="java.lang.Double"/>
+	<field name="SOLINEITEM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="UNITPRICE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRODUCTPRICE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="CountSub" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{UOMMULTI} != null)
+	? new Double(($F{QTY}.doubleValue() * $F{UOMMULTI}.doubleValue())/$F{UOMFACTOR}.doubleValue())
+	: $F{QTY}]]></variableExpression>
+	</variable>
+	<variable name="Count" class="java.lang.Integer">
+		<variableExpression><![CDATA[new Integer($V{CountSub}.intValue())]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="140" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" x="0" y="0" width="288" height="140" uuid="e019126a-438c-44d9-a91c-27070c9d26c4"/>
+				<subreportParameter name="ckDon&apos;tShowShippingAndService">
+					<subreportParameterExpression><![CDATA[$P{ckDon'tShowShippingAndService}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Count">
+					<subreportParameterExpression><![CDATA[$V{Count}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="productNum">
+					<subreportParameterExpression><![CDATA[$F{PRODUCTNUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="URLPrefix">
+					<subreportParameterExpression><![CDATA[$P{URLPrefix}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="soItemPrice">
+					<subreportParameterExpression><![CDATA[$F{UNITPRICE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "sub4x2ProductLabelBySOOneOff_poli.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
