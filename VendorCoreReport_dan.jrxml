@@ -66,6 +66,20 @@
 		<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Column Sorting"/>
+			<property name="Sort" value="4"/>
+			<property name="Tooltip" value="Choose if the report should be sorted in ascending or descending order"/>
+			<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Column Sorting"/>
+			<property name="Sort" value="3"/>
+			<property name="Tooltip" value="Choose which column will be used to sort the report"/>
+			<parameterDescription><![CDATA[1 $P!{cbOrder},Part Number,2 $P!{cbOrder},Description,3 $P!{cbOrder},Qty Received,4 $P!{cbOrder},Qty Return,5 $P!{cbOrder},Qty Open,6 $P!{cbOrder},Qty On Hand]]></parameterDescription>
+			<defaultValueExpression><![CDATA["1 $P!{cbOrder}"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
    part.num AS PARTNUM,
@@ -75,7 +89,7 @@
    sum(partcr.qtyReturned) AS  TOTALQTYRETURNED,
    sum(partcor.qtyReceived)  - sum(partcr.qtyReturned) AS QTYOPEN
 FROM part
-INNER JOIN
+LEFT OUTER JOIN
 	(SELECT
        	   part.id AS partId,
 	   part.num AS PartNumber,
@@ -92,6 +106,8 @@ INNER JOIN
 	   LEFT OUTER JOIN currency ON currency.homeCurrency = 1
 	   WHERE
 		part.num like "%-COR"
+                     AND po.locationGroupId IN ($P!{locationGroupID})
+   AND vendor.id LIKE '$P!{vendorID}'
 	   	AND poitem.dateLastFulfillment BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 	   GROUP BY 1,2,3,4,5,6
        ) AS partcor ON part.id =  partcor.partId
@@ -113,13 +129,12 @@ INNER JOIN
 	   LEFT OUTER JOIN currency ON currency.homeCurrency = 1
 	   WHERE
        		part.num like "%-CR"
+		AND po.locationGroupId IN ($P!{locationGroupID})
+   		AND vendor.id LIKE '$P!{vendorID}'
 	   	AND poitem.dateLastFulfillment BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 	   GROUP BY 1,2,3,4,5,6
        ) AS partcr ON replace(part.num, '-COR', '') =  replace(partcr.PartNumber,'-CR','')
-			AND partcr.vendorId = partcor.vendorId
-            AND partcr.locationGroupId = partcor.locationGroupId
-       LEFT OUTER JOIN vendor ON vendor.id = partcor.vendorId
-       LEFT OUTER JOIN locationgroup ON locationgroup.id = partcor.locationgroupId
+
        LEFT JOIN (
         SELECT
             part.num AS partNumber,
@@ -132,9 +147,9 @@ INNER JOIN
     ) AS inventoryTotals ON replace(inventoryTotals.partNumber,'-CR','') = replace(part.num, '-COR', '')
 
 WHERE part.num like "%-COR"
-   AND locationgroup.id IN ($P!{locationGroupID})
-   AND vendor.id LIKE '$P!{vendorID}'
-GROUP BY 1,2,3]]>
+
+GROUP BY 1,2,3
+ORDER BY $P!{cbSortBy}]]>
 		</queryString>
 		<field name="PARTDESCRIPTION" class="java.lang.String"/>
 		<field name="PARTNUM" class="java.lang.String"/>
@@ -187,6 +202,20 @@ GROUP BY 1,2,3]]>
 	</parameter>
 	<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="4"/>
+		<property name="Tooltip" value="Choose if the report should be sorted in ascending or descending order"/>
+		<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="3"/>
+		<property name="Tooltip" value="Choose which column will be used to sort the report"/>
+		<parameterDescription><![CDATA[1 $P!{cbOrder},Part Number,2 $P!{cbOrder},Description,3 $P!{cbOrder},Qty Received,4 $P!{cbOrder},Qty Return,5 $P!{cbOrder},Qty Open,6 $P!{cbOrder},Qty On Hand]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1 $P!{cbOrder}"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -262,7 +291,7 @@ WHERE id = 1]]>
 					<jr:column width="90" uuid="c1b50426-5990-4a7d-b258-193653320d5c">
 						<jr:columnHeader height="29" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="28" uuid="66ca3e7d-4991-4776-8c1b-2aaa98a62380"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="29" uuid="66ca3e7d-4991-4776-8c1b-2aaa98a62380"/>
 								<box leftPadding="3" rightPadding="1">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -272,10 +301,10 @@ WHERE id = 1]]>
 								<text><![CDATA[Part Number]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="11" rowSpan="1">
+						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="11" isPrintWhenDetailOverflows="true" uuid="3c3a2df8-c652-4362-bffe-b0a67cb7b458"/>
-								<box leftPadding="3" rightPadding="1"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" isPrintWhenDetailOverflows="true" uuid="3c3a2df8-c652-4362-bffe-b0a67cb7b458"/>
+								<box topPadding="2" leftPadding="3" rightPadding="3"/>
 								<textElement>
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
@@ -286,7 +315,7 @@ WHERE id = 1]]>
 					<jr:column width="180" uuid="5446dd46-3a0a-4be9-b516-3a377a0bd395">
 						<jr:columnHeader height="29" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="180" height="28" uuid="dba5fa94-aeff-4b74-97da-d802623880eb"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="180" height="29" uuid="dba5fa94-aeff-4b74-97da-d802623880eb"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -296,10 +325,10 @@ WHERE id = 1]]>
 								<text><![CDATA[Description]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="11" rowSpan="1">
+						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="180" height="11" isPrintWhenDetailOverflows="true" uuid="a1c96fb3-1ef5-4dd6-9ebd-a10fd6be610c"/>
-								<box leftPadding="3" rightPadding="1"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="180" height="14" isPrintWhenDetailOverflows="true" uuid="a1c96fb3-1ef5-4dd6-9ebd-a10fd6be610c"/>
+								<box topPadding="2" leftPadding="3" rightPadding="3"/>
 								<textElement>
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
@@ -310,7 +339,7 @@ WHERE id = 1]]>
 					<jr:column width="70" uuid="1a0f6396-0073-4904-8413-79068f0c1480">
 						<jr:columnHeader height="29" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="28" uuid="10830cf8-5830-4f16-85e4-d35ab6c830fc"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="29" uuid="10830cf8-5830-4f16-85e4-d35ab6c830fc"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -320,10 +349,10 @@ WHERE id = 1]]>
 								<text><![CDATA[Qty Received]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="11" rowSpan="1">
+						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="11" isPrintWhenDetailOverflows="true" uuid="43d6f4e1-e67a-4770-8f3f-22c33096753e"/>
-								<box leftPadding="1" rightPadding="3"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="14" isPrintWhenDetailOverflows="true" uuid="43d6f4e1-e67a-4770-8f3f-22c33096753e"/>
+								<box topPadding="2" leftPadding="0"/>
 								<textElement textAlignment="Center">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
@@ -335,7 +364,7 @@ WHERE id = 1]]>
 					<jr:column width="70" uuid="c6b3b7a1-dc14-4fa4-a999-74b38ac2c73f">
 						<jr:columnHeader height="29" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="28" uuid="70d89136-cd68-4cac-ba42-1427a8d6f436"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="29" uuid="70d89136-cd68-4cac-ba42-1427a8d6f436"/>
 								<box leftPadding="3" rightPadding="0">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -345,10 +374,10 @@ WHERE id = 1]]>
 								<text><![CDATA[Qty Returned]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="11" rowSpan="1">
+						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="11" isPrintWhenDetailOverflows="true" uuid="91842a14-d8b8-42c8-a795-3ecda6a0ab33"/>
-								<box leftPadding="1" rightPadding="1"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="14" isPrintWhenDetailOverflows="true" uuid="91842a14-d8b8-42c8-a795-3ecda6a0ab33"/>
+								<box topPadding="2" leftPadding="0"/>
 								<textElement textAlignment="Center">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
@@ -360,7 +389,7 @@ WHERE id = 1]]>
 					<jr:column width="70" uuid="f9c47130-8c95-4e45-ac3a-f016a9f1d01b">
 						<jr:columnHeader height="29" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="28" uuid="d51f21a7-336d-480e-aa0f-28a7d1a5ca15"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="29" uuid="d51f21a7-336d-480e-aa0f-28a7d1a5ca15"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -370,10 +399,10 @@ WHERE id = 1]]>
 								<text><![CDATA[Qty Open]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="11" rowSpan="1">
+						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="11" isPrintWhenDetailOverflows="true" uuid="dffb6604-39f8-40a9-8a66-4e3ded607ec4"/>
-								<box leftPadding="1" rightPadding="1"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="14" isPrintWhenDetailOverflows="true" uuid="dffb6604-39f8-40a9-8a66-4e3ded607ec4"/>
+								<box topPadding="2" leftPadding="0"/>
 								<textElement textAlignment="Center">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
@@ -385,7 +414,7 @@ WHERE id = 1]]>
 					<jr:column width="70" uuid="f9c47130-8c95-4e45-ac3a-f016a9f1d01b">
 						<jr:columnHeader height="29" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="28" uuid="4a106547-db5b-4aa5-99db-40fbc047a5d6"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="29" uuid="4a106547-db5b-4aa5-99db-40fbc047a5d6"/>
 								<box>
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -395,10 +424,10 @@ WHERE id = 1]]>
 								<text><![CDATA[Qty On Hand]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="11" rowSpan="1">
+						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="11" isPrintWhenDetailOverflows="true" uuid="dffb6604-39f8-40a9-8a66-4e3ded607ec4"/>
-								<box leftPadding="1" rightPadding="1"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="14" isPrintWhenDetailOverflows="true" uuid="dffb6604-39f8-40a9-8a66-4e3ded607ec4"/>
+								<box topPadding="2" leftPadding="0"/>
 								<textElement textAlignment="Center">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
@@ -414,7 +443,7 @@ WHERE id = 1]]>
 	<pageFooter>
 		<band height="15" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="330" y="0" width="130" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
+				<reportElement key="" mode="Transparent" x="423" y="0" width="87" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="3">
@@ -430,7 +459,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="460" y="0" width="92" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
+				<reportElement key="" mode="Transparent" x="510" y="0" width="42" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="0">
