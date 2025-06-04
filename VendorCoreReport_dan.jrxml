@@ -77,17 +77,17 @@
 			<property name="Group" value="Column Sorting"/>
 			<property name="Sort" value="3"/>
 			<property name="Tooltip" value="Choose which column will be used to sort the report"/>
-			<parameterDescription><![CDATA[1 $P!{cbOrder},Part Number,2 $P!{cbOrder},Description,3 $P!{cbOrder},Qty Received,4 $P!{cbOrder},Qty Return,5 $P!{cbOrder},Qty Open,6 $P!{cbOrder},Qty On Hand]]></parameterDescription>
+			<parameterDescription><![CDATA[1 $P!{cbOrder},Part Number,2 $P!{cbOrder},Description,4 $P!{cbOrder},Qty Received,5 $P!{cbOrder},Qty Return,6 $P!{cbOrder},Qty Open,3 $P!{cbOrder},Qty On Hand]]></parameterDescription>
 			<defaultValueExpression><![CDATA["1 $P!{cbOrder}"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
    part.num AS PARTNUM,
    part.description AS PARTDESCRIPTION,
+   inventoryTotals.totalOnHand AS TOTALONHAND
    sum(partcor.qtyReceived) AS TOTALQTYRECEIVED,
    sum(partcr.qtyReturned) AS  TOTALQTYRETURNED,
    sum(partcor.qtyReceived)  - sum(partcr.qtyReturned) AS QTYOPEN
-   inventoryTotals.totalOnHand AS TOTALONHAND,
 FROM part
 LEFT OUTER JOIN
 	(SELECT
@@ -214,7 +214,7 @@ ORDER BY $P!{cbSortBy}]]>
 		<property name="Group" value="Column Sorting"/>
 		<property name="Sort" value="3"/>
 		<property name="Tooltip" value="Choose which column will be used to sort the report"/>
-		<parameterDescription><![CDATA[1 $P!{cbOrder},Part Number,2 $P!{cbOrder},Description,3 $P!{cbOrder},Qty Received,4 $P!{cbOrder},Qty Return,5 $P!{cbOrder},Qty Open,6 $P!{cbOrder},Qty On Hand]]></parameterDescription>
+		<parameterDescription><![CDATA[1 $P!{cbOrder},Part Number,2 $P!{cbOrder},Description,3 $P!{cbOrder},Qty Received,4 $P!{cbOrder},Qty Return,5 $P!{cbOrder},Qty Open,3 $P!{cbOrder},Qty On Hand]]></parameterDescription>
 		<defaultValueExpression><![CDATA["1 $P!{cbOrder}"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
