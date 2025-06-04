@@ -84,10 +84,10 @@
 			<![CDATA[SELECT
    part.num AS PARTNUM,
    part.description AS PARTDESCRIPTION,
-   inventoryTotals.totalOnHand AS TOTALONHAND,
    sum(partcor.qtyReceived) AS TOTALQTYRECEIVED,
    sum(partcr.qtyReturned) AS  TOTALQTYRETURNED,
    sum(partcor.qtyReceived)  - sum(partcr.qtyReturned) AS QTYOPEN
+   inventoryTotals.totalOnHand AS TOTALONHAND,
 FROM part
 LEFT OUTER JOIN
 	(SELECT
