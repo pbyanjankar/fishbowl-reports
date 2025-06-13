@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1269722013523666"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="272"/>
+	<property name="ireport.y" value="365"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1302,7 +1302,7 @@ GROUP BY
 						<font fontName="Open Sans"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression><![CDATA["<b>RDL Eagle Trade Inc.</b><br /><b>Lot #9</b><br />Spring Garden Industrial Estate<br />Brighton<br />St. Michael, M BB12050<br />Phone: +1 (246) 434-0159<br />Email: procurement@rdleagle.com"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["<b>RDL Eagle Trade Inc.</b><br />Lot #9<br />Spring Garden Industrial Estate<br />Brighton<br />St. Michael, M BB12050<br />Phone: +1 (246) 434-0159<br />Email: procurement@rdleagle.com"]]></textFieldExpression>
 				</textField>
 				<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 					<reportElement mode="Opaque" x="0" y="24" width="98" height="90" forecolor="#000000" backcolor="#FFFFFF" uuid="e3f91cdb-b8da-42a1-b20d-d242e92ad85a"/>
@@ -2069,7 +2069,7 @@ $F{TOTALCOST}]]></textFieldExpression>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10" isBold="true"/>
 									</textElement>
-									<textFieldExpression><![CDATA["VAT (17.5%)*"]]></textFieldExpression>
+									<textFieldExpression><![CDATA["TAX:"]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
