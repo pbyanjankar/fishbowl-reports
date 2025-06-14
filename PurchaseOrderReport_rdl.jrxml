@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1269722013523666"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="365"/>
+	<property name="ireport.y" value="155"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -91,7 +91,7 @@
     CustomFieldByName(po.customfields, 'CustomBuyer') buyercf,
     CustomFieldByName(po.customfields, 'Buyer PO#') buyerponum,
     CustomFieldByName(po.customfields, 'Job') job,
-    CustomFieldByName(po.customfields, 'Concession') concession
+    CustomFieldByName(po.customfields, 'Lot #') LOTNUMBERS
 FROM po
     INNER JOIN potype ON po.typeid = potype.id
     INNER JOIN fobpoint ON po.fobpointid = fobpoint.id
@@ -125,7 +125,7 @@ WHERE po.id = $P{poId}]]>
 		<field name="buyercf" class="java.lang.String"/>
 		<field name="buyerponum" class="java.lang.String"/>
 		<field name="job" class="java.lang.String"/>
-		<field name="concession" class="java.lang.String"/>
+		<field name="LOTNUMBERS" class="java.lang.String"/>
 		<variable name="DateFormat" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
 		</variable>
@@ -1046,7 +1046,7 @@ GROUP BY
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Concession]]></text>
+									<text><![CDATA[Lot #]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="15" rowSpan="1">
@@ -1061,7 +1061,7 @@ GROUP BY
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{concession}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{LOTNUMBERS}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -1988,12 +1988,12 @@ $F{TOTALCOST}]]></textFieldExpression>
 				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="453" height="62" uuid="13d2a5c6-d0ce-47fe-96dc-b4b25e81134f"/>
+				<reportElement x="0" y="0" width="506" height="62" uuid="13d2a5c6-d0ce-47fe-96dc-b4b25e81134f"/>
 				<box rightPadding="0"/>
 				<textElement verticalAlignment="Bottom" markup="styled">
 					<font fontName="Open Sans" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Approval: __________________________________________________________________ Date: _________________"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Approval: ____________________________________________ Approval: ____________________________________________"]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
