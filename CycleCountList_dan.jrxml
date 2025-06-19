@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="59"/>
-	<property name="ireport.y" value="4"/>
+	<property name="ireport.y" value="1"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -75,6 +75,33 @@
 		<property name="Group" value="Parts"/>
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="partNumPartNumber6" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="12"/>
+		<property name="Group" value="Parts"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNumPartNumber7" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="13"/>
+		<property name="Group" value="Parts"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNumPartNumber8" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="14"/>
+		<property name="Group" value="Parts"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNumPartNumber9" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="15"/>
+		<property name="Group" value="Parts"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNumPartNumber10" class="java.lang.String" isForPrompting="false">
+		<property name="Sort" value="16"/>
+		<property name="Group" value="Parts"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productTree1" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="productTree2" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[#Pull Items in inventory
 SELECT LOCATIONGROUP.NAME AS LG, LOCATION.NAME AS LOCATION,
@@ -96,6 +123,10 @@ FROM part
         JOIN uom ON part.uomid = uom.id
         JOIN company ON company.id = 1
 
+    LEFT OUTER JOIN product ON part.id = product.partid
+    LEFT OUTER JOIN ProductToTree ON product.id = producttotree.productid
+    LEFT OUTER JOIN ProductTree ON producttotree.producttreeid = producttree.id
+
 WHERE Part.activeFlag IN ($P!{ckShowInactiveParts},1)
   AND part.typeID = 10
   AND UPPER(Part.abcCode) LIKE UPPER($P{cbABCCode})
@@ -107,17 +138,28 @@ WHERE Part.activeFlag IN ($P!{ckShowInactiveParts},1)
 		OR  $P{partNumPartNumber3} <> '%'
 		OR  $P{partNumPartNumber4} <> '%'
 		OR  $P{partNumPartNumber5} <> '%'
+		OR  $P{partNumPartNumber6} <> '%'
+		OR  $P{partNumPartNumber7} <> '%'
+		OR  $P{partNumPartNumber8} <> '%'
+		OR  $P{partNumPartNumber9} <> '%'
+		OR  $P{partNumPartNumber10} <> '%'
       	THEN
 			part.num IN ($P{partNum}
 			,$P{partNumPartNumber1}
 			,$P{partNumPartNumber2}
 			,$P{partNumPartNumber3}
 			,$P{partNumPartNumber4}
-			 ,$P{partNumPartNumber5})
+			,$P{partNumPartNumber5}
+			,$P{partNumPartNumber6}
+			,$P{partNumPartNumber7}
+			,$P{partNumPartNumber8}
+			,$P{partNumPartNumber9}
+			,$P{partNumPartNumber10})
      ELSE
 	TRUE
      END)
   AND location.name LIKE concat($P{LocationStartsWith},'%')
+  AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))
 
 GROUP BY 1,2,3,4,5,6,7,8,9,10
 
@@ -139,6 +181,9 @@ FROM part
         JOIN uom ON part.uomid = uom.id
         JOIN company ON company.id = 1
         LEFT JOIN tag ON location.id = tag.locationid AND tag.partid = part.id
+        LEFT OUTER JOIN product ON part.id = product.partid
+        LEFT OUTER JOIN ProductToTree ON product.id = producttotree.productid
+        LEFT OUTER JOIN ProductTree ON producttotree.producttreeid = producttree.id
 WHERE tag.id IS NULL
         AND Part.activeFlag IN ($P!{ckShowInactiveParts},1)
         AND part.typeID = 10
@@ -151,19 +196,30 @@ WHERE tag.id IS NULL
 		OR  $P{partNumPartNumber3} <> '%'
 		OR  $P{partNumPartNumber4} <> '%'
 		OR  $P{partNumPartNumber5} <> '%'
+		OR  $P{partNumPartNumber6} <> '%'
+		OR  $P{partNumPartNumber7} <> '%'
+		OR  $P{partNumPartNumber8} <> '%'
+		OR  $P{partNumPartNumber9} <> '%'
+		OR  $P{partNumPartNumber10} <> '%'
       	THEN
 			part.num IN ($P{partNum}
 			,$P{partNumPartNumber1}
 			,$P{partNumPartNumber2}
 			,$P{partNumPartNumber3}
 			,$P{partNumPartNumber4}
-			 ,$P{partNumPartNumber5})
+			,$P{partNumPartNumber5}
+			,$P{partNumPartNumber6}
+			,$P{partNumPartNumber7}
+			,$P{partNumPartNumber8}
+			,$P{partNumPartNumber9}
+			,$P{partNumPartNumber10})
      ELSE
 	TRUE
      END)
 
         AND $P{cbZeroQuantityItems} = 'defaultloc'
         AND location.name LIKE concat($P{LocationStartsWith},'%')
+  AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))
 
 
 UNION ALL
@@ -187,6 +243,9 @@ FROM part
                 WHERE locationgroup.id IN ($P!{locationGroupID})
                   AND location.id LIKE $P{locationID}
                 GROUP BY 2) tag ON part.id = tag.partid
+        LEFT OUTER JOIN product ON part.id = product.partid
+        LEFT OUTER JOIN ProductToTree ON product.id = producttotree.productid
+        LEFT OUTER JOIN ProductTree ON producttotree.producttreeid = producttree.id
 
 WHERE Part.activeFlag IN ($P!{ckShowInactiveParts},1)
         AND part.typeID = 10
@@ -199,18 +258,29 @@ WHERE Part.activeFlag IN ($P!{ckShowInactiveParts},1)
 		OR  $P{partNumPartNumber3} <> '%'
 		OR  $P{partNumPartNumber4} <> '%'
 		OR  $P{partNumPartNumber5} <> '%'
+		OR  $P{partNumPartNumber6} <> '%'
+		OR  $P{partNumPartNumber7} <> '%'
+		OR  $P{partNumPartNumber8} <> '%'
+		OR  $P{partNumPartNumber9} <> '%'
+		OR  $P{partNumPartNumber10} <> '%'
       	THEN
 			part.num IN ($P{partNum}
 			,$P{partNumPartNumber1}
 			,$P{partNumPartNumber2}
 			,$P{partNumPartNumber3}
 			,$P{partNumPartNumber4}
-			 ,$P{partNumPartNumber5})
+			,$P{partNumPartNumber5}
+			,$P{partNumPartNumber6}
+			,$P{partNumPartNumber7}
+			,$P{partNumPartNumber8}
+			,$P{partNumPartNumber9}
+			,$P{partNumPartNumber10})
      ELSE
 	TRUE
      END)
         AND $P{cbZeroQuantityItems} = 'show'
         AND tag.tagid IS NULL
+        AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))
 
 
 ORDER BY 1, 2, 4]]>
