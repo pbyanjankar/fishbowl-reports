@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1269722013523666"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="19"/>
 	<property name="ireport.y" value="155"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -553,8 +553,8 @@ ORDER BY poitem.polineitem]]>
 		<defaultValueExpression><![CDATA["Purchase Approval"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cbCompany" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA["Plantation Sanctuary Inc","Plantation Sanctuary Inc"]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Plantation Sanctuary Inc"]]></defaultValueExpression>
+		<parameterDescription><![CDATA["DuraVilla Homes Guyana Inc","DuraVilla Homes Guyana Inc","Plantation Sanctuary Inc","Plantation Sanctuary Inc"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["DuraVilla Homes Guyana Inc"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
@@ -796,11 +796,15 @@ GROUP BY
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="html">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 						<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{cbCompany}.equals("Plantation Sanctuary Inc") ? "Apes Hill Development<br />Apes Hill Club<br />Apes Hill, St. James<br />Barbados<br />Phone: 246-538-0590<br />Email: finance@apeshillclub.com":""]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{SHIPTONAME} == null ? "" : $F{SHIPTONAME} + "\n") +
+($F{SHIPTOADDRESS} == null ? "" : $F{SHIPTOADDRESS} + "\n") +
+($F{SHIPTOCITY} == null ? "" : $F{SHIPTOCITY} + ", ") + ($F{SHIPTOSTATE} == null ? "  " : $F{SHIPTOSTATE} + "  ") + ($F{SHIPTOZIP} == null ? "" : $F{SHIPTOZIP}) +
+($P{ShowCountry} ? "\n" + $F{SHIPTOCOUNTRY} : "")
+]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement key="staticText-1" mode="Opaque" x="184" y="0" width="184" height="17" forecolor="#000000" backcolor="#EAEAEA" uuid="bf09a587-b53f-4696-b661-d4b57c7d928e"/>
@@ -830,7 +834,12 @@ GROUP BY
 						<font fontName="Open Sans" size="9" isBold="false" isItalic="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{cbCompany}.equals("Plantation Sanctuary Inc") ? "Apes Hill (Barbados) Inc<br />c/o Plantation Sanctuary Inc<br />Apes Hill Club<br />Apes Hill, St. James<br />Barbados<br />Phone: 246-538-0590<br />Email: finance@apeshillclub.com":""]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{cbCompany}.equals("DuraVilla Homes Guyana Inc") ?
+
+"DuraVilla Homes Guyana Inc <br /> 81 Stone Avenue <br />Georgetown,<br />Guyana<br />Phone: +592-227-0549<br />Email: fdvh@DuraVillaGuyana.com"
+
+
+: ($P{cbCompany}.equals("Plantation Sanctuary Inc") ? "Apes Hill (Barbados) Inc<br />c/o Plantation Sanctuary Inc<br />Apes Hill Club<br />Apes Hill, St. James<br />Barbados<br />Phone: 246-538-0590<br />Email: finance@apeshillclub.com":"")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
