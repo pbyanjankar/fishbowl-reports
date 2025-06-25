@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderInvoiceTS" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="155bb73f-2023-44d0-85f5-63e56db28cac">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="orderNumbers" class="java.lang.String">
+		<property name="Tooltip" value="Enter an SO number for each order to include in the batch. Separate them by comma with no space"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Custom/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Customized version of Batch By Order - Ability to view multiple SO Invoices at one time."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBillToPhoneNumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="Bill To"/>
+		<property name="Tooltip" value="Choose to show the bill to phone on the bill to address by checking this box."/>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBillToFax" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="Bill To"/>
+		<property name="Tooltip" value="Choose to show the bill to fax on the bill to address by checking this box"/>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBillToEmail" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Choose to show the Bill To email on the Bill To address by checking this box."/>
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="Bill To"/>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBOMOnWOItems" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Choose to show the bill of materials of items being manufactured by checking this box.. This option requires that the &quot;Item Number and Description&quot; combined column be displayed."/>
+		<property name="Tab" value="BOM"/>
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowRevision" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="Choose to show the revision number of the order by checking this checkbox. This revision number is pulled from the Details tab of the Sales Order module."/>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IncludeCustomerPartNumbers" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Displays the customer part numbers when checked. Customer part numbers will be in parentheses."/>
+		<property name="Group" value="Items"/>
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowStatus" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="Choose to show the order status under the report title by checking this box."/>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="All Addresses"/>
+		<property name="Tooltip" value="Choose to show the country on all addresses by checking this box."/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowMemos" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="Choose to show memos by checking this box."/>
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OnlyShowBOMPriceAdjustments" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Choose to show only items on the BOM that have price adjustments by checking this box. Uncheck this box to show all items. This option correlates with the Show BOM On WO Items checkbox."/>
+		<property name="Tab" value="BOM"/>
+		<property name="Sort" value="4"/>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbDisplaySeller" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether to display the seller&apos;s name as their username, first name or full name."/>
+		<parameterDescription><![CDATA[username,Username,first,First Name,full,Full Name]]></parameterDescription>
+		<defaultValueExpression><![CDATA["username"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCompanyAddress" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="Company"/>
+		<property name="Tooltip" value="Choose to show your company address in the top left hand corner of the report by checking this box."/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IsInvoice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="When this checkbox is checked, the title of the report will be changed to &quot;Invoice&quot;."/>
+		<property name="Group" value="Other Settings"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowLineItemNotes" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Items"/>
+		<property name="Tooltip" value="Choose to show line item notes by checking this box."/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowDescriptionOnWOItems" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="BOM"/>
+		<property name="Tooltip" value="Choose to show the description of raw goods by checking this box. This option requires that &quot;Show BOM on WO Items&quot; be checked."/>
+		<property name="Sort" value="2"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowAdjustmentAmounts" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Choose to show the adjustment amounts for items with a BOM by checking this checkbox. This option requires that &quot;Show BOM on WO Items&quot; be checked."/>
+		<property name="Tab" value="BOM"/>
+		<property name="Sort" value="3"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTotals" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="!Multi Currency"/>
+		<property name="Group" value="Other Settings"/>
+		<defaultValueExpression><![CDATA[!Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCurrencyTotals" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<property name="Tooltip" value="Choose to show the totals in the order&apos;s currency by checking this box."/>
+		<property name="Group" value="Other Settings"/>
+		<property name="Sort" value="10"/>
+		<defaultValueExpression><![CDATA[Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbShowDate" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select what should be displayed in the Date field at the top right."/>
+		<parameterDescription><![CDATA[issued,Issued,completed,Completed,created,Created,firstship,Scheduled,lastmodified,Last Modified,revision,Revision,today,Today]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Issued"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowHomeCurrencyTotals" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<property name="Tooltip" value="Choose to show the totals in the home currency by checking this box."/>
+		<property name="Group" value="Other Settings"/>
+		<property name="Sort" value="9"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowPayments" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Payments"/>
+		<property name="Sort" value="1"/>
+		<property name="Tooltip" value="Choose to show payments received for this order by checking this box."/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCreditCardNumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Payments"/>
+		<property name="Tooltip" value="Choose to show the last 4 digits of the credit card number by checking this box. This option requires that &quot;Show Payments&quot; be checked."/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowHomeCurrency" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<property name="Group" value="Other Settings"/>
+		<property name="Sort" value="8"/>
+		<property name="Tooltip" value="Choose to show the home currency rate for payments by checking this box."/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowZeroPriceItems" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Items"/>
+		<property name="Tooltip" value="Choose to show items that have a $0 price by checking this box."/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCompanyName" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="Company"/>
+		<property name="Tooltip" value="Choose to show the company name at the top of the report by checking this box."/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowOrderNotes" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="Choose to show order notes by checking this box. These notes are pulled from the Details tab of the Sales Order module."/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AddTaxIntegrationEstimatedTaxToTotal" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="This option will include the estimated tax in the total. An integration with a tax service is required."/>
+		<property name="Group" value="Tax"/>
+		<property name="Sort" value="2"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Choose to show the barcode on the report by checking this box."/>
+		<property name="Group" value="Other Settings"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLogoAlignment" class="java.lang.String" isForPrompting="false">
+		<property name="Tooltip" value="Select whether your company logo is displayed above your address or to the left of your address."/>
+		<parameterDescription><![CDATA[top,Top,left,Left]]></parameterDescription>
+		<defaultValueExpression><![CDATA["left"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowContact" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tooltip" value="Choose to show the contact below the Ship To address by checking this box."/>
+		<property name="Group" value="Other Settings"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FieldTitle:ReportTitle" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Header"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Report Title]]></parameterDescription>
+	</parameter>
+	<parameter name="ShowTaxRateName" class="java.lang.Boolean" isForPrompting="false">
+		<property name="QBVersion" value="US"/>
+		<property name="Group" value="Tax"/>
+		<property name="Tooltip" value="Choose to show the tax rate name in place of &quot;Sales Tax&quot; by checking this box."/>
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCustomerNameInAddress" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Address"/>
+		<property name="Group" value="Bill To"/>
+		<property name="Tooltip" value="With this option enabled, the customer name will be displayed instead of the customer contact."/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FieldTitle:Order#" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Header"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Order #]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FieldTitle:Date" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Header"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Date]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:BillTo" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Address"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Bill To]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:ShipTo" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Address"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Ship To]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SalesRep" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Sales Rep]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:PaymentTerms" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Payment Terms]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:FOBPoint" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[FOB Point]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:ShippingTerms" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[Shipping Terms]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Carrier" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="5"/>
+		<parameterDescription><![CDATA[Carrier]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:ShipService" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="6"/>
+		<parameterDescription><![CDATA[Ship Service]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:DateScheduled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="7"/>
+		<parameterDescription><![CDATA[Date Scheduled]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:PO#" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="8"/>
+		<parameterDescription><![CDATA[PO#]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:CurrencyCode" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="9"/>
+		<parameterDescription><![CDATA[CurrencyCode]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:CurrencyRate" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="10"/>
+		<parameterDescription><![CDATA[Currency Rate]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:EstimatedTax" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="11"/>
+		<parameterDescription><![CDATA[Estimated Tax]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Notes" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Sort" value="12"/>
+		<parameterDescription><![CDATA[Notes]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Subtotal" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Totals"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Subtotal]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Total" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Totals"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Total]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SalesTax" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Totals"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Sales Tax]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Paid" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Totals"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[Paid]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:BalanceDue" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Totals"/>
+		<property name="Sort" value="5"/>
+		<parameterDescription><![CDATA[Balance Due]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Customer" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Other"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Customer]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Contact" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Other"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Contact]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:PONumber" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Other"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Estimated Tax]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Item#" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Item #]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Type" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Type]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Number/Description" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Number/Description]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Number" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[Number]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Description" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="5"/>
+		<parameterDescription><![CDATA[Description]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:ItemDateScheduled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="6"/>
+		<parameterDescription><![CDATA[Date Scheduled]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:UnitPrice" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="7"/>
+		<parameterDescription><![CDATA[Unit Price]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:QtyOrdered" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="8"/>
+		<parameterDescription><![CDATA[Qty Ordered]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:TotalPrice" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="9"/>
+		<parameterDescription><![CDATA[Total Price]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:PaymentDate" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Payments"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Date]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Payment" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Payments"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Payment]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Amount" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Payments"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Amount]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:TaxCode" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="10"/>
+		<property name="QBVersion" value="!US"/>
+		<parameterDescription><![CDATA[Tax Code]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:TaxAmount" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="11"/>
+		<property name="QBVersion" value="!US"/>
+		<parameterDescription><![CDATA[Tax Amount]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:GST/HST" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Other"/>
+		<property name="Sort" value="4"/>
+		<property name="QBVersion" value="CA"/>
+		<parameterDescription><![CDATA[GST / HST]]></parameterDescription>
+	</parameter>
+	<parameter name="ShowSOCustomFields" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Sort" value="-1"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfSO1" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 1"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfSO2" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 2"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display Field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfSO3" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 3"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display Field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfSO4" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 4"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display Field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfSO5" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 5"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display Field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfSO6" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 6"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display Field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CustomField:SO1" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 1"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="SO"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select an SO custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:SO2" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 2"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="SO"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select an SO custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:SO3" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 3"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="SO"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select an SO custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:SO4" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 4"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="SO"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select an SO custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:SO5" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 5"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="SO"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select an SO custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:SO6" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 6"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="SO"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select an SO custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SOcf1" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 1"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SOcf2" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 2"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SOcf3" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 3"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SOcf4" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 4"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SOcf5" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 5"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:SOcf6" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="SO Custom Field 6"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Itemcf1" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 1"/>
+		<property name="Sort" value="2"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Itemcf2" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 2"/>
+		<property name="Sort" value="2"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="FieldTitle:Itemcf3" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 3"/>
+		<property name="Sort" value="2"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:Item1" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 1"/>
+		<property name="Sort" value="3"/>
+		<property name="Table" value="soitem"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select a Sales Order Line Item custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:Item2" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 2"/>
+		<property name="Sort" value="3"/>
+		<property name="Table" value="soitem"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select a Sales Order Line Item custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:Item3" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 3"/>
+		<property name="Sort" value="3"/>
+		<property name="Table" value="soitem"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select a Sales Order Line Item custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="ShowCfItem1" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 1"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[Display field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfItem2" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 2"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[Display field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCfItem3" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Item Custom Field 3"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[Display field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:CustomerName" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Customer Name]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:DateScheduled" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemCurrencyTax" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Currency Tax Amount]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemCurrencyTotalPrice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Currency Total Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemCurrencyUnitPrice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Currency Unit Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemDateScheduled" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Date Scheduled]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemDescription" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Item Columns"/>
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Description]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemLineNumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Line Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemNumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemNumberAndDescription" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Number/Description]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemQuantityOrdered" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Qty Ordered]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemTaxAmount" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Tax Amount]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemTaxCode" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Tax Code]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemTotalPrice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Total Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[!Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemType" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Type]]></parameterDescription>
+		<defaultValueExpression><![CDATA[Boolean.getBoolean("QBVersion,US")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:ItemUnitPrice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Item Columns"/>
+		<parameterDescription><![CDATA[Unit Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[!Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:OrderCurrencyCode" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Currency Code]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:OrderCurrencyRate" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Currency Rate]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:PONumber" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[PO#]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:SalesOrderCarrier" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Carrier]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:SalesOrderFOBPoint" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[FOB Point]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:SalesOrderPaymentTerms" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Payment Terms]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:SalesOrderSeller" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Sales Rep]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:SalesOrderShippingTerms" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Shipping Terms]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:SalesOrderShipService" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<parameterDescription><![CDATA[Ship Service]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Column:TaxIntegrationEstimatedTax" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<property name="Group" value="Order Fields"/>
+		<property name="Tooltip" value="Tax integration required"/>
+		<parameterDescription><![CDATA[Estimated Tax]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    so.num AS SONUM
+
+FROM so
+
+WHERE so.num IN ($P!{orderNumbers})
+
+ORDER BY so.num]]>
+	</queryString>
+	<field name="SONUM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<subreport runToBottom="true">
+				<reportElement x="0" y="0" width="612" height="14" isPrintInFirstWholeBand="true" uuid="b8fe89a4-ea45-4b65-8869-3b068eb9b42d"/>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<subreportParameter name="IsInvoice">
+					<subreportParameterExpression><![CDATA[true]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="soNum">
+					<subreportParameterExpression><![CDATA[$F{SONUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["SOReport_ts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
