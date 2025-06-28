@@ -170,7 +170,7 @@ LIMIT $P!{Count} OFFSET $P!{Skip}]]>
 									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Open Sans" size="14"/>
+									<font fontName="Open Sans" size="18"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 							</textField>
@@ -189,7 +189,7 @@ LIMIT $P!{Count} OFFSET $P!{Skip}]]>
 									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Open Sans" size="14"/>
+									<font fontName="Open Sans" size="18"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
 							</textField>
@@ -238,7 +238,7 @@ LIMIT $P!{Count} OFFSET $P!{Skip}]]>
 									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Open Sans" size="14"/>
+									<font fontName="Open Sans" size="18"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 							</textField>
@@ -257,7 +257,7 @@ LIMIT $P!{Count} OFFSET $P!{Skip}]]>
 									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Open Sans" size="14"/>
+									<font fontName="Open Sans" size="18"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
 							</textField>
