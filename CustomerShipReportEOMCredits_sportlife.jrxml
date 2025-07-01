@@ -1087,7 +1087,7 @@ WHERE id = 1]]>
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Sales Order Summary" : $P{ReportTitle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Customer Ship Report - EOM Credits" : $P{ReportTitle}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
