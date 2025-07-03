@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackingSlip4x2GroupByCartonAMB" pageWidth="288" pageHeight="144" whenNoDataType="AllSectionsNoDetail" columnWidth="279" leftMargin="5" rightMargin="4" topMargin="4" bottomMargin="4" uuid="b062b891-b6f7-46e5-8505-299eb37395a9">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Arial" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Arial" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Arial" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Arial" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Arial" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Arial" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Arial" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Arial" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Arial" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Arial" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Arial" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Arial" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Arial" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Arial" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Arial" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Arial" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Arial" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Arial" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Arial" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Arial" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Arial" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="shipID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["7"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowKitHeaders" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[80,90]]></parameterDescription>
+		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowCountry" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderNumber" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[SO,SO Number,PO,Custoemr PO Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA["PO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbContactToShow" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[address,Address Name,contact,SO Contact]]></parameterDescription>
+		<defaultValueExpression><![CDATA["address"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowUniqueShipNumbers" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTracking" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowBackOrderItems" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[100,101]]></parameterDescription>
+		<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Labels/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT so.id AS soid, ship.id AS shipid, so.locationgroupid AS locationgroupid, ship.statusid AS shipstatus,
+    ship.note AS memo, so.customerpo AS socustomerpo, ship.dateshipped AS shipdate,
+    COALESCE(so.shiptoname,'') AS shiptoname, so.shiptoaddress AS shiptoaddress, so.shiptocity AS shiptocity,
+    shipState.code AS shiptostate, so.shiptozip AS shiptozip, so.customercontact AS shiptocontact,
+    COALESCE(so.billtoname,'') AS billtoname, so.billtoaddress AS billtoaddress, so.billtocity AS billtocity,
+    billState.code AS billtostate, so.billtozip AS billtozip, COALESCE(ship.cartoncount,0) AS cartoncount,
+    so.datefirstship AS regshipdate, fobpoint.name AS fobpoint, shipterms.name AS ShippingTerms, ship.num AS shipnum,
+    carrier.name AS carriername, so.num AS sonum, shipcountry.name AS shipcountry, billcountry.name AS billcountry,
+    (SELECT s1.sysvalue
+        FROM sysproperties s1
+        WHERE s1.syskey = 'Barcodes have DI'
+    ) AS barcodeshavedi,
+    company.name AS company,
+shipcarton.id AS shipCartonID
+
+FROM ship
+    INNER JOIN carrier ON ship.carrierid = carrier.id
+    INNER JOIN so ON ship.soId = so.id
+    INNER JOIN fobpoint ON so.fobpointid = fobpoint.id
+    INNER JOIN shipterms ON so.shiptermsid = shipterms.id
+    LEFT OUTER JOIN stateconst shipState ON so.shiptostateid = shipState.id
+    LEFT OUTER JOIN stateconst billState ON so.billtostateid = billState.id
+    LEFT OUTER JOIN countryconst shipCountry ON so.shiptocountryid = shipCountry.id
+    LEFT OUTER JOIN countryconst billCountry ON so.billtocountryid = billCountry.id
+    JOIN company ON company.id = 1
+    LEFT OUTER JOIN shipcarton ON shipcarton.shipid = ship.id
+
+WHERE ship.id = $P{shipID}
+  AND ship.ordertypeid = 20]]>
+	</queryString>
+	<field name="SOID" class="java.lang.Integer"/>
+	<field name="SHIPID" class="java.lang.Integer"/>
+	<field name="LOCATIONGROUPID" class="java.lang.Integer"/>
+	<field name="SHIPSTATUS" class="java.lang.Integer"/>
+	<field name="MEMO" class="java.lang.String"/>
+	<field name="SOCUSTOMERPO" class="java.lang.String"/>
+	<field name="SHIPDATE" class="java.sql.Timestamp"/>
+	<field name="SHIPTONAME" class="java.lang.String"/>
+	<field name="SHIPTOADDRESS" class="java.lang.String"/>
+	<field name="SHIPTOCITY" class="java.lang.String"/>
+	<field name="SHIPTOSTATE" class="java.lang.String"/>
+	<field name="SHIPTOZIP" class="java.lang.String"/>
+	<field name="SHIPTOCONTACT" class="java.lang.String"/>
+	<field name="BILLTONAME" class="java.lang.String"/>
+	<field name="BILLTOADDRESS" class="java.lang.String"/>
+	<field name="BILLTOCITY" class="java.lang.String"/>
+	<field name="BILLTOSTATE" class="java.lang.String"/>
+	<field name="BILLTOZIP" class="java.lang.String"/>
+	<field name="CARTONCOUNT" class="java.lang.Integer"/>
+	<field name="REGSHIPDATE" class="java.sql.Timestamp"/>
+	<field name="FOBPOINT" class="java.lang.String"/>
+	<field name="SHIPPINGTERMS" class="java.lang.String"/>
+	<field name="SHIPNUM" class="java.lang.String"/>
+	<field name="CARRIERNAME" class="java.lang.String"/>
+	<field name="SONUM" class="java.lang.String"/>
+	<field name="SHIPCOUNTRY" class="java.lang.String"/>
+	<field name="BILLCOUNTRY" class="java.lang.String"/>
+	<field name="BARCODESHAVEDI" class="java.lang.String"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="shipCartonID" class="java.lang.Integer"/>
+	<variable name="ORDERNUMBER" class="java.lang.String">
+		<variableExpression><![CDATA[$F{BARCODESHAVEDI} == null ? $V{PREORDERNUMBER} :
+	$F{BARCODESHAVEDI}.equals("true") && !$P{ShowUniqueShipNumbers} ? "S" + $V{PREORDERNUMBER} : $V{PREORDERNUMBER}]]></variableExpression>
+	</variable>
+	<variable name="PREORDERNUMBER" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[$P{ShowUniqueShipNumbers} ?
+    $F{SHIPNUM} :
+    ($P{cbOrderNumber}.equals("SO") ?
+        $F{SONUM} :
+        ($F{SOCUSTOMERPO} == null || $F{SOCUSTOMERPO}.length() < 1 ?
+            $F{SONUM} :
+            $F{SOCUSTOMERPO}))]]></variableExpression>
+	</variable>
+	<variable name="CustomerPO" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(($F{SOCUSTOMERPO} != null) && (!$F{SOCUSTOMERPO}.equals(""))) ? "PO Number: " + $F{SOCUSTOMERPO} : ""]]></variableExpression>
+	</variable>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<group name="PackingInfo" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{shipCartonID}]]></groupExpression>
+		<groupHeader>
+			<band height="19">
+				<subreport isUsingCache="true">
+					<reportElement key="subreport-6" mode="Opaque" x="0" y="6" width="280" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="e5357f0d-68ed-4ba1-905c-400e105765a0"/>
+					<subreportParameter name="ShipID">
+						<subreportParameterExpression><![CDATA[$F{SHIPID}.toString()]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="shipCartonId">
+						<subreportParameterExpression><![CDATA[$F{shipCartonID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["./PackingSlip4x2_GroupByCarton_amb/subCarton4x2.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<staticText>
+				<reportElement key="staticText" style="24b" mode="Transparent" x="0" y="0" width="280" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="534b23f0-b386-4d9e-981b-3d7a57562646"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Arial" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Packing Slip]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="183" y="0" width="97" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="bcdb8566-109a-42b1-8d53-a1fef929704c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateInstance(DateFormat.LONG)).format($F{SHIPDATE})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-3" style="18b" mode="Transparent" x="146" y="11" width="134" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="41eeddf8-6e91-4a73-afb7-218e36904e0b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ORDERNUMBER}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="146" y="24" width="134" height="23" uuid="02a80fba-bc73-4e18-a189-d14187253957">
+					<printWhenExpression><![CDATA[$P{ShowBarcode}]]></printWhenExpression>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128B" drawText="false" checksumRequired="false" barWidth="0" evaluationTime="Report">
+					<jr:codeExpression><![CDATA[$V{ORDERNUMBER}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement key="staticText-1" style="14b" mode="Transparent" x="0" y="8" width="92" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="56dba021-488a-4019-b4ac-2eb8a93c32c7"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="7"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ship To:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-5" mode="Transparent" x="0" y="18" width="135" height="32" forecolor="#000000" backcolor="#FFFFFF" uuid="c34e84ed-3052-4278-82b1-f77035ec93f4">
+					<printWhenExpression><![CDATA[new Boolean($F{SHIPTONAME} != null)]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="7" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{cbContactToShow}.equals("address") ? $F{SHIPTONAME} : $F{SHIPTOCONTACT}) + "\n" +
+($F{SHIPTOADDRESS} == null ? "" : $F{SHIPTOADDRESS}) + "\n" +
+($F{SHIPTOCITY} == null ? "" : $F{SHIPTOCITY}) + ", " + ($F{SHIPTOSTATE} == null ? "  " : $F{SHIPTOSTATE}) + "  " + ($F{SHIPTOZIP} == null ? "" : $F{SHIPTOZIP}) +
+($P{ckShowCountry}.equals("1") ? ($F{SHIPCOUNTRY} == null ? "" : "\n" + $F{SHIPCOUNTRY}) : "")]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<subreport isUsingCache="false" runToBottom="false">
+				<reportElement key="subreport-5" mode="Opaque" x="0" y="6" width="280" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="c7c2b72a-bd59-45ca-85fc-e78f7395ecfd"/>
+				<subreportParameter name="ShipStatus">
+					<subreportParameterExpression><![CDATA[$F{SHIPSTATUS}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="module">
+					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowTracking">
+					<subreportParameterExpression><![CDATA[$P{ShowTracking}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SOID">
+					<subreportParameterExpression><![CDATA[$F{SOID}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShipID">
+					<subreportParameterExpression><![CDATA[$F{SHIPID}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="shipCartonId">
+					<subreportParameterExpression><![CDATA[$F{shipCartonID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ckShowBackOrderItems">
+					<subreportParameterExpression><![CDATA[$P{ckShowBackOrderItems}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ckShowKitHeaders">
+					<subreportParameterExpression><![CDATA[$P{ckShowKitHeaders}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./PackingSlip4x2_GroupByCarton_amb/subSOItems4x2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
