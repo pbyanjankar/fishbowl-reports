@@ -153,12 +153,12 @@ WHERE ship.id = $P{shipID}
 	<variable name="DateFormat" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
 	</variable>
-	<group name="PackingInfo" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+	<group name="PackingInfo" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{shipCartonID}]]></groupExpression>
 		<groupHeader>
-			<band height="19">
+			<band height="17">
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-6" mode="Opaque" x="0" y="6" width="280" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="e5357f0d-68ed-4ba1-905c-400e105765a0"/>
+					<reportElement key="subreport-6" mode="Opaque" x="0" y="3" width="280" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="e5357f0d-68ed-4ba1-905c-400e105765a0"/>
 					<subreportParameter name="ShipID">
 						<subreportParameterExpression><![CDATA[$F{SHIPID}.toString()]]></subreportParameterExpression>
 					</subreportParameter>
@@ -166,7 +166,7 @@ WHERE ship.id = $P{shipID}
 						<subreportParameterExpression><![CDATA[$F{shipCartonID}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["./PackingSlip4x2_GroupByCarton_amb/subCarton4x2.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["./PackingSlip4x2_GroupByCarton_amb/subCarton4x2_GroupByCarton.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -266,9 +266,9 @@ WHERE ship.id = $P{shipID}
 		<band/>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="37" splitType="Stretch">
 			<subreport isUsingCache="false" runToBottom="false">
-				<reportElement key="subreport-5" mode="Opaque" x="0" y="6" width="280" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="c7c2b72a-bd59-45ca-85fc-e78f7395ecfd"/>
+				<reportElement key="subreport-5" mode="Opaque" x="0" y="3" width="280" height="34" forecolor="#000000" backcolor="#FFFFFF" uuid="c7c2b72a-bd59-45ca-85fc-e78f7395ecfd"/>
 				<subreportParameter name="ShipStatus">
 					<subreportParameterExpression><![CDATA[$F{SHIPSTATUS}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
@@ -294,7 +294,7 @@ WHERE ship.id = $P{shipID}
 					<subreportParameterExpression><![CDATA[$P{ckShowKitHeaders}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["./PackingSlip4x2_GroupByCarton_amb/subSOItems4x2.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./PackingSlip4x2_GroupByCarton_amb/subSOItems4x2_GroupByCarton.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
