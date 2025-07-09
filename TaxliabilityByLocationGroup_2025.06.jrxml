@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="1432"/>
-	<property name="ireport.y" value="33"/>
+	<property name="ireport.x" value="1750"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -186,7 +186,7 @@ ORDER BY l1.name,
 	<field name="DORMANTFOLLOWUPDATE" class="java.sql.Timestamp"/>
 	<field name="DORMANTFOLLOWUPDATEBY" class="java.lang.String"/>
 	<field name="FIRSTPAYMENTDATE" class="java.sql.Timestamp"/>
-	<field name="HUBSPOTFOLLOWUPDATE" class="java.sql.Timestamp"/>
+	<field name="HUBSPOTFOLLOWUPDATE" class="java.lang.String"/>
 	<field name="REACTIVATIONDATE" class="java.sql.Timestamp"/>
 	<variable name="subTotal" class="java.lang.Double" resetType="Group" resetGroup="PaymentMethod" calculation="Sum">
 		<variableExpression><![CDATA[$F{pamount}]]></variableExpression>
@@ -563,7 +563,7 @@ ORDER BY l1.name,
 				<textFieldExpression><![CDATA[$F{paymentdate}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="684" y="0" width="60" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="f7a682c3-82df-4fe8-b4e6-255481d77afc"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -695,7 +695,7 @@ ORDER BY l1.name,
 				<textFieldExpression><![CDATA[$F{totaltax}.doubleValue()==0?$F{lineitemtax}.doubleValue():$F{totaltax}.doubleValue()]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="834" y="0" width="60" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="8966251f-0277-41bb-ac06-847836ce35fd"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -709,7 +709,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Ctype}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="290" y="0" width="63" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="c45e13e8-1caf-4293-a7e3-70bc01122447"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -723,7 +723,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="1109" y="0" width="100" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="a9f5421b-7b89-40e6-a78e-88fe3f8a27ab"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -737,7 +737,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MarketingData}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="894" y="0" width="70" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="183cde48-1c4c-44c6-845c-7df1bb0fdf2d"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -751,7 +751,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cdte}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="120" y="0" width="60" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="da63fc04-21b9-4550-821c-8e413d29f0e0"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -765,7 +765,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{locname}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="744" y="0" width="90" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="dfc60574-59dc-4bdf-915e-9fb48696efc4"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -779,7 +779,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{salesperson}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="180" y="0" width="110" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="4b6b0e8b-08a3-4a8a-a2bf-9b2758ec83ee"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -793,7 +793,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ORDERPAYMENTWAREHOUSE}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="353" y="0" width="63" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="b1a94036-acbc-4e27-9ad5-93ef3cbd7f91"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -807,7 +807,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ISDORMANT}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="416" y="0" width="48" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="37ede572-b139-447b-817e-e05f72e5502e"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -821,7 +821,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ISIDLE}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="464" y="0" width="67" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="bb9e5479-7749-4b19-97de-8f3bc4251d10"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -835,7 +835,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DORMANTFOLLOWUPDATE}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="531" y="0" width="83" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="c4572c53-366e-488a-a471-5290688bcd1f"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -849,7 +849,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DORMANTFOLLOWUPDATEBY}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="964" y="0" width="70" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="acd57743-101c-4b68-af71-8f854b0a4462"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -863,7 +863,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FIRSTPAYMENTDATE}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="1034" y="0" width="75" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="5258fb3c-c5b5-4cae-bf87-b0a03a5a40a5"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -877,7 +877,7 @@ ORDER BY l1.name,
 				</textElement>
 				<textFieldExpression><![CDATA[$F{REACTIVATIONDATE}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true" hyperlinkType="Reference">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="614" y="0" width="70" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="7a4fe1c0-e66d-4024-b1ed-73c0463c5755"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
