@@ -315,7 +315,7 @@ $P!{Skip}]]>
 		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["This is a consolidated report of the Inventory Module. The Count parameter specifies the number of records to return. The Skip parameter skips that many records before starting the count."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["A customized version of the Inventory Availability report that displays stock availability exclusively for the selected Location Groups."]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Count" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["1000"]]></defaultValueExpression>
