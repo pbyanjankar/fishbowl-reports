@@ -226,7 +226,7 @@ ORDER BY soitem.solineitem]]>
 						<font fontName="Arial" size="7"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{QTYTOFULFILL}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{QTYSHIPPED}]]></textFieldExpression>
 					<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
