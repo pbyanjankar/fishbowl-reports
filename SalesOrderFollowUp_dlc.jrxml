@@ -1,0 +1,3163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderFollowUpDLC" pageWidth="3380" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="3320" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="2542"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Mon Nov 29 11:28:37 EST 2021\ncallouts.1.text=Don&apos;t Show Details\ncallouts.3.pins=726,219;\ncallouts.3.bounds=504,341,150,75\ncallouts.2.text=Show Details\ncallouts.2.bounds=460,274,150,75\ncallouts.1.pins=723,103;\ncallouts.1.bounds=372,292,150,75\ncallouts.3.text=Don&apos;t Show Details and Group By Class\ncallouts.2.pins=725,162;"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<subDataset name="SOInfo" uuid="4b15957a-182e-4442-9265-e7e84736377e">
+		<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[25,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[70,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[60,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[80,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckOrderByCustomer" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowSODetails" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomer" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colSalesPerson" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colStatus" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOrdered" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipped" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colRemaining" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateScheduled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbGroupBy" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[locationgroup.name,Location Group,qbclass.name,Class,so.salesman,Sales Person,stateconst.name,Ship To State/Province]]></parameterDescription>
+			<defaultValueExpression><![CDATA["locationgroup.name"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["900"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[90,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomerPO" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipToState/Province" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateFulfilled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="SO Status"/>
+			<parameterDescription><![CDATA[85,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="MarketingData" class="java.lang.String" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[SELECT
+
+    distinct
+    CUSTOMER.NAME AS CUSTOMER,
+    SO.NUM AS SO,
+    SO.DATEISSUED,
+    SOSTATUS.NAME AS STATUS,
+    SO.SALESMAN AS "user",
+    locationgroup.name as locationgroup,
+
+
+    SORDER.ORDERED,
+    SORDER.SHIPPED,
+    POSTSO.POSTDATE,
+    SO.DATEISSUED,
+    CURRENCY.SYMBOL,
+    SO.CUSTOMERPO,
+    STATECONST.CODE AS SHIPTOSTATE,
+
+    SO.DATEFIRSTSHIP,
+    SO.DATECOMPLETED,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'In-Stock Notification') as date)  AS isn,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up') as date) AS est1,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #2')  as date) AS est2,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #3')  as date) AS est3,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up')  as date) AS so1,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up')  as date) AS so2,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up #3') as date) AS so3,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up') as date) AS FulfilledFollowUp,
+CustomFieldByName(so.CUSTOMFIELDS, 'Order Payment Warehouse') AS OrderPaymentWarehouse,
+so.DATECREATED,so.totalprice,
+COALESCE((select sum(amount) from postransaction
+where soid=so.id),0) as pdmt,
+sa1.username as createdby,
+
+coalesce((select username from so_aud
+where so_aud.id=so.id and so_aud.statusid=20
+order by so_aud.dateissued desc limit 1),'') as IssuedUser,
+coalesce((select COALESCE(memo.memo,'')  from MEMO
+where memo.tableid = '1012013120'
+and memo.recordid = so.id order by datecreated desc limit 1
+),'') as lastmemo,CustomFieldByName(customer.CUSTOMFIELDS, 'Customer Type') AS CustomerGroup,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Magento Email') as MagentoEmail,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'In-Stock Notification') AS DATE) is not null
+order by rev desc limit 1),'') as stuser,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Estimate Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as euser,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'SO Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as suser,
+
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Fulfilled Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as luser,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Ageing Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as aguser,
+coalesce(CustomFieldByName(so.CUSTOMFIELDS, 'Canceled / Voided Reason'),'') as creason,
+CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback') AS EstimateFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up Feedback') AS SOFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up Feedback') AS AgeingFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Negative') AS FulfilledFollowUpFeedbackN,
+CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Positive') AS FulfilledFollowUpFeedbackP
+FROM
+    so
+    LEFT JOIN stateconst ON so.shiptostateid = stateconst.id
+    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+    INNER JOIN customer ON customer.id = so.customerid
+    INNER JOIN sostatus ON sostatus.id = so.statusid
+    INNER JOIN soitem ON soitem.soid = so.id
+    LEFT JOIN product ON soitem.productid = product.id
+    JOIN qbclass ON qbclass.id = so.qbclassid
+    LEFT JOIN currency ON currency.homeCurrency = 1
+    LEFT JOIN (
+        SELECT
+            postso.soid AS soid,
+            MAX(postso.postdate) AS postdate
+        FROM
+            postso
+        WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+        GROUP BY postso.soid
+    ) AS postso ON so.id = postso.soid
+    INNER JOIN uom ON uom.id = soitem.uomid
+    INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
+    INNER JOIN (
+        SELECT
+            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
+            SUM(
+                ROUND(
+                    ((soitem.qtyfulfilled * soitem.unitprice) +
+                        (IF(soitem.qtytofulfill = 0,0,soitem.adjustamount / soitem.qtytofulfill) * soitem.qtyfulfilled)) * 10
+                    ,1) / 10
+            ) AS shipped,
+            soitem.soid
+        FROM
+            soitem
+        WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+        GROUP BY soitem.soid
+    ) AS sorder ON so.id = sorder.soid
+left join sysuser sa1 on sa1.id=so.createdbyuserid
+WHERE
+    soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+    AND so.locationgroupid IN ($P!{locationGroupID})
+    AND so.customerid LIKE $P{customerID}
+    AND soitem.qbclassid LIKE $P{qbClassID}
+    AND UPPER(so.salesman) LIKE UPPER($P{salesPerson})
+    AND so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND COALESCE(product.num,'') LIKE $P{productNum}
+     AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
+and
+coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like $P{MarketingData}
+ORDER BY
+customer.name,so.num]]>
+		</queryString>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="SO" class="java.lang.String"/>
+		<field name="DATEISSUED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="STATUS" class="java.lang.String"/>
+		<field name="user" class="java.lang.String"/>
+		<field name="ORDERED" class="java.math.BigDecimal"/>
+		<field name="SHIPPED" class="java.math.BigDecimal"/>
+		<field name="POSTDATE" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SYMBOL" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CUSTOMERPO" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SHIPTOSTATE" class="java.lang.String"/>
+		<field name="DATEFIRSTSHIP" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DATECOMPLETED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="isn" class="java.sql.Date"/>
+		<field name="est1" class="java.sql.Date"/>
+		<field name="est2" class="java.sql.Date"/>
+		<field name="est3" class="java.sql.Date"/>
+		<field name="so1" class="java.sql.Date"/>
+		<field name="so2" class="java.sql.Date"/>
+		<field name="so3" class="java.sql.Date"/>
+		<field name="DATECREATED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="totalprice" class="java.lang.Double"/>
+		<field name="pdmt" class="java.lang.Double"/>
+		<field name="locationgroup" class="java.lang.String"/>
+		<field name="createdby" class="java.lang.String"/>
+		<field name="IssuedUser" class="java.lang.String"/>
+		<field name="FulfilledFollowUp" class="java.util.Date"/>
+		<field name="LASTMEMO" class="java.lang.String"/>
+		<field name="CustomerGroup" class="java.lang.String"/>
+		<field name="MagentoEmail" class="java.lang.String"/>
+		<field name="luser" class="java.lang.String"/>
+		<field name="euser" class="java.lang.String"/>
+		<field name="suser" class="java.lang.String"/>
+		<field name="stuser" class="java.lang.String"/>
+		<field name="aguser" class="java.lang.String"/>
+		<field name="creason" class="java.lang.String"/>
+		<field name="HasDesign" class="java.lang.String"/>
+		<field name="MarketingData" class="java.lang.String"/>
+		<field name="EstimateFollowUpFeedback" class="java.lang.String"/>
+		<field name="SOFollowUpFeedback" class="java.lang.String"/>
+		<field name="AgeingFollowUpFeedback" class="java.lang.String"/>
+		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
+		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
+		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="SOClassInfo" uuid="9fec9dea-1bd1-4694-b32f-71633df3bb8e">
+		<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[25,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[70,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[60,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[80,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckOrderByCustomer" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowSODetails" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomer" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colSalesPerson" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colStatus" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOrdered" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipped" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colRemaining" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colFulfillmentDate" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbGroupBy" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[locationgroup.name,Location Group,qbclass.name,Class,so.salesman,Sales Person]]></parameterDescription>
+			<defaultValueExpression><![CDATA["locationgroup.name"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["900"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[90,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomerPO" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipToState/Province" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateFulfilled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+    $P!{cbGroupBy} AS GROUPBY,
+    LOCATIONGROUP.NAME AS LG,
+    CUSTOMER.NAME AS CUSTOMER,
+    SO.NUM AS SO,
+    SO.DATEISSUED,
+    SOSTATUS.NAME AS STATUS,
+    SO.SALESMAN AS "user",
+    SOITEM.PRODUCTNUM AS PRODUCTNUM,
+    UOM.CODE AS SOITEMUOMCODE,
+    SOITEMSTATUS.NAME AS SOITEMSTATUS,
+    SOITEM.DESCRIPTION,
+    SOITEM.ID AS ITEMID,
+    (SOITEM.UNITPRICE * SOITEM.QTYTOFULFILL) + SOITEM.ADJUSTAMOUNT AS OPRICE,
+    (SOITEM.QTYTOFULFILL) AS QTYTOFULFILL,
+    ROUND(
+        ((SOITEM.QTYFULFILLED * SOITEM.UNITPRICE) +
+            (IF(SOITEM.QTYTOFULFILL = 0,0,SOITEM.ADJUSTAMOUNT / SOITEM.QTYTOFULFILL) * SOITEM.QTYFULFILLED)) * 10
+    ,1) / 10 AS FPRICE,
+    MIN(SOITEM.DATESCHEDULEDFULFILLMENT) AS DATESCHEDULEDFULFILLMENT,
+    SOITEM.DATESCHEDULEDFULFILLMENT AS ITEMFULFILLMENT,
+    MIN(SO.DATEISSUED) AS MINDATEISSUED,
+    SORDER.ORDERED,
+    SORDER.SHIPPED,
+    CURRENCY.SYMBOL,
+    SO.CUSTOMERPO,
+    STATECONST.CODE AS SHIPTOSTATE,
+    SO.DATEFIRSTSHIP,
+    SO.DATECOMPLETED
+
+FROM
+    so
+    LEFT JOIN stateconst ON so.shiptostateid = stateconst.id
+    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+    INNER JOIN customer ON customer.id = so.customerid
+    INNER JOIN sostatus ON sostatus.id = so.statusid
+    INNER JOIN soitem ON soitem.soid = so.id
+    LEFT JOIN product ON soitem.productid = product.id
+    LEFT JOIN (
+        SELECT
+            postso.soid AS soid,
+            max(postso.postdate) AS postdate
+        FROM
+            postso
+        WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+        GROUP BY 1
+    ) AS postso ON so.id = postso.soid
+    LEFT JOIN qbclass ON soitem.qbclassid = qbclass.id
+    LEFT JOIN currency ON currency.homeCurrency = 1
+    INNER JOIN uom ON uom.id = soitem.uomid
+    INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
+    INNER JOIN (
+        SELECT
+            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
+            SUM(
+                ROUND(
+                    ((soitem.qtyfulfilled * soitem.unitprice) + (IF(soitem.qtytofulfill = 0,0,soitem.adjustamount / soitem.qtytofulfill) * soitem.qtyfulfilled)) * 10
+                ,1) / 10
+            ) AS shipped,
+            soitem.soid,
+            soitem.qbclassid
+        FROM
+            soitem
+        WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+        GROUP BY
+            soitem.soid, soitem.qbclassid
+    ) AS sorder ON so.id = sorder.soid AND sorder.qbclassid = soitem.qbclassid
+
+WHERE
+    soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+    AND so.locationgroupid IN ($P!{locationGroupID})
+    AND so.customerid LIKE "$P!{customerID}"
+    AND soitem.qbclassid LIKE "$P!{qbClassID}"
+    AND UPPER(so.salesman) LIKE UPPER($P{salesPerson})
+    AND so.statusid IN ($P!{ckEstimate}, $P!{ckIssued}, $P!{ckInProgress}, $P!{ckFulfilled}, $P!{ckClosedShort}, $P!{ckVoided}, $P!{ckExpired})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND COALESCE(product.num,'') LIKE $P{productNum}
+    AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
+
+GROUP BY
+    so.num, locationgroup.name, customer.name, so.dateissued, so.statusid,
+    sostatus.name, so.salesman, soitem.productnum, uom.code, soitemstatus.name,
+    sorder.ordered, soitem.datescheduledfulfillment, sorder.shipped, soitem.description, soitem.id,
+    qbclass.name, soitem.totalprice, soitem.qtytofulfill, soitem.qtyfulfilled, soitem.unitprice,
+    soitem.adjustamount, currency.symbol, stateconst.code
+
+ORDER BY
+    groupby, locationgroup.name, IF($P!{ckOrderByCustomer} = 1,customer.name,so.num), so.num
+-- CLASS TABLE]]>
+		</queryString>
+		<field name="GROUPBY" class="java.lang.String"/>
+		<field name="LG" class="java.lang.String"/>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="SO" class="java.lang.String"/>
+		<field name="DATEISSUED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="STATUS" class="java.lang.String"/>
+		<field name="user" class="java.lang.String"/>
+		<field name="PRODUCTNUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SOITEMUOMCODE" class="java.lang.String"/>
+		<field name="SOITEMSTATUS" class="java.lang.String"/>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ITEMID" class="java.lang.Integer"/>
+		<field name="OPRICE" class="java.lang.Double"/>
+		<field name="QTYTOFULFILL" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FPRICE" class="java.lang.Double"/>
+		<field name="DATESCHEDULEDFULFILLMENT" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ITEMFULFILLMENT" class="java.sql.Timestamp"/>
+		<field name="MINDATEISSUED" class="java.sql.Timestamp"/>
+		<field name="ORDERED" class="java.lang.Double"/>
+		<field name="SHIPPED" class="java.lang.Double"/>
+		<field name="SYMBOL" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CUSTOMERPO" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SHIPTOSTATE" class="java.lang.String"/>
+		<field name="DATEFIRSTSHIP" class="java.sql.Timestamp"/>
+		<field name="DATECOMPLETED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="LGOrdered" class="java.lang.Double" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+			<variableExpression><![CDATA[$F{OPRICE}]]></variableExpression>
+		</variable>
+		<variable name="LGShipped" class="java.lang.Double" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+			<variableExpression><![CDATA[$F{FPRICE}]]></variableExpression>
+		</variable>
+		<variable name="LGRemaining" class="java.lang.Double" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+			<variableExpression><![CDATA[$F{OPRICE} - $F{FPRICE}]]></variableExpression>
+		</variable>
+		<variable name="TotalOrdered" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{OPRICE}]]></variableExpression>
+		</variable>
+		<variable name="TotalShipped" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{FPRICE}]]></variableExpression>
+		</variable>
+		<variable name="TotalRemaining" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{OPRICE} - $F{FPRICE}]]></variableExpression>
+		</variable>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<group name="GroupBy">
+			<groupExpression><![CDATA[$F{GROUPBY}]]></groupExpression>
+		</group>
+		<group name="SO">
+			<groupExpression><![CDATA[$F{SO}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="SOXOInfo" uuid="818e0b81-ec24-4efc-9f44-bfefc64efc25">
+		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckOrderByCustomer" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowSODetails" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomer" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colSalesPerson" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colStatus" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOrdered" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipped" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colRemaining" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateScheduled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbGroupBy" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[locationgroup.name,Location Group,qbclass.name,Class,so.salesman,Sales Person,stateconst.name,Ship To State/Province]]></parameterDescription>
+			<defaultValueExpression><![CDATA["locationgroup.name"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["900"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomerPO" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipToState/Province" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateFulfilled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOVoided" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[90,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOClosedShort" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[80,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOFulfilled" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[70,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXORequest" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[15,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["15"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOIssued" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOEntered" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOPicking" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[30,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOPartial" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[40,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOPicked" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[50,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["50"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOShipped" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[60,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOInProgress" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[25,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckXOEstimate" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[25,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[70,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[60,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[80,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[90,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="SO Status"/>
+			<parameterDescription><![CDATA[85,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="MarketingData" class="java.lang.String" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[SELECT
+
+    distinct
+    CUSTOMER.NAME AS CUSTOMER,
+    SO.NUM AS SO,
+    SO.DATEISSUED,
+    SOSTATUS.NAME AS STATUS,
+    SO.SALESMAN AS "user",
+    locationgroup.name as locationgroup,
+
+
+    SORDER.ORDERED,
+    SORDER.SHIPPED,
+    POSTSO.POSTDATE,
+    SO.DATEISSUED,
+    CURRENCY.SYMBOL,
+    SO.CUSTOMERPO,
+    STATECONST.CODE AS SHIPTOSTATE,
+
+    SO.DATEFIRSTSHIP,
+    SO.DATECOMPLETED,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'In-Stock Notification') as date)  AS isn,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up') as date) AS est1,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #2')  as date) AS est2,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #3')  as date) AS est3,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up')  as date) AS so1,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up')  as date) AS so2,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up #3') as date) AS so3,
+cast(CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up') as date) AS FulfilledFollowUp,
+CustomFieldByName(so.CUSTOMFIELDS, 'Order Payment Warehouse') AS OrderPaymentWarehouse,
+so.DATECREATED,so.totalprice,
+COALESCE((select sum(amount) from postransaction
+where soid=so.id),0) as pdmt,
+sa1.username as createdby,
+
+coalesce((select username from so_aud
+where so_aud.id=so.id and so_aud.statusid=20
+order by so_aud.dateissued desc limit 1),'') as IssuedUser,
+coalesce((select COALESCE(memo.memo,'')  from MEMO
+where memo.tableid = '1012013120'
+and memo.recordid = so.id order by datecreated desc limit 1
+),'') as lastmemo,'so' as rtype,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Customer Type') AS CustomerGroup,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Magento Email') as MagentoEmail,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'In-Stock Notification') AS DATE) is not null
+order by rev desc limit 1),'') as stuser,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Estimate Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as euser,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'SO Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as suser,
+
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Fulfilled Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as luser,
+coalesce((
+select username from so_aud
+
+where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Ageing Follow Up') AS DATE) is not null
+order by rev desc limit 1),'') as aguser,
+coalesce(CustomFieldByName(so.CUSTOMFIELDS, 'Canceled / Voided Reason'),'') as creason,
+CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback') AS EstimateFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up Feedback') AS SOFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up Feedback') AS AgeingFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Negative') AS FulfilledFollowUpFeedbackN,
+CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Positive') AS FulfilledFollowUpFeedbackP
+FROM
+    so
+    LEFT JOIN stateconst ON so.shiptostateid = stateconst.id
+    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+    INNER JOIN customer ON customer.id = so.customerid
+    INNER JOIN sostatus ON sostatus.id = so.statusid
+    INNER JOIN soitem ON soitem.soid = so.id
+    LEFT JOIN product ON soitem.productid = product.id
+    JOIN qbclass ON qbclass.id = so.qbclassid
+    LEFT JOIN currency ON currency.homeCurrency = 1
+    LEFT JOIN (
+        SELECT
+            postso.soid AS soid,
+            MAX(postso.postdate) AS postdate
+        FROM
+            postso
+        WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+        GROUP BY postso.soid
+    ) AS postso ON so.id = postso.soid
+    INNER JOIN uom ON uom.id = soitem.uomid
+    INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
+    INNER JOIN (
+        SELECT
+            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
+            SUM(
+                ROUND(
+                    ((soitem.qtyfulfilled * soitem.unitprice) +
+                        (IF(soitem.qtytofulfill = 0,0,soitem.adjustamount / soitem.qtytofulfill) * soitem.qtyfulfilled)) * 10
+                    ,1) / 10
+            ) AS shipped,
+            soitem.soid
+        FROM
+            soitem
+        WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+        GROUP BY soitem.soid
+    ) AS sorder ON so.id = sorder.soid
+left join sysuser sa1 on sa1.id=so.createdbyuserid
+WHERE
+    soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+    AND so.locationgroupid IN ($P!{locationGroupID})
+    AND so.customerid LIKE $P{customerID}
+    AND soitem.qbclassid LIKE $P{qbClassID}
+    AND UPPER(so.salesman) LIKE UPPER($P{salesPerson})
+    AND so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND COALESCE(product.num,'') LIKE $P{productNum}
+     AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
+and
+coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like $P{MarketingData}
+
+UNION ALL
+
+SELECT xo.shiptoattn,xo.num AS so,xo.dateissued,xostatus.name AS STATUS,
+null AS USER,l1.name AS locationgroup,NULL,NULL,NULL,xo.dateissued,NULL,null,NULL,xo.datefirstship,xo.datecompleted,
+
+
+CustomFieldByName(xo.CUSTOMFIELDS, 'In-Stock Notification') AS isn,
+null,null,null,null,null,null,null,NULL,xo.datecreated,NULL,NULL,
+
+COALESCE((SELECT username FROM xo_aud
+INNER JOIN sysuser ON sysuser.id=xo_aud.userid
+WHERE xo_aud.id=xo.id AND xo_aud.statusid=10
+ORDER BY xo_aud.dateissued DESC LIMIT 1),'') AS CreatedBy,
+
+COALESCE((SELECT username FROM xo_aud
+INNER JOIN sysuser ON sysuser.id=xo_aud.userid
+WHERE xo_aud.id=xo.id AND xo_aud.statusid=20
+ORDER BY xo_aud.dateissued DESC LIMIT 1),'') AS IssuedBy,
+
+COALESCE((SELECT COALESCE(memo.memo,'')  FROM MEMO
+WHERE memo.tableid = '605251168'
+AND memo.recordid = xo.id ORDER BY datecreated DESC LIMIT 1
+),'') AS lastmemo,'xo' AS rtype,
+'' AS CustomerGroup,
+'' as MagentoEmail,
+'' as stuser,
+'' as euser,
+'' as suser,
+
+'' as luser,
+'' as aguser,
+'' as creason,
+'' AS HasDesign,
+'' AS MarketingData,
+'' AS EstimateFollowUpFeedback,
+'' AS SOFollowUpFeedback,
+'' AS AgeingFollowUpFeedback,
+'' AS FulfilledFollowUpFeedbackN,
+'' AS FulfilledFollowUpFeedbackP
+ FROM xo
+INNER JOIN xostatus ON xostatus.id=xo.statusid
+LEFT JOIN locationgroup l1 ON l1.id=xo.fromlgid
+
+
+where xo.fromlgid IN ($P!{locationGroupID})
+
+    AND xo.statusid IN ($P{ckXOEntered},$P{ckXORequest},$P{ckXOIssued},$P{ckXOPicking},$P{ckXOPartial},$P{ckXOPicked},$P{ckXOShipped},$P{ckXOFulfilled},$P{ckXOClosedShort},$P{ckXOVoided})
+    AND xo.datescheduled BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+ORDER BY
+rtype,1,2]]>
+		</queryString>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="SO" class="java.lang.String"/>
+		<field name="DATEISSUED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="STATUS" class="java.lang.String"/>
+		<field name="user" class="java.lang.String"/>
+		<field name="ORDERED" class="java.math.BigDecimal"/>
+		<field name="SHIPPED" class="java.math.BigDecimal"/>
+		<field name="POSTDATE" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SYMBOL" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CUSTOMERPO" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SHIPTOSTATE" class="java.lang.String"/>
+		<field name="DATEFIRSTSHIP" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DATECOMPLETED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="isn" class="java.sql.Date"/>
+		<field name="est1" class="java.sql.Date"/>
+		<field name="est2" class="java.sql.Date"/>
+		<field name="est3" class="java.sql.Date"/>
+		<field name="so1" class="java.sql.Date"/>
+		<field name="so2" class="java.sql.Date"/>
+		<field name="so3" class="java.sql.Date"/>
+		<field name="DATECREATED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="totalprice" class="java.lang.Double"/>
+		<field name="pdmt" class="java.lang.Double"/>
+		<field name="locationgroup" class="java.lang.String"/>
+		<field name="createdby" class="java.lang.String"/>
+		<field name="IssuedUser" class="java.lang.String"/>
+		<field name="FulfilledFollowUp" class="java.util.Date"/>
+		<field name="LASTMEMO" class="java.lang.String"/>
+		<field name="rtype" class="java.lang.String"/>
+		<field name="CustomerGroup" class="java.lang.String"/>
+		<field name="MagentoEmail" class="java.lang.String"/>
+		<field name="luser" class="java.lang.String"/>
+		<field name="euser" class="java.lang.String"/>
+		<field name="suser" class="java.lang.String"/>
+		<field name="stuser" class="java.lang.String"/>
+		<field name="aguser" class="java.lang.String"/>
+		<field name="creason" class="java.lang.String"/>
+		<field name="HasDesign" class="java.lang.String"/>
+		<field name="MarketingData" class="java.lang.String"/>
+		<field name="EstimateFollowUpFeedback" class="java.lang.String"/>
+		<field name="SOFollowUpFeedback" class="java.lang.String"/>
+		<field name="AgeingFollowUpFeedback" class="java.lang.String"/>
+		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
+		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
+		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Prints a summary of sales orders issued during the time window given; no taxes are included."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[10,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[25,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[60,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[70,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[80,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[90,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AlternateReportTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIncludeTransferOrders" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOVoided" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[90,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOClosedShort" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[80,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOFulfilled" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[70,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXORequest" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[15,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["15"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOIssued" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOEntered" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[10,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOPicking" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[30,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOPartial" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[40,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOPicked" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[50,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["50"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOShipped" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[60,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOInProgress" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[25,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckXOEstimate" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[10,100]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[85,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MarketingData" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+    COMPANY.NAME AS COMPANY
+
+FROM
+    company
+
+WHERE id = 1]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="64" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="3320" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
+					<printWhenExpression><![CDATA[true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange1}.getYear() <= -900 && $P{dateRange2}.getYear() >= 1100
+  ? "Date Range: All"
+  : "Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
+(new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-129600000)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="0" width="3320" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="54" width="3320" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="3320" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AlternateReportTitle}.equals("%") ? "Sales Order Follow Up report" : $P{AlternateReportTitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="56">
+			<printWhenExpression><![CDATA[$P{ckIncludeTransferOrders}.contains("0")]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="3320" height="56" uuid="3a69cb21-719d-4127-9ee5-3f37c4fd5bf2"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="SOInfo" uuid="e929490b-ee12-4eb0-a468-0350f3ad6b70">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="ckInProgress">
+							<datasetParameterExpression><![CDATA[$P{ckInProgress}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIssued">
+							<datasetParameterExpression><![CDATA[$P{ckIssued}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckClosedShort">
+							<datasetParameterExpression><![CDATA[$P{ckClosedShort}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckEstimate">
+							<datasetParameterExpression><![CDATA[$P{ckEstimate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cbApplyDateFilter">
+							<datasetParameterExpression><![CDATA[$P{cbApplyDateFilter}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckFulfilled">
+							<datasetParameterExpression><![CDATA[$P{ckFulfilled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="qbClassID">
+							<datasetParameterExpression><![CDATA[$P{qbClassID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange2">
+							<datasetParameterExpression><![CDATA[$P{dateRange2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckVoided">
+							<datasetParameterExpression><![CDATA[$P{ckVoided}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange1">
+							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="module">
+							<datasetParameterExpression><![CDATA[$P{module}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locationGroupID">
+							<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="customerID">
+							<datasetParameterExpression><![CDATA[$P{customerID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="salesPerson">
+							<datasetParameterExpression><![CDATA[$P{salesPerson}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="productNum">
+							<datasetParameterExpression><![CDATA[$P{productNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIncludeReturns">
+							<datasetParameterExpression><![CDATA[$P{ckIncludeReturns}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckExpired">
+							<datasetParameterExpression><![CDATA[$P{ckExpired}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckCancelled">
+							<datasetParameterExpression><![CDATA[$P{ckCancelled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="MarketingData">
+							<datasetParameterExpression><![CDATA[$P{MarketingData}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="3309" uuid="e94bacac-c0d6-4000-b813-e20a154a77c4">
+						<jr:columnGroup width="1009" uuid="2a5922c8-cb7f-422f-997d-64a8c0d73fbc">
+							<jr:column width="80" uuid="42555978-00cf-40bd-832a-bd8983d21749">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="6774e443-db3e-4b2a-a1cb-72e39e40af72"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[SO #]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+										<reportElement key="thisOne" stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" forecolor="#000099" uuid="5fbc84d3-d786-41fa-8961-1374bcbd789d"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{SO}]]></textFieldExpression>
+										<anchorNameExpression><![CDATA["SONum"]]></anchorNameExpression>
+										<hyperlinkReferenceExpression><![CDATA[$F{SO}]]></hyperlinkReferenceExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="160" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="160" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="14" forecolor="#000099" uuid="4c6c94ba-cebf-4312-a49b-89a1a593a30b"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
+										<anchorNameExpression><![CDATA["CustomerName"]]></anchorNameExpression>
+										<hyperlinkReferenceExpression><![CDATA[$F{CUSTOMER}]]></hyperlinkReferenceExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="160" uuid="967a0218-7765-4346-b1b3-5d7d9bf482b3">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="160" height="30" uuid="d76bc917-f825-485d-a3b5-5e4b61719a02"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Magento Email]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="160" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="5c8badaa-5819-40dd-af73-ed3ce38525a8"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+											<font fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+											<paragraph lineSpacing="Single"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{MagentoEmail}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="79" uuid="a999bbce-9146-439c-828d-d046e8dcc789">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="79" height="30" uuid="607122a8-839f-4a82-8c4f-53d55619e171"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer PO]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="79" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="78298b9d-89b9-4202-9f61-746127e15fd3"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+											<font fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+											<paragraph lineSpacing="Single"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CUSTOMERPO}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="ccdc27f0-9693-4050-8a61-ee899bc99e6a">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="87608a6b-6d04-4191-9378-8622380130ea"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Has Design]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="ee867b5e-4e0f-479e-ab63-b7d0872cb2c1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{HasDesign}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="120" uuid="f6fcf491-3463-4841-b6f6-5364599fe187">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="120" height="30" uuid="d327068d-4f03-4ecf-9ca7-2e4f7df5e342"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer Group]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="120" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f8c3d941-c793-4e3b-9182-b11ba049a2a3"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+											<font fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+											<paragraph lineSpacing="Single"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CustomerGroup}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="3f25bbe6-a1f2-4b16-aafe-e487733be50d">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="0cc08441-9d8e-4faa-aaad-c35c30600228"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Marketing Data]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="29f7f8f9-7f50-4727-80fd-0c890e90fe74"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{MarketingData}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Status]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="85ac8377-d58b-43fc-a742-ea531b79d70b"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{STATUS}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="150" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="150" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Order Payment Warehouse]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="150" height="14" uuid="85ac8377-d58b-43fc-a742-ea531b79d70b"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{OrderPaymentWarehouse}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+						<jr:columnGroup width="770" uuid="51c3c5f3-fe00-4f5e-ba78-22856e635b80">
+							<jr:column width="80" uuid="57913773-23ba-4c61-9bc2-140070dd7fb5">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="eda3c4df-5c89-46d2-b8dd-b481c2a151cc"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[SO Total]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" isPrintWhenDetailOverflows="true" uuid="6f25e32e-bcd8-4c74-bf27-afa147d06b1a"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{totalprice}.doubleValue()]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="71919653-7b63-4fb3-b4b9-7c5b7d0661da">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="1b0c6ecf-004f-4a8e-8a26-6021bf064d4b"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Remaining]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" isPrintWhenDetailOverflows="true" uuid="d3d4c6e0-762f-4425-8be4-3256ea623542"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{totalprice}.doubleValue() - $F{pdmt}.doubleValue()]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="24963c57-1634-48ac-9d0c-98850c5fa25d">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="63c9c140-d1c9-49e6-9c4a-1aefba18a832"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Date Created]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="324da4ce-0e18-4222-9c3f-f061878fa84e"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{DATECREATED}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="282b2850-3eb1-472d-a7be-ac32aba0d35e">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="ff1ee514-c08a-45ca-a611-14b5c309dd77"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Date Issued]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="47b66c77-cf46-4c85-a0e7-b91866a88789"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{DATEISSUED}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="656b325e-35ed-4453-92c1-e43e73f56974">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="0e01dd7a-13a2-4090-a037-afa7a9e44fd2"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[In-Stock Notification]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="05de4f18-19ac-4e22-96e3-4e0dd178c074"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{isn}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="19dd2736-e27c-480b-a29d-19de92c7877e">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="2095f838-e2a9-4952-b2ef-0f43357955a1"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[In-Stock Notification By]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="43c8e7e8-3715-4494-ba9f-94a0418969da"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{stuser}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="330e03a2-e53a-442d-b634-bdf3ea21066a">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="1569ac3b-bcab-4c1b-a614-f0ea2f0ac802"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Estimate Follow Up]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="06578215-2d3f-4867-a850-6889d6c600c9"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{est1}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="db906d96-6fcf-445e-be6d-ff4dd44ff036">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="771c6666-2d67-4746-a04c-35e2636d5b68"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Estimate Follow Up By]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="50776b6b-2db7-4d36-a4f0-f84f12930016"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{euser}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="6c9d32da-f898-4d5f-a371-ca6bb0c1048b">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="06fcdd19-51d5-4a0b-89a1-df3ecac7fac6"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Estimate Follow Up Feedback]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="30" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="eba8622f-c383-43f9-abc5-377b2f4dc4a5"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{EstimateFollowUpFeedback}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+						<jr:column width="80" uuid="aae4bf65-47e6-4840-84f0-0152d28d623e">
+							<jr:tableFooter height="0" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.0"/>
+								</box>
+							</jr:tableFooter>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="429e4797-51dc-4369-9043-58c4e6c4d4c0"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[SO Follow Up]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="6bd21e14-5e34-4058-8799-2def3f967192"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{so1}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="da419b7f-9b15-4de1-9d6e-c9c6c4866118">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="654f387c-a2c9-4e55-b83a-c769da497bda"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[SO Follow Up By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="a82ce4b8-7322-460c-90d5-3efdd990859f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{suser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="b5ee50cb-fe21-4c05-a268-ef8aa90a84a0">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="194be07c-9518-4be3-bb15-4f0a3d1bbaed"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[SO Follow Up Feedback]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="145176d5-0d11-44fd-bad9-891e856946ef"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{SOFollowUpFeedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="a728ddbb-e50a-48b3-ac25-4ce3ec386fad">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="dde6530a-1003-49d5-9c6f-c955034a2e74"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ageing Follow Up]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="d56e375a-e415-4d11-b0f7-bdc45b876bb8"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{so2}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="8accd0de-ae38-4139-a363-74c8d1f91c91">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="78cd9bdd-23a3-41e4-a8a2-9933a6d8b496"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ageing Follow Up By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="015ff15d-8c52-43c3-9725-5ce075c6280e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{aguser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="e1637e6e-bc35-4562-bf9f-d32ae6699d26">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="1a80856b-f97e-4b2f-b6b3-7cd1af44c6a7"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Ageing Follow Up Feedback]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="0046025c-7bec-4570-85f4-a40c10e68c28"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AgeingFollowUpFeedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="78bf55ab-b5aa-4a82-a5f5-02055b9be392">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="dc6fed4e-aadd-40db-95ef-622569cd6e8b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="08aed77f-564a-43b7-bdf7-e159083c9684"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FulfilledFollowUp}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="832f171e-ad2a-434a-91e2-a3a210b0d007">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="dc013c7d-66e6-4590-8350-de3b13061f1a"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="7ec71262-e107-405a-b575-3520fe5746df"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{luser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="941a38c6-4efa-4f45-86a6-b75c6ae38738">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="f4164491-8bd5-477d-acb7-cabfd3e94259"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up Feedback (Pos)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="944d1196-e099-4199-b145-c6b46fc4306a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FulfilledFollowUpFeedbackP}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="f7c9e01f-083e-4466-8cd3-0fab9bdcd573">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="80da6c0d-50a5-4ea2-848d-eb0670431e21"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up Feedback (Neg)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="da06b53e-bac7-4ec5-b4c8-8a3f0adb217a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FulfilledFollowUpFeedbackN}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="300" uuid="4ebeeda2-04e7-4566-8f5c-af74426a4f9b">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="300" height="30" uuid="13096c99-91d7-4b6d-ba9e-a8e1c6f416cf"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Memo]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="300" height="14" uuid="71b491ef-6f10-4379-bd52-de5c1dcd6b1b"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{LASTMEMO}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="7ed64f64-c92b-4ae1-a53f-e06f9165f8cc">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="af0e5cec-00ea-4ed1-a6ee-c050be23ce4f"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Location Group]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="36ac1165-239b-44fa-85e0-c31fa99a6781"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{locationgroup}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="f6881931-ce38-4834-8a29-a254e3ddbc20">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="3cd23d79-871f-4162-bb08-5b6d491bb43c"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Created By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="c4e3861f-54ee-408b-9f37-1da300d6fbb4"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{createdby}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="ec847ecd-16cd-4766-90b0-feae65678bcb">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="5d9b9c67-a719-4728-b83c-3af15f5956fc"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Last Issued By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="415c0b1a-e4c5-4a16-b0aa-c19d8bfa5b70"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{IssuedUser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="d3633da5-a783-42ab-a119-03e8e84273bc">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="9d2a8168-970d-47fe-a78b-18774119d7f2"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Canceled / Voided Reason ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="b37a5f78-5234-4c12-b400-bf13b5769244"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{creason}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="58">
+			<printWhenExpression><![CDATA[$P{ckIncludeTransferOrders}.contains("1")]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="3320" height="56" uuid="04dc3a12-7e04-43a4-93f4-ca459df0cfbc"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="SOXOInfo" uuid="a24d5fb6-21fe-4a1f-84bc-49ae681c5284">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="cbApplyDateFilter">
+							<datasetParameterExpression><![CDATA[$P{cbApplyDateFilter}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="qbClassID">
+							<datasetParameterExpression><![CDATA[$P{qbClassID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange2">
+							<datasetParameterExpression><![CDATA[$P{dateRange2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange1">
+							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="module">
+							<datasetParameterExpression><![CDATA[$P{module}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locationGroupID">
+							<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="customerID">
+							<datasetParameterExpression><![CDATA[$P{customerID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="salesPerson">
+							<datasetParameterExpression><![CDATA[$P{salesPerson}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="productNum">
+							<datasetParameterExpression><![CDATA[$P{productNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIncludeReturns">
+							<datasetParameterExpression><![CDATA[$P{ckIncludeReturns}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOVoided">
+							<datasetParameterExpression><![CDATA[$P{ckXOVoided}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOClosedShort">
+							<datasetParameterExpression><![CDATA[$P{ckXOClosedShort}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOFulfilled">
+							<datasetParameterExpression><![CDATA[$P{ckXOFulfilled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXORequest">
+							<datasetParameterExpression><![CDATA[$P{ckXORequest}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOIssued">
+							<datasetParameterExpression><![CDATA[$P{ckXOIssued}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOEntered">
+							<datasetParameterExpression><![CDATA[$P{ckXOEntered}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOPicking">
+							<datasetParameterExpression><![CDATA[$P{ckXOPicking}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOPartial">
+							<datasetParameterExpression><![CDATA[$P{ckXOPartial}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOPicked">
+							<datasetParameterExpression><![CDATA[$P{ckXOPicked}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOShipped">
+							<datasetParameterExpression><![CDATA[$P{ckXOShipped}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOInProgress">
+							<datasetParameterExpression><![CDATA[$P{ckXOInProgress}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckXOEstimate">
+							<datasetParameterExpression><![CDATA[$P{ckXOEstimate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckInProgress">
+							<datasetParameterExpression><![CDATA[$P{ckInProgress}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIssued">
+							<datasetParameterExpression><![CDATA[$P{ckIssued}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckClosedShort">
+							<datasetParameterExpression><![CDATA[$P{ckClosedShort}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckEstimate">
+							<datasetParameterExpression><![CDATA[$P{ckEstimate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckFulfilled">
+							<datasetParameterExpression><![CDATA[$P{ckFulfilled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckVoided">
+							<datasetParameterExpression><![CDATA[$P{ckVoided}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckExpired">
+							<datasetParameterExpression><![CDATA[$P{ckExpired}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckCancelled">
+							<datasetParameterExpression><![CDATA[$P{ckCancelled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="MarketingData">
+							<datasetParameterExpression><![CDATA[$P{MarketingData}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="3269" uuid="af25c3db-cfaf-4988-bb82-d2c0af8a878f">
+						<jr:columnGroup width="1009" uuid="6b7d2526-e07f-463d-86d2-172139d4eb6b">
+							<jr:column width="80" uuid="91c3e578-522d-4369-994b-6b9e996b25f3">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="6b943883-fd4f-4321-b7a6-4076fba3cce4"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[SO #]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+										<reportElement key="thisOne" stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" forecolor="#000099" uuid="8ef4e7df-02f4-49fd-8909-4873cc7a0728"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{SO}]]></textFieldExpression>
+										<anchorNameExpression><![CDATA["SONum"]]></anchorNameExpression>
+										<hyperlinkReferenceExpression><![CDATA[$F{SO}]]></hyperlinkReferenceExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="160" uuid="25e8275a-fe54-45c3-b923-58bf39f09767">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="160" height="30" uuid="30aaf0af-7048-45be-8e0b-803a3e50227b"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="14" forecolor="#000099" uuid="0402b2c8-44e4-47c5-af6e-7394e93724d3"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
+										<anchorNameExpression><![CDATA["CustomerName"]]></anchorNameExpression>
+										<hyperlinkReferenceExpression><![CDATA[$F{CUSTOMER}]]></hyperlinkReferenceExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="160" uuid="a8ca8b39-2ccc-45d0-accd-0e0870bf3dc1">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="160" height="30" uuid="e2ce0ec8-27aa-49d4-a4fa-a189658809e5"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Magento Email]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="160" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="61b1a3d6-8ab6-4c3e-aea1-15b6a49d5c28"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+											<font fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+											<paragraph lineSpacing="Single"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{MagentoEmail}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="79" uuid="2733f837-773e-4f21-9023-3744dbf988d7">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="79" height="30" uuid="f43b5ca1-dc1c-4977-92dd-a83908bc5edb"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer PO]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="79" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="7e79aedd-abd6-4006-9ca3-118d2e6e6e7e"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+											<font fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+											<paragraph lineSpacing="Single"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CUSTOMERPO}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="e76b0500-e23c-429f-8746-e672585daeca">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="94c6d45b-1d7b-4990-8f29-b9ad887edd06"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Has Design]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="4a7c1bfa-7876-431b-ac38-609eeded7fc6"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{HasDesign}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="120" uuid="f92384b4-3194-4d80-98f9-4155dd1305e0">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="120" height="30" uuid="6eeb7be2-bc59-49db-92b9-6e3ae75db81d"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Customer Group]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="120" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="1d8db1f2-78d3-4c2e-8f29-ffce4c02c867"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+											<font fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+											<paragraph lineSpacing="Single"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{CustomerGroup}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="e86351c9-3a1f-4182-ab6d-daf75e5884ee">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="f66dd7c0-b074-43c2-9a60-e085eba27260"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Marketing Data]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="121d3d4d-7b3e-4834-bde4-555bc5ac0196"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{MarketingData}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="15618098-2a7f-4d31-b3b2-9534fb82939a">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="26abf6e7-99d0-49d7-b576-186c7627ae3c"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Status]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="880a9767-de4a-4b7f-a52b-2b3653704e21"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{STATUS}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="150" uuid="15618098-2a7f-4d31-b3b2-9534fb82939a">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="150" height="30" uuid="26abf6e7-99d0-49d7-b576-186c7627ae3c"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Order Payment Warehouse]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="150" height="14" uuid="880a9767-de4a-4b7f-a52b-2b3653704e21"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{OrderPaymentWarehouse}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+						<jr:columnGroup width="770" uuid="8e2f279e-455b-4f37-85e6-30b70f1e3e8a">
+							<jr:column width="80" uuid="0095083e-60e8-4668-8eae-57d30ac7508e">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="3064a2f9-1986-42ea-b22b-2a0a3c40c5f5"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[SO Total]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" isPrintWhenDetailOverflows="true" uuid="2a026245-4382-4455-bda0-b128b3986e2e"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{totalprice}.doubleValue()]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="f81e6379-5602-4fc3-9a54-e15b71b57e18">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="6ad93ab4-8b59-4b0c-9123-daa023aff707"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Remaining]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" isPrintWhenDetailOverflows="true" uuid="713d7774-9ba0-4f9a-b733-3afc3ff40ffc"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{totalprice}.doubleValue() - $F{pdmt}.doubleValue()]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="63456426-d3d8-4f50-926c-1dc945859b55">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="3b1d014b-11a8-4db7-80a4-1a15a2222418"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Date Created]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="dab21d37-3670-4de7-9567-bebbb08516d5"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{DATECREATED}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Date Issued]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{DATEISSUED}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="6fe23f2d-5360-4527-8bc9-bb458f65eb51">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="84b484cb-8e69-44e8-8825-f9d9889f4b14"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[In-Stock Notification]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="568378b7-cb46-4bb1-8e82-2e96b900669f"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{isn}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="8139159b-2fbf-4e70-b56f-d49789b428a9">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="2ad788b6-a1da-4273-8bf1-95b62cfe580c"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[In-Stock Notification By]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="1c5624b7-5dea-4d18-bad3-299e1edd65c1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{stuser}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="80" uuid="5dba468a-8b32-46da-846d-73cac4811d31">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="80" height="30" uuid="8d1d8952-6596-43e8-b0f6-0ffeaa52e2e7"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Estimate Follow Up]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="594d5588-8148-4e28-bb9e-df9233b61f79"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{est1}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="fd005815-e6a6-4990-9620-2ad01b43515e">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="b99e9844-94e8-48a7-9c89-b3234e82e14f"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Estimate Follow Up By]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="d0f34ee8-1f48-4a57-bc78-ecd51e5f12ed"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{euser}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="80b23aab-dfea-4e39-a75c-ab6fbf1c0ff6">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="374c1338-c4d7-4dba-b2e1-715cabf21f14"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Estimate Follow Up Feedback]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="14" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="a0ccd231-e0c7-4f88-ab7b-d1ceaa0c21c0"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{EstimateFollowUpFeedback}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+						<jr:column width="80" uuid="3049e272-1e21-4585-9723-9caf474b7ae4">
+							<jr:tableFooter height="0" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.0"/>
+								</box>
+							</jr:tableFooter>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="ffe9a38f-9acf-49bb-8bc0-eaf6559f005b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[SO Follow Up]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="9bf62a01-e3e0-43c2-9440-e7b91b549aa2"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{so1}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="5ad056b9-b0a6-40ee-8c79-4c6d6af93019">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="d25616a0-3050-4f23-853f-79ec6991d1ac"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[SO Follow Up By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="dfe3b52e-b2eb-4efa-ae1e-9d7baf287397"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{suser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="c9cf6d1a-45ba-4217-be0f-3fbea36c033a">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="3963c524-1b7d-41f9-b76d-e5e3e6f8ba41"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[SO Follow Up Feedback]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="8241b184-7c44-4fdd-84db-2cd23f695878"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{SOFollowUpFeedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="4418d82a-5429-409f-9428-398cde97e86a">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="43fbe6ca-8f53-4119-ae61-06085e4d7c1b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ageing Follow Up]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="3b52a662-9b92-425d-a8b3-59c557d57b79"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{so2}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="9347d016-9ef2-429d-b4bb-75c449220cf9">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="57e7e391-0426-45bb-a16a-87a2dbdffc4e"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ageing Follow Up By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="50096667-2bd6-4028-b6aa-167541c13f6f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{aguser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="862e0c3a-9f1c-4e2a-b5f4-ea894c6182ac">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="979ea364-0e99-4b2c-8329-7fbed66e2593"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Ageing Follow Up Feedback]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="761bac62-44a1-4690-bf88-7af09572292e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AgeingFollowUpFeedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="48ccec62-47cd-4d41-bc69-161ab7404e28">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="95a4690a-2398-4cae-a0d9-507d9a4f3ee1"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="c07de784-b949-44c7-a08f-6c261de379bd"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FulfilledFollowUp}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="f04c1220-d591-4d81-a930-b862bcbdfaf2">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="929e4ba7-ff59-47cc-9227-1468a9440a19"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="ae2cbb8f-e8b8-4f05-9775-adad6db667fc"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{luser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="82318969-cd27-4b80-bb27-a789e3943b04">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="8b46ba3e-615f-4ba7-92b6-4568fe63098b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up Feedback (POS)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="a90d200f-8f1c-4271-bc9c-60c91b23e7fe"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FulfilledFollowUpFeedbackP}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="58359549-0299-40e1-88fd-cd911916b659">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="e113697d-dd2e-43dc-897f-dcc1630af5b6"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Fulfilled Follow Up Feedback (Neg)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="d3cedd8e-93bb-4959-9224-b37cf5ef43fb"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FulfilledFollowUpFeedbackN}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="260" uuid="d8861a72-3ea9-4476-bf78-9e8be7c54f4a">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="260" height="30" uuid="5d4eec21-7bdd-430f-acc6-4bd2ada3e36c"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Memo]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="260" height="14" uuid="134879d4-626e-4398-91e8-9bec0cc517d9"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{LASTMEMO}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="c4388a9e-f6d5-452a-ba62-936e8d5dba4b">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="da1978ed-0c6b-468b-abc2-30a43f7c0162"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Location Group]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="e4921d0f-ce6b-4277-8d94-8878604a7015"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{locationgroup}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="184f3bd7-e828-45d1-b573-78eac20681dc">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="ba077ebb-0a31-44a7-8f4e-2535d37617a2"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Created By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="7a152454-8483-41ca-89b8-77c34360c2a6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{createdby}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="12abc4f7-46d3-4544-947b-cc0db468f248">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="9899c49c-a1a6-423b-909b-c38b061e8d5f"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="10" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Last Issued By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="dde81f30-4efc-4424-8962-414d2764082c"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{IssuedUser}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="92d30bca-1c6d-496c-9e56-1baa2d6d5e93">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="78f70643-8ac7-41e6-8b0e-614b8740bc71"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Canceled / Voided Reason ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="536be459-ff63-4c99-a200-ecb4822ced53"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{creason}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Prevent">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="501" y="3" width="2771" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="3272" y="3" width="48" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="3" width="501" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="be88ff9d-ce0a-4398-b59e-9e444a24b556">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
