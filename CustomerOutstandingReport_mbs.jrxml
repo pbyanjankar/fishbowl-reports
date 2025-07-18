@@ -20,7 +20,7 @@
 			<defaultValueExpression><![CDATA["../SalesOrder/"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="sort" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[1,PartNumber,2,PartDescription,3,Customer,4,SONumber]]></parameterDescription>
+			<parameterDescription><![CDATA[1,Product Number,2,Product Description,3,Customer,4,SONumber]]></parameterDescription>
 			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
@@ -56,8 +56,8 @@
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
-part.num AS partnum,
-part.description AS description,
+soitem.productnum AS productnum,
+soitem.description AS description,
 so.billtoname AS bname,
 so.num AS sonum,
 soitem.datescheduledfulfillment AS datetofulfill,
@@ -91,15 +91,17 @@ AND so.statusid IN ($P!{ckEstimate},$P!{ckIssued},$P!{ckInProgress})
 so.customerpo AS CUSTOMERPO
 
 FROM so
-    JOIN soitem ON (so.id = soitem.soid AND soitem.typeid = 10 AND so.locationgroupid IN ($P!{locationGroupID}) AND soitem.statusid < 50)
+    left JOIN soitem ON (so.id = soitem.soid AND soitem.typeid IN (10,80) AND so.locationgroupid IN ($P!{locationGroupID}) AND soitem.statusid < 50)
     LEFT JOIN product ON product.id = soitem.productid
     LEFT JOIN part ON part.id = product.partid
-    INNER JOIN uom ON part.uomid = uom.id
+    left JOIN uom ON part.uomid = uom.id
     LEFT JOIN uomconversion ON (part.uomid = uomconversion.touomid AND soitem.uomid = uomconversion.fromuomid)
     JOIN customer ON customer.id = so.customerid
+    LEFT OUTER JOIN objecttoobject ON objecttoobject.recordId1 = soitem.id AND tableId1 = '1002104832' and  tableId2 = '1002104832'
 
 WHERE so.statusid IN ($P!{ckEstimate},$P!{ckIssued},$P!{ckInProgress})
-  AND part.typeid IN (10)
+  -- AND (part.typeid IN (10)
+  AND objecttoobject.id is null
   AND UPPER(so.num) LIKE UPPER('$P!{soNum}')
   AND UPPER(product.num) LIKE UPPER('$P!{productNum}')
   AND soitem.datescheduledfulfillment BETWEEN $P{dateRange1} AND $P{dateRange2}
@@ -107,7 +109,7 @@ WHERE so.statusid IN ($P!{ckEstimate},$P!{ckIssued},$P!{ckInProgress})
 
 ORDER BY $P!{sort}]]>
 		</queryString>
-		<field name="partnum" class="java.lang.String"/>
+		<field name="productnum" class="java.lang.String"/>
 		<field name="description" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
@@ -163,7 +165,7 @@ ORDER BY $P!{sort}]]>
 		<defaultValueExpression><![CDATA["Displays SO's that are fulfillable or on Backorder along with the outstanding quanitity"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="sort" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[1,PartNumber,2,PartDescription,3,Customer,4,SONumber]]></parameterDescription>
+		<parameterDescription><![CDATA[1,Product Number,2,Product Description,3,Customer,4,SONumber]]></parameterDescription>
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="module" class="java.lang.Object" isForPrompting="false">
@@ -340,7 +342,7 @@ WHERE company.id = 1]]>
 								<textElement verticalAlignment="Bottom" markup="none">
 									<font fontName="Open Sans" size="11" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA["Part  #"]]></textFieldExpression>
+								<textFieldExpression><![CDATA["Product  #"]]></textFieldExpression>
 								<hyperlinkTooltipExpression><![CDATA["Part Number"]]></hyperlinkTooltipExpression>
 							</textField>
 						</jr:columnHeader>
@@ -356,9 +358,9 @@ WHERE company.id = 1]]>
 								<textElement>
 									<font fontName="Open Sans"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{partnum}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{productnum}]]></textFieldExpression>
 								<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
-								<hyperlinkReferenceExpression><![CDATA[$F{partnum}]]></hyperlinkReferenceExpression>
+								<hyperlinkReferenceExpression><![CDATA[$F{productnum}]]></hyperlinkReferenceExpression>
 								<hyperlinkTooltipExpression><![CDATA["Open in the Part Module."]]></hyperlinkTooltipExpression>
 							</textField>
 						</jr:detailCell>
@@ -373,7 +375,7 @@ WHERE company.id = 1]]>
 								<textElement verticalAlignment="Bottom" markup="none">
 									<font fontName="Open Sans" size="11" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
+								<textFieldExpression><![CDATA["Product Description"]]></textFieldExpression>
 								<hyperlinkTooltipExpression><![CDATA["Part Description"]]></hyperlinkTooltipExpression>
 							</textField>
 						</jr:columnHeader>
