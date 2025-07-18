@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="2542"/>
+	<property name="ireport.x" value="826"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Mon Nov 29 11:28:37 EST 2021\ncallouts.1.text=Don&apos;t Show Details\ncallouts.3.pins=726,219;\ncallouts.3.bounds=504,341,150,75\ncallouts.2.text=Show Details\ncallouts.2.bounds=460,274,150,75\ncallouts.1.pins=723,103;\ncallouts.1.bounds=372,292,150,75\ncallouts.3.text=Don&apos;t Show Details and Group By Class\ncallouts.2.pins=725,162;"/>
 	<import value="net.sf.jasperreports.engine.*"/>
