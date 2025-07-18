@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="30"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="422"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -1374,7 +1374,7 @@ $F{TOTALPRICE}]]></variableExpression>
 					<text><![CDATA[]]></text>
 				</staticText>
 				<componentElement>
-					<reportElement key="SOInfo" x="0" y="31" width="552" height="0" uuid="ee5758da-5767-474a-937e-f1eb62ee616e"/>
+					<reportElement key="SOInfo" positionType="Float" x="0" y="31" width="552" height="0" uuid="ee5758da-5767-474a-937e-f1eb62ee616e"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 						<datasetRun subDataset="SOInfo" uuid="f9d8e3ad-ad92-4772-b154-1cbf18a17f21">
 							<datasetParameter name="soId">
@@ -1382,7 +1382,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
-						<jr:column width="150" uuid="a988b096-8bed-4037-a295-3b2896823aec">
+						<jr:column width="552" uuid="a988b096-8bed-4037-a295-3b2896823aec">
 							<printWhenExpression><![CDATA[$F{CUSTOMERCONCERN} != null && $F{CUSTOMERCONCERN}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1393,8 +1393,9 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="150" height="14" backcolor="#EAEAEA" uuid="957d3d89-2719-40e6-8e03-b3e6a3124b0a"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
+									<reportElement mode="Opaque" x="0" y="0" width="552" height="14" backcolor="#EAEAEA" uuid="957d3d89-2719-40e6-8e03-b3e6a3124b0a"/>
+									<box leftPadding="3"/>
+									<textElement verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
 									<text><![CDATA[Customer Concern]]></text>
@@ -1409,16 +1410,28 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="150" height="14" uuid="4ec1ccd8-2c8d-48b3-badb-074e8d2ba441"/>
-									<textElement textAlignment="Center">
+									<reportElement x="0" y="0" width="552" height="14" uuid="4ec1ccd8-2c8d-48b3-badb-074e8d2ba441"/>
+									<box leftPadding="3"/>
+									<textElement>
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{CUSTOMERCONCERN}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="150" uuid="db23432a-dd4f-41ee-bdf2-58ddc72969e7">
-							<printWhenExpression><![CDATA[$F{REPAIRSUMMARY}!=null && $F{REPAIRSUMMARY}.length()>0]]></printWhenExpression>
+					</jr:table>
+				</componentElement>
+				<componentElement>
+					<reportElement key="SOInfo" positionType="Float" x="0" y="35" width="552" height="0" uuid="8a075e46-cf11-4784-914f-accba087dee5"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="SOInfo" uuid="0288359c-b271-4173-99d3-7c49000e68b7">
+							<datasetParameter name="soId">
+								<datasetParameterExpression><![CDATA[$F{RECORDID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="552" uuid="09da08a0-56e8-47ac-9121-39245ce8aefe">
+							<printWhenExpression><![CDATA[$F{REPAIRSUMMARY} != null && $F{REPAIRSUMMARY}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1428,8 +1441,9 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="150" height="14" backcolor="#EAEAEA" uuid="39c1323d-1889-4f20-9093-6a518fcbce7e"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
+									<reportElement mode="Opaque" x="0" y="0" width="552" height="14" backcolor="#EAEAEA" uuid="ed9cde64-f99d-4bc4-9fa3-cec2543b3067"/>
+									<box leftPadding="3"/>
+									<textElement verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
 									<text><![CDATA[Repair Summary]]></text>
@@ -1444,8 +1458,9 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="150" height="14" uuid="f016f326-86b8-4baf-802f-bff9246f6d08"/>
-									<textElement textAlignment="Center">
+									<reportElement x="0" y="0" width="552" height="14" uuid="d2edac7e-b24e-4ca1-b452-2a7fa4761c24"/>
+									<box leftPadding="3"/>
+									<textElement>
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{REPAIRSUMMARY}]]></textFieldExpression>
