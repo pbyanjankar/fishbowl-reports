@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="2x4PartBarcodesOneOffAMB" pageWidth="288" pageHeight="144" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7d385386-6854-4b1f-8d04-a20463d0fc7b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="2x4PartBarcodesOneOffAMBV2" pageWidth="288" pageHeight="144" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7d385386-6854-4b1f-8d04-a20463d0fc7b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="3.0"/>
@@ -167,7 +167,7 @@ LIMIT $P!{Count} OFFSET $P!{Skip}]]>
 								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 							</textField>
 							<componentElement>
-								<reportElement style="center" x="0" y="29" width="288" height="86" uuid="7bfcbc3d-fb02-4bee-b33d-cf0a9586bd2e"/>
+								<reportElement style="center" x="0" y="4" width="288" height="140" uuid="7bfcbc3d-fb02-4bee-b33d-cf0a9586bd2e"/>
 								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="1" barHeight="0">
 									<jr:codeExpression><![CDATA[$F{NUM}]]></jr:codeExpression>
 								</jr:barbecue>
@@ -230,7 +230,7 @@ LIMIT $P!{Count} OFFSET $P!{Skip}]]>
 								<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 							</textField>
 							<componentElement>
-								<reportElement style="center" x="0" y="29" width="288" height="86" uuid="501f1557-d725-4284-855c-12b0a042d1dd"/>
+								<reportElement style="center" x="0" y="4" width="288" height="140" uuid="501f1557-d725-4284-855c-12b0a042d1dd"/>
 								<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
 									<jr:codeExpression><![CDATA[$F{NUM}]]></jr:codeExpression>
 								</jr:barbecue>
