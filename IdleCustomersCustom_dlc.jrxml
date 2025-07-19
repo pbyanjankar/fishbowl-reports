@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IdleCustomersCustomDLC" pageWidth="2390" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="2330" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="c93956d1-d9cc-4a2b-b65a-909b29be7849">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="60"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Fri Dec 16 15:32:56 MST 2022"/>
 	<subDataset name="Table Dataset 1" uuid="22adddab-b59d-462d-b61f-a97ab26cfd39">
@@ -871,7 +871,7 @@ ORDER BY $P!{cbSortBy}]]>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-22" mode="Transparent" x="0" y="0" width="368" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="22b82dc8-799c-4675-b3bb-92beb6d44ae4"/>
+				<reportElement key="textField-22" mode="Transparent" x="0" y="0" width="208" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="22b82dc8-799c-4675-b3bb-92beb6d44ae4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
