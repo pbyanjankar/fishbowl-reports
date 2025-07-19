@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DormantCustomersCustomDLC" pageWidth="2490" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="2430" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="c93956d1-d9cc-4a2b-b65a-909b29be7849">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri Dec 16 15:32:56 MST 2022"/>
+	<subDataset name="Table Dataset 1" uuid="22adddab-b59d-462d-b61f-a97ab26cfd39">
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="path" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowInactiveCustomers" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[0,1]]></parameterDescription>
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DormantPeriod" class="java.lang.Integer" isForPrompting="false">
+			<property name="Group" value="Enter dormant period in days (no decimals)"/>
+			<property name="Sort" value="1"/>
+			<property name="Tooltip" value="The report will look back the number of days entered from the current date."/>
+			<parameterDescription><![CDATA["Enter Dormant Period in Days"]]></parameterDescription>
+			<defaultValueExpression><![CDATA[90]]></defaultValueExpression>
+		</parameter>
+		<parameter name="LastOrderLimit(Days)" class="java.lang.Integer" isForPrompting="false">
+			<property name="Group" value="Enter dormant period in days (no decimals)"/>
+			<property name="Sort" value="2"/>
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[365]]></defaultValueExpression>
+		</parameter>
+		<parameter name="WithTotalOrdersGreaterThan" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="WithTotalSpentGreaterThan" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Column Sorting"/>
+			<property name="Sort" value="3"/>
+			<parameterDescription><![CDATA[customer.name $P!{cbOrder},Customer,sysuser.username $P!{cbOrder},Sales Rep,stateconst.code $P!{cbOrder},State/Province,maxso.lastorderdate $P!{cbOrder},Last Ordered,so.num $P!{cbOrder},Last SO#,so.totalprice $P!{cbOrder},Last Order Amount,3 $P!{cbOrder},Days Dormant,ordercount.total $P!{cbOrder},Total Orders,ordercount.totalspent $P!{cbOrder},Total Spent]]></parameterDescription>
+			<defaultValueExpression><![CDATA["3"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Column Sorting"/>
+			<property name="Sort" value="4"/>
+			<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbState/Province" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customer" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Customer]]></parameterDescription>
+		</parameter>
+		<parameter name="salesRep" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Sales Rep]]></parameterDescription>
+		</parameter>
+		<parameter name="stateprovince" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[State / Province]]></parameterDescription>
+		</parameter>
+		<parameter name="lastOrdered" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Last Ordered]]></parameterDescription>
+		</parameter>
+		<parameter name="lastSO" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Last SO #]]></parameterDescription>
+		</parameter>
+		<parameter name="lastOrderAmount" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Last Order Amount]]></parameterDescription>
+		</parameter>
+		<parameter name="daysDormant" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Days Dormant]]></parameterDescription>
+		</parameter>
+		<parameter name="totalOrders" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+		</parameter>
+		<parameter name="totalSpent" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Hide/Show"/>
+			<parameterDescription><![CDATA[Total Spent]]></parameterDescription>
+		</parameter>
+		<parameter name="FieldTitle:Customercf1" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Custom Fields"/>
+			<property name="Group" value="Customer Custom Field 1"/>
+			<property name="Sort" value="1"/>
+			<property name="Alias" value="Field Title"/>
+			<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+		</parameter>
+		<parameter name="CustomField:Customer1" class="java.lang.String" isForPrompting="false">
+			<property name="Tab" value="Custom Fields"/>
+			<property name="Group" value="Customer Custom Field 1"/>
+			<property name="Sort" value="2"/>
+			<property name="Table" value="Customer"/>
+			<property name="Type" value="Custom Field"/>
+			<property name="Tooltip" value="Select a Customer custom field to display"/>
+			<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+		</parameter>
+		<parameter name="ShowCfCustomer1" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tab" value="Custom Fields"/>
+			<property name="Group" value="Customer Custom Field 1"/>
+			<property name="Sort" value="3"/>
+			<parameterDescription><![CDATA[Display field]]></parameterDescription>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cfFilterData" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filter by Customer Custom Field"/>
+			<property name="Sort" value="2"/>
+			<property name="Tooltip" value="Type a value to filter by. Use % for wildcard searches. If the custom field is a checkbox, use true or false."/>
+			<parameterDescription><![CDATA[Enter filter data]]></parameterDescription>
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cfFilter" class="java.lang.String" isForPrompting="false">
+			<property name="Type" value="Custom Field"/>
+			<property name="Table" value="Customer"/>
+			<property name="Group" value="Filter by Customer Custom Field"/>
+			<property name="Sort" value="1"/>
+			<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+		</parameter>
+		<parameter name="cbLastOrdered" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Other Settings"/>
+			<property name="Sort" value="14"/>
+			<parameterDescription><![CDATA[so.datecompleted, Date Completed,so.datecreated,Date Created,so.datefirstship,Date Scheduled,so.dateissued,Date Issued]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.dateissued"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="MarkertingData" class="java.lang.String" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[SELECT customer.name AS Customer,
+       customer.number AS ACCOUNTNUMBER,
+       maxso.lastorderdate AS "Last Order Date",
+       DATEDIFF(CURRENT_DATE, maxso.lastorderdate) AS "Days Dormant",
+       so.num AS "Last SO#",
+       so.totalprice AS "Last Order Amount",
+       ordercount.total AS "Total Orders",
+      postCatch.totalpaid AS "Total Spent",
+	     company.name AS company,
+	     sysuser.username AS "Sales Rep",
+	     stateconst.code AS "State",
+       $P!{CustomField:Customer1} AS customercf1,
+customer.lastchangeduser,
+accountgroup.name as accountgroup,
+cast(CustomFieldByName(customer.CUSTOMFIELDS, 'Dormant Follow Up Date') as date) AS dmt,
+coalesce((select contact.contactname from contact
+where contact.accountid=customer.accountid
+and contact.typeid=50
+limit 1),'') as CName,
+coalesce((select contact.datus from contact
+where contact.accountid=customer.accountid
+and contact.typeid=60
+limit 1),'') as CEmail,
+coalesce((select contact.datus from contact
+where contact.accountid=customer.accountid
+and contact.typeid=50
+limit 1),'') as CPhone,
+coalesce((
+SELECT SUM(amount) FROM postransaction p1
+INNER JOIN so ON p1.soid=so.id
+WHERE so.customerid=customer.id),0) as TotRecvd,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Default LG') as lg1,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') as md1,
+coalesce((
+select lastchangeduser from customer_aud
+
+where id=customer.id and CAST(CustomFieldByName(customer_aud.CUSTOMFIELDS, 'Dormant Follow Up Date') AS DATE) is not null
+order by rev ASC limit 1),'') ludmt,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Magento Email') as MagEmail,
+customer.datecreated,
+
+coalesce((SELECT COUNT(SO.id) FROM so WHERE
+so.datecreated BETWEEN (CURDATE() - INTERVAL 1 MONTH ) AND CURDATE()
+and so.customerid=customer.id
+),0) as last30day,
+
+coalesce((SELECT COUNT(SO.id) FROM so WHERE
+so.datecreated BETWEEN (CURDATE() - INTERVAL 2 MONTH ) AND CURDATE()
+and so.customerid=customer.id
+),0) as last60day,
+
+coalesce((SELECT COUNT(SO.id) FROM so WHERE
+so.datecreated BETWEEN (CURDATE() - INTERVAL 3 MONTH ) AND CURDATE()
+and so.customerid=customer.id
+),0) as last90day,
+coalesce((SELECT memo
+FROM memo
+WHERE tableid = 2142022944
+  AND recordid = customer.id
+ORDER BY id desc limit 1),'') as lastmemo,
+coalesce(cTret.TOTALPRICE,0) as cTotRet
+
+FROM customer
+     LEFT OUTER JOIN accountgrouprelation ON customer.accountid = accountgrouprelation.accountid
+     LEFT OUTER JOIN accountgroup ON accountgrouprelation.groupid = accountgroup.id
+     LEFT OUTER JOIN sysuser ON customer.defaultsalesmanid = sysuser.id
+     LEFT OUTER JOIN address ON customer.accountid = address.accountid AND address.typeid = 50 AND address.defaultflag = true
+     LEFT OUTER JOIN stateconst On address.stateid = stateconst.id
+     INNER JOIN company ON company.id = 1
+     inner JOIN (SELECT MAX($P!{cbLastOrdered}) AS lastorderdate, so.customerid, so.id
+                 FROM so
+                 WHERE so.statusid IN (10,20,25,60,70)
+                 GROUP BY so.customerid) AS maxso ON customer.id = maxso.customerid
+  inner JOIN so ON so.customerid = customer.id
+    inner JOIN (SELECT COUNT(so.id) AS total,  so.customerid
+                 FROM so
+                 WHERE so.statusid IN (10,20,25,60,70)
+                 GROUP BY so.customerid) AS ordercount ON customer.id = ordercount.customerid
+
+left join (
+SELECT  customer.id AS cid,
+    CUSTOMER.NAME AS CUSTOMERNAME,  SUM(SOITEM.TOTALPRICE + (SOITEM.ADJUSTAMOUNT / (CASE WHEN SOITEM.QTYTOFULFILL = 0
+                                                            THEN 1
+                                                            ELSE SOITEM.QTYTOFULFILL END))) AS TOTALPRICE
+
+FROM SOItem
+    INNER JOIN SO ON SO.ID = SOItem.SOID
+    INNER JOIN Customer ON Customer.ID = SO.customerID
+WHERE SOItem.typeID = 20
+GROUP BY customer.id,CUSTOMER.NAME
+) as cTRet on cTret.cid=customer.id
+
+LEFT JOIN(
+      		SELECT so.customerid, SUM(amount) AS totalPaid
+      		FROM posTransaction
+      		INNER JOIN so ON so.id=posTransaction.soid
+      		GROUP BY so.customerid
+   		) postCatch ON postCatch.customerid = customer.id
+
+WHERE (DATEDIFF(CURRENT_DATE, maxso.lastorderdate) BETWEEN $P{DormantPeriod} AND $P{LastOrderLimit(Days)}
+  AND COALESCE(accountgroup.id,0) IN ($P!{customerGroupID})
+  AND customer.activeFlag IN (1, $P!{ckShowInactiveCustomers})
+  AND COALESCE(sysuser.username,'') LIKE $P{salesPerson}
+  AND COALESCE(stateconst.name,'') LIKE $P!{cbState/Province}
+  AND COALESCE(UPPER($P!{cfFilter}),'') LIKE UPPER($P{cfFilterData})
+  AND customer.id LIKE $P{customerID}
+  AND $P!{cbLastOrdered} = maxso.lastorderdate
+  AND (ordercount.total > $P{WithTotalOrdersGreaterThan} OR COALESCE(ordercount.total, -1) = -1)
+  AND (postCatch.totalpaid > $P{WithTotalSpentGreaterThan} OR COALESCE(postCatch.totalpaid, -1) = -1)
+and coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like concat('%',$P{MarkertingData},'%'))
+
+GROUP BY customer.id
+
+ORDER BY $P!{cbSortBy}]]>
+		</queryString>
+		<field name="Customer" class="java.lang.String"/>
+		<field name="Last Order Date" class="java.sql.Timestamp"/>
+		<field name="Days Dormant" class="java.lang.Integer"/>
+		<field name="Last SO#" class="java.lang.String"/>
+		<field name="Last Order Amount" class="java.lang.Double"/>
+		<field name="Total Orders" class="java.lang.Integer"/>
+		<field name="Total Spent" class="java.lang.Double"/>
+		<field name="company" class="java.lang.String"/>
+		<field name="Sales Rep" class="java.lang.String"/>
+		<field name="State" class="java.lang.String"/>
+		<field name="customercf1" class="java.lang.String"/>
+		<field name="lastchangeduser" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="accountgroup" class="java.lang.String"/>
+		<field name="dmt" class="java.sql.Date"/>
+		<field name="CName" class="java.lang.String"/>
+		<field name="CEmail" class="java.lang.String"/>
+		<field name="CPhone" class="java.lang.String"/>
+		<field name="lg1" class="java.lang.String"/>
+		<field name="ludmt" class="java.lang.String"/>
+		<field name="MagEmail" class="java.lang.String"/>
+		<field name="datecreated" class="java.util.Date"/>
+		<field name="last60day" class="java.lang.Double"/>
+		<field name="last30day" class="java.lang.Double"/>
+		<field name="last90day" class="java.lang.Double"/>
+		<field name="lastmemo" class="java.lang.String"/>
+		<field name="md1" class="java.lang.String"/>
+		<field name="cTotRet" class="java.lang.Double"/>
+		<field name="ACCOUNTNUMBER" class="java.lang.String"/>
+		<variable name="isUseDayMonth" class="java.lang.Boolean" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_USE_DAY_MONTH_YEAR").equalsIgnoreCase("true")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Prints a list of customers that have not purchased within the selected dormant period."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowInactiveCustomers" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<parameterDescription><![CDATA[0,1]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DormantPeriod" class="java.lang.Integer" isForPrompting="false">
+		<property name="Group" value="Enter dormant period in days (no decimals)"/>
+		<property name="Sort" value="1"/>
+		<property name="Tooltip" value="The report will look back the number of days entered from the current date."/>
+		<parameterDescription><![CDATA["Enter Dormant Period in Days"]]></parameterDescription>
+		<defaultValueExpression><![CDATA[90]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LastOrderLimit(Days)" class="java.lang.Integer" isForPrompting="false">
+		<property name="Group" value="Enter dormant period in days (no decimals)"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[365]]></defaultValueExpression>
+	</parameter>
+	<parameter name="WithTotalOrdersGreaterThan" class="java.lang.Integer" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="WithTotalSpentGreaterThan" class="java.lang.Integer" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[customer.name $P!{cbOrder},Customer,sysuser.username $P!{cbOrder},Sales Rep,stateconst.code $P!{cbOrder},State/Province,maxso.lastorderdate $P!{cbOrder},Last Ordered,so.num $P!{cbOrder},Last SO#,so.totalprice $P!{cbOrder},Last Order Amount,3 $P!{cbOrder},Days Dormant,ordercount.total $P!{cbOrder},Total Orders,ordercount.totalspent $P!{cbOrder},Total Spent]]></parameterDescription>
+		<defaultValueExpression><![CDATA["3"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbState/Province" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLastOrdered" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Enter dormant period in days (no decimals)"/>
+		<property name="Sort" value="4"/>
+		<property name="Tooltip" value="Choose the sales order date field used to determine the last order"/>
+		<parameterDescription><![CDATA[so.datecompleted, Date Completed,so.datecreated,Date Created,so.datefirstship,Date Scheduled,so.dateissued,Date Issued]]></parameterDescription>
+		<defaultValueExpression><![CDATA["so.dateissued"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customer" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Customer]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="salesRep" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Sales Rep]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stateprovince" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[State / Province]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lastOrdered" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Last Ordered]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lastSO" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Last SO #]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lastOrderAmount" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Last Order Amount]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="daysDormant" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Days Dormant]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalOrders" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Total Orders]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalSpent" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<parameterDescription><![CDATA[Total Spent]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FieldTitle:Customercf1" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Customer Custom Field 1"/>
+		<property name="Sort" value="1"/>
+		<property name="Alias" value="Field Title"/>
+		<parameterDescription><![CDATA[Field Title]]></parameterDescription>
+	</parameter>
+	<parameter name="CustomField:Customer1" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Customer Custom Field 1"/>
+		<property name="Sort" value="2"/>
+		<property name="Table" value="Customer"/>
+		<property name="Type" value="Custom Field"/>
+		<property name="Tooltip" value="Select a Customer custom field to display"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="ShowCfCustomer1" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Custom Fields"/>
+		<property name="Group" value="Customer Custom Field 1"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Display field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cfFilterData" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filter by Customer Custom Field"/>
+		<property name="Sort" value="4"/>
+		<property name="Tooltip" value="Type a value to filter by. Use % for wildcard searches. If the custom field is a checkbox, use true or false."/>
+		<parameterDescription><![CDATA[Enter filter data]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cfFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Type" value="Custom Field"/>
+		<property name="Table" value="Customer"/>
+		<property name="Group" value="Filter by Customer Custom Field"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="MarkertingData" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT company.name AS company FROM company WHERE id = 1]]>
+	</queryString>
+	<field name="company" class="java.lang.String"/>
+	<variable name="isUseDayMonth" class="java.lang.Boolean" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_USE_DAY_MONTH_YEAR").equalsIgnoreCase("true")]]></variableExpression>
+	</variable>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+			<textField>
+				<reportElement x="0" y="40" width="445" height="17" uuid="88e0d4b6-483a-4fed-b22f-01bd158cd46c"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Showing customers with no orders in the last"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="445" y="40" width="34" height="17" uuid="7596b2f2-df8a-482f-a088-3775354cf7ee"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Open Sans" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DormantPeriod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="40" width="1951" height="17" uuid="36fb0bb4-e42f-47bb-965d-b39224eb6cfb"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["days"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-15" x="0" y="0" width="2430" height="18" uuid="76287755-33ad-4124-b9e6-a5479b140d1c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-7" mode="Transparent" x="0" y="18" width="2430" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="d8abd792-6c38-4c48-8c54-0bfc1b12fd3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Dormant Customers" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-14" x="0" y="74" width="2430" height="12" uuid="9392cce8-96f6-431f-b398-81a2cb59d7f3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="57" width="2430" height="17" uuid="58525f4c-fcc1-4fb5-8f78-d0accd10ad6c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["and whose last order was not beyond " + $P{LastOrderLimit(Days)} + " days ago"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="0" y="0" width="2430" height="50" uuid="54940819-da70-4945-a579-3bf6296bb522"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="5d667fdd-0a7a-4656-90d5-5375172122c0">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="MarkertingData">
+							<datasetParameterExpression><![CDATA[$P{MarkertingData}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="208" uuid="f0d88b6a-a26a-4b93-82fe-7739872f266d">
+						<printWhenExpression><![CDATA[$P{customer}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="208" height="30" forecolor="#000000" backcolor="#999999" uuid="6aa4cfe2-d0d4-41a0-8eec-769b9dce6984"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Customer]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="208" height="13" forecolor="#000099" uuid="b253a418-107d-45bf-87e5-b746387bf486"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Customer}]]></textFieldExpression>
+								<anchorNameExpression><![CDATA["CustomerName"]]></anchorNameExpression>
+								<hyperlinkReferenceExpression><![CDATA[$F{Customer}]]></hyperlinkReferenceExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="20b7efa1-24ef-4cf7-8cb4-975e348b5fa9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="100" height="30" forecolor="#000000" backcolor="#999999" uuid="5adc621d-f074-4fee-a36d-b4b2af80d3ef"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Account Number]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="13" forecolor="#000000" uuid="1e3d7dc2-1e97-400d-a1cd-3c4a60de68f4"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ACCOUNTNUMBER}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="20b7efa1-24ef-4cf7-8cb4-975e348b5fa9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="100" height="30" forecolor="#000000" backcolor="#999999" uuid="5adc621d-f074-4fee-a36d-b4b2af80d3ef"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Contact Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="13" forecolor="#000000" uuid="1e3d7dc2-1e97-400d-a1cd-3c4a60de68f4"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="160" uuid="93fbb3cc-6416-4919-8000-ea7936222d29">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="160" height="30" forecolor="#000000" backcolor="#999999" uuid="23987e40-411e-47ba-90ee-4aff25fa01b5"/>
+								<box leftPadding="3" rightPadding="3">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Email]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="13" forecolor="#000000" uuid="33f2400e-bc62-44b8-afba-4fde98f1ce01"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CEmail}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="e1318a29-925b-49e8-b249-639e2e0c8b10">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="100" height="30" forecolor="#000000" backcolor="#999999" uuid="9915cc5f-fff2-4cdb-9623-4fbcd37313a3"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Phone]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="13" uuid="43ab9840-fd3d-4b36-9a98-456199778dd9"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CPhone}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="58199d0a-ed46-492c-b2ea-4b1b31033899">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="9afcc385-2470-42f2-bd0d-209a036d99e0"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Customer Group]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="ac2d8b09-8139-47b2-96bb-bcde71675c73"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{accountgroup}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9f7a65e7-a92e-4b98-9adb-447904bb7df9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="63e4693c-8997-42b0-984c-5b8c56c88298"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Last Ordered]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="1c62c034-2854-4790-ae2f-6774d05d963d"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Last Order Date}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="81" uuid="de00cbc9-55fd-4c66-98f6-e1efdc3d10fb">
+						<printWhenExpression><![CDATA[$P{lastSO}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="81" height="30" forecolor="#000000" backcolor="#999999" uuid="079d7f54-67b0-4d60-92d2-0e44ecf74090"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Last SO#]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="81" height="13" forecolor="#000099" uuid="e77474b4-71bc-4218-83cc-bd00a09bc3d3"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Last SO#}]]></textFieldExpression>
+								<anchorNameExpression><![CDATA["SONum"]]></anchorNameExpression>
+								<hyperlinkReferenceExpression><![CDATA[$F{Last SO#}]]></hyperlinkReferenceExpression>
+								<hyperlinkTooltipExpression><![CDATA[$F{Last SO#}]]></hyperlinkTooltipExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="e4bd491a-545f-4791-9651-e118a05d5bfc">
+						<printWhenExpression><![CDATA[$P{lastOrderAmount}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="66" height="30" uuid="67267f99-c6df-4fd3-8d80-a2bd15779201"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Last Order
+Amount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="66" height="13" uuid="9b6ec565-c140-47e5-92c7-e8c6bf2a271b"/>
+								<box leftPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Last Order Amount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="59" uuid="79938600-f9d8-45a9-ad6b-e1de74640791">
+						<printWhenExpression><![CDATA[$P{daysDormant}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="59" height="30" forecolor="#000000" backcolor="#999999" uuid="90b96e65-fc7c-4f5b-a62f-41065b3a61bf"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Days
+Dormant]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="59" height="13" uuid="ec257173-911c-4cd1-a599-8a80c2137c4a"/>
+								<box leftPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Days Dormant}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="412cf076-a284-4f15-92a9-f4a0d61ed1ec">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="326740c5-62a2-48bb-846b-f9e0692f804f"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[SOs Created Last 30 Days]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="d6994df7-8585-45c1-b573-e2e8e7f97081"/>
+								<box leftPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{last30day}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="647f794f-86e3-4716-8c3b-8e3454564327">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="611029bc-51b6-4263-a888-0efc94073e20"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[SOs Created Last 60 Days]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="d2336796-e66e-4f21-a968-d48ca7938cdc"/>
+								<box leftPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{last60day}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="58bf8ab6-e7aa-4604-a70f-ba0815402a1d">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="d1f5d49e-f6c5-4973-ba22-cb4da08c2624"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[SOs Created Last 90 Days]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="cb4739e4-cd7e-42f1-b25d-c602b7d90b26"/>
+								<box leftPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{last90day}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="59" uuid="c3109ad8-2ff4-474a-9079-4149d7f7aa70">
+						<printWhenExpression><![CDATA[$P{totalOrders}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="59" height="30" forecolor="#000000" backcolor="#999999" uuid="d813fe9a-18d2-4710-a884-d4c8e026a31e"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Total
+Orders]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="59" height="13" uuid="3c6f9d08-f68e-49b3-b06c-1c40f65674ff"/>
+								<box leftPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Total Orders}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="993d1e1d-1c50-4c9f-8a6d-2a48fa8676df">
+						<printWhenExpression><![CDATA[$P{totalSpent}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="66" height="30" uuid="acf3cf67-67c1-4021-ad6d-7c7a2c8faefd"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total
+Spent]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="66" height="13" uuid="f0637284-2eed-422f-933f-f0a2bc55a249"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Total Spent}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="7c0fa475-00ca-4d1f-8d79-8512474d3840">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="967abe10-79c5-4d4f-a94b-aadc0834798a"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total Credit]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="13" uuid="b89efbe0-546a-42fb-9504-33a068909b96"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cTotRet}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c07e0a2a-32b3-4a53-8aeb-2c40af9c4298">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="ee958d4d-e9da-4136-ac92-57518becf211"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Default LG"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="9cc5907c-5aac-411f-b692-fd8b2180b317"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lg1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="b0261e77-cf03-4a08-b9ec-d41ed11378d8">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="b42b7144-6e71-4a10-bd87-6c15b3e7714a"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Dormant Follow Up date"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="2bd1d3e8-58e0-4f96-aa7d-828d81700efb"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="2447afd4-98cf-4373-aeec-7d4d5bd4101b">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="e283222c-47f6-4ba8-9ab3-b5d76b817ed9"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Dormant Follow Up By"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="c8dcac15-a2f6-4524-86d8-41e81bad7eb7"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ludmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="e5dd5525-fc4f-4d83-8396-85c1b3aa5ec6">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="120" height="30" forecolor="#000000" backcolor="#999999" uuid="57a1b7bb-c43c-493d-a5e1-cffe13521664"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Magento Email"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="13" uuid="fb352fe5-4ec7-4822-b4e8-9323b2a10491"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{MagEmail}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="a670f6f5-6387-4abf-a0f1-c89041d42b21">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="4fff037e-8545-4378-a833-fee13741adbe"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Creation Date"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="8a071a29-d95d-4c94-9cee-40e185f7e1eb"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{datecreated}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="ac79d5f7-2ba2-4577-a52c-a6b4df64639c">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="03c793ea-8131-4c31-95da-a392e6cb9f22"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Created By"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="84dc2517-5fe5-4cfe-a10b-824a482446e9"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lastchangeduser}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="5fe9031a-e9bf-4ea9-850e-6aa7fee63054">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="120" height="30" forecolor="#000000" backcolor="#999999" uuid="4063e40b-2b1d-4010-a5de-03d8cab5056c"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Marketing Data"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="13" uuid="b881f308-d1cb-4f4d-ab6e-b167db460951"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{md1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="200" uuid="31b719be-1da2-4d1c-a84c-a19f8e7db84d">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="200" height="30" forecolor="#000000" backcolor="#999999" uuid="25f4c0c9-f382-4447-845b-15101c592534"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Memo"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="200" height="13" uuid="d7b26de2-c116-40c5-bc14-bd216d87b0a2"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lastmemo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" mode="Transparent" x="548" y="0" width="1860" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="397cc9fa-84fb-40d2-b66d-c933290dfeae">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-24" mode="Transparent" x="2408" y="0" width="22" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="17e9a075-25df-4c6e-b1c4-469822989ec3">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-22" mode="Transparent" x="0" y="0" width="208" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="22b82dc8-799c-4675-b3bb-92beb6d44ae4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
