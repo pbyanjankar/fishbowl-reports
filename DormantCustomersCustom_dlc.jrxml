@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DormantCustomersCustomDLC" pageWidth="2490" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="2430" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="c93956d1-d9cc-4a2b-b65a-909b29be7849">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DormantCustomersCustomDLC" pageWidth="2761" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="2701" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="c93956d1-d9cc-4a2b-b65a-909b29be7849">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="3298"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Fri Dec 16 15:32:56 MST 2022"/>
 	<subDataset name="Table Dataset 1" uuid="22adddab-b59d-462d-b61f-a97ab26cfd39">
@@ -492,21 +492,21 @@ ORDER BY $P!{cbSortBy}]]>
 				<textFieldExpression><![CDATA[$P{DormantPeriod}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="479" y="40" width="1951" height="17" uuid="36fb0bb4-e42f-47bb-965d-b39224eb6cfb"/>
+				<reportElement x="479" y="40" width="2222" height="17" uuid="36fb0bb4-e42f-47bb-965d-b39224eb6cfb"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Open Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA["days"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-15" x="0" y="0" width="2430" height="18" uuid="76287755-33ad-4124-b9e6-a5479b140d1c"/>
+				<reportElement key="textField-15" x="0" y="0" width="2700" height="18" uuid="76287755-33ad-4124-b9e6-a5479b140d1c"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans" size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="staticText-7" mode="Transparent" x="0" y="18" width="2430" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="d8abd792-6c38-4c48-8c54-0bfc1b12fd3c"/>
+				<reportElement key="staticText-7" mode="Transparent" x="0" y="18" width="2701" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="d8abd792-6c38-4c48-8c54-0bfc1b12fd3c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -514,14 +514,14 @@ ORDER BY $P!{cbSortBy}]]>
 				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Dormant Customers" : $P{ReportTitle}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-14" x="0" y="74" width="2430" height="12" uuid="9392cce8-96f6-431f-b398-81a2cb59d7f3"/>
+				<reportElement key="textField-14" x="0" y="74" width="2701" height="12" uuid="9392cce8-96f6-431f-b398-81a2cb59d7f3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="57" width="2430" height="17" uuid="58525f4c-fcc1-4fb5-8f78-d0accd10ad6c"/>
+				<reportElement x="0" y="57" width="2701" height="17" uuid="58525f4c-fcc1-4fb5-8f78-d0accd10ad6c"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Open Sans"/>
 				</textElement>
@@ -532,7 +532,7 @@ ORDER BY $P!{cbSortBy}]]>
 	<detail>
 		<band height="50" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table" x="0" y="0" width="2430" height="50" uuid="54940819-da70-4945-a579-3bf6296bb522"/>
+				<reportElement key="table" x="0" y="0" width="2701" height="50" uuid="54940819-da70-4945-a579-3bf6296bb522"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Table Dataset 1" uuid="5d667fdd-0a7a-4656-90d5-5375172122c0">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
