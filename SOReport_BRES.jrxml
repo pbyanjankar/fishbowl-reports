@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="422"/>
+	<property name="ireport.x" value="30"/>
+	<property name="ireport.y" value="534"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -35,7 +35,8 @@
   CustomFieldByName(so.customfields, "Odometer") AS cfOdometer,
   CustomFieldByName(so.customfields, "Unit Number") AS cfUnitNumber,
   CustomFieldByName(so.customfields, "Customer Concern") AS CUSTOMERCONCERN,
-  CustomFieldByName(so.customfields, "Repair Summary") AS REPAIRSUMMARY
+  CustomFieldByName(so.customfields, "Repair Summary") AS REPAIRSUMMARY,
+  CustomFieldByName(so.customfields, "Body Serial Number") AS BODYSERIALNUMBER
 
 FROM so
     INNER JOIN company ON company.id = 1
@@ -64,6 +65,7 @@ WHERE so.id = $P{soId}]]>
 		<field name="cfUnitNumber" class="java.lang.String"/>
 		<field name="CUSTOMERCONCERN" class="java.lang.String"/>
 		<field name="REPAIRSUMMARY" class="java.lang.String"/>
+		<field name="BODYSERIALNUMBER" class="java.lang.String"/>
 		<variable name="OrderNumber" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[$P{BarcodesHaveDI} == null ?
     $F{NUM} :
@@ -734,7 +736,8 @@ CONCAT(IF(true,(COALESCE(companyAddress.address,"")),""), "\n",
         IF(true,(COALESCE(companyAddress.zip,"")),""), "\n",
         IF(true,(CONCAT("Phone: ", COALESCE(companyPhone.datus,""))),"")) AS companyInfo,
   CustomFieldByName(so.customfields, "Customer Concern") AS CUSTOMERCONCERN,
-  CustomFieldByName(so.customfields, "Repair Summary") AS REPAIRSUMMARY
+  CustomFieldByName(so.customfields, "Repair Summary") AS REPAIRSUMMARY,
+  CustomFieldByName(so.customfields, "Body Serial Number") AS BODYSERIALNUMBER
 
 FROM so
     INNER JOIN customer ON so.customerid = customer.id
@@ -824,6 +827,7 @@ GROUP BY so.note, company.name, so.locationgroupid, so.customercontact, so.custo
 	<field name="paymentlink" class="java.lang.String"/>
 	<field name="CUSTOMERCONCERN" class="java.lang.String"/>
 	<field name="REPAIRSUMMARY" class="java.lang.String"/>
+	<field name="BODYSERIALNUMBER" class="java.lang.String"/>
 	<variable name="CustomerContact" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[$F{CUSTOMERCONTACT} != null && !$F{CUSTOMERCONTACT}.equals("") ?
     "Contact: " + $F{CUSTOMERCONTACT} :
@@ -1469,6 +1473,54 @@ $F{TOTALPRICE}]]></variableExpression>
 						</jr:column>
 					</jr:table>
 				</componentElement>
+				<componentElement>
+					<reportElement key="SOInfo" positionType="Float" x="0" y="37" width="552" height="0" uuid="b1462fd3-ecf4-4d3d-9b09-3c36cdb417e3"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="SOInfo" uuid="a149cbd0-1c18-4bed-af8f-a4b787bf5542">
+							<datasetParameter name="soId">
+								<datasetParameterExpression><![CDATA[$F{RECORDID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="552" uuid="4319dea0-3fdf-42c9-9af2-7e5269751b51">
+							<printWhenExpression><![CDATA[$F{BODYSERIALNUMBER} != null && $F{BODYSERIALNUMBER}.length()>0]]></printWhenExpression>
+							<jr:columnHeader height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="552" height="14" backcolor="#EAEAEA" uuid="016e6946-aed2-4e10-afba-880b260b46c6"/>
+									<box leftPadding="3"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Body Serial Number]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="552" height="14" uuid="75695f75-ded8-4cf7-b668-67e1e870537e"/>
+									<box leftPadding="3"/>
+									<textElement>
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{BODYSERIALNUMBER}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
 			</band>
 		</groupHeader>
 	</group>
@@ -1714,7 +1766,7 @@ $F{companyInfo}]]></textFieldExpression>
 		<band height="45" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{isUnitedStates}]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="SOItemsTogetherUS" x="0" y="0" width="552" height="45" uuid="0ad05d24-7be7-4c1d-baed-8c27b3f0a2eb"/>
+				<reportElement key="SOItemsTogetherUS" x="0" y="3" width="552" height="42" uuid="0ad05d24-7be7-4c1d-baed-8c27b3f0a2eb"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="ItemInfo" uuid="c57c3718-bee4-4485-8405-9fdc5338c251">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
@@ -2225,7 +2277,7 @@ $F{CURRENCYCODE} + "\nTotal Price"]]></textFieldExpression>
 		<band height="45">
 			<printWhenExpression><![CDATA[$V{isAustralia}]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="SOItemsTogetherAU" x="0" y="0" width="552" height="45" uuid="575ce950-0b77-4850-bf30-d32c80f195b1"/>
+				<reportElement key="SOItemsTogetherAU" x="0" y="3" width="552" height="42" uuid="575ce950-0b77-4850-bf30-d32c80f195b1"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="ItemInfo" uuid="963f62dd-31a9-414c-b5fb-08c27c05a9e7">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
@@ -2851,7 +2903,7 @@ $F{CURRENCYCODE} + "\nTotal Price"]]></textFieldExpression>
 		<band height="45">
 			<printWhenExpression><![CDATA[$V{isCanada}]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="SOItemsTogetherCA" x="0" y="0" width="552" height="45" uuid="e0e2189b-9db6-4e93-88b9-470c7bb37188"/>
+				<reportElement key="SOItemsTogetherCA" x="0" y="3" width="552" height="42" uuid="e0e2189b-9db6-4e93-88b9-470c7bb37188"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="ItemInfo" uuid="edda1ed6-e992-4668-98c3-53b47ee5495f">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
