@@ -138,6 +138,11 @@
 customer.lastchangeduser,
 accountgroup.name AS accountgroup,
 CAST(CustomFieldByName(customer.CUSTOMFIELDS, 'Dormant Follow Up Date') AS DATE) AS dmt,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Customer Type') AS CUSTOMERTYPE,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Dormant Follow Up Feedback') AS DORMANTFOLLOWUPFEEDBACK,
+CustomFieldByName(customer.CUSTOMFIELDS, 'Next Dormant Follow Up Date') AS NEXTDORMANTFOLLOWUPDATE,
+
+
 COALESCE((SELECT contact.contactname FROM contact
 WHERE contact.accountid=customer.accountid
 AND contact.typeid=50
@@ -227,6 +232,9 @@ ORDER BY $P!{cbSortBy}]]>
 		<field name="md1" class="java.lang.String"/>
 		<field name="cTotRet" class="java.lang.Double"/>
 		<field name="ACCOUNTNUMBER" class="java.lang.String"/>
+		<field name="CUSTOMERTYPE" class="java.lang.String"/>
+		<field name="DORMANTFOLLOWUPFEEDBACK" class="java.lang.String"/>
+		<field name="NEXTDORMANTFOLLOWUPDATE" class="java.sql.Date"/>
 		<variable name="isUseDayMonth" class="java.lang.Boolean" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_USE_DAY_MONTH_YEAR").equalsIgnoreCase("true")]]></variableExpression>
 		</variable>
@@ -613,6 +621,36 @@ ORDER BY $P!{cbSortBy}]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
+					<jr:column width="90" uuid="58199d0a-ed46-492c-b2ea-4b1b31033899">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="9afcc385-2470-42f2-bd0d-209a036d99e0"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Customer Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="ac2d8b09-8139-47b2-96bb-bcde71675c73"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CUSTOMERTYPE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 					<jr:column width="90" uuid="c07e0a2a-32b3-4a53-8aeb-2c40af9c4298">
 						<jr:columnHeader height="30" rowSpan="1">
 							<textField>
@@ -691,6 +729,60 @@ ORDER BY $P!{cbSortBy}]]>
 									<font fontName="Open Sans" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{ludmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="2447afd4-98cf-4373-aeec-7d4d5bd4101b">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="e283222c-47f6-4ba8-9ab3-b5d76b817ed9"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Dormant Follow Up Feedback"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="c8dcac15-a2f6-4524-86d8-41e81bad7eb7"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DORMANTFOLLOWUPFEEDBACK}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="b0261e77-cf03-4a08-b9ec-d41ed11378d8">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="b42b7144-6e71-4a10-bd87-6c15b3e7714a"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Next Dormant Follow Up date"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="2bd1d3e8-58e0-4f96-aa7d-828d81700efb"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NEXTDORMANTFOLLOWUPDATE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
