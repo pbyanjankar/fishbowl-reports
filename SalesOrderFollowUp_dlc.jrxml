@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderFollowUpDLC" pageWidth="3380" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="3320" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderFollowUpDLC" pageWidth="3641" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="3581" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="826"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Mon Nov 29 11:28:37 EST 2021\ncallouts.1.text=Don&apos;t Show Details\ncallouts.3.pins=726,219;\ncallouts.3.bounds=504,341,150,75\ncallouts.2.text=Show Details\ncallouts.2.bounds=460,274,150,75\ncallouts.1.pins=723,103;\ncallouts.1.bounds=372,292,150,75\ncallouts.3.text=Don&apos;t Show Details and Group By Class\ncallouts.2.pins=725,162;"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -183,6 +183,10 @@ cast(CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up')  as date) AS so2,
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up #3') as date) AS so3,
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up') as date) AS FulfilledFollowUp,
 CustomFieldByName(so.CUSTOMFIELDS, 'Order Payment Warehouse') AS OrderPaymentWarehouse,
+CustomFieldByName(so.CUSTOMFIELDS, 'Next Estimate Follow Up Date') AS NextEstimateFollowUpDate,
+CustomFieldByName(so.CUSTOMFIELDS, 'Next SO Follow Up Date') AS NextSOFollowUpDate,
+CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Aged Out') = 'true' THEN 'Yes' ELSE 'No' END AS AgedOut,
+
 so.DATECREATED,so.totalprice,
 COALESCE((select sum(amount) from postransaction
 where soid=so.id),0) as pdmt,
@@ -340,6 +344,13 @@ customer.name,so.num]]>
 		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
 		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
 		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
+		<field name="NextEstimateFollowUpDate" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="NextSOFollowUpDate" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="AgedOut" class="java.lang.String"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -837,6 +848,12 @@ cast(CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up')  as date) AS so2,
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up #3') as date) AS so3,
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up') as date) AS FulfilledFollowUp,
 CustomFieldByName(so.CUSTOMFIELDS, 'Order Payment Warehouse') AS OrderPaymentWarehouse,
+
+CustomFieldByName(so.CUSTOMFIELDS, 'Next Estimate Follow Up Date') AS NextEstimateFollowUpDate,
+CustomFieldByName(so.CUSTOMFIELDS, 'Next SO Follow Up Date') AS NextSOFollowUpDate,
+CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Aged Out') = 'true' THEN 'Yes' ELSE 'No' END AS AgedOut,
+
+
 so.DATECREATED,so.totalprice,
 COALESCE((select sum(amount) from postransaction
 where soid=so.id),0) as pdmt,
@@ -942,7 +959,7 @@ null AS USER,l1.name AS locationgroup,NULL,NULL,NULL,xo.dateissued,NULL,null,NUL
 
 
 CustomFieldByName(xo.CUSTOMFIELDS, 'In-Stock Notification') AS isn,
-null,null,null,null,null,null,null,NULL,xo.datecreated,NULL,NULL,
+null,null,null,null,null,null,null,NULL, NULL, NULL, NULL,xo.datecreated,NULL,NULL,
 
 COALESCE((SELECT username FROM xo_aud
 INNER JOIN sysuser ON sysuser.id=xo_aud.userid
@@ -1045,6 +1062,13 @@ rtype,1,2]]>
 		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
 		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
 		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
+		<field name="NextEstimateFollowUpDate" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="NextSOFollowUpDate" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="AgedOut" class="java.lang.String"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -1214,7 +1238,7 @@ WHERE id = 1]]>
 	<pageHeader>
 		<band height="64" splitType="Prevent">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="0" y="40" width="3320" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="3580" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
 					<printWhenExpression><![CDATA[true]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
@@ -1233,7 +1257,7 @@ WHERE id = 1]]>
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-129600000)]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="0" width="3320" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
+				<reportElement key="" x="0" y="0" width="3580" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans" size="13" isBold="true"/>
@@ -1241,7 +1265,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="54" width="3320" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
+				<reportElement key="" x="0" y="54" width="3580" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement>
 					<font fontName="Open Sans"/>
@@ -1249,7 +1273,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" mode="Transparent" x="0" y="18" width="3320" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="3580" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -1262,7 +1286,7 @@ WHERE id = 1]]>
 		<band height="56">
 			<printWhenExpression><![CDATA[$P{ckIncludeTransferOrders}.contains("0")]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="3320" height="56" uuid="3a69cb21-719d-4127-9ee5-3f37c4fd5bf2"/>
+				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="3580" height="56" uuid="3a69cb21-719d-4127-9ee5-3f37c4fd5bf2"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="SOInfo" uuid="e929490b-ee12-4eb0-a468-0350f3ad6b70">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
@@ -1325,7 +1349,7 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="3309" uuid="e94bacac-c0d6-4000-b813-e20a154a77c4">
+					<jr:columnGroup width="3579" uuid="e94bacac-c0d6-4000-b813-e20a154a77c4">
 						<jr:columnGroup width="1009" uuid="2a5922c8-cb7f-422f-997d-64a8c0d73fbc">
 							<jr:column width="80" uuid="42555978-00cf-40bd-832a-bd8983d21749">
 								<jr:columnHeader height="30" rowSpan="1">
@@ -1764,6 +1788,30 @@ WHERE id = 1]]>
 								</jr:detailCell>
 							</jr:column>
 						</jr:columnGroup>
+						<jr:column width="90" uuid="282b2850-3eb1-472d-a7be-ac32aba0d35e">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="ff1ee514-c08a-45ca-a611-14b5c309dd77"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Next Estimate Follow Up Date]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="47b66c77-cf46-4c85-a0e7-b91866a88789"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NextEstimateFollowUpDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 						<jr:column width="80" uuid="aae4bf65-47e6-4840-84f0-0152d28d623e">
 							<jr:tableFooter height="0" rowSpan="1">
 								<box>
@@ -1845,6 +1893,30 @@ WHERE id = 1]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
+						<jr:column width="90" uuid="282b2850-3eb1-472d-a7be-ac32aba0d35e">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="ff1ee514-c08a-45ca-a611-14b5c309dd77"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Next SO Follow Up Date]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="47b66c77-cf46-4c85-a0e7-b91866a88789"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NextSOFollowUpDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 						<jr:column width="80" uuid="a728ddbb-e50a-48b3-ac25-4ce3ec386fad">
 							<jr:tableHeader height="0" rowSpan="1"/>
 							<jr:tableFooter height="0" rowSpan="1"/>
@@ -1921,6 +1993,29 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{AgeingFollowUpFeedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="ccdc27f0-9693-4050-8a61-ee899bc99e6a">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="87608a6b-6d04-4191-9378-8622380130ea"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Aged Out]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="ee867b5e-4e0f-479e-ab63-b7d0872cb2c1"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AgedOut}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -2168,7 +2263,7 @@ WHERE id = 1]]>
 		<band height="58">
 			<printWhenExpression><![CDATA[$P{ckIncludeTransferOrders}.contains("1")]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="3320" height="56" uuid="04dc3a12-7e04-43a4-93f4-ca459df0cfbc"/>
+				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="3580" height="56" uuid="04dc3a12-7e04-43a4-93f4-ca459df0cfbc"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="SOXOInfo" uuid="a24d5fb6-21fe-4a1f-84bc-49ae681c5284">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
@@ -2267,7 +2362,7 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="3269" uuid="af25c3db-cfaf-4988-bb82-d2c0af8a878f">
+					<jr:columnGroup width="3539" uuid="af25c3db-cfaf-4988-bb82-d2c0af8a878f">
 						<jr:columnGroup width="1009" uuid="6b7d2526-e07f-463d-86d2-172139d4eb6b">
 							<jr:column width="80" uuid="91c3e578-522d-4369-994b-6b9e996b25f3">
 								<jr:columnHeader height="30" rowSpan="1">
@@ -2706,6 +2801,30 @@ WHERE id = 1]]>
 								</jr:detailCell>
 							</jr:column>
 						</jr:columnGroup>
+						<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Next Estimate Follow Up Date]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NextEstimateFollowUpDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 						<jr:column width="80" uuid="3049e272-1e21-4585-9723-9caf474b7ae4">
 							<jr:tableFooter height="0" rowSpan="1">
 								<box>
@@ -2787,6 +2906,30 @@ WHERE id = 1]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
+						<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Next SO Follow Up Date]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NextSOFollowUpDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 						<jr:column width="80" uuid="4418d82a-5429-409f-9428-398cde97e86a">
 							<jr:tableHeader height="0" rowSpan="1"/>
 							<jr:tableFooter height="0" rowSpan="1"/>
@@ -2863,6 +3006,29 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{AgeingFollowUpFeedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="e76b0500-e23c-429f-8746-e672585daeca">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="94c6d45b-1d7b-4990-8f29-b9ad887edd06"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Aged Out]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="4a7c1bfa-7876-431b-ac38-609eeded7fc6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AgedOut}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -3111,7 +3277,7 @@ WHERE id = 1]]>
 	<pageFooter>
 		<band height="18" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="501" y="3" width="2771" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
+				<reportElement key="" mode="Transparent" x="501" y="3" width="3032" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="4">
@@ -3127,7 +3293,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="3272" y="3" width="48" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
+				<reportElement key="" mode="Transparent" x="3533" y="3" width="48" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="0">
