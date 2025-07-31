@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QCDashboardTransferFulfilledAtQCReceivingLUX" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9955ccc0-971f-458f-b2ee-d1e14e6259c9">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="36"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="New Dataset 1" uuid="ed845f1a-a52a-44a6-9102-98d137390727">
 		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
@@ -131,9 +131,9 @@
 			<parameterDescription><![CDATA[Customers]]></parameterDescription>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
-		<parameter name="ContractManufacturer" class="java.lang.Boolean" isForPrompting="false">
+		<parameter name="ShipFrom" class="java.lang.Boolean" isForPrompting="false">
 			<property name="Tab" value="Show/Hide"/>
-			<parameterDescription><![CDATA[Contract Manufacturer]]></parameterDescription>
+			<parameterDescription><![CDATA[Ship From]]></parameterDescription>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<queryString>
@@ -152,7 +152,7 @@
        SO.dateScheduled AS DATESCHEDULED,
        COALESCE(onhand.tagQty,0) AS qoh,
        SO.customers AS CUSTOMERS,
-       SO.CONTRACTMANUFACTURER
+       locationgroup.name AS SHIPFROM
 
 FROM XO
      INNER JOIN XOITEM ON XOITEM.XOID = XO.ID
@@ -160,6 +160,7 @@ FROM XO
      LEFT OUTER JOIN PART ON PART.ID = XOITEM.PARTID
      LEFT OUTER JOIN PRODUCT ON PRODUCT.PARTID = PART.ID
      LEFT OUTER JOIN SHIPITEM ON SHIPITEM.XOITEMID = XOITEM.ID
+     LEFT OUTER JOIN locationgroup ON locationgroup.id = XO.fromLGid
      LEFT OUTER JOIN (SELECT
 			PRODUCT.PARTID,
 			GROUP_CONCAT(DISTINCT SO.NUM) NUM,
@@ -212,7 +213,7 @@ ORDER BY $P!{cbSortBy}, XO.NUM, XOITEM.LINEITEM]]>
 		<field name="DATESCHEDULED" class="java.sql.Timestamp"/>
 		<field name="qoh" class="java.lang.Double"/>
 		<field name="CUSTOMERS" class="java.lang.String"/>
-		<field name="CONTRACTMANUFACTURER" class="java.lang.String"/>
+		<field name="SHIPFROM" class="java.lang.String"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -353,9 +354,9 @@ ORDER BY $P!{cbSortBy}, XO.NUM, XOITEM.LINEITEM]]>
 		<parameterDescription><![CDATA[Customers]]></parameterDescription>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ContractManufacturer" class="java.lang.Boolean" isForPrompting="false">
+	<parameter name="ShipFrom" class="java.lang.Boolean" isForPrompting="false">
 		<property name="Tab" value="Show/Hide"/>
-		<parameterDescription><![CDATA[Contract Manufacturer]]></parameterDescription>
+		<parameterDescription><![CDATA[Ship From]]></parameterDescription>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -624,7 +625,8 @@ Number]]></text>
 							</box>
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="30" uuid="4e07d34b-0f20-4c31-a716-5c76fb079467"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Bottom">
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Customers]]></text>
@@ -636,7 +638,7 @@ Number]]></text>
 							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="80" height="13" uuid="5c202472-427a-4a47-9828-3b6b48520f51"/>
-								<box leftPadding="2" rightPadding="2"/>
+								<box leftPadding="3" rightPadding="2"/>
 								<textElement>
 									<font fontName="Open Sans" size="9"/>
 								</textElement>
@@ -645,17 +647,18 @@ Number]]></text>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="80" uuid="95fed8da-4118-408d-bf2d-2300e3fe42e9">
-						<printWhenExpression><![CDATA[$P{ContractManufacturer}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{ShipFrom}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<box>
 								<bottomPen lineWidth="0.5"/>
 							</box>
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="30" uuid="4e07d34b-0f20-4c31-a716-5c76fb079467"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Bottom">
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Contract Manufacturer]]></text>
+								<text><![CDATA[Ship From]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="13" rowSpan="1">
@@ -664,11 +667,11 @@ Number]]></text>
 							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="80" height="13" uuid="5c202472-427a-4a47-9828-3b6b48520f51"/>
-								<box leftPadding="2" rightPadding="2"/>
+								<box leftPadding="3" rightPadding="2"/>
 								<textElement>
 									<font fontName="Open Sans" size="9"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{CONTRACTMANUFACTURER}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{SHIPFROM}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
