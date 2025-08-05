@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="4 x 3ShippingLabelDILLON" pageWidth="288" pageHeight="216" whenNoDataType="AllSectionsNoDetail" columnWidth="252" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7d385386-6854-4b1f-8d04-a20463d0fc7b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="center" hAlign="Center" vAlign="Middle"/>
+	<style name="LEFT" hAlign="Left" vAlign="Middle"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["4x3 Receiving Label for PO - Dillon Candy Company"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="receiptID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+    RECEIPT.ID AS RECEIPTID,
+    receiptitem.dateReceived AS DATERECEIVED,
+    part.num AS RECEIPTITEMPARTNUM,
+    PART.DESCRIPTION AS RECEIPTITEMPARTDESC,
+
+poitem.vendorpartnum AS VENDORPARTNUMBER,
+trackinginfo.info AS LOTNUMBER
+
+
+
+
+FROM receipt
+    INNER JOIN receiptitem ON receipt.id = receiptitem.receiptid
+    INNER JOIN part ON part.id = receiptitem.partId
+    INNER JOIN receipttype ON receipt.typeid = receipttype.id
+    INNER JOIN receiptstatus ON receipt.statusid = receiptstatus.id
+     inner join poitem on poitem.id = receiptitem.poitemid
+    LEFT OUTER JOIN ordertype ON receipt.ordertypeid = ordertype.id
+    LEFT OUTER JOIN trackinginfo ON trackinginfo.recordId = receiptitem.id AND tableid = 1259138490
+WHERE receipt.id = $P!{receiptID}
+  AND receiptitem.statusid IN (20,30,40)
+  AND receipt.orderTypeId = 10;]]>
+	</queryString>
+	<field name="RECEIPTID" class="java.lang.Integer"/>
+	<field name="DATERECEIVED" class="java.sql.Timestamp"/>
+	<field name="RECEIPTITEMPARTNUM" class="java.lang.String"/>
+	<field name="RECEIPTITEMPARTDESC" class="java.lang.String"/>
+	<field name="VENDORPARTNUMBER" class="java.lang.String"/>
+	<field name="LOTNUMBER" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="180">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" positionType="Float" mode="Transparent" x="65" y="81" width="187" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="8a8154ea-972d-459c-a911-5d2751e64fc1"/>
+				<box leftPadding="0" bottomPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="styled">
+					<font fontName="Open Sans" size="16" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATERECEIVED}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="252" height="25" uuid="9f17769c-d19d-47ad-925a-5de970cadd98"/>
+				<textElement>
+					<font fontName="Open Sans" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECEIPTITEMPARTDESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="26" width="252" height="20" uuid="887e4d0f-1ded-42e2-9f9a-d569e7060e13"/>
+				<textElement>
+					<font fontName="Open Sans" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECEIPTITEMPARTNUM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" positionType="Float" mode="Transparent" x="36" y="56" width="216" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="58394f5f-9bee-4c30-9840-575910bbbea8"/>
+				<box leftPadding="0" bottomPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="styled">
+					<font fontName="Open Sans" size="16" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOTNUMBER}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="116" width="252" height="20" uuid="3317fc35-2637-43cd-813d-f62361aeda70"/>
+				<textElement>
+					<font fontName="Open Sans" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VENDORPARTNUMBER}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement style="LEFT" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="136" width="252" height="44" uuid="0414729f-7fc6-4e7f-ab5f-f0a32bb8cdeb"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128B" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{RECEIPTITEMPARTNUM}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" positionType="Float" mode="Transparent" x="0" y="56" width="36" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="c778f691-9647-45d0-80ae-529ed7a922da"/>
+				<box leftPadding="0" bottomPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="styled">
+					<font fontName="Open Sans" size="14" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Lot#:"]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" positionType="Float" mode="Transparent" x="0" y="81" width="65" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="5100db70-2fab-48d8-b9da-81f544195aa5"/>
+				<box leftPadding="0" bottomPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="styled">
+					<font fontName="Open Sans" size="14" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rec Date:"]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
