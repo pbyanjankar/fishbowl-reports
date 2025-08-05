@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReconcileReportDAN" pageWidth="882" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="822" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="d223075f-8c71-496d-931b-2529a627db2b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReconcileReportDAN" pageWidth="1102" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1042" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="d223075f-8c71-496d-931b-2529a627db2b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="112"/>
+	<property name="ireport.x" value="85"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -139,6 +139,15 @@
 		<parameter name="colItemCost" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
+		<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateReceived" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colReconciledBy" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT po.num AS poNum, part.num AS partNum, poItem.poLineItem AS lineItem,
 
@@ -170,7 +179,10 @@
      receiptItem.refNo AS REFNO,
      poitem.vendorpartnum AS VENDORNUMBER,
      poitem.unitcost AS ITEMCOST,
-     receiptItem.qty AS QUANTITY
+     receiptItem.qty AS QUANTITY,
+     po.dateIssued AS DATEISSUED,
+     receiptitem.dateReceived AS DATERECEIVED,
+     sysuser.username AS RECONCILEDBY
 
 FROM receiptItem
     LEFT OUTER JOIN receipt ON (receiptItem.receiptId = receipt.id)
@@ -181,7 +193,11 @@ FROM receiptItem
     LEFT OUTER JOIN poItem ON (poItem.id = receiptItem.poItemId AND receipt.orderTypeId=10)
     INNER JOIN uom ON poItem.uomid = uom.id
     LEFT OUTER JOIN uomConversion ON uom.id = uomConversion.fromUomId AND poItem.uomId = uomConversion.toUomId
-    LEFT JOIN currency AS homeCurrency ON homeCurrency.homeCurrency = 1
+    LEFT OUTER JOIN currency AS homeCurrency ON homeCurrency.homeCurrency = 1
+LEFT OUTER JOIN ( SELECT max(REV) as REVISIONID, id from receipt_aud where statusid = 20 AND poid is not null
+GROUP BY poid) AS reconciledreceipt ON reconciledreceipt.id = receipt.id
+    LEFT OUTER JOIN receipt_aud ON receipt_aud.rev = reconciledreceipt.REVISIONID AND receipt_aud.id = receipt.id
+    LEFT OUTER JOIN sysuser ON sysuser.id = receipt_aud.userid
 
 WHERE receiptItem.statusId > 10
     AND receiptItem.dateReconciled BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
@@ -212,6 +228,9 @@ ORDER BY poNum, lineItem]]>
 		<field name="VENDORNUMBER" class="java.lang.String"/>
 		<field name="ITEMCOST" class="java.lang.Double"/>
 		<field name="QUANTITY" class="java.lang.Double"/>
+		<field name="DATEISSUED" class="java.sql.Timestamp"/>
+		<field name="DATERECEIVED" class="java.sql.Timestamp"/>
+		<field name="RECONCILEDBY" class="java.lang.String"/>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
@@ -369,6 +388,15 @@ $V{poCurrencyLandedTotalNotRounded}]]></variableExpression>
 		<parameter name="colItemCost" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
+		<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateReceived" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colReconciledBy" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT SUM(round(COALESCE(receiptItem.qty * poItem.unitCost, 0), 2)) AS totalOriginalCost,
     SUM(receiptItem.billedTotalCost) AS totalBilledCost,
@@ -493,6 +521,15 @@ GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]
 	<parameter name="colItemCost" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
+	<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDateReceived" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colReconciledBy" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT SUM(COALESCE (receiptItem.qty * poItem.unitCost, 0)) AS totalOriginalCost,
     SUM(receiptItem.billedTotalCost) AS totalBilledCost,
@@ -537,7 +574,7 @@ GROUP BY company.name]]>
 	<pageHeader>
 		<band height="64" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-17" mode="Transparent" x="0" y="18" width="822" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="f061ba35-ce9c-4952-821b-0d72539e4afe"/>
+				<reportElement key="staticText-17" mode="Transparent" x="0" y="18" width="1042" height="21" forecolor="#000000" backcolor="#FFFFFF" uuid="f061ba35-ce9c-4952-821b-0d72539e4afe"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -551,7 +588,7 @@ GROUP BY company.name]]>
 				<text><![CDATA[Reconcile Report]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-1" mode="Transparent" x="0" y="40" width="822" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3032dbfd-89c2-440e-931b-a6a72bee1d4b"/>
+				<reportElement key="textField-1" mode="Transparent" x="0" y="40" width="1042" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="3032dbfd-89c2-440e-931b-a6a72bee1d4b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -568,14 +605,14 @@ GROUP BY company.name]]>
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-86400000)]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" x="0" y="0" width="822" height="18" uuid="ae67df01-fa60-4c62-b103-560f53e97a4e"/>
+				<reportElement key="textField-2" x="0" y="0" width="1042" height="17" uuid="ae67df01-fa60-4c62-b103-560f53e97a4e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans" size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-3" x="0" y="54" width="822" height="10" uuid="3c2257dc-fa6e-4542-913c-fc7ab9a04519"/>
+				<reportElement key="textField-3" x="0" y="54" width="1042" height="9" uuid="3c2257dc-fa6e-4542-913c-fc7ab9a04519"/>
 				<textElement>
 					<font fontName="Open Sans"/>
 				</textElement>
@@ -586,7 +623,7 @@ GROUP BY company.name]]>
 	<columnHeader>
 		<band height="18" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table 1" x="0" y="0" width="822" height="18" uuid="b74c65a9-17ed-444a-a2f0-3ca582343462"/>
+				<reportElement key="table 1" x="0" y="0" width="1042" height="17" uuid="b74c65a9-17ed-444a-a2f0-3ca582343462"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TotalQuery" uuid="14d66ea5-8a3b-40c2-8b42-476661ec245d">
 						<datasetParameter name="dateRange1">
@@ -619,7 +656,6 @@ GROUP BY company.name]]>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="90" uuid="9b50373f-b5ad-4918-8779-6f77f6c9eac1">
-						<printWhenExpression><![CDATA[$P{colLineNumber}]]></printWhenExpression>
 						<jr:tableHeader height="37" rowSpan="1">
 							<staticText>
 								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="90" height="37" forecolor="#000000" backcolor="#999999" uuid="6e343bc8-81e6-4188-a84a-931ae47979f6"/>
@@ -856,6 +892,75 @@ GROUP BY company.name]]>
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
+					<jr:column width="60" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
+						<printWhenExpression><![CDATA[$P{colDateIssued}]]></printWhenExpression>
+						<jr:tableHeader height="37" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="60" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
+								<box leftPadding="2" rightPadding="4">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Date Issued]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1"/>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="60" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
+						<printWhenExpression><![CDATA[$P{colDateReceived}]]></printWhenExpression>
+						<jr:tableHeader height="37" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="60" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
+								<box leftPadding="2" rightPadding="4">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Date Received]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1"/>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="100" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
+						<printWhenExpression><![CDATA[$P{colReconciledBy}]]></printWhenExpression>
+						<jr:tableHeader height="37" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="100" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
+								<box leftPadding="2" rightPadding="4">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Reconciled By]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1"/>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
 				</jr:table>
 			</componentElement>
 		</band>
@@ -864,7 +969,7 @@ GROUP BY company.name]]>
 		<band height="53" splitType="Stretch">
 			<printWhenExpression><![CDATA[new Boolean(true)]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="Line Item Table" positionType="Float" isPrintRepeatedValues="false" x="0" y="0" width="822" height="53" uuid="bb63618c-4d5e-4077-975b-470111d806f7"/>
+				<reportElement key="Line Item Table" positionType="Float" isPrintRepeatedValues="false" x="0" y="0" width="1042" height="52" uuid="bb63618c-4d5e-4077-975b-470111d806f7"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="POLineItem" uuid="1fcc4d5b-98ea-42a9-8b9f-41fce055c6b2">
 						<datasetParameter name="dateRange1">
@@ -896,34 +1001,14 @@ GROUP BY company.name]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="912" uuid="ed1ef1ba-4574-41be-8eb6-2768c261a986">
-						<jr:groupHeader groupName="PO">
-							<jr:cell height="21" rowSpan="1">
-								<textField pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
-									<reportElement style="Link" x="0" y="0" width="912" height="20" printWhenGroupChanges="PO" forecolor="#000099" uuid="cbc4d3ff-b75b-4609-9ae1-13702666d3a3"/>
-									<box leftPadding="10" bottomPadding="1" rightPadding="4">
-										<bottomPen lineWidth="1.0"/>
-									</box>
-									<textElement verticalAlignment="Middle">
-										<font fontName="Open Sans" size="9" isBold="false" isUnderline="false"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{SYMBOL} == null || !com.evnt.eve.modules.CurrencyModule.isMultiCurrency() ?
-"PO #" + $F{PONUM} :
-"PO #" + $F{PONUM} + " (" + $F{CODE} +")"]]></textFieldExpression>
-									<anchorNameExpression><![CDATA["PONum"]]></anchorNameExpression>
-									<hyperlinkReferenceExpression><![CDATA[$F{PONUM}]]></hyperlinkReferenceExpression>
-									<hyperlinkTooltipExpression><![CDATA[$F{PONUM}]]></hyperlinkTooltipExpression>
-								</textField>
-							</jr:cell>
-						</jr:groupHeader>
+					<jr:columnGroup width="1132" uuid="ed1ef1ba-4574-41be-8eb6-2768c261a986">
 						<jr:column width="90" uuid="1b861b4b-bef2-4b9c-a803-cb5c96c451a6">
-							<printWhenExpression><![CDATA[$P{colLineNumber}]]></printWhenExpression>
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="0" rowSpan="1"/>
 							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-									<reportElement x="0" y="1" width="90" height="20" forecolor="#000099" uuid="3cb54630-9991-4649-a0ba-f91f7a2f1455">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" forecolor="#000099" uuid="3cb54630-9991-4649-a0ba-f91f7a2f1455">
 										<printWhenExpression><![CDATA[$P{colLineNumber}]]></printWhenExpression>
 									</reportElement>
 									<box topPadding="3"/>
@@ -943,9 +1028,9 @@ GROUP BY company.name]]>
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="0" rowSpan="1"/>
 							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="1" width="30" height="20" uuid="3cb54630-9991-4649-a0ba-f91f7a2f1455">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="20" uuid="3cb54630-9991-4649-a0ba-f91f7a2f1455">
 										<printWhenExpression><![CDATA[$P{colLineNumber}]]></printWhenExpression>
 									</reportElement>
 									<box topPadding="3"/>
@@ -965,9 +1050,9 @@ GROUP BY company.name]]>
 								<jr:tableFooter height="0" rowSpan="1"/>
 								<jr:columnHeader height="0" rowSpan="1"/>
 								<jr:columnFooter height="0" rowSpan="1"/>
-								<jr:detailCell height="21" rowSpan="1">
+								<jr:detailCell height="20" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-										<reportElement style="Link" x="0" y="1" width="90" height="20" forecolor="#000099" uuid="1d487f4e-7746-4d63-bcb6-440c84ee19d6"/>
+										<reportElement style="Link" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" forecolor="#000099" uuid="1d487f4e-7746-4d63-bcb6-440c84ee19d6"/>
 										<box topPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -985,9 +1070,9 @@ GROUP BY company.name]]>
 								<jr:tableFooter height="0" rowSpan="1"/>
 								<jr:columnHeader height="0" rowSpan="1"/>
 								<jr:columnFooter height="0" rowSpan="1"/>
-								<jr:detailCell height="21" rowSpan="1">
+								<jr:detailCell height="20" rowSpan="1">
 									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement style="Money" x="0" y="0" width="90" height="21" uuid="3d45bcad-6f46-458d-92b4-f319857f5233">
+										<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233">
 											<printWhenExpression><![CDATA[$P{colVendorNumber}]]></printWhenExpression>
 										</reportElement>
 										<box topPadding="3" leftPadding="3" rightPadding="3"/>
@@ -1004,9 +1089,9 @@ GROUP BY company.name]]>
 								<jr:tableFooter height="0" rowSpan="1"/>
 								<jr:columnHeader height="0" rowSpan="1"/>
 								<jr:columnFooter height="0" rowSpan="1"/>
-								<jr:detailCell height="21" rowSpan="1">
+								<jr:detailCell height="20" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-										<reportElement style="Link" x="0" y="1" width="150" height="20" forecolor="#000099" uuid="61d19dc7-7b68-4df6-b2ba-15c4a58aa769"/>
+										<reportElement style="Link" stretchType="RelativeToBandHeight" x="0" y="0" width="150" height="20" forecolor="#000099" uuid="61d19dc7-7b68-4df6-b2ba-15c4a58aa769"/>
 										<box topPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -1041,9 +1126,9 @@ GROUP BY company.name]]>
 									</textField>
 								</jr:cell>
 							</jr:groupFooter>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement style="BilledItemMoney" x="0" y="0" width="52" height="21" uuid="3f8c6004-aaf7-456a-b0fa-0a1bebea6ab0"/>
+									<reportElement style="BilledItemMoney" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="20" uuid="3f8c6004-aaf7-456a-b0fa-0a1bebea6ab0"/>
 									<box topPadding="3" leftPadding="0"/>
 									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="9"/>
@@ -1077,9 +1162,9 @@ GROUP BY company.name]]>
 									</textField>
 								</jr:cell>
 							</jr:groupFooter>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement style="BilledItemMoney" x="0" y="0" width="90" height="21" uuid="3f8c6004-aaf7-456a-b0fa-0a1bebea6ab0"/>
+									<reportElement style="BilledItemMoney" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" uuid="3f8c6004-aaf7-456a-b0fa-0a1bebea6ab0"/>
 									<box topPadding="3" rightPadding="3"/>
 									<textElement textAlignment="Right" verticalAlignment="Top">
 										<font fontName="Open Sans" size="9"/>
@@ -1116,9 +1201,9 @@ GROUP BY company.name]]>
 							</jr:groupFooter>
 							<jr:columnHeader height="0" rowSpan="1"/>
 							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement style="BilledItemMoney" x="0" y="0" width="90" height="21" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<reportElement style="BilledItemMoney" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
 									<box topPadding="3" rightPadding="3"/>
 									<textElement textAlignment="Right" verticalAlignment="Top">
 										<font fontName="Open Sans" size="9"/>
@@ -1147,9 +1232,9 @@ GROUP BY company.name]]>
 									</textField>
 								</jr:cell>
 							</jr:groupFooter>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement style="Money" x="0" y="0" width="70" height="20" uuid="3c5b4ce0-3296-44f3-a2dc-1020dfa6c587"/>
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="20" uuid="3c5b4ce0-3296-44f3-a2dc-1020dfa6c587"/>
 									<box topPadding="3"/>
 									<textElement textAlignment="Right" verticalAlignment="Top">
 										<font fontName="Open Sans" size="9"/>
@@ -1182,9 +1267,9 @@ GROUP BY company.name]]>
 							</jr:groupFooter>
 							<jr:columnHeader height="0" rowSpan="1"/>
 							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement style="Money" x="0" y="0" width="60" height="21" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
 									<box topPadding="3"/>
 									<textElement textAlignment="Center" verticalAlignment="Top">
 										<font fontName="Open Sans" size="9"/>
@@ -1214,15 +1299,109 @@ GROUP BY company.name]]>
 							</jr:groupFooter>
 							<jr:columnHeader height="0" rowSpan="1"/>
 							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="21" rowSpan="1">
+							<jr:detailCell height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement style="Money" x="0" y="0" width="100" height="21" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
 									<box topPadding="3" leftPadding="3" rightPadding="3"/>
 									<textElement textAlignment="Left" verticalAlignment="Top">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{REFNO}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="04df78b5-4db2-44ac-b093-41338e6f1f6b">
+							<printWhenExpression><![CDATA[$P{colDateIssued}]]></printWhenExpression>
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupFooter groupName="PO">
+								<jr:cell height="20" rowSpan="1">
+									<textField pattern="" isBlankWhenNull="true">
+										<reportElement style="Money" x="0" y="0" width="60" height="20" uuid="5c246b00-09c6-4f86-abbd-799bab33d12b"/>
+										<box>
+											<topPen lineWidth="1.0"/>
+										</box>
+										<textElement>
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader height="0" rowSpan="1"/>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<box topPadding="3" leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Top">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DATEISSUED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="04df78b5-4db2-44ac-b093-41338e6f1f6b">
+							<printWhenExpression><![CDATA[$P{colDateReceived}]]></printWhenExpression>
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupFooter groupName="PO">
+								<jr:cell height="20" rowSpan="1">
+									<textField pattern="" isBlankWhenNull="true">
+										<reportElement style="Money" x="0" y="0" width="60" height="20" uuid="5c246b00-09c6-4f86-abbd-799bab33d12b"/>
+										<box>
+											<topPen lineWidth="1.0"/>
+										</box>
+										<textElement>
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader height="0" rowSpan="1"/>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<box topPadding="3" leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Top">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DATERECEIVED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="100" uuid="04df78b5-4db2-44ac-b093-41338e6f1f6b">
+							<printWhenExpression><![CDATA[$P{colReconciledBy}]]></printWhenExpression>
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupFooter groupName="PO">
+								<jr:cell height="20" rowSpan="1">
+									<textField pattern="" isBlankWhenNull="true">
+										<reportElement style="Money" x="0" y="0" width="100" height="20" uuid="5c246b00-09c6-4f86-abbd-799bab33d12b"/>
+										<box>
+											<topPen lineWidth="1.0"/>
+										</box>
+										<textElement>
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader height="0" rowSpan="1"/>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<box topPadding="3" leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Top">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{RECONCILEDBY}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -1237,35 +1416,7 @@ GROUP BY company.name]]>
 	<pageFooter>
 		<band height="14" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-4" mode="Transparent" x="501" y="0" width="273" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="bc789628-5480-4a39-b718-5c58a58eddad"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
-					<font fontName="Open Sans" size="9"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-5" mode="Transparent" x="774" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="23bf1e20-f25e-4a22-ac49-2b7cbd9c3543"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
-					<font fontName="Open Sans" size="9"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-6" mode="Transparent" x="0" y="0" width="501" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="0368580a-dc1b-40e5-ac9b-85f720116601"/>
+				<reportElement key="textField-6" mode="Transparent" x="0" y="0" width="210" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="0368580a-dc1b-40e5-ac9b-85f720116601"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1278,12 +1429,40 @@ GROUP BY company.name]]>
 				</textElement>
 				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
 			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-4" mode="Transparent" x="210" y="0" width="784" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="bc789628-5480-4a39-b718-5c58a58eddad"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-5" mode="Transparent" x="994" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="23bf1e20-f25e-4a22-ac49-2b7cbd9c3543"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<lastPageFooter>
 		<band height="32" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-7" mode="Transparent" x="501" y="18" width="273" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="11e1d3e9-2191-435a-b6bf-7f48071fe338">
+				<reportElement key="textField-7" mode="Transparent" x="210" y="18" width="784" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="11e1d3e9-2191-435a-b6bf-7f48071fe338">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -1299,7 +1478,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" mode="Transparent" x="774" y="18" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4ff80009-e59f-48f5-9db4-dbdc122d41df">
+				<reportElement key="textField-8" mode="Transparent" x="994" y="18" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4ff80009-e59f-48f5-9db4-dbdc122d41df">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -1315,7 +1494,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-9" mode="Transparent" x="0" y="18" width="501" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="1479d62b-7c6d-4109-9564-46d2db523606"/>
+				<reportElement key="textField-9" mode="Transparent" x="0" y="18" width="210" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="1479d62b-7c6d-4109-9564-46d2db523606"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1329,7 +1508,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement key="table 1" x="0" y="0" width="822" height="18" uuid="dc177bd4-9f84-4509-a74d-bcb8cf36e830"/>
+				<reportElement key="table 1" x="0" y="0" width="1042" height="18" uuid="dc177bd4-9f84-4509-a74d-bcb8cf36e830"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TotalQuery" uuid="b350aa8f-0e34-4efc-951f-8bfb9790c265">
 						<datasetParameter name="dateRange1">
@@ -1362,47 +1541,31 @@ GROUP BY company.name]]>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="90" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
-						<printWhenExpression><![CDATA[$P{colLineNumber}]]></printWhenExpression>
-						<jr:columnFooter height="16" rowSpan="2"/>
+						<jr:columnFooter height="16" rowSpan="1"/>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="30" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
 						<printWhenExpression><![CDATA[$P{colLineNumber}]]></printWhenExpression>
-						<jr:columnFooter height="16" rowSpan="2"/>
+						<jr:columnFooter height="16" rowSpan="1"/>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:columnGroup width="330" uuid="8eede3ad-9967-4f1d-81dc-7f94b0f96080">
-						<jr:columnFooter height="16" rowSpan="1">
-							<textField pattern="" isBlankWhenNull="true">
-								<reportElement key="textField" mode="Transparent" x="0" y="0" width="330" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a67d4c7d-5286-448d-ba6d-9d0c9622c982"/>
-								<box topPadding="1">
-									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<bottomPen lineWidth="0.0" lineColor="#000000"/>
-									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-								</box>
-								<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-									<paragraph lineSpacing="Single"/>
-								</textElement>
-							</textField>
-						</jr:columnFooter>
-						<jr:column width="179" uuid="286bd6bb-b870-4e1e-b4b5-b7278abd156f">
-							<printWhenExpression><![CDATA[$P{colProductParts}]]></printWhenExpression>
-							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="0" rowSpan="1"/>
-						</jr:column>
-						<jr:column width="151" uuid="bf1676fd-107c-451d-9ee8-0d5edf3dad97">
-							<printWhenExpression><![CDATA[$P{colDescription}]]></printWhenExpression>
-							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="0" rowSpan="1"/>
-						</jr:column>
-					</jr:columnGroup>
+					<jr:column width="90" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
+						<jr:columnFooter height="16" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="90" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
+						<jr:columnFooter height="16" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="150" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
+						<jr:columnFooter height="16" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
 					<jr:column width="52" uuid="5ac02768-eb78-439a-9711-1fab61e6d5e5">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1"/>
-						<jr:columnFooter height="16" rowSpan="2">
+						<jr:columnFooter height="16" rowSpan="1">
 							<textField pattern="" isBlankWhenNull="true">
 								<reportElement key="textField" style="Money" mode="Transparent" x="0" y="0" width="52" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="30d58162-0f2d-4caa-ac98-790deb02c459"/>
 								<box topPadding="1">
@@ -1423,7 +1586,7 @@ GROUP BY company.name]]>
 					</jr:column>
 					<jr:column width="90" uuid="73916ce6-e389-46f9-962c-0666261a8ed8">
 						<printWhenExpression><![CDATA[$P{colBilledTotal}]]></printWhenExpression>
-						<jr:columnFooter height="16" rowSpan="2">
+						<jr:columnFooter height="16" rowSpan="1">
 							<textField pattern="" isBlankWhenNull="true">
 								<reportElement style="BilledTotalMoney" x="0" y="0" width="90" height="16" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
 								<box rightPadding="3">
@@ -1446,7 +1609,7 @@ $F{TOTALBILLEDCOST}]]></textFieldExpression>
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1"/>
-						<jr:columnFooter height="16" rowSpan="2">
+						<jr:columnFooter height="16" rowSpan="1">
 							<textField pattern="" isBlankWhenNull="true">
 								<reportElement style="Money" x="0" y="0" width="90" height="16" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
 								<box>
@@ -1462,7 +1625,7 @@ $F{TOTALBILLEDCOST}]]></textFieldExpression>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="70" uuid="7899a296-fa46-4ff7-919b-df803e5a2a7a">
-						<jr:columnFooter height="16" rowSpan="2">
+						<jr:columnFooter height="16" rowSpan="1">
 							<textField pattern="" isBlankWhenNull="true">
 								<reportElement key="textField" style="Money" mode="Transparent" x="0" y="0" width="70" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="abfc69ec-b77a-416d-b429-3951bbb1a4f2"/>
 								<box topPadding="1">
@@ -1480,13 +1643,13 @@ $F{TOTALBILLEDCOST}]]></textFieldExpression>
 						</jr:columnFooter>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:column width="160" uuid="e3dc8118-39eb-4d4f-9128-513f206edba9">
+					<jr:column width="60" uuid="e3dc8118-39eb-4d4f-9128-513f206edba9">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1"/>
-						<jr:columnFooter height="16" rowSpan="2">
+						<jr:columnFooter height="16" rowSpan="1">
 							<textField pattern="" isBlankWhenNull="true">
-								<reportElement key="textField" style="Money" mode="Transparent" x="0" y="0" width="160" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="abfc69ec-b77a-416d-b429-3951bbb1a4f2"/>
+								<reportElement key="textField" style="Money" mode="Transparent" x="0" y="0" width="60" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="abfc69ec-b77a-416d-b429-3951bbb1a4f2"/>
 								<box topPadding="1">
 									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
