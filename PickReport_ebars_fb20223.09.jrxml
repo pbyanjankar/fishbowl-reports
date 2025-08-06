@@ -1,0 +1,1126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PickReportWithMetalContentsEbarsFB2023.09" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="3f23a98b-ed85-449d-a6d1-93ceeaa2cd5d">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="12"/>
+	<property name="ireport.y" value="170"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" hAlign="Right" pattern="EEEEE dd MMMMM yyyy" fontName="Open Sans" fontSize="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Picking/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["A complete list of ALL items on the Pick and their status."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pickNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA["S50025"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRangeNone" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowAddress" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FBI_Helper" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[JRPickReportHelper]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Show SO Item Description" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbPrimarySortBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[mainlocation.sortorder,Location Sort Order,mainlocation.name,Location Name]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Location Name"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSecondarySortBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,Line Item,part.num,Part]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Line Item"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSalesOrderContact" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,SO Contact,2,SO Customer]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowRMCdQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowRMAsQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowRMPbQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowRMHgQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	PI1.ID AS PICKID,
+ 	PI1.NUM AS PICKNUMBER,
+	PICKTYPE.NAME AS PICKTYPE,
+	PICKSTATUS.NAME AS PICKSTATUS,
+	PRIORITY.NAME AS PICKPRIORITY,
+	PICKLG.NAME AS PICKLOCATIONGROUP,
+	PICKLG.ID AS PICKLOCATIONGROUPID,
+    	PI1.DATECREATED AS PICKDATECREATED,
+	PI1.DATESCHEDULED AS PICKDATESCHEDULED,
+	PI1.DATEFINISHED AS PICKDATEFINISHED,
+    	PI1.DATELASTMODIFIED AS PICKDATELASTMODIFIED,
+	PI1.DATESTARTED AS PICKDATESTARTED,
+    	PICKITEM.ID AS PICKITEMID,
+	PICKITEMSTATUS.NAME AS PICKITEMSTATUS,
+	PICKITEMSTATUS.ID AS PICKITEMSTATUSID,
+    	PART.NUM AS PICKITEMPARTNUM,
+	PART.DESCRIPTION AS PICKITEMPARTDESC,
+	round(PICKITEM.QTY,1) AS PICKITEMQTY,
+	UOM.CODE AS PICKITEMUOM,
+   	COALESCE(MAINLOCATION.NAME, '') AS PICKITEMLOCNAME,
+	COALESCE(MAINLG.NAME, '') AS PICKITEMLOCGRPNAME, MAINTAG.NUM AS PICKITEMTAGNUM,
+    	COALESCE(DESTLOCATION.NAME, '') AS PICKITEMDESTLOCNAME, COALESCE(DESTLG.NAME, '') AS PICKITEMDESTLOCGRPNAME,
+   	PICKITEM.SLOTNUM AS PICKITEMSLOTNUM,
+	COMPANY.NAME AS COMPANY,
+    (CASE
+	WHEN PICKITEM.ORDERTYPEID = 10 THEN POITEM.NOTE
+	WHEN PICKITEM.ORDERTYPEID = 20 THEN SOITEM.NOTE
+	WHEN PICKITEM.ORDERTYPEID = 40 THEN XOITEM.NOTE
+    END) AS PICKITEMNOTE,
+	COALESCE(SOITEM.DESCRIPTION,PART.DESCRIPTION) AS SOITEMDESCRIPTION, CARRIER.NAME AS CARRIER,
+   	kitHeader.productNum AS kitHeaderName,
+	kitHeader.description AS kitHeaderDescription,
+	kitHeader.id AS kitFlag,
+    (SELECT bom.num
+    FROM Mo
+        INNER JOIN MoItem ON Mo.id = MoItem.moId
+        INNER JOIN BOM ON BOM.id = MOitem.bomid
+        inner join wo on left(wo.num, 4) = mo.num
+        where PI1.num = Concat('W',wo.num) and moitem.typeid = 50) as orderitemid,
+        (SELECT  bom.description
+            FROM Mo
+                INNER JOIN MoItem ON Mo.id = MoItem.moId
+                INNER JOIN BOM ON BOM.id = MOitem.bomid
+                inner join wo on left(wo.num, 4)= mo.num
+                where PI1.num = Concat('W',wo.num) and moitem.typeid = 50) as orderDescription,
+pickitem.qty/result.FGTotalLbs AS FG,
+if(PbTrackingDecimal.infoDouble < 0, -1, PbTrackingDecimal.infoDouble) AS RMPbQty,
+if(PbTrackingDecimal.infoDouble < 0, -1, PbTrackingDecimal.infoDouble * pickitem.qty/result.FGTotalLbs) AS PbQty,
+if(CdTrackingDecimal.info < 0, -1, CdTrackingDecimal.info) AS RMCdQty,
+if(CdTrackingDecimal.info < 0, -1, CdTrackingDecimal.info * pickitem.qty/result.FGTotalLbs)  AS CdQty,
+if(AsTrackingDecimal.info < 0, -1, AsTrackingDecimal.info) AS RMAsQty,
+if(AsTrackingDecimal.info < 0, -1, AsTrackingDecimal.info * pickitem.qty/result.FGTotalLbs)  AS AsQty,
+if(HgTrackingDecimal.info < 0, -1, HgTrackingDecimal.info) AS RMHgQty,
+if(HgTrackingDecimal.info < 0, -1, HgTrackingDecimal.info  * pickitem.qty/result.FGTotalLbs) AS HgQty,
+part.description AS PartDescription,
+HMDSTracking.info AS HMDataSource
+
+FROM pick PI1
+    INNER JOIN picktype ON PI1.typeid = picktype.id
+    INNER JOIN pickstatus ON PI1.statusid = pickstatus.id
+    INNER JOIN priority ON PI1.priority = priority.id
+    INNER JOIN locationgroup picklg ON PI1.locationgroupid = picklg.id
+    LEFT OUTER JOIN pickitem ON PI1.id = pickitem.pickid
+    LEFT OUTER JOIN tag maintag ON COALESCE(pickitem.srctagid,pickitem.tagid) = maintag.id
+    LEFT OUTER JOIN location mainlocation ON pickitem.srclocationid = mainlocation.id
+    LEFT OUTER JOIN locationgroup mainlg ON mainlocation.locationgroupid = mainlg.id
+    LEFT OUTER JOIN pickitemstatus ON pickitem.statusid = pickitemstatus.id
+    LEFT OUTER JOIN part ON pickitem.partid = part.id
+    LEFT OUTER JOIN uom ON pickitem.uomid = uom.id
+    LEFT OUTER JOIN tag desttag ON pickitem.desttagid = desttag.id
+    LEFT OUTER JOIN location destlocation ON desttag.locationid = destlocation.id
+    LEFT OUTER JOIN locationgroup destlg ON destlocation.locationgroupid = destlg.id
+    LEFT OUTER JOIN poitem ON (pickitem.poitemid = poitem.id AND pickitem.ordertypeid = 10)
+    LEFT OUTER JOIN soitem ON (pickitem.soitemid = soitem.id AND pickitem.ordertypeid = 20)
+    LEFT OUTER JOIN woitem ON (pickitem.woitemid = woitem.id AND pickitem.ordertypeid = 30)
+    LEFT OUTER JOIN xoitem ON (pickitem.xoitemid = xoitem.id AND pickitem.ordertypeid = 40)
+    LEFT OUTER JOIN so ON soitem.soid = so.id
+    LEFT OUTER JOIN carrier ON so.carrierid = carrier.id
+    JOIN company ON company.id = 1
+    LEFT OUTER JOIN objectToObject AS obo ON obo.recordid1 = soitem.id AND obo.typeid = 30
+    LEFT OUTER JOIN soitem AS kitHeader ON kitHeader.id = obo.recordid2 AND kitheader.typeid = 80
+LEFT OUTER JOIN (
+SELECT pick.id AS pickId, sum(pickitem.qty) AS FGTotalLbs
+FROM
+pick
+INNER JOIN pickitem ON pickitem.pickid = pick.id
+INNER JOIN part ON part.id = pickitem.partId
+INNER JOIN UOM ON part.uomid = uom.id
+WHERE UOM.code = 'lbs'
+GROUP BY pick.id
+) AS result ON result.pickId = PI1.id
+LEFT JOIN trackinginfo AS PbTrackingDecimal ON PbTrackingDecimal.recordId = pickitem.id AND PbTrackingDecimal.partTrackingId = (SELECT id FROM parttracking where abbr='Pb')
+LEFT JOIN trackingdecimal AS CdTrackingDecimal ON CdTrackingDecimal.tagId = pickitem.tagId AND CdTrackingDecimal.partTrackingId = (SELECT id FROM parttracking where abbr='Cd')
+LEFT JOIN trackingdecimal AS AsTrackingDecimal ON AsTrackingDecimal.tagId = pickitem.tagId AND AsTrackingDecimal.partTrackingId = (SELECT id FROM parttracking where abbr='As')
+LEFT JOIN trackingdecimal AS HgTrackingDecimal ON HgTrackingDecimal.tagId = pickitem.tagId AND HgTrackingDecimal.partTrackingId = (SELECT id FROM parttracking where abbr='Hg')
+
+LEFT JOIN trackingtext AS HMDSTracking ON HMDSTracking.tagId = pickitem.tagId AND HMDSTracking.partTrackingId = (SELECT id FROM parttracking where name='HM Data Source')
+
+WHERE (PI1.num = $P{pickNum})
+AND UOM.code = 'lbs'
+ORDER BY
+COALESCE($P!{cbPrimarySortBy},'ZZ'),
+COALESCE($P!{cbSecondarySortBy}, 'ZZ')]]>
+	</queryString>
+	<field name="PICKID" class="java.lang.Integer"/>
+	<field name="PICKNUMBER" class="java.lang.String"/>
+	<field name="PICKTYPE" class="java.lang.String"/>
+	<field name="PICKSTATUS" class="java.lang.String"/>
+	<field name="PICKPRIORITY" class="java.lang.String"/>
+	<field name="PICKLOCATIONGROUP" class="java.lang.String"/>
+	<field name="PICKLOCATIONGROUPID" class="java.lang.Integer"/>
+	<field name="PICKDATECREATED" class="java.sql.Timestamp"/>
+	<field name="PICKDATESCHEDULED" class="java.sql.Timestamp"/>
+	<field name="PICKDATEFINISHED" class="java.sql.Timestamp"/>
+	<field name="PICKDATELASTMODIFIED" class="java.sql.Timestamp"/>
+	<field name="PICKDATESTARTED" class="java.sql.Timestamp"/>
+	<field name="PICKITEMID" class="java.lang.Integer"/>
+	<field name="PICKITEMSTATUS" class="java.lang.String"/>
+	<field name="PICKITEMSTATUSID" class="java.lang.Integer"/>
+	<field name="PICKITEMPARTNUM" class="java.lang.String"/>
+	<field name="PICKITEMPARTDESC" class="java.lang.String"/>
+	<field name="PICKITEMQTY" class="java.math.BigDecimal"/>
+	<field name="PICKITEMUOM" class="java.lang.String"/>
+	<field name="PICKITEMLOCNAME" class="java.lang.String"/>
+	<field name="PICKITEMLOCGRPNAME" class="java.lang.String"/>
+	<field name="PICKITEMTAGNUM" class="java.lang.Long"/>
+	<field name="PICKITEMDESTLOCNAME" class="java.lang.String"/>
+	<field name="PICKITEMDESTLOCGRPNAME" class="java.lang.String"/>
+	<field name="PICKITEMSLOTNUM" class="java.lang.Integer"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="PICKITEMNOTE" class="java.lang.String"/>
+	<field name="SOITEMDESCRIPTION" class="java.lang.String"/>
+	<field name="CARRIER" class="java.lang.String"/>
+	<field name="kitHeaderDescription" class="java.lang.String"/>
+	<field name="kitHeaderName" class="java.lang.String"/>
+	<field name="kitFlag" class="java.lang.String"/>
+	<field name="ORDERITEMID" class="java.lang.String"/>
+	<field name="ORDERDESCRIPTION" class="java.lang.String"/>
+	<field name="FG" class="java.lang.Double"/>
+	<field name="RMCdQty" class="java.lang.Double"/>
+	<field name="CdQty" class="java.lang.Double"/>
+	<field name="RMAsQty" class="java.lang.Double"/>
+	<field name="AsQty" class="java.lang.Double"/>
+	<field name="RMPbQty" class="java.lang.Double"/>
+	<field name="PbQty" class="java.lang.Double"/>
+	<field name="RMHgQty" class="java.lang.Double"/>
+	<field name="HgQty" class="java.lang.Double"/>
+	<field name="PartDescription" class="java.lang.String"/>
+	<field name="HMDataSource" class="java.lang.String"/>
+	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+	</variable>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<variable name="TotalCdQty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CdQty}< 0.0? 0.0 : $F{CdQty}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAsQty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{AsQty}< 0.0? 0.0 : $F{AsQty}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalPbQty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{PbQty}< 0.0? 0.0 : $F{PbQty}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalHgQty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{HgQty}< 0.0? 0.0 : $F{HgQty}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="161" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="24b" mode="Transparent" x="0" y="0" width="552" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="444919d2-7799-4384-a6bc-0cc973024fb0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="20" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Pick Report]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-3" mode="Transparent" x="0" y="60" width="401" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1e8212f4-3b11-4026-967c-22e24bc127df">
+					<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[((com.evnt.eve.modules.ReportHelperModule) $P{module}).getCompanyReportAddress($F{PICKLOCATIONGROUPID}, $P{ShowCountry})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="95" y="118" width="241" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="b8cda436-7b65-4b76-a31c-89826e67c599"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKLOCATIONGROUP}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="date" mode="Transparent" x="0" y="0" width="552" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="12a55df9-3d80-40a5-bf1a-640926e14c96"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateInstance(DateFormat.FULL)).format($F{PICKDATECREATED})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" style="12b" positionType="Float" mode="Transparent" x="370" y="40" width="182" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a98ddede-7a57-41ce-817b-20aa5eee0774"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKNUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="date" positionType="Float" mode="Transparent" x="95" y="104" width="241" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="072ea218-8ce6-4cff-80e2-fbc019c27d4a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKDATESCHEDULED}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-13" style="14b" mode="Transparent" x="0" y="40" width="370" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c194b7a6-c08b-4d04-8e49-1491630bc75a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Bottom" isUsingCache="true">
+				<reportElement key="image-2" mode="Opaque" x="0" y="0" width="169" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="b10ab30d-d3e1-4ba1-9f14-0be8827c98bf">
+					<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+				<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement key="staticText-2" style="12b" positionType="Float" x="336" y="90" width="50" height="14" uuid="e43feca4-6cd2-4dd6-9090-a8402538f74c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="12b" positionType="Float" x="336" y="104" width="50" height="14" uuid="f57188c8-321c-47a0-80ba-dc58d53fd71f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Type:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" style="12b" positionType="Float" x="0" y="90" width="95" height="14" uuid="99b41bb2-66c7-4c9c-88e6-c89e595ec5fe"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Priority:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" style="12b" positionType="Float" x="0" y="104" width="95" height="14" uuid="bf4518a9-49e7-4bd1-afd2-fd33108e7237"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Scheduled:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" style="12b" positionType="Float" x="0" y="118" width="95" height="14" uuid="7bb8323e-fd60-48fd-88a5-a49a7ac04655"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Location Group:]]></text>
+			</staticText>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-5" style="body" positionType="Float" x="0" y="148" width="552" height="11" uuid="5e7a593e-b3bc-4af5-be05-0c85d50f4680"/>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<subreportParameter name="pickID">
+					<subreportParameterExpression><![CDATA[$F{PICKID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowAddress">
+					<subreportParameterExpression><![CDATA[$P{ShowAddress}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCountry">
+					<subreportParameterExpression><![CDATA[$P{ShowCountry}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "./subPickingOrders.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement key="line-1" style="body" positionType="Float" x="0" y="146" width="552" height="1" uuid="ba7181c3-7673-482e-ba1e-6c84f9b00e96"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line-2" positionType="FixRelativeToBottom" x="0" y="160" width="552" height="1" uuid="fe70a908-e4b7-4a0e-aec4-06d6452cfdbd"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement positionType="Float" x="370" y="60" width="182" height="19" uuid="60608270-6282-4f34-ba69-9ec2a086301b">
+					<printWhenExpression><![CDATA[$P{ShowBarcode}]]></printWhenExpression>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128B" drawText="false" checksumRequired="false" evaluationTime="Report">
+					<jr:codeExpression><![CDATA[$F{PICKNUMBER}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="386" y="104" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3b48fe77-f445-46b0-b875-eafd72d5bbf0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKTYPE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="386" y="90" width="166" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="aa72d519-0b0b-497d-aa17-758d055bd5a4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKSTATUS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="95" y="90" width="241" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="5ec2bad0-d300-4a70-b5bf-e178e929ae26"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKPRIORITY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" style="12b" positionType="Float" x="0" y="132" width="95" height="14" uuid="101090c9-1a7f-4ba9-8025-5e807ceb85f1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[OrderItemID:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="95" y="132" width="241" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="16c89cf0-5e45-45cd-b15c-4b53d67086c1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDERITEMID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" style="12b" positionType="Float" x="336" y="118" width="213" height="14" uuid="3939eb63-7c43-4e97-bd8e-6af92c41111b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Description:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12" positionType="Float" mode="Transparent" x="336" y="132" width="213" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="8ba93913-3a3a-4b18-bb6c-0465f79f1ef8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDERDESCRIPTION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Prevent">
+			<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() > 1)]]></printWhenExpression>
+			<staticText>
+				<reportElement key="staticText" style="24b" mode="Transparent" x="0" y="0" width="552" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="9a716958-ccfd-41ce-a98e-256a711e00a7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="20" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Pick Report]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Bottom" isUsingCache="true">
+				<reportElement key="image-1" mode="Opaque" x="0" y="0" width="169" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="4a11f5b4-dbed-4961-8e70-06268537c0ea">
+					<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+				<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Company", 1, true))]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="12b" mode="Transparent" x="370" y="40" width="182" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="178d5137-00fd-474e-919a-7272dfb8e8c6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKNUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-4" style="date" mode="Transparent" x="0" y="0" width="552" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="130b4f90-618b-4803-b2c6-0e221ea3ce6a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateInstance(DateFormat.FULL)).format($F{PICKDATECREATED})]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-14" style="14b" mode="Transparent" x="0" y="40" width="370" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d556d29f-49ca-4dc2-947d-bc8c09077030"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Prevent">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-5" style="12b" mode="Transparent" x="100" y="0" width="60" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="59a7a6d4-ce6f-48e5-9f13-71cb92f4ce97"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Quantity"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-6" style="12b" mode="Transparent" x="0" y="0" width="100" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="7b666b3c-9e7a-4ea7-997f-9a5d8349ae69"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Part"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="160" y="0" width="37" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="1951f83e-ebc6-4942-b69a-949ba812ceb3"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FG%"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="197" y="0" width="46" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="66d56b2b-6faf-494c-ab90-60dd8c7ccb5b">
+					<printWhenExpression><![CDATA[$P{ShowRMCdQty}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RM Cd\nQty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="243" y="0" width="35" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="c3a49d6c-05f7-40ea-9fd1-64b8cfb13e1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cd Qty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="324" y="0" width="35" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="01c198f1-7730-4b24-8c27-85821d730a4a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["As Qty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="278" y="0" width="46" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="e945abc1-fb7f-4ca0-bbf5-27cc1f99273c">
+					<printWhenExpression><![CDATA[$P{ShowRMAsQty}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RM As\nQty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="405" y="0" width="35" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="bac225ea-e150-4d51-a4be-baa39dd0e291"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pb Qty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="359" y="0" width="46" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="bf1909ad-54c4-4abb-903d-0cf440719129">
+					<printWhenExpression><![CDATA[$P{ShowRMPbQty}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RM Pb\nQty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="486" y="0" width="35" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3832ccfc-4f2c-4167-8bbc-71420d498bcb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hg Qty"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="440" y="0" width="46" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="6bbfa695-e18f-4d8a-be57-70d2cdc0eec1">
+					<printWhenExpression><![CDATA[$P{ShowRMHgQty}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RM Hg\nQty"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="22" width="552" height="1" uuid="2c00d724-e9cc-400e-8961-f7756932d236"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="521" y="0" width="31" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="67e0b896-85b4-4828-b968-cf0768112bb8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["HM\nDS"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="42" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="100" y="0" width="40" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="73baf3d3-4c83-429a-9ed2-f9294c2d877e"/>
+				<box leftPadding="17" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKITEMQTY}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="140" y="0" width="20" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="eb7e44c8-2d0e-423e-88c6-92c90489c6f1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKITEMUOM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="160" y="0" width="37" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="65d83407-4d05-4f15-9428-ec43539fb707"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FG}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-11" positionType="Float" mode="Transparent" x="203" y="14" width="349" height="14" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="cc56667d-6442-4f80-9778-3b5c7c977d00">
+					<printWhenExpression><![CDATA[new Boolean($P{module} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[((com.evnt.eve.modules.ReportHelperModule) $P{module}).getAllTrackingInfo("PickItem", $F{PICKITEMID})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-12" style="body" positionType="FixRelativeToBottom" x="0" y="28" width="552" height="14" uuid="c2dea97a-e895-4714-a81a-bd1d92df243b"/>
+				<box leftPadding="206">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKITEMNOTE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="197" y="0" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f6c1262d-aaa1-4c76-8ac0-7c9e57ba602b">
+					<printWhenExpression><![CDATA[$P{ShowRMCdQty}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RMCdQty}<0.0?"N/A":$F{RMCdQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="243" y="0" width="35" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4f31f277-cf7b-4b3c-b9e3-2c0e358b26e8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CdQty}<0.0?"N/A":$F{CdQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="324" y="0" width="35" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f7994c48-6660-474f-8d97-74884428b955"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AsQty}<0.0?"N/A":$F{AsQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="278" y="0" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="cddc0e26-834a-47b1-9318-f4748c63d2fd">
+					<printWhenExpression><![CDATA[$P{ShowRMAsQty}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RMAsQty}<0.0?"N/A":$F{RMAsQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="14" uuid="e60e698f-43f2-46fe-88a4-b0301cff78cc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKITEMPARTNUM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="405" y="0" width="35" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3c1de466-b0f5-485e-a5c2-d091b0506ae2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PbQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="359" y="0" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="9b333693-8afa-43d1-a28e-6b585986112f">
+					<printWhenExpression><![CDATA[$P{ShowRMPbQty}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RMPbQty}< 0.0 ? "N/A":$F{RMPbQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="486" y="0" width="35" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="8149e537-8e8b-43a6-81fb-5e6998770e5d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HgQty}<0.0?"N/A":$F{HgQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="440" y="0" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="86c73158-7471-44c2-940a-f50ca57a6121">
+					<printWhenExpression><![CDATA[$P{ShowRMHgQty}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RMHgQty}< 0.0 ? "N/A":$F{RMHgQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-12" style="body" positionType="FixRelativeToBottom" x="0" y="14" width="203" height="14" uuid="9297471a-08d3-400f-9127-f0d6024a9675"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Open Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PartDescription}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="521" y="0" width="31" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="42a1815d-870f-4afd-b549-13e96d8ac4e0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HMDataSource}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Prevent"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Prevent">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="321" y="0" width="183" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="57e49e8e-b1f2-44cc-812b-7648d1816fa2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="504" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3e0e357a-656d-431c-b5e6-b8a842ec86ca"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="321" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="e759c17d-6333-4655-92a0-7862b8132042"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="239" y="0" width="57" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3ea7b4a5-7e8f-49b9-a899-c84ad3d96848"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalCdQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="326" y="0" width="57" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="7893d214-bc83-4a80-83d2-a618eeab2c3b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAsQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="419" y="0" width="57" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="92d69ee2-03b2-4853-9013-0445c87871e1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalPbQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" style="body" mode="Transparent" x="512" y="0" width="40" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="91fc4808-0eee-4da1-b659-bad73de71d3c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalHgQty}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="552" height="1" uuid="2dc66da6-5434-41be-b9e9-724e5ba40f0a"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="12b" mode="Transparent" x="160" y="0" width="79" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="c6e63d09-52d0-43b2-b08d-fa096fc41497"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Qty"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
