@@ -32,6 +32,16 @@
 	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Zebra" fontName="Open Sans">
+		<box leftPadding="3" rightPadding="3">
+			<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{COLUMN_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EAEAEA"/>
+		</conditionalStyle>
+	</style>
 	<subDataset name="SOInfo" uuid="4b15957a-182e-4442-9265-e7e84736377e">
 		<parameter name="module" class="java.lang.Object" isForPrompting="false">
 			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
@@ -237,10 +247,10 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="84" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="65" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="84" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="65" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -252,7 +262,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="84" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="65" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
@@ -262,10 +272,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="120" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
+					<jr:column width="219" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="120" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
+								<reportElement x="0" y="0" width="219" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -276,22 +286,20 @@ WHERE id = 1]]>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="14" forecolor="#000099" uuid="318617e7-06ea-4a32-af57-1a12c5ebde0c"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="219" height="14" forecolor="#000000" uuid="318617e7-06ea-4a32-af57-1a12c5ebde0c"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
-								<anchorNameExpression><![CDATA["CustomerName"]]></anchorNameExpression>
-								<hyperlinkReferenceExpression><![CDATA[$F{CUSTOMER}]]></hyperlinkReferenceExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="80" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="55" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="80" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="55" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -303,7 +311,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
@@ -312,10 +320,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="95" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="85" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="95" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="85" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -327,7 +335,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="95" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="85" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
@@ -336,10 +344,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="50" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="50" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -351,7 +359,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
@@ -375,7 +383,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="b6ee0e6d-8435-4a46-bbb3-5fc213b0d070"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="b6ee0e6d-8435-4a46-bbb3-5fc213b0d070"/>
 								<box leftPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
@@ -384,10 +392,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="85" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="85" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -399,7 +407,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="85" height="14" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
@@ -428,7 +436,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" isPrintWhenDetailOverflows="true" uuid="d84848c7-19f4-4581-afdf-e99c884ae907"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" isPrintWhenDetailOverflows="true" uuid="d84848c7-19f4-4581-afdf-e99c884ae907"/>
 								<box leftPadding="1" rightPadding="1"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font fontName="Open Sans"/>
