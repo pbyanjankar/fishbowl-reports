@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackingSlipEAGL" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="a87f62d2-3104-4786-a934-8096b4c706a1">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="18"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="shipID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["7"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Ship/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Packing List for a selected order. Selecting Standard or By Location layouts will include backorder items."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowKitHeaders" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[80,90]]></parameterDescription>
+		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowCountry" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderNumber" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[SO,SO Number,PO,Customer PO Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA["PO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLayoutFormat" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[standard,Standard,carton,By Carton]]></parameterDescription>
+		<defaultValueExpression><![CDATA["carton"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbContactToShow" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[address,Address Name,contact,SO Contact]]></parameterDescription>
+		<defaultValueExpression><![CDATA["address"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowUniqueShipNumbers" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTracking" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowBackOrderItems" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[100,101]]></parameterDescription>
+		<defaultValueExpression><![CDATA["100"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colLineNumber" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colPartNumDescription" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colQtyOrdered" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colQtyShipped" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colQtyRemaining" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colUnitPrice" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colTotalPrice" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCartonInformation" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowDeliverySignature" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCompanyName" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowOrderNotes" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLogoAlignment" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[top,Top,left,Left]]></parameterDescription>
+		<defaultValueExpression><![CDATA["left"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colPartNumber" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDescription" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Packing Slip"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colShelfLocation" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowShipNum" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    SHIP.ID AS SHIPID,
+    SHIP.ORDERTYPEID AS ORDERTYPE,
+    if( so.totalprice = 0.0 , true, false)
+     AS ZEROTOTAL,
+    if(paymentInfo.amount IS NOT NULL, true, false) AS ISPAID,
+    so.totalprice AS SOTOTAL
+
+FROM
+    ship
+LEFT OUTER JOIN so ON ship.soid = so.id
+LEFT OUTER JOIN (SELECT DISTINCT SUM(posTransaction.amount) AS amount, posTransaction.soId
+                     FROM posTransaction
+	 	GROUP BY posTransaction.soId) AS paymentInfo ON ship.soid = paymentInfo.soId
+
+
+
+WHERE ship.id = $P{shipID}]]>
+	</queryString>
+	<field name="SHIPID" class="java.lang.Integer"/>
+	<field name="ORDERTYPE" class="java.lang.Integer"/>
+	<field name="ISPAID" class="java.lang.Boolean"/>
+	<field name="SOTOTAL" class="java.lang.Double"/>
+	<field name="ZEROTOTAL" class="java.lang.Boolean"/>
+	<group name="SOPackingList">
+		<groupExpression><![CDATA[new Integer(1)]]></groupExpression>
+		<groupHeader>
+			<band height="63" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{ORDERTYPE}.intValue() == 20)]]></printWhenExpression>
+				<subreport isUsingCache="true">
+					<reportElement key="subreport-5" mode="Opaque" x="0" y="0" width="552" height="63" forecolor="#000000" backcolor="#FFFFFF" uuid="fba8ca5d-4b1b-4c9a-a7be-5203ad229af0">
+						<printWhenExpression><![CDATA[new Boolean($F{ORDERTYPE}.intValue() == 20)]]></printWhenExpression>
+					</reportElement>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<subreportParameter name="colPartNumDescription">
+						<subreportParameterExpression><![CDATA[$P{colPartNumDescription}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="shipID">
+						<subreportParameterExpression><![CDATA[$F{SHIPID}.toString()]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="module">
+						<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowTracking">
+						<subreportParameterExpression><![CDATA[$P{ShowTracking}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colQtyShipped">
+						<subreportParameterExpression><![CDATA[$P{colQtyShipped}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colDescription">
+						<subreportParameterExpression><![CDATA[$P{colDescription}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cbLogoAlignment">
+						<subreportParameterExpression><![CDATA[$P{cbLogoAlignment}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colUnitPrice">
+						<subreportParameterExpression><![CDATA[$P{colUnitPrice}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowUniqueShipNumbers">
+						<subreportParameterExpression><![CDATA[$P{ShowUniqueShipNumbers}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colQtyRemaining">
+						<subreportParameterExpression><![CDATA[$P{colQtyRemaining}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cbOrderNumber">
+						<subreportParameterExpression><![CDATA[$P{cbOrderNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colTotalPrice">
+						<subreportParameterExpression><![CDATA[$P{colTotalPrice}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colPartNumber">
+						<subreportParameterExpression><![CDATA[$P{colPartNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cbContactToShow">
+						<subreportParameterExpression><![CDATA[$P{cbContactToShow}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ckShowCountry">
+						<subreportParameterExpression><![CDATA[$P{ckShowCountry}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowOrderNotes">
+						<subreportParameterExpression><![CDATA[$P{ShowOrderNotes}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowShipNum">
+						<subreportParameterExpression><![CDATA[$P{ShowShipNum}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ckShowBackOrderItems">
+						<subreportParameterExpression><![CDATA[$P{ckShowBackOrderItems}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowCompanyName">
+						<subreportParameterExpression><![CDATA[$P{ShowCompanyName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowCartonInfo">
+						<subreportParameterExpression><![CDATA[$P{ShowCartonInformation}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colQtyOrdered">
+						<subreportParameterExpression><![CDATA[$P{colQtyOrdered}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowBarcode">
+						<subreportParameterExpression><![CDATA[$P{ShowBarcode}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ckShowKitHeaders">
+						<subreportParameterExpression><![CDATA[$P{ckShowKitHeaders}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="colLineNumber">
+						<subreportParameterExpression><![CDATA[$P{colLineNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{cbLayoutFormat}.equals("standard") ?
+    "../Ship/SOPackingList.jasper" :
+    "./subCartonSOPackingList.jasper"]]></subreportExpression>
+				</subreport>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement mode="Transparent" x="206" y="15" width="136" height="48" uuid="f74a2346-b57e-44f1-a578-e55bc92ee218">
+						<printWhenExpression><![CDATA[$F{ZEROTOTAL} || $F{ISPAID}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA["./Images/paid.png"]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="POPackingList">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="50" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{ORDERTYPE}.intValue() == 10)]]></printWhenExpression>
+				<subreport isUsingCache="true">
+					<reportElement key="subreport-5" mode="Opaque" x="0" y="0" width="552" height="50" forecolor="#000000" backcolor="#FFFFFF" uuid="1ca9c614-da10-4586-8eef-89be976185c9">
+						<printWhenExpression><![CDATA[new Boolean($F{ORDERTYPE}.intValue() == 10)]]></printWhenExpression>
+					</reportElement>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<subreportParameter name="shipID">
+						<subreportParameterExpression><![CDATA[$F{SHIPID}.toString()]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="module">
+						<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowTracking">
+						<subreportParameterExpression><![CDATA[$P{ShowTracking}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ckShowCountry">
+						<subreportParameterExpression><![CDATA[$P{ckShowCountry}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowOrderNotes">
+						<subreportParameterExpression><![CDATA[$P{ShowOrderNotes}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowUniqueShipNumbers">
+						<subreportParameterExpression><![CDATA[$P{ShowUniqueShipNumbers}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowCartonInfo">
+						<subreportParameterExpression><![CDATA[$P{ShowCartonInformation}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowBarcode">
+						<subreportParameterExpression><![CDATA[$P{ShowBarcode}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowCompanyName">
+						<subreportParameterExpression><![CDATA[$P{ShowCompanyName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{cbLayoutFormat}.equals("standard") ?
+    "../Ship/POPackingList.jasper" :
+    "../Ship/cartonPOPackingList.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="TOPackingList">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="50" splitType="Stretch">
+				<subreport isUsingCache="true">
+					<reportElement key="subreport-6" mode="Opaque" x="0" y="0" width="552" height="50" forecolor="#000000" backcolor="#FFFFFF" uuid="3e7ba540-32a9-43fd-bfe0-fa5d0a47163c">
+						<printWhenExpression><![CDATA[new Boolean($F{ORDERTYPE}.intValue() == 40)]]></printWhenExpression>
+					</reportElement>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<subreportParameter name="module">
+						<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="shipID">
+						<subreportParameterExpression><![CDATA[$F{SHIPID}.toString()]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowTracking">
+						<subreportParameterExpression><![CDATA[$P{ShowTracking}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ckShowCountry">
+						<subreportParameterExpression><![CDATA[$P{ckShowCountry}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowOrderNotes">
+						<subreportParameterExpression><![CDATA[$P{ShowOrderNotes}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowShipNum">
+						<subreportParameterExpression><![CDATA[$P{ShowShipNum}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowUniqueShipNumbers">
+						<subreportParameterExpression><![CDATA[$P{ShowUniqueShipNumbers}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowCompanyName">
+						<subreportParameterExpression><![CDATA[$P{ShowCompanyName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowBarcode">
+						<subreportParameterExpression><![CDATA[$P{ShowBarcode}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ShowCartonInfo">
+						<subreportParameterExpression><![CDATA[$P{ShowCartonInformation}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{cbLayoutFormat}.equals("standard") ?
+    "../Ship/TOPackingList.jasper" :
+        "../Custom/FB-EAGL-cartonTOPackingList.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{ShowDeliverySignature}]]></printWhenExpression>
+			<image scaleImage="RealSize">
+				<reportElement x="360" y="0" width="192" height="14" uuid="6ed5919d-641b-4379-a1de-cc5903bf4720">
+					<printWhenExpression><![CDATA[$P{ShowDeliverySignature}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[com.evnt.util.ImageUtil.decodeImage(((com.evnt.eve.modules.ReportHelperModule) $P{module}).getImageData("Ship", $F{SHIPID}, true))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="260" y="0" width="100" height="14" uuid="cfd9738c-2b56-450d-95e8-92460fd0ea7b">
+					<printWhenExpression><![CDATA[$P{ShowDeliverySignature}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Open Sans"/>
+				</textElement>
+				<text><![CDATA[Receipt Signature: ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="0" width="321" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="a9fc4e0a-da82-4384-8705-b0215406da6e"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="321" y="0" width="183" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="72b86b35-15b1-4590-b210-6099c22602f7"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="504" y="0" width="48" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="48714d7e-e3a4-4566-975a-ae253eda3913"/>
+				<box leftPadding="3" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
