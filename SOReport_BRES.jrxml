@@ -108,6 +108,7 @@
   CustomFieldByName(so.customfields, "VIN") AS cfVIN,
   CustomFieldByName(so.customfields, "License") AS cfLicense,
   CustomFieldByName(so.customfields, "Odometer") AS cfOdometer,
+  CustomFieldByName(so.customfields, "Registration") AS cfRegistration,
   CustomFieldByName(so.customfields, "Unit Number") AS cfUnitNumber,
   CustomFieldByName(so.customfields, "Customer Concern") AS CUSTOMERCONCERN,
   CustomFieldByName(so.customfields, "Repair Summary") AS REPAIRSUMMARY,
@@ -166,6 +167,7 @@ WHERE so.id = $P{soId}]]>
 		<field name="HOMECURRENCYCODE" class="java.lang.String"/>
 		<field name="ESTIMATEDTAX" class="java.lang.Double"/>
 		<field name="CUSTOMERPO" class="java.lang.String"/>
+		<field name="cfRegistration" class="java.lang.String"/>
 		<variable name="OrderNumber" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[$P{BarcodesHaveDI} == null ?
     $F{NUM} :
@@ -880,6 +882,7 @@ CONCAT(IF(true,(COALESCE(companyAddress.address,"")),""), "\n",
   CustomFieldByName(so.customfields, "VIN") AS cfVIN,
   CustomFieldByName(so.customfields, "License") AS cfLicense,
   CustomFieldByName(so.customfields, "Odometer") AS cfOdometer,
+  CustomFieldByName(so.customfields, "Registration") AS cfRegistration,
   CustomFieldByName(so.customfields, "Unit Number") AS cfUnitNumber,
   CustomFieldByName(so.customfields, "Customer Concern") AS CUSTOMERCONCERN,
   CustomFieldByName(so.customfields, "Repair Summary") AS REPAIRSUMMARY,
@@ -981,6 +984,7 @@ GROUP BY so.note, company.name, so.locationgroupid, so.customercontact, so.custo
 	<field name="cfLicense" class="java.lang.String"/>
 	<field name="cfOdometer" class="java.lang.String"/>
 	<field name="cfUnitNumber" class="java.lang.String"/>
+	<field name="cfRegistration" class="java.lang.String"/>
 	<variable name="CustomerContact" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[$F{CUSTOMERCONTACT} != null && !$F{CUSTOMERCONTACT}.equals("") ?
     "Contact: " + $F{CUSTOMERCONTACT} :
@@ -1765,7 +1769,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
-						<jr:column width="75" uuid="73d3c3bb-7521-4a46-b5dd-2fcd957ad21c">
+						<jr:column width="92" uuid="73d3c3bb-7521-4a46-b5dd-2fcd957ad21c">
 							<printWhenExpression><![CDATA[$F{cfYear}!=null || $F{cfYear}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1776,7 +1780,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="3502348c-d3bd-4cd9-acfc-2c34a1ab83cb"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="3502348c-d3bd-4cd9-acfc-2c34a1ab83cb"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1792,7 +1796,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="75" height="14" uuid="efb05d48-dfe4-4766-9025-344e39102aed"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="efb05d48-dfe4-4766-9025-344e39102aed"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1800,7 +1804,7 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="75" uuid="ced375fe-4ee7-4347-9ac3-322f71d2024c">
+						<jr:column width="92" uuid="ced375fe-4ee7-4347-9ac3-322f71d2024c">
 							<printWhenExpression><![CDATA[$F{cfMake}!=null || $F{cfMake}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1811,7 +1815,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="d3fc9ac1-75aa-4f90-9c20-a56a960ce2fe"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="d3fc9ac1-75aa-4f90-9c20-a56a960ce2fe"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1827,7 +1831,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="75" height="14" uuid="2ecdff9e-7f12-401d-b9c2-b5edd725802a"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="2ecdff9e-7f12-401d-b9c2-b5edd725802a"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1835,7 +1839,7 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="75" uuid="72f9373d-1057-4426-b4f0-fa25c41d2b7f">
+						<jr:column width="92" uuid="72f9373d-1057-4426-b4f0-fa25c41d2b7f">
 							<printWhenExpression><![CDATA[$F{cfModel}!=null || $F{cfModel}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1846,7 +1850,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="34837b7c-7ea8-4aa0-8d9a-39ee27663d48"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="34837b7c-7ea8-4aa0-8d9a-39ee27663d48"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1862,7 +1866,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="75" height="14" uuid="5cf5a498-12d5-4a3c-995d-fe85382e8ceb"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="5cf5a498-12d5-4a3c-995d-fe85382e8ceb"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1870,7 +1874,7 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="102" uuid="62228115-8cfe-40f0-9f3a-b55acda7f66e">
+						<jr:column width="92" uuid="62228115-8cfe-40f0-9f3a-b55acda7f66e">
 							<printWhenExpression><![CDATA[$F{cfVIN}!=null || $F{cfVIN}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1881,7 +1885,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="102" height="14" backcolor="#EAEAEA" uuid="11d7f695-2f81-40fa-913b-916d9b8e84e7"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="11d7f695-2f81-40fa-913b-916d9b8e84e7"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1897,7 +1901,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="102" height="14" uuid="8ccfc443-9f4b-46b7-9a73-f47291d978dd"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="8ccfc443-9f4b-46b7-9a73-f47291d978dd"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1905,7 +1909,7 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="75" uuid="568e5718-0e0e-4519-95ff-60dc875d39e1">
+						<jr:column width="92" uuid="568e5718-0e0e-4519-95ff-60dc875d39e1">
 							<printWhenExpression><![CDATA[$F{cfLicense}!=null || $F{cfLicense}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1916,7 +1920,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="155d27c4-36f3-4d98-97d8-2c4a2d5e1eb3"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="155d27c4-36f3-4d98-97d8-2c4a2d5e1eb3"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1932,7 +1936,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="75" height="14" uuid="27809716-775f-49f5-84be-5717d7a3579c"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="27809716-775f-49f5-84be-5717d7a3579c"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1940,7 +1944,7 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="75" uuid="5367e403-5c0d-431d-934b-e55e37e21114">
+						<jr:column width="92" uuid="5367e403-5c0d-431d-934b-e55e37e21114">
 							<printWhenExpression><![CDATA[$F{cfOdometer}!=null || $F{cfOdometer}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1951,7 +1955,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="1c3719af-78ea-4665-9094-4197eb5a33d1"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="1c3719af-78ea-4665-9094-4197eb5a33d1"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1967,7 +1971,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="75" height="14" uuid="c4d010df-c6e6-4e54-94bc-dead401f8ca7"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="c4d010df-c6e6-4e54-94bc-dead401f8ca7"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1975,7 +1979,42 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="75" uuid="d141292c-c439-4e19-af77-4d30db0750b8">
+						<jr:column width="92" uuid="d141292c-c439-4e19-af77-4d30db0750b8">
+							<printWhenExpression><![CDATA[$F{cfRegistration}!=null || $F{cfRegistration}.length()>0]]></printWhenExpression>
+							<jr:columnHeader height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="fd9f33ad-eec6-47a5-9ff0-385590e11ae9"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Registration]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="92" height="14" uuid="b03d7ec2-96d3-4e58-994e-5bcb646dc82c"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cfRegistration}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="92" uuid="d141292c-c439-4e19-af77-4d30db0750b8">
 							<printWhenExpression><![CDATA[$F{cfUnitNumber}!=null || $F{cfUnitNumber}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1986,7 +2025,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="fd9f33ad-eec6-47a5-9ff0-385590e11ae9"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="fd9f33ad-eec6-47a5-9ff0-385590e11ae9"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -2002,7 +2041,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="75" height="14" uuid="b03d7ec2-96d3-4e58-994e-5bcb646dc82c"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="b03d7ec2-96d3-4e58-994e-5bcb646dc82c"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -2016,7 +2055,7 @@ $F{TOTALPRICE}]]></variableExpression>
 			<band height="36">
 				<printWhenExpression><![CDATA[$F{BODYSERIALNUMBER}!=null || $F{BODYSERIALNUMBER}.trim().length()>0]]></printWhenExpression>
 				<componentElement>
-					<reportElement key="SerialNumber" x="0" y="0" width="552" height="36" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="b1462fd3-ecf4-4d3d-9b09-3c36cdb417e3"/>
+					<reportElement key="SerialNumber" x="0" y="0" width="92" height="36" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="b1462fd3-ecf4-4d3d-9b09-3c36cdb417e3"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 						<datasetRun subDataset="SOInfo" uuid="a149cbd0-1c18-4bed-af8f-a4b787bf5542">
 							<datasetParameter name="soId">
@@ -2024,7 +2063,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
-						<jr:column width="552" uuid="4319dea0-3fdf-42c9-9af2-7e5269751b51">
+						<jr:column width="92" uuid="4319dea0-3fdf-42c9-9af2-7e5269751b51">
 							<printWhenExpression><![CDATA[$F{BODYSERIALNUMBER} != null && $F{BODYSERIALNUMBER}.length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -2035,7 +2074,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="552" height="14" backcolor="#EAEAEA" uuid="016e6946-aed2-4e10-afba-880b260b46c6"/>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="016e6946-aed2-4e10-afba-880b260b46c6"/>
 									<box leftPadding="3"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
@@ -2052,7 +2091,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="552" height="14" uuid="75695f75-ded8-4cf7-b668-67e1e870537e"/>
+									<reportElement x="0" y="0" width="92" height="14" uuid="75695f75-ded8-4cf7-b668-67e1e870537e"/>
 									<box leftPadding="3"/>
 									<textElement>
 										<font fontName="Open Sans" size="9"/>
