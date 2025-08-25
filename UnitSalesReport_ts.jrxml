@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UnitSalesReportTS" pageWidth="14400" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="14340" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="9731d4f9-2aba-4200-87c1-016c52941e74">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0980750000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="Zebra" fontName="Open Sans">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EAEAEA" pattern="" fontName="Open Sans"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="SOInfo" uuid="29eac9f8-4a7f-448b-8838-de79603785e9">
+		<parameter name="path" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange1SODatePosted" class="java.util.Date" isForPrompting="false">
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2SODatePosted" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIncludeCreditReturnItems" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+
+(case when $P{ckShowHistoricalProductNumber} = 1 then soitem.productnum else product.num end) AS SOITEMPRODUCTNUM,
+SOITEM.DESCRIPTION AS SOITEMDESCRIPTION,
+locationgroup.name AS LG,
+    (case when soitem.uomid != product.uomid then ((postsoitem.qty*uomconversion.multiply)/uomconversion.factor) else postsoitem.qty end) AS POSTSOITEMQTY,
+    postSoItem.totalPrice AS PRICE,
+    COMPANY.NAME AS COMPANY,
+    UOM.CODE AS UOMCODE,
+    CURRENCY.SYMBOL,
+    COALESCE(onhand.qty,0) AS qoh
+
+FROM soitem
+    INNER JOIN so ON so.id = soitem.soid
+    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+    LEFT JOIN postsoitem ON soitem.id = postsoitem.soitemid
+    JOIN postso on postsoitem.postsoid = postso.id
+    JOIN product ON soitem.productid = product.id
+    LEFT JOIN uom ON product.uomid = uom.id
+    LEFT JOIN uomconversion on product.uomid = uomconversion.touomid and soitem.uomid = uomconversion.fromuomid
+    INNER JOIN company ON company.id = 1
+    LEFT JOIN currency ON currency.homeCurrency = 1
+    LEFT OUTER JOIN (SELECT COALESCE(SUM(qty), 0) AS qty, partID, locationgroupid
+	FROM Tag
+          LEFT OUTER JOIN location ON tag.locationid = location.id
+          LEFT OUTER JOIN locationgroup ON location.locationgroupid = locationgroup.id
+
+	GROUP BY partID, locationgroupid
+	HAVING SUM(qty) > 0
+    ) as onhand ON onhand.partid = product.partid AND onhand.locationgroupid = locationgroup.id
+
+
+
+WHERE postso.postdate BETWEEN $P{dateRange1SODatePosted} AND DATE_SUB($P{dateRange2SODatePosted}, INTERVAL 1 SECOND)
+    AND product.num LIKE $P{productNum}
+    AND soitem.typeid IN (10,11,12,21,30,31,40,50,60,70,80)
+    AND locationgroup.id IN ($P!{locationGroupID})
+
+
+UNION ALL
+
+SELECT
+
+(case when $P{ckShowHistoricalProductNumber} = 1 then soitem.productnum else product.num end) AS soitemproductnum,
+soitem.description AS soitemdescription,
+locationgroup.name AS LG,
+    ((case when soitem.uomid != product.uomid then ((postsoitem.qty*uomconversion.multiply)/uomconversion.factor) else postsoitem.qty end)*-1) AS postsoitemqty,
+    postSoItem.totalPrice AS PRICE,
+    company.name AS company,
+    uom.code AS uomcode,
+    currency.symbol,
+    COALESCE(onhand.qty,0) AS qoh
+
+FROM soitem
+    INNER JOIN so ON so.id = soitem.soid
+    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+    LEFT JOIN postsoitem ON soitem.id = postsoitem.soitemid
+    JOIN postso on postsoitem.postsoid = postso.id
+    JOIN product ON soitem.productid = product.id
+    LEFT JOIN uom ON product.uomid = uom.id
+    LEFT JOIN uomconversion on product.uomid = uomconversion.touomid and soitem.uomid = uomconversion.fromuomid
+    INNER JOIN company ON company.id = 1
+    LEFT JOIN currency ON currency.homeCurrency = 1
+    LEFT OUTER JOIN (SELECT COALESCE(SUM(qty), 0) AS qty, partID, locationgroupid
+	FROM Tag
+          LEFT OUTER JOIN location ON tag.locationid = location.id
+          LEFT OUTER JOIN locationgroup ON location.locationgroupid = locationgroup.id
+	GROUP BY partID, locationgroupid
+	HAVING SUM(qty) > 0
+    ) as onhand ON onhand.partid = product.partid AND onhand.locationgroupid = locationgroup.id
+
+
+WHERE postso.postdate BETWEEN $P{dateRange1SODatePosted} AND DATE_SUB($P{dateRange2SODatePosted}, INTERVAL 1 SECOND)
+  AND product.num LIKE $P{productNum}
+  AND soitem.typeid IN ($P!{ckIncludeCreditReturnItems})
+  AND locationgroup.id IN ($P!{locationGroupID})
+
+
+ORDER BY 1;]]>
+		</queryString>
+		<field name="SOITEMPRODUCTNUM" class="java.lang.String"/>
+		<field name="SOITEMDESCRIPTION" class="java.lang.String"/>
+		<field name="POSTSOITEMQTY" class="java.lang.Double"/>
+		<field name="COMPANY" class="java.lang.String"/>
+		<field name="UOMCODE" class="java.lang.String"/>
+		<field name="SYMBOL" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="LG" class="java.lang.String"/>
+		<field name="PRICE" class="java.lang.Double"/>
+		<field name="qoh" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../SalesOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRangeNone" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="dateRange1SODatePosted" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2SODatePosted" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIncludeCreditReturnItems" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Shows list of products with units sold, unit sales and corresponding quantity on hand for the location group."]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+
+
+    COMPANY.NAME AS COMPANY
+
+
+FROM company WHERE company.id = 1]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<group name="CrossTab">
+		<groupHeader>
+			<band height="70">
+				<crosstab>
+					<reportElement x="0" y="0" width="1380" height="70" uuid="50869199-171e-4768-be2d-dc10937b0fdb"/>
+					<crosstabDataset>
+						<dataset>
+							<datasetRun subDataset="SOInfo" uuid="6c51bef0-e274-44c5-924b-1b6883fef676">
+								<datasetParameter name="dateRange1SODatePosted">
+									<datasetParameterExpression><![CDATA[$P{dateRange1SODatePosted}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="dateRange2SODatePosted">
+									<datasetParameterExpression><![CDATA[$P{dateRange2SODatePosted}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="ckIncludeCreditReturnItems">
+									<datasetParameterExpression><![CDATA[$P{ckIncludeCreditReturnItems}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="ckShowHistoricalProductNumber">
+									<datasetParameterExpression><![CDATA[$P{ckShowHistoricalProductNumber}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="productNum">
+									<datasetParameterExpression><![CDATA[$P{productNum}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="locationGroupID">
+									<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
+								</datasetParameter>
+								<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							</datasetRun>
+						</dataset>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="15" width="70" height="15" backcolor="#CCCCCC" uuid="9a4a0df7-c032-4fa2-8fa7-d5a6b7d4c765"/>
+								<box leftPadding="3">
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Part]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="70" y="15" width="118" height="15" backcolor="#CCCCCC" uuid="0e749f95-66e1-46d1-a63d-1ca0f8c93c80"/>
+								<box leftPadding="3">
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Part Description]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="SOITEMPRODUCTNUM" width="70">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="27eb6ffa-df00-4fc8-81a3-062db3d93330"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$V{SOITEMPRODUCTNUM}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="SOITEMDESCRIPTION" width="118">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{SOITEMDESCRIPTION}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="118" height="25" uuid="c89b36f9-30af-4ce3-8ae0-49f446c14c05"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$V{SOITEMDESCRIPTION}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="LGGroup" height="30" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{LG}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents>
+								<textField>
+									<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="236" height="15" backcolor="#CCCCCC" uuid="c52151cb-d75d-4812-8be7-27c6dfef3421"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{LGGroup}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" mode="Opaque" x="71" y="15" width="89" height="15" backcolor="#CCCCCC" uuid="909261d6-6c49-4f0f-87ec-37befe13a3eb"/>
+									<box rightPadding="3">
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Unit Sales"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" mode="Opaque" x="160" y="15" width="76" height="15" backcolor="#CCCCCC" uuid="bf1677ae-ffb7-4878-82b9-b07cd31a7428"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA["On Hand"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="15" width="71" height="15" backcolor="#CCCCCC" uuid="eedeb432-da56-4b44-99c9-667af8995532"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Units Sold"]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="245" height="15" backcolor="#CCCCCC" uuid="35d946e3-4bef-42d4-92ee-6edf7cde2e03"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[]]></text>
+								</staticText>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="15" width="126" height="15" backcolor="#CCCCCC" uuid="9e26ee4b-f375-4ce7-b904-c4d8b73d8c4a"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[Total Units Sold]]></text>
+								</staticText>
+								<staticText>
+									<reportElement mode="Opaque" x="126" y="15" width="119" height="15" backcolor="#CCCCCC" uuid="00f71f7d-3cd7-4fb5-bf72-5e0c287c5d3e"/>
+									<box rightPadding="3">
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Total Unit Sales]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="POSTSOITEMQTYmeasure" class="java.lang.Double" calculation="Sum">
+						<measureExpression><![CDATA[$F{POSTSOITEMQTY}]]></measureExpression>
+					</measure>
+					<measure name="QTYONHANDmeasure" class="java.lang.Double" calculation="Highest">
+						<measureExpression><![CDATA[$F{qoh}]]></measureExpression>
+					</measure>
+					<measure name="PRICEmeasure" class="java.lang.Double" calculation="Sum">
+						<measureExpression><![CDATA[$F{PRICE}]]></measureExpression>
+					</measure>
+					<crosstabCell width="236" height="25">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="71" height="25" uuid="379f38ef-3316-404a-aa7c-b9ad42f1a58f"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{POSTSOITEMQTYmeasure}]]></textFieldExpression>
+								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></patternExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="71" y="0" width="89" height="25" uuid="1a5ef871-f021-4ef5-9713-fee6177f66c7"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{PRICEmeasure}]]></textFieldExpression>
+								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></patternExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="160" y="0" width="76" height="25" uuid="abeef7d7-f2c3-4e93-b418-5fc1a886e6ab"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{QTYONHANDmeasure} == null ? 0 : $V{QTYONHANDmeasure}]]></textFieldExpression>
+								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></patternExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="SOITEMPRODUCTNUM">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="72897b80-1d83-4dd4-80a8-215b4f4ec2d6"/>
+								<textFieldExpression><![CDATA[$V{POSTSOITEMQTYmeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="SOITEMDESCRIPTION">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="af859bc8-3d93-451c-94a3-cccfacd8d731"/>
+								<textFieldExpression><![CDATA[$V{POSTSOITEMQTYmeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="245" height="25" columnTotalGroup="LGGroup">
+						<cellContents>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="126" height="25" uuid="e983a906-6b30-45b5-82aa-e39331205fc8"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{POSTSOITEMQTYmeasure}]]></textFieldExpression>
+								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></patternExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="126" y="0" width="119" height="25" uuid="5e88dd31-3d7f-4a87-a9d3-c2e31232a3ca"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{PRICEmeasure}]]></textFieldExpression>
+								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></patternExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="SOITEMPRODUCTNUM" columnTotalGroup="LGGroup">
+						<cellContents/>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="SOITEMDESCRIPTION" columnTotalGroup="LGGroup">
+						<cellContents/>
+					</crosstabCell>
+				</crosstab>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="0" width="1380" height="18" uuid="b7660593-24c6-41c9-be4e-4cfa2a54e7b7"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement>
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="1380" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="e80b44fd-3fa4-4ac8-a24e-60abb9bc410f"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Unit Sales Report" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="1380" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="2b09cc6b-ec8a-4a73-99c3-4ce8a095c51e">
+					<printWhenExpression><![CDATA[true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange1SODatePosted}.getYear() <= -900 && $P{dateRange2SODatePosted}.getYear() >= 1100
+  ? "Date Range: All"
+  : "Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1SODatePosted}) + " - " +
+(new SimpleDateFormat($V{DateFormat})).format($P{dateRange2SODatePosted}.getTime()-129600000)]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>
