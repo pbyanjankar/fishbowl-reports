@@ -1718,6 +1718,40 @@ $P{ReportTitle}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
+					<jr:column width="55" uuid="059e171d-2eae-4b49-b65e-a4728c63b1c3">
+						<printWhenExpression><![CDATA[$P{colItemSize}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+							</box>
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="55" height="28" backcolor="#EAEAEA" uuid="4abb8d65-cfec-4022-a37a-276de96a057e"/>
+								<box leftPadding="3" bottomPadding="0" rightPadding="0">
+									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Size]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="14" rowSpan="1">
+							<box>
+								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="13" uuid="b9ed000c-e666-4702-b3dc-805411c83231"/>
+								<box leftPadding="3" rightPadding="3"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SIZE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 					<jr:column width="43" uuid="de3e7d24-96ba-4dc7-b16e-685a39c5ddc6">
 						<printWhenExpression><![CDATA[$P{colItemPatternCode}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
@@ -2260,40 +2294,6 @@ Ordered]]></text>
 									<font fontName="Open Sans" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{DESCRIPTIONSHORT}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="55" uuid="059e171d-2eae-4b49-b65e-a4728c63b1c3">
-						<printWhenExpression><![CDATA[$P{colItemSize}]]></printWhenExpression>
-						<jr:columnHeader height="30" rowSpan="1">
-							<box>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-							</box>
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="55" height="28" backcolor="#EAEAEA" uuid="4abb8d65-cfec-4022-a37a-276de96a057e"/>
-								<box leftPadding="3" bottomPadding="0" rightPadding="0">
-									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								</box>
-								<textElement textAlignment="Left" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Size]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell height="14" rowSpan="1">
-							<box>
-								<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-							</box>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="13" uuid="b9ed000c-e666-4702-b3dc-805411c83231"/>
-								<box leftPadding="3" rightPadding="3"/>
-								<textElement>
-									<font fontName="Open Sans" size="9"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{SIZE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
