@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderListAMB" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="732" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Tue Sep 02 16:50:46 NPT 2025\ncallouts.1.pins=723,103;\ncallouts.1.text=Don&apos;t Show Details\ncallouts.1.bounds=755,78,150,75"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Barcode" hAlign="Center" vAlign="Middle">
+		<box topPadding="0"/>
+	</style>
+	<subDataset name="SOInfo" uuid="4b15957a-182e-4442-9265-e7e84736377e">
+		<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[25,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[70,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[10,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[60,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.sql.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[80,100]]></parameterDescription>
+			<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange1" class="java.sql.Date" isForPrompting="false">
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckOrderByCustomer" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomer" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colSalesPerson" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colStatus" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOrdered" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipped" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colRemaining" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateScheduled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbGroupBy" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[locationgroup.name,Location Group,qbclass.name,Class,so.salesman,Sales Person,stateconst.name,Ship To State/Province]]></parameterDescription>
+			<defaultValueExpression><![CDATA["locationgroup.name"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[20,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["900"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[90,900]]></parameterDescription>
+			<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colCustomerPO" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colShipToState/Province" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colDateFulfilled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[1,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cfFilter" class="java.lang.String" isForPrompting="false">
+			<property name="Type" value="Custom Field"/>
+			<property name="Table" value="SO"/>
+		</parameter>
+		<parameter name="cfFilterData" class="java.lang.String" isForPrompting="false"/>
+		<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[85,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["85"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+    $P!{cbGroupBy} AS GROUPBY,
+    LOCATIONGROUP.NAME AS LG,
+    CUSTOMER.NAME AS CUSTOMER,
+    SO.shipToName AS SHIPTONAME,
+    SO.NUM AS SO,
+    SO.DATEISSUED,
+    SOSTATUS.NAME AS STATUS,
+    SO.SALESMAN AS "user",
+    (case when $P{ckShowHistoricalProductNumber} = 1 then soitem.productnum else product.num end) AS PRODUCTNUM,
+    UOM.CODE AS SOITEMUOMCODE,
+    SOITEMSTATUS.NAME AS SOITEMSTATUS,
+    SOITEM.DESCRIPTION,
+    SOITEM.ID AS ITEMID,
+    (SOITEM.UNITPRICE * SOITEM.QTYTOFULFILL) + SOITEM.ADJUSTAMOUNT AS OPRICE,
+    SOITEM.QTYTOFULFILL AS QTYTOFULFILL,
+    ROUND(
+        ((SOITEM.QTYFULFILLED * SOITEM.UNITPRICE) +
+            (IF(SOITEM.QTYTOFULFILL = 0,0,SOITEM.ADJUSTAMOUNT / SOITEM.QTYTOFULFILL) * SOITEM.QTYFULFILLED)) * 10
+    ,1) / 10 AS FPRICE,
+    MIN(SOITEM.DATESCHEDULEDFULFILLMENT) AS DATESCHEDULEDFULFILLMENT,
+    SOITEM.DATESCHEDULEDFULFILLMENT AS ITEMFULFILLMENT,
+    MIN(SO.DATEISSUED) AS MINDATEISSUED,
+    SORDER.ORDERED,
+    SORDER.SHIPPED,
+    POSTSO.POSTDATE,
+    SO.DATEISSUED,
+    CURRENCY.SYMBOL,
+    SO.CUSTOMERPO,
+    STATECONST.CODE AS SHIPTOSTATE,
+    SOITEM.DATELASTFULFILLMENT,
+    SO.DATEFIRSTSHIP,
+    SO.DATECOMPLETED
+
+FROM
+    so
+    LEFT JOIN stateconst ON so.shiptostateid = stateconst.id
+    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
+    INNER JOIN customer ON customer.id = so.customerid
+    INNER JOIN sostatus ON sostatus.id = so.statusid
+    INNER JOIN soitem ON soitem.soid = so.id
+    LEFT JOIN product ON soitem.productid = product.id
+    JOIN qbclass ON qbclass.id = so.qbclassid
+    LEFT JOIN currency ON currency.homeCurrency = 1
+    LEFT JOIN (
+        SELECT
+            postso.soid AS soid,
+            MAX(postso.postdate) AS postdate
+        FROM
+            postso
+        WHERE postso.postdate BETWEEN $P{dateRange1} AND $P{dateRange2}
+        GROUP BY postso.soid
+    ) AS postso ON so.id = postso.soid
+    INNER JOIN uom ON uom.id = soitem.uomid
+    INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
+    INNER JOIN (
+        SELECT
+            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
+            SUM(
+                ROUND(
+                    ((soitem.qtyfulfilled * soitem.unitprice) +
+                        (IF(soitem.qtytofulfill = 0,0,soitem.adjustamount / soitem.qtytofulfill) * soitem.qtyfulfilled)) * 10
+                    ,1) / 10
+            ) AS shipped,
+            soitem.soid
+        FROM
+            soitem
+        WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+        GROUP BY soitem.soid
+    ) AS sorder ON so.id = sorder.soid
+
+WHERE
+    soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+    AND so.locationgroupid IN ($P!{locationGroupID})
+    AND so.customerid LIKE $P{customerID}
+    AND soitem.qbclassid LIKE $P{qbClassID}
+    AND UPPER(so.salesman) LIKE UPPER($P{salesPerson})
+    AND so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired}, $P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND $P{dateRange2}
+    AND COALESCE(product.num,'') LIKE $P{productNum}
+    AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
+    AND COALESCE(UPPER($P!{cfFilter}),'') LIKE UPPER($P{cfFilterData})
+
+GROUP BY
+    so.num, locationgroup.name, customer.name, so.dateissued, so.statusid,
+    sostatus.name, so.salesman, soitem.productnum, uom.code, soitemstatus.name,
+    sorder.ordered, itemfulfillment, sorder.shipped, soitem.description, soitem.id,
+    soitem.totalprice, soitem.qtytofulfill, soitem.qtyfulfilled, soitem.unitprice, soitem.adjustamount,
+    postso.postdate, qbclass.name, currency.symbol, stateconst.code
+
+ORDER BY
+    groupby, locationgroup.name, IF($P!{ckOrderByCustomer} = 1,customer.name,so.num), so.num]]>
+		</queryString>
+		<field name="GROUPBY" class="java.lang.String"/>
+		<field name="LG" class="java.lang.String"/>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="SO" class="java.lang.String"/>
+		<field name="DATEISSUED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="STATUS" class="java.lang.String"/>
+		<field name="user" class="java.lang.String"/>
+		<field name="PRODUCTNUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SOITEMUOMCODE" class="java.lang.String"/>
+		<field name="SOITEMSTATUS" class="java.lang.String"/>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ITEMID" class="java.lang.Integer"/>
+		<field name="OPRICE" class="java.lang.Double"/>
+		<field name="QTYTOFULFILL" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FPRICE" class="java.lang.Double"/>
+		<field name="DATESCHEDULEDFULFILLMENT" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ITEMFULFILLMENT" class="java.sql.Timestamp"/>
+		<field name="MINDATEISSUED" class="java.sql.Timestamp"/>
+		<field name="ORDERED" class="java.lang.Double"/>
+		<field name="SHIPPED" class="java.lang.Double"/>
+		<field name="POSTDATE" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SYMBOL" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CUSTOMERPO" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SHIPTOSTATE" class="java.lang.String"/>
+		<field name="DATELASTFULFILLMENT" class="java.sql.Timestamp"/>
+		<field name="DATEFIRSTSHIP" class="java.sql.Timestamp"/>
+		<field name="DATECOMPLETED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SHIPTONAME" class="java.lang.String"/>
+		<variable name="TotalOrdered" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{OPRICE}]]></variableExpression>
+		</variable>
+		<variable name="TotalShipped" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{FPRICE}]]></variableExpression>
+		</variable>
+		<variable name="TotalRemaining" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{OPRICE} - $F{FPRICE}]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<group name="SO">
+			<groupExpression><![CDATA[$F{SO}]]></groupExpression>
+		</group>
+		<group name="SOItem">
+			<groupExpression><![CDATA[$F{ITEMID}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Prints a summary of sales orders issued during the time window given; no taxes are included."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[10,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[25,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[60,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[70,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[80,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange1" class="java.sql.Date" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.sql.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckOrderByCustomer" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colCustomer" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colSalesPerson" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDateIssued" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colStatus" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colOrdered" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colShipped" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colRemaining" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDateScheduled" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbGroupBy" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<parameterDescription><![CDATA[locationgroup.name,Location Group,qbclass.name,Class,so.salesman,Sales Person,stateconst.name,Ship To State/Province]]></parameterDescription>
+		<defaultValueExpression><![CDATA["locationgroup.name"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[90,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colCustomerPO" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colShipToState/Province" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDateFulfilled" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="When unchecked, items will show the current product name, even if it was changed after the item was placed on the order."/>
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Type an alternate title for this report"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cfFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Type" value="Custom Field"/>
+		<property name="Table" value="SO"/>
+		<property name="Group" value="Filter by SO Custom Field"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[Select a field]]></parameterDescription>
+	</parameter>
+	<parameter name="cfFilterData" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filter by SO Custom Field"/>
+		<property name="Sort" value="2"/>
+		<property name="Tooltip" value="Type a value to filter by. Use % for wildcard searches. If the custom field is a checkbox, use true or false."/>
+		<parameterDescription><![CDATA[Enter filter data]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckCancelled" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="SO Status"/>
+		<parameterDescription><![CDATA[85,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    COMPANY.NAME AS COMPANY
+
+FROM
+    company
+
+WHERE id = 1]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="64" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="732" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
+					<printWhenExpression><![CDATA[true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange1}.getYear() <= -900 && $P{dateRange2}.getYear() >= 1100
+  ? "Date Range: All"
+  : "Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
+(new SimpleDateFormat($V{DateFormat})).format($P{dateRange2})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="0" width="732" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" x="0" y="54" width="732" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="732" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Sales Order Summary" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="56">
+			<componentElement>
+				<reportElement key="Show Details" x="0" y="0" width="732" height="56" uuid="3f5f93ed-b926-456d-9431-9255f472873a"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="SOInfo" uuid="c5d5940a-d333-4640-aa7e-a22707218c63">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="ckInProgress">
+							<datasetParameterExpression><![CDATA[$P{ckInProgress}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIssued">
+							<datasetParameterExpression><![CDATA[$P{ckIssued}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckClosedShort">
+							<datasetParameterExpression><![CDATA[$P{ckClosedShort}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckEstimate">
+							<datasetParameterExpression><![CDATA[$P{ckEstimate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cbApplyDateFilter">
+							<datasetParameterExpression><![CDATA[$P{cbApplyDateFilter}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckFulfilled">
+							<datasetParameterExpression><![CDATA[$P{ckFulfilled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="qbClassID">
+							<datasetParameterExpression><![CDATA[$P{qbClassID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange2">
+							<datasetParameterExpression><![CDATA[$P{dateRange2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckVoided">
+							<datasetParameterExpression><![CDATA[$P{ckVoided}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange1">
+							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="module">
+							<datasetParameterExpression><![CDATA[$P{module}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locationGroupID">
+							<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="customerID">
+							<datasetParameterExpression><![CDATA[$P{customerID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="salesPerson">
+							<datasetParameterExpression><![CDATA[$P{salesPerson}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckOrderByCustomer">
+							<datasetParameterExpression><![CDATA[$P{ckOrderByCustomer}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="productNum">
+							<datasetParameterExpression><![CDATA[$P{productNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colCustomer">
+							<datasetParameterExpression><![CDATA[$P{colCustomer}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colSalesPerson">
+							<datasetParameterExpression><![CDATA[$P{colSalesPerson}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colDateIssued">
+							<datasetParameterExpression><![CDATA[$P{colDateIssued}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colStatus">
+							<datasetParameterExpression><![CDATA[$P{colStatus}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colOrdered">
+							<datasetParameterExpression><![CDATA[$P{colOrdered}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colShipped">
+							<datasetParameterExpression><![CDATA[$P{colShipped}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colRemaining">
+							<datasetParameterExpression><![CDATA[$P{colRemaining}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cbGroupBy">
+							<datasetParameterExpression><![CDATA[$P{cbGroupBy}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIncludeReturns">
+							<datasetParameterExpression><![CDATA[$P{ckIncludeReturns}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckExpired">
+							<datasetParameterExpression><![CDATA[$P{ckExpired}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="118" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
+						<jr:groupHeader groupName="SO">
+							<jr:cell height="34" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+								</box>
+								<componentElement>
+									<reportElement style="Barcode" positionType="Float" x="0" y="0" width="118" height="34" uuid="f3e8cefe-85b7-4895-8e2f-05e77d089a31"/>
+									<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barHeight="50" evaluationTime="Report">
+										<jr:codeExpression><![CDATA[$F{SO}]]></jr:codeExpression>
+									</jr:barbecue>
+								</componentElement>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="118" height="30" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Order Barcode]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="128" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
+						<jr:groupHeader groupName="SO">
+							<jr:cell height="34" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="128" height="34" forecolor="#000099" uuid="246090ca-b1b0-452e-b6a8-eb1193a2758c"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{SO}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["SONum"]]></anchorNameExpression>
+									<hyperlinkReferenceExpression><![CDATA[$F{SO}]]></hyperlinkReferenceExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:groupHeader groupName="SOItem">
+							<jr:cell height="17" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="128" height="16" uuid="9391dd8c-a911-46ca-a93e-64f94390a5cc"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PRODUCTNUM}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="128" height="30" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Order Number
+Part Number]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="356" uuid="560f3932-08dd-4ae9-822e-fa81fed7784e">
+						<jr:groupHeader groupName="SO">
+							<jr:cell height="34" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkTarget="Blank">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="356" height="34" forecolor="#000000" uuid="c3778745-af28-4157-9c9b-e2c96a37259b"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{SHIPTONAME}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:groupHeader groupName="SOItem">
+							<jr:cell height="17" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="356" height="16" uuid="d888b151-8efa-4b10-bd28-6089464aa9aa"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement>
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="356" height="30" uuid="5f45a6a6-c620-4129-bfba-01bb42cdc9aa"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Ship To Name 
+Part Description]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="127" uuid="ae654926-867a-42a6-9b53-a21e03767079">
+						<printWhenExpression><![CDATA[$P{colDateIssued}]]></printWhenExpression>
+						<jr:groupHeader groupName="SOItem">
+							<jr:cell height="17" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="127" height="16" uuid="6f3466a1-7c17-4f50-93f6-52eef4b47cf8"/>
+									<box leftPadding="0" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{QTYTOFULFILL}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:groupHeader groupName="SO">
+							<jr:cell height="34" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="127" height="34" uuid="40bbb496-993d-45de-a7bb-7b18e6efb351"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DATEISSUED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="127" height="30" uuid="306b7d81-beb6-4d05-9fb5-60e2aef08774"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Order Date
+Quantity Ordered]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Prevent">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="501" y="3" width="210" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="711" y="3" width="21" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="3" width="501" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="be88ff9d-ce0a-4398-b59e-9e444a24b556">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
