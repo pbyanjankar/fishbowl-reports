@@ -93,138 +93,64 @@
 		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
-    LOCATIONGROUP.NAME AS LG,
+
+    SO.NUM AS SO,
     CUSTOMER.NAME AS CUSTOMER,
     SO.shipToName AS SHIPTONAME,
-    SO.NUM AS SO,
     SO.DATEISSUED,
-    SOSTATUS.NAME AS STATUS,
-    SO.SALESMAN AS "user",
     (case when $P{ckShowHistoricalProductNumber} = 1 then soitem.productnum else product.num end) AS PRODUCTNUM,
-    UOM.CODE AS SOITEMUOMCODE,
     SOITEMSTATUS.NAME AS SOITEMSTATUS,
     SOITEM.DESCRIPTION,
     SOITEM.ID AS ITEMID,
-    (SOITEM.UNITPRICE * SOITEM.QTYTOFULFILL) + SOITEM.ADJUSTAMOUNT AS OPRICE,
     SOITEM.QTYTOFULFILL AS QTYTOFULFILL,
-    ROUND(
-        ((SOITEM.QTYFULFILLED * SOITEM.UNITPRICE) +
-            (IF(SOITEM.QTYTOFULFILL = 0,0,SOITEM.ADJUSTAMOUNT / SOITEM.QTYTOFULFILL) * SOITEM.QTYFULFILLED)) * 10
-    ,1) / 10 AS FPRICE,
-    MIN(SOITEM.DATESCHEDULEDFULFILLMENT) AS DATESCHEDULEDFULFILLMENT,
-    SOITEM.DATESCHEDULEDFULFILLMENT AS ITEMFULFILLMENT,
-    MIN(SO.DATEISSUED) AS MINDATEISSUED,
-    SORDER.ORDERED,
-    SORDER.SHIPPED,
-    POSTSO.POSTDATE,
-    SO.DATEISSUED,
-    CURRENCY.SYMBOL,
-    SO.CUSTOMERPO,
-    STATECONST.CODE AS SHIPTOSTATE,
-    SOITEM.DATELASTFULFILLMENT,
-    SO.DATEFIRSTSHIP,
-    SO.DATECOMPLETED
+    SOITEM.QTYORDERED AS QTYORDERED,
+    SO.DATEISSUED
 
 FROM
     so
-    LEFT JOIN stateconst ON so.shiptostateid = stateconst.id
-    INNER JOIN locationgroup ON locationgroup.id = so.locationgroupid
     INNER JOIN customer ON customer.id = so.customerid
     INNER JOIN sostatus ON sostatus.id = so.statusid
     INNER JOIN soitem ON soitem.soid = so.id
     LEFT JOIN product ON soitem.productid = product.id
-    JOIN qbclass ON qbclass.id = so.qbclassid
-    LEFT JOIN currency ON currency.homeCurrency = 1
-    LEFT JOIN (
-        SELECT
-            postso.soid AS soid,
-            MAX(postso.postdate) AS postdate
-        FROM
-            postso
-        WHERE postso.postdate BETWEEN $P{dateRange1} AND $P{dateRange2}
-        GROUP BY postso.soid
-    ) AS postso ON so.id = postso.soid
-    INNER JOIN uom ON uom.id = soitem.uomid
     INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
-    INNER JOIN (
-        SELECT
-            SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ordered,
-            SUM(
-                ROUND(
-                    ((soitem.qtyfulfilled * soitem.unitprice) +
-                        (IF(soitem.qtytofulfill = 0,0,soitem.adjustamount / soitem.qtytofulfill) * soitem.qtyfulfilled)) * 10
-                    ,1) / 10
-            ) AS shipped,
-            soitem.soid
-        FROM
-            soitem
-        WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
-        GROUP BY soitem.soid
-    ) AS sorder ON so.id = sorder.soid
+    	LEFT OUTER JOIN accountgrouprelation ON customer.accountid = accountgrouprelation.accountid
+     	LEFT OUTER JOIN accountgroup ON accountgrouprelation.groupid = accountgroup.id
+
 
 WHERE
     soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
     AND so.customerid LIKE $P{customerID}
     AND so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired}, $P{ckCancelled})
     AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND $P{dateRange2}
-
-GROUP BY
-    so.num, locationgroup.name, customer.name, so.dateissued, so.statusid,
-    sostatus.name, so.salesman, soitem.productnum, uom.code, soitemstatus.name,
-    sorder.ordered, itemfulfillment, sorder.shipped, soitem.description, soitem.id,
-    soitem.totalprice, soitem.qtytofulfill, soitem.qtyfulfilled, soitem.unitprice, soitem.adjustamount,
-    postso.postdate, qbclass.name, currency.symbol, stateconst.code
+    AND COALESCE(accountgroup.id,0) IN ($P!{customerGroupID})
 
 ORDER BY
     so.num, soitem.solineitem;]]>
 		</queryString>
-		<field name="LG" class="java.lang.String"/>
 		<field name="CUSTOMER" class="java.lang.String"/>
 		<field name="SO" class="java.lang.String"/>
 		<field name="DATEISSUED" class="java.sql.Timestamp">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="STATUS" class="java.lang.String"/>
-		<field name="user" class="java.lang.String"/>
 		<field name="PRODUCTNUM" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="SOITEMUOMCODE" class="java.lang.String"/>
-		<field name="SOITEMSTATUS" class="java.lang.String"/>
 		<field name="DESCRIPTION" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="ITEMID" class="java.lang.Integer"/>
-		<field name="OPRICE" class="java.lang.Double"/>
 		<field name="QTYTOFULFILL" class="java.math.BigDecimal">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="FPRICE" class="java.lang.Double"/>
-		<field name="DATESCHEDULEDFULFILLMENT" class="java.sql.Timestamp">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="ITEMFULFILLMENT" class="java.sql.Timestamp"/>
-		<field name="MINDATEISSUED" class="java.sql.Timestamp"/>
-		<field name="ORDERED" class="java.lang.Double"/>
-		<field name="SHIPPED" class="java.lang.Double"/>
-		<field name="POSTDATE" class="java.sql.Timestamp">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="SYMBOL" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="CUSTOMERPO" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="SHIPTOSTATE" class="java.lang.String"/>
-		<field name="DATELASTFULFILLMENT" class="java.sql.Timestamp"/>
-		<field name="DATEFIRSTSHIP" class="java.sql.Timestamp"/>
-		<field name="DATECOMPLETED" class="java.sql.Timestamp">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
 		<field name="SHIPTONAME" class="java.lang.String"/>
+		<field name="QTYORDERED" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -255,7 +181,7 @@ ORDER BY
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Prints a summary of sales orders issued during the time window given; no taxes are included."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Prints sales orders and details"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckEstimate" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
@@ -328,6 +254,10 @@ ORDER BY
 	</parameter>
 	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
 		<property name="Group" value="Type an alternate title for this report"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -438,15 +368,15 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="118" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
+					<jr:column width="175" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
 						<jr:groupHeader groupName="SO">
-							<jr:cell height="34" rowSpan="1">
+							<jr:cell height="50" rowSpan="1">
 								<box>
 									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
 								</box>
 								<componentElement>
-									<reportElement style="Barcode" positionType="Float" x="0" y="2" width="118" height="30" uuid="f3e8cefe-85b7-4895-8e2f-05e77d089a31"/>
-									<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barHeight="50" evaluationTime="Report">
+									<reportElement style="Barcode" isPrintRepeatedValues="false" x="0" y="0" width="175" height="50" uuid="fc3f30ad-76c7-45f7-8634-b97e15fb0f5a"/>
+									<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
 										<jr:codeExpression><![CDATA[$F{SO}]]></jr:codeExpression>
 									</jr:barbecue>
 								</componentElement>
@@ -454,7 +384,7 @@ WHERE id = 1]]>
 						</jr:groupHeader>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="118" height="30" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
+								<reportElement x="0" y="0" width="175" height="30" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -468,12 +398,12 @@ WHERE id = 1]]>
 					</jr:column>
 					<jr:column width="128" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
 						<jr:groupHeader groupName="SO">
-							<jr:cell height="34" rowSpan="1">
+							<jr:cell height="50" rowSpan="1">
 								<box>
 									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="128" height="34" forecolor="#000099" uuid="246090ca-b1b0-452e-b6a8-eb1193a2758c"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="128" height="50" forecolor="#000099" uuid="246090ca-b1b0-452e-b6a8-eb1193a2758c"/>
 									<box leftPadding="3" rightPadding="3"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10" isBold="true"/>
@@ -511,14 +441,14 @@ Part Number]]></text>
 						</jr:columnHeader>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:column width="356" uuid="560f3932-08dd-4ae9-822e-fa81fed7784e">
+					<jr:column width="316" uuid="560f3932-08dd-4ae9-822e-fa81fed7784e">
 						<jr:groupHeader groupName="SO">
-							<jr:cell height="34" rowSpan="1">
+							<jr:cell height="50" rowSpan="1">
 								<box>
 									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkTarget="Blank">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="356" height="34" forecolor="#000000" uuid="c3778745-af28-4157-9c9b-e2c96a37259b"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="316" height="50" forecolor="#000000" uuid="c3778745-af28-4157-9c9b-e2c96a37259b"/>
 									<box leftPadding="3" rightPadding="3"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10" isBold="true"/>
@@ -530,7 +460,7 @@ Part Number]]></text>
 						<jr:groupHeader groupName="SOItem">
 							<jr:cell height="17" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="356" height="16" uuid="d888b151-8efa-4b10-bd28-6089464aa9aa"/>
+									<reportElement x="0" y="0" width="316" height="16" uuid="d888b151-8efa-4b10-bd28-6089464aa9aa"/>
 									<box leftPadding="3" rightPadding="3"/>
 									<textElement>
 										<font fontName="Open Sans"/>
@@ -541,7 +471,7 @@ Part Number]]></text>
 						</jr:groupHeader>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="356" height="30" uuid="5f45a6a6-c620-4129-bfba-01bb42cdc9aa"/>
+								<reportElement x="0" y="0" width="316" height="30" uuid="5f45a6a6-c620-4129-bfba-01bb42cdc9aa"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -554,27 +484,27 @@ Part Description]]></text>
 						</jr:columnHeader>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:column width="127" uuid="ae654926-867a-42a6-9b53-a21e03767079">
+					<jr:column width="110" uuid="ae654926-867a-42a6-9b53-a21e03767079">
 						<jr:groupHeader groupName="SOItem">
 							<jr:cell height="17" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="127" height="16" uuid="6f3466a1-7c17-4f50-93f6-52eef4b47cf8"/>
+									<reportElement x="0" y="0" width="110" height="16" uuid="6f3466a1-7c17-4f50-93f6-52eef4b47cf8"/>
 									<box leftPadding="0" rightPadding="3"/>
 									<textElement textAlignment="Right">
 										<font fontName="Open Sans"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{QTYTOFULFILL}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{QTYORDERED}]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 								</textField>
 							</jr:cell>
 						</jr:groupHeader>
 						<jr:groupHeader groupName="SO">
-							<jr:cell height="34" rowSpan="1">
+							<jr:cell height="50" rowSpan="1">
 								<box>
 									<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
 								</box>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="127" height="34" uuid="40bbb496-993d-45de-a7bb-7b18e6efb351"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="110" height="50" uuid="40bbb496-993d-45de-a7bb-7b18e6efb351"/>
 									<textElement textAlignment="Right" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10" isBold="true"/>
 									</textElement>
@@ -585,7 +515,7 @@ Part Description]]></text>
 						</jr:groupHeader>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="127" height="30" uuid="306b7d81-beb6-4d05-9fb5-60e2aef08774"/>
+								<reportElement x="0" y="0" width="110" height="30" uuid="306b7d81-beb6-4d05-9fb5-60e2aef08774"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
