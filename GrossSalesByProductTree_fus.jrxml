@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrossSalesByProductTreeFUSION" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="9731d4f9-2aba-4200-87c1-016c52941e74">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0980750000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../SalesOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRangeNone" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productTree1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productTree2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowData" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowGraphs" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowEachProductOnce" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckIncludeCreditReturnItems" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowHistoricalProductNumber" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT (case when $P{ckShowHistoricalProductNumber} = 1 then soitem.productnum else product.num end) AS SOITEMPRODUCTNUM, SOITEM.DESCRIPTION AS SOITEMDESCRIPTION,
+    (case when soitem.uomid != product.uomid then ((postsoitem.qty*uomconversion.multiply)/uomconversion.factor) else postsoitem.qty end) AS POSTSOITEMQTY,
+    producttree.name AS PRODUCTTREENAME,
+    (CASE WHEN soitem.uomid != product.uomid then (soitem.unitprice/uomconversion.multiply)*uomconversion.factor else soitem.unitprice end) + (soitem.adjustamount / (CASE WHEN soitem.qtytofulfill = 0
+                                                            THEN 1
+                                                            ELSE soitem.qtytofulfill END)) AS SOITEMUNITPRICE, SOITEM.TYPEID AS SOITEMTYPEID,
+    COMPANY.NAME AS COMPANY,
+    UOM.CODE AS UOMCODE,
+    CURRENCY.SYMBOL,
+
+    COALESCE(inventoryTotals.totalOnHand,0) AS INVENTORYQTY,
+    COALESCE(inventoryTotals.totalOnOrder,0) AS ONORDERQTY
+
+FROM soitem
+    LEFT JOIN postsoitem ON soitem.id = postsoitem.soitemid
+    JOIN postso on postsoitem.postsoid = postso.id
+    JOIN product ON soitem.productid = product.id
+    LEFT JOIN producttotree ON product.id = producttotree.productid
+    LEFT JOIN producttree ON producttotree.producttreeid = producttree.id
+    LEFT JOIN uom ON product.uomid = uom.id
+    LEFT JOIN uomconversion on product.uomid = uomconversion.touomid and soitem.uomid = uomconversion.fromuomid
+    INNER JOIN company ON company.id = 1
+    LEFT JOIN currency ON currency.homeCurrency = 1
+
+     LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        GROUP BY partId
+    ) AS inventoryTotals ON inventoryTotals.partId = product.partid
+
+
+
+WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND soitem.typeid IN (10,11,12,21,30,31,40,50,60,70,80)
+    AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))
+    AND (CASE WHEN $P!{ckShowEachProductOnce} =1 then (Select producttree.id
+           FROM product AS p1
+           LEFT JOIN producttotree ON p1.id = producttotree.productid
+           LEFT JOIN producttree ON producttotree.producttreeid = producttree.id
+           WHERE p1.id = product.id
+           AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))limit 1)  else producttree.id end) = producttree.id
+
+UNION ALL
+
+SELECT (case when $P{ckShowHistoricalProductNumber} = 1 then soitem.productnum else product.num end) AS soitemproductnum, soitem.description AS soitemdescription,
+    ((case when soitem.uomid != product.uomid then ((postsoitem.qty*uomconversion.multiply)/uomconversion.factor) else postsoitem.qty end)*-1) AS postsoitemqty,
+    producttree.name AS producttreename,
+    ((CASE WHEN soitem.uomid != product.uomid then (soitem.unitprice/uomconversion.multiply)*uomconversion.factor else soitem.unitprice end) * -1) + (soitem.adjustamount / (CASE WHEN soitem.qtytofulfill = 0
+                                                            THEN 1
+                                                            ELSE soitem.qtytofulfill END)) AS soitemunitprice, soitem.typeid AS soitemTypeid,
+    company.name AS company, uom.code AS uomcode, currency.symbol,
+    COALESCE(inventoryTotals.totalOnHand,0) AS INVENTORYQTY,
+    COALESCE(inventoryTotals.totalOnOrder,0) AS ONORDERQTY
+
+FROM soitem
+    LEFT JOIN postsoitem ON soitem.id = postsoitem.soitemid
+    JOIN postso on postsoitem.postsoid = postso.id
+    JOIN product ON soitem.productid = product.id
+    LEFT JOIN producttotree ON product.id = producttotree.productid
+    LEFT JOIN producttree ON producttotree.producttreeid = producttree.id
+    LEFT JOIN uom ON product.uomid = uom.id
+    LEFT JOIN uomconversion on product.uomid = uomconversion.touomid and soitem.uomid = uomconversion.fromuomid
+    INNER JOIN company ON company.id = 1
+    LEFT JOIN currency ON currency.homeCurrency = 1
+
+
+    LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        GROUP BY partId
+    ) AS inventoryTotals ON inventoryTotals.partId = product.partid
+
+
+WHERE postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+  AND soitem.typeid IN ($P!{ckIncludeCreditReturnItems})
+  AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))
+  AND (CASE WHEN $P!{ckShowEachProductOnce} =1 then (Select producttree.id
+           FROM product AS p1
+           LEFT JOIN producttotree ON p1.id = producttotree.productid
+           LEFT JOIN producttree ON producttotree.producttreeid = producttree.id
+           WHERE p1.id = product.id
+           AND ((COALESCE(producttreeid,0) IN ($P!{productTree1})) OR ((COALESCE(producttreeid,0) LIKE $P{productTree2})))limit 1) else producttree.id end) = producttree.id
+
+
+ORDER BY 4,1,3]]>
+	</queryString>
+	<field name="SOITEMPRODUCTNUM" class="java.lang.String"/>
+	<field name="SOITEMDESCRIPTION" class="java.lang.String"/>
+	<field name="POSTSOITEMQTY" class="java.lang.Double"/>
+	<field name="PRODUCTTREENAME" class="java.lang.String"/>
+	<field name="SOITEMUNITPRICE" class="java.lang.Double"/>
+	<field name="SOITEMTYPEID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="UOMCODE" class="java.lang.String"/>
+	<field name="SYMBOL" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INVENTORYQTY" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ONORDERQTY" class="java.lang.Double"/>
+	<variable name="productTotalQty" class="java.math.BigDecimal" resetType="Group" resetGroup="Product" calculation="Sum">
+		<variableExpression><![CDATA[$F{SOITEMTYPEID}.doubleValue() != 20 ?
+                ($F{POSTSOITEMQTY} != null
+                      ? $F{POSTSOITEMQTY}.doubleValue()
+                      : 0)
+                  :($F{POSTSOITEMQTY} != null
+                      ? $F{POSTSOITEMQTY}.doubleValue() * (-1)
+                      : 0)]]></variableExpression>
+	</variable>
+	<variable name="productTotalPrice" class="java.lang.Double" resetType="Group" resetGroup="Product" calculation="Sum">
+		<variableExpression><![CDATA[new Double(($F{POSTSOITEMQTY} != null ? $F{POSTSOITEMQTY}.doubleValue() : 0) *
+		($F{SOITEMUNITPRICE} != null ? $F{SOITEMUNITPRICE}.doubleValue() : 0))]]></variableExpression>
+	</variable>
+	<variable name="productTreeTotalPrice" class="java.lang.Double" resetType="Group" resetGroup="ProductTree" calculation="Sum">
+		<variableExpression><![CDATA[new Double(($F{POSTSOITEMQTY} != null ? $F{POSTSOITEMQTY}.doubleValue() : 0) *
+		($F{SOITEMUNITPRICE} != null ? $F{SOITEMUNITPRICE}.doubleValue() : 0))]]></variableExpression>
+	</variable>
+	<variable name="productTotalQty_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Product" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{POSTSOITEMQTY} != null ? $F{POSTSOITEMQTY}.doubleValue() : 0)]]></variableExpression>
+	</variable>
+	<variable name="ProductTreeName" class="java.lang.String" resetType="Group" resetGroup="ProductTree">
+		<variableExpression><![CDATA[$F{PRODUCTTREENAME}]]></variableExpression>
+	</variable>
+	<variable name="productDuplicateCount" class="java.lang.Double" incrementType="Group" incrementGroup="ProductTree" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></variableExpression>
+	</variable>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<variable name="isMultiCurrency" class="java.lang.Boolean">
+		<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+	</variable>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="avgPrice" class="java.lang.Double">
+		<variableExpression><![CDATA[new Double(($V{productTotalQty_1}.doubleValue() != 0 && $V{productTotalQty_1} != null) ?         ($V{productTotalPrice}.doubleValue()/$V{productTotalQty_1}.doubleValue()) :         0)]]></variableExpression>
+	</variable>
+	<variable name="productTreeTotalQTY" class="java.math.BigDecimal" resetType="Group" resetGroup="ProductTree" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{POSTSOITEMQTY} != null ? $F{POSTSOITEMQTY}.doubleValue() : 0)]]></variableExpression>
+	</variable>
+	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+	</variable>
+	<group name="ProductTree" minHeightToStartNewPage="60">
+		<groupExpression><![CDATA[$F{PRODUCTTREENAME}]]></groupExpression>
+		<groupHeader>
+			<band height="14" splitType="Stretch">
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" x="0" y="0" width="552" height="14" uuid="01887d77-f234-458a-9508-24a64f97401b"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Open Sans" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PRODUCTTREENAME} != null ? $F{PRODUCTTREENAME} : "No Product Tree Assigned"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="434" splitType="Stretch">
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-7" x="463" y="0" width="89" height="14" uuid="9b541186-dda8-4506-954a-e26710803472">
+						<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="4">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
+com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{productTreeTotalPrice}, $V{PriceDecimal})
+:
+$V{productTreeTotalPrice}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-21" x="0" y="0" width="210" height="14" uuid="6c2c6ed5-b142-41fe-a865-8650797b69f4">
+						<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="69" rightPadding="4">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Open Sans" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total" + " " + ($F{PRODUCTTREENAME} != null ? $F{PRODUCTTREENAME} : "No Product Tree Assigned")]]></textFieldExpression>
+				</textField>
+				<bar3DChart>
+					<chart evaluationTime="Group" evaluationGroup="ProductTree">
+						<reportElement key="element-23" style="note" x="61" y="256" width="424" height="178" uuid="88093852-9f98-422d-af34-60c417c1a039">
+							<printWhenExpression><![CDATA[$P{ShowGraphs}]]></printWhenExpression>
+						</reportElement>
+						<box>
+							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.0" lineColor="#000000"/>
+							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+					</chart>
+					<categoryDataset>
+						<dataset resetType="Group" resetGroup="ProductTree"/>
+						<categorySeries>
+							<seriesExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></categoryExpression>
+							<valueExpression><![CDATA[$V{productTotalPrice}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<bar3DPlot>
+						<plot/>
+						<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+						<categoryAxisLabelExpression><![CDATA["Product"]]></categoryAxisLabelExpression>
+						<categoryAxisFormat>
+							<axisFormat/>
+						</categoryAxisFormat>
+						<valueAxisLabelExpression><![CDATA["Dollar Amount"]]></valueAxisLabelExpression>
+						<valueAxisFormat>
+							<axisFormat/>
+						</valueAxisFormat>
+					</bar3DPlot>
+				</bar3DChart>
+				<pieChart>
+					<chart evaluationTime="Group" evaluationGroup="ProductTree">
+						<reportElement key="element-24" style="note" x="61" y="24" width="424" height="232" uuid="a7aa6b63-d59a-47de-ac3c-e1ecd32be7c7">
+							<printWhenExpression><![CDATA[$P{ShowGraphs}]]></printWhenExpression>
+						</reportElement>
+						<box>
+							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.0" lineColor="#000000"/>
+							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+					</chart>
+					<pieDataset>
+						<dataset resetType="Group" resetGroup="ProductTree"/>
+						<keyExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></keyExpression>
+						<valueExpression><![CDATA[$V{productTotalPrice}]]></valueExpression>
+					</pieDataset>
+					<piePlot isCircular="true">
+						<plot/>
+						<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+					</piePlot>
+				</pieChart>
+				<line>
+					<reportElement key="line-3" style="note" positionType="Float" x="0" y="19" width="552" height="1" uuid="050ce7db-7736-43fa-974d-f2232eca4ba2">
+						<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<break>
+					<reportElement x="0" y="433" width="552" height="1" printWhenGroupChanges="ProductTree" uuid="946b098a-bd3c-45a2-9d03-6ed7f77a7bcc"/>
+				</break>
+				<textField isStretchWithOverflow="true" pattern="#,##0.##" isBlankWhenNull="true">
+					<reportElement key="textField-7" x="210" y="0" width="40" height="14" uuid="12dc1ab5-4653-4c2a-9a40-f1869567f2dd">
+						<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="6" rightPadding="4">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{productTreeTotalQTY}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-7" x="250" y="0" width="25" height="14" uuid="4ec721cd-2818-4995-baf4-374d4928fea7">
+						<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="4">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-7" x="275" y="0" width="188" height="14" uuid="5834b705-2edb-4bac-8e5e-0152fd305a1d">
+						<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="4">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Product">
+		<groupExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="14" splitType="Stretch">
+				<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-2" x="0" y="0" width="91" height="14" uuid="be3d1a05-cec2-4e9a-98dd-6235f7b3bd12"/>
+					<box leftPadding="6">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SOITEMPRODUCTNUM}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-3" x="91" y="0" width="119" height="14" uuid="3dacb0c7-7556-4aef-a827-bf0308e20f65"/>
+					<box leftPadding="6">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SOITEMDESCRIPTION}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-4" x="210" y="0" width="40" height="14" uuid="ae14ff60-f08d-414a-8f8d-bc26b44b1226"/>
+					<box leftPadding="6" rightPadding="4">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{productTotalQty_1}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-5" x="463" y="0" width="89" height="14" uuid="8415f3fc-0b42-4afa-afbb-881457073c70"/>
+					<box leftPadding="0" rightPadding="4">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
+com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{productTotalPrice}, $V{PriceDecimal})
+:
+$V{productTotalPrice}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00 %" isBlankWhenNull="true">
+					<reportElement key="textField-10" x="345" y="0" width="32" height="14" uuid="f6c85b82-3c76-433f-bb6e-db969bec5836"/>
+					<box leftPadding="6" rightPadding="4">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-25" style="note" x="250" y="0" width="25" height="14" uuid="bdb83a8e-2c43-4b7b-b45a-886c34722d36"/>
+					<box leftPadding="6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Open Sans" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{UOMCODE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-4" x="275" y="0" width="102" height="14" uuid="662fddf7-e8a1-4420-ba7c-d6bfa4176a62"/>
+					<box leftPadding="6" rightPadding="4">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{INVENTORYQTY}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-4" x="377" y="0" width="86" height="14" uuid="116ffc17-1a16-4174-8e39-3816d249b1ac"/>
+					<box leftPadding="6" rightPadding="4">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Open Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ONORDERQTY}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Prevent"/>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Prevent">
+			<textField>
+				<reportElement key="staticText-1" mode="Transparent" x="0" y="18" width="552" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="9871367b-11dd-444b-8170-17ccc0079a52"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Gross Sales By Product Tree" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-27" mode="Transparent" x="0" y="40" width="552" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="17c94108-6c44-413c-8122-7736d424cac6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange1}.getYear() <= -900 && $P{dateRange2}.getYear() >= 1100
+  ? "Date Range: All" +
+    ((!$P{ShowData}.booleanValue() && !$P{ShowGraphs}.booleanValue()) ?
+    "\nYou must select a method to view the information" :
+    "")
+  :"Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
+(new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime() - 86400000) +
+((!$P{ShowData}.booleanValue() && !$P{ShowGraphs}.booleanValue()) ?
+    "\nYou must select a method to view the information" :
+    "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-28" x="0" y="0" width="552" height="18" uuid="04cb66fa-664f-4330-843f-ae6fe983c5c9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-29" x="0" y="54" width="552" height="10" uuid="d5d0eb2b-2861-40f3-af92-15705633d7c7"/>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Prevent">
+			<printWhenExpression><![CDATA[$P{ShowData}]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-12" style="note" mode="Transparent" x="0" y="0" width="91" height="20" uuid="4db0f766-62f6-4728-a64d-cb85802aebf6"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Product"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-13" style="note" mode="Transparent" x="91" y="0" width="119" height="20" uuid="d3eca0c2-a9dc-42ce-bc2d-a415d2d52f1a"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement key="textField-14" style="note" mode="Transparent" x="210" y="0" width="65" height="20" uuid="fc9c7f29-194b-4c66-9cbd-91132afa9660"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sales Qty"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-15" style="note" mode="Transparent" x="463" y="1" width="89" height="20" uuid="dcb9617e-c587-4a0c-96f5-08fb95507bda"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sales Amount"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="PercentOfTotalSales" x="275" y="0" width="102" height="20" uuid="76564e07-5abe-4dfe-b55e-ab3cfb966e79"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Inventory Qty"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="PercentOfTreeSales" x="377" y="0" width="86" height="20" uuid="d776b4e4-0e8f-4de8-84ef-a30342e016d9"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["On Order Qty"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="19" width="552" height="1" uuid="8318d74c-28d7-485c-bdae-c26bfcc48afd"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Prevent"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Prevent"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Prevent">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-30" mode="Transparent" x="321" y="0" width="183" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c4636cb7-f7a0-4e11-b642-01405490ad98">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="4">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-31" mode="Transparent" x="504" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="1c094f11-78fd-44db-aba5-7c2dec15d5a3">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-32" mode="Transparent" x="0" y="0" width="321" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="b999ddfc-de10-4932-9f81-07efe460a790">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Prevent"/>
+	</summary>
+</jasperReport>
