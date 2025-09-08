@@ -377,7 +377,7 @@ WHERE id = 1]]>
 								<componentElement>
 									<reportElement style="Barcode" isPrintRepeatedValues="false" x="0" y="0" width="175" height="50" uuid="fc3f30ad-76c7-45f7-8634-b97e15fb0f5a"/>
 									<jr:barbecue type="Code128B" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
-										<jr:codeExpression><![CDATA[$F{SO}]]></jr:codeExpression>
+										<jr:codeExpression><![CDATA["S"+$F{SO}]]></jr:codeExpression>
 									</jr:barbecue>
 								</componentElement>
 							</jr:cell>
