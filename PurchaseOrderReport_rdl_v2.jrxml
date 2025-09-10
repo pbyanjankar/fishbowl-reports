@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1269722013523666"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="224"/>
+	<property name="ireport.y" value="96"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1348,6 +1348,7 @@ GROUP BY
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="90" uuid="e64cce2c-fbd7-49e7-b376-91ace0c4440d">
+							<printWhenExpression><![CDATA[!$P{cbCompany}.equals("Panoramic Builders Inc")]]></printWhenExpression>
 							<jr:columnHeader height="16" rowSpan="1">
 								<box>
 									<topPen lineWidth="0.5"/>
@@ -1454,6 +1455,7 @@ GROUP BY
 	<group name="Custom Field">
 		<groupHeader>
 			<band height="39">
+				<printWhenExpression><![CDATA[$P{ShowPOCustomFields}]]></printWhenExpression>
 				<componentElement>
 					<reportElement key="table" x="0" y="0" width="552" height="28" uuid="224f1d3b-1c15-4729-8466-1c66d95be743"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
