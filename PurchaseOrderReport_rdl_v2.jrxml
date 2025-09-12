@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1269722013523666"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -237,8 +237,10 @@
     CARRIERSERVICE.NAME AS CARRIERSERVICE,
     CustomFieldByName(po.customfields, 'CustomBuyer') buyercf,
     CustomFieldByName(po.customfields, 'Buyer PO#') buyerponum,
+    CustomFieldByName(po.customfields, 'Reference') REFERENCE,
     CustomFieldByName(po.customfields, 'Job') job,
     CustomFieldByName(po.customfields, 'Lot #') LOTNUMBERS,
+    CustomFieldByName(po.customfields, 'Special Notes') SPECIALNOTES,
     $P!{CustomField:PO1} AS pocf1,
     $P!{CustomField:PO2} AS pocf2,
     $P!{CustomField:PO3} AS pocf3,
@@ -286,6 +288,8 @@ WHERE po.id = $P{poId}]]>
 		<field name="pocf4" class="java.lang.String"/>
 		<field name="pocf5" class="java.lang.String"/>
 		<field name="pocf6" class="java.lang.String"/>
+		<field name="REFERENCE" class="java.lang.String"/>
+		<field name="SPECIALNOTES" class="java.lang.String"/>
 		<variable name="DateFormat" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
 		</variable>
@@ -1295,7 +1299,7 @@ GROUP BY
 									<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 										<font fontName="Open Sans" isBold="true"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$P{cbCompany}.equals("Panoramic Builders Inc") ? "Account #" : "Buyer PO"]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$P{cbCompany}.equals("Panoramic Builders Inc") ? "Reference" : "Buyer PO"]]></textFieldExpression>
 								</textField>
 							</jr:columnHeader>
 							<jr:detailCell height="15" rowSpan="1">
@@ -1311,7 +1315,7 @@ GROUP BY
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{buyerponum}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$P{cbCompany}.equals("Panoramic Builders Inc") ? $F{REFERENCE} : $F{buyerponum}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -1348,7 +1352,6 @@ GROUP BY
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="90" uuid="e64cce2c-fbd7-49e7-b376-91ace0c4440d">
-							<printWhenExpression><![CDATA[!$P{cbCompany}.equals("Panoramic Builders Inc")]]></printWhenExpression>
 							<jr:columnHeader height="16" rowSpan="1">
 								<box>
 									<topPen lineWidth="0.5"/>
@@ -1356,13 +1359,13 @@ GROUP BY
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="90" height="16" backcolor="#EAEAEA" uuid="86d1453d-82f9-4f14-9f79-412de0ea0f3d"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="16" backcolor="#EAEAEA" uuid="47d38511-cc77-4568-9064-9a8f8699aa1c"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 										<font fontName="Open Sans" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Lot #]]></text>
-								</staticText>
+									<textFieldExpression><![CDATA[$P{cbCompany}.equals("Panoramic Builders Inc") ? "Special Notes" : "Lot #"]]></textFieldExpression>
+								</textField>
 							</jr:columnHeader>
 							<jr:detailCell height="15" rowSpan="1">
 								<box>
@@ -1376,7 +1379,8 @@ GROUP BY
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{LOTNUMBERS}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$P{cbCompany}.equals("Panoramic Builders Inc") ? $F{SPECIALNOTES}
+:$F{LOTNUMBERS}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -1797,7 +1801,7 @@ GROUP BY
 					<font fontName="Open Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{cbApprovalOrOrder}.equals("Purchase Approval") ?
- "Approval #" : "Order #"]]></textFieldExpression>
+ "Approval #" : "Purchase Order #"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="438" y="21" width="100" height="12" uuid="80824789-d7b0-4f0d-a8fe-94210b275eb0">
@@ -2573,7 +2577,7 @@ $F{TOTALCOST}]]></textFieldExpression>
 				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="506" height="62" uuid="13d2a5c6-d0ce-47fe-96dc-b4b25e81134f"/>
+				<reportElement x="0" y="14" width="506" height="62" uuid="13d2a5c6-d0ce-47fe-96dc-b4b25e81134f"/>
 				<box rightPadding="0"/>
 				<textElement verticalAlignment="Bottom" markup="styled">
 					<font fontName="Open Sans" size="10"/>
