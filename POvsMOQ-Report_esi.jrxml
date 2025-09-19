@@ -48,12 +48,15 @@ inner join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
                group by partid) pos on pos.partid = part.id
  inner join customfield cf on cf.name = 'Minimum Order Qty' and cf.tableid = -2003201472
  inner join customdecimal minorderqty on minorderqty.customfieldid = cf.id and minorderqty.recordid = part.id
+ left outer join customfield cf2 on cf2.name = "Standard Wheel" AND cf2.tableid = -2003201472
+ left outer join custominteger standardwheel on standardwheel.customfieldid = cf2.id and standardwheel.recordid = part.id
 
 LEFT OUTER JOIN uomconversion ON (part.uomid = uomconversion.touomid AND sos.uomid = uomconversion.fromuomid)
 
 
 where part.num LIKE ($P{partNum})
 AND ((sos.qty * uomconversion.multiply) < 16 OR (pos.qty > sos.qty * uomconversion.multiply))
+AND coalesce(standardwheel.info,0) = 1
 
 order by part.num]]>
 	</queryString>
