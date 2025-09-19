@@ -56,7 +56,7 @@ LEFT OUTER JOIN uomconversion ON (part.uomid = uomconversion.touomid AND sos.uom
 
 where part.num LIKE ($P{partNum})
 AND ((sos.qty * uomconversion.multiply) < 16 OR (pos.qty > sos.qty * uomconversion.multiply))
-AND coalesce(standardwheel.info,0) = 1
+AND coalesce(standardwheel.info,0) = 0
 
 order by part.num]]>
 	</queryString>
