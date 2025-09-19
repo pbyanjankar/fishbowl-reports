@@ -15,8 +15,7 @@
 		<![CDATA[select
 company.name as company,
 part.num as partnum,
--- minorderqty.info as minorderqty,
-16 as minorderqty,
+minorderqty.info as minorderqty,
 pos.qty as qtyonpo,
 sos.qty as qtyonso,
 pos.pos as polist,
@@ -27,7 +26,7 @@ sos.qty * uomconversion.multiply as totalqtyonso
 
 from part
 inner join company on company.id = 1
-LEFT join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
+inner join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
                    group_concat(distinct so.num separator ', ') as sos,
                    product.partid,
                    uom.id as uomid,
@@ -39,7 +38,7 @@ LEFT join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
                left join uom on soitem.uomid = uom.id
                 where soitem.statusid < 50
 		group by partid, uomid, uom) sos on sos.partid = part.id
-LEFT join (select sum(receiptitem.qty) as qty,
+ inner join (select sum(receiptitem.qty) as qty,
                    group_concat(distinct po.num separator ', ') as pos,
                    poitem.partid
               from receiptitem
@@ -47,14 +46,13 @@ LEFT join (select sum(receiptitem.qty) as qty,
                inner join po on poitem.poid = po.id and po.statusid between 20 and 60
                 where po.dateissued between $P{dateRange1} and date_sub($P{dateRange2}, interval 1 second)
                group by partid) pos on pos.partid = part.id
--- inner join customfield cf on cf.name = 'Minimum Order Qty' and cf.tableid = -2003201472
--- inner join customdecimal minorderqty on minorderqty.customfieldid = cf.id and minorderqty.recordid = part.id
+ inner join customfield cf on cf.name = 'Minimum Order Qty' and cf.tableid = -2003201472
+ inner join customdecimal minorderqty on minorderqty.customfieldid = cf.id and minorderqty.recordid = part.id
 
-LEFT JOIN uomconversion ON (part.uomid = uomconversion.touomid AND sos.uomid = uomconversion.fromuomid)
+LEFT OUTER JOIN uomconversion ON (part.uomid = uomconversion.touomid AND sos.uomid = uomconversion.fromuomid)
 
 
 where part.num LIKE ($P{partNum})
--- and pos.qty > sos.qty
 AND ((sos.qty * uomconversion.multiply) < 16 OR (pos.qty > sos.qty * uomconversion.multiply))
 
 order by part.num]]>
