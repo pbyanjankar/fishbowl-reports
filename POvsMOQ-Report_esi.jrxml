@@ -126,7 +126,7 @@ order by part.num]]>
 					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[Total Qty on SO  > Qty on PO && Min Order > 0]]></text>
+				<text><![CDATA[Total Qty on SO  > (Qty on PO + On Hand) && Min Order > 0]]></text>
 			</staticText>
 		</band>
 	</title>
