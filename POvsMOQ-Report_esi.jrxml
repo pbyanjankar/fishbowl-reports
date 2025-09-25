@@ -21,12 +21,13 @@ sos.qty as qtyonso,
 pos.pos as polist,
 sos.sos as solist,
 sos.uom as souom,
-sos.qty * uomconversion.multiply as totalqtyonso
+coalesce(sos.qty,0)  * COALESCE(uomconversion.multiply,1) / COALESCE(uomconversion.factor,1) as totalqtyonso,
+COALESCE(INVENTORYTOTALS.TOTALONHAND,0) AS QTYONHAND
 
 
 from part
 inner join company on company.id = 1
-inner join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
+LEFT OUTER join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
                    group_concat(distinct so.num separator ', ') as sos,
                    product.partid,
                    uom.id as uomid,
@@ -38,7 +39,7 @@ inner join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
                left join uom on soitem.uomid = uom.id
                 where soitem.statusid < 50
 		group by partid, uomid, uom) sos on sos.partid = part.id
- inner join (select sum(receiptitem.qty) as qty,
+ LEFT OUTER join (select sum(receiptitem.qty) as qty,
                    group_concat(distinct po.num separator ', ') as pos,
                    poitem.partid
               from receiptitem
@@ -46,16 +47,24 @@ inner join (select sum(soitem.qtytofulfill - soitem.qtyfulfilled) as qty,
                inner join po on poitem.poid = po.id and po.statusid between 20 and 60
                 where po.dateissued between $P{dateRange1} and date_sub($P{dateRange2}, interval 1 second)
                group by partid) pos on pos.partid = part.id
- inner join customfield cf on cf.name = 'Minimum Order Qty' and cf.tableid = -2003201472
- inner join customdecimal minorderqty on minorderqty.customfieldid = cf.id and minorderqty.recordid = part.id
+ LEFT OUTER join customfield cf on cf.name = 'Minimum Order Qty' and cf.tableid = -2003201472
+ LEFT OUTER join customdecimal minorderqty on minorderqty.customfieldid = cf.id and minorderqty.recordid = part.id
  left outer join customfield cf2 on cf2.name = "Standard Wheel" AND cf2.tableid = -2003201472
  left outer join custominteger standardwheel on standardwheel.customfieldid = cf2.id and standardwheel.recordid = part.id
 
 LEFT OUTER JOIN uomconversion ON (part.uomid = uomconversion.touomid AND sos.uomid = uomconversion.fromuomid)
-
+LEFT OUTER JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand
+        FROM
+            qtyInventoryTotals
+        GROUP BY partId
+    ) AS inventoryTotals ON inventoryTotals.partId = part.id
 
 where part.num LIKE ($P{partNum})
-AND ((sos.qty * uomconversion.multiply) < 16 OR (pos.qty > sos.qty * uomconversion.multiply))
+AND (COALESCE(sos.qty,0) * COALESCE(uomconversion.multiply,1) / COALESCE(uomconversion.factor,1) ) > (COALESCE(pos.qty,0) + COALESCE(INVENTORYTOTALS.TOTALONHAND,0) )
+AND minorderqty.info > 0
 AND coalesce(standardwheel.info,0) = 0
 
 order by part.num]]>
@@ -69,6 +78,7 @@ order by part.num]]>
 	<field name="SOLIST" class="java.lang.String"/>
 	<field name="SOUOM" class="java.lang.String"/>
 	<field name="totalqtyonso" class="java.lang.Double"/>
+	<field name="QTYONHAND" class="java.lang.Double"/>
 	<variable name="DateFormat" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
 	</variable>
@@ -94,7 +104,7 @@ order by part.num]]>
 				<text><![CDATA[PO vs MOQ Report]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-10" mode="Transparent" x="0" y="40" width="572" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="264378bd-bc0b-4c1a-816b-7f445735d00f"/>
+				<reportElement key="textField-10" mode="Transparent" x="0" y="53" width="572" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="264378bd-bc0b-4c1a-816b-7f445735d00f"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -110,6 +120,14 @@ order by part.num]]>
   : "Date Range: " + (new SimpleDateFormat($V{DateFormat})).format($P{dateRange1}) + " - " +
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-86400000)]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement key="textField-10" mode="Transparent" x="0" y="40" width="572" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="46e68329-1e14-4006-a6db-2ad9cb1912c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Total Qty on SO  > Qty on PO && Min Order > 0]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
@@ -129,7 +147,7 @@ order by part.num]]>
 				<text><![CDATA[Part #]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="100" y="0" width="45" height="25" backcolor="#99FFFF" uuid="d7729142-d171-4a16-8df9-2a1fbc841335"/>
+				<reportElement mode="Opaque" x="100" y="0" width="40" height="25" backcolor="#99FFFF" uuid="d7729142-d171-4a16-8df9-2a1fbc841335"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -143,7 +161,7 @@ order by part.num]]>
 				<text><![CDATA[Min. Order Qty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="190" y="0" width="45" height="25" backcolor="#99FFFF" uuid="ef425514-19da-436d-8603-f7e388d0b0f5"/>
+				<reportElement mode="Opaque" x="180" y="0" width="40" height="25" backcolor="#99FFFF" uuid="ef425514-19da-436d-8603-f7e388d0b0f5"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -157,7 +175,7 @@ order by part.num]]>
 				<text><![CDATA[Qty on SO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="330" y="0" width="121" height="25" backcolor="#99FFFF" uuid="2c32819e-7462-4aa4-8a9a-d22dab3cfd5f"/>
+				<reportElement mode="Opaque" x="350" y="0" width="111" height="25" backcolor="#99FFFF" uuid="2c32819e-7462-4aa4-8a9a-d22dab3cfd5f"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -171,7 +189,7 @@ order by part.num]]>
 				<text><![CDATA[List of PO #s]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="451" y="0" width="121" height="25" backcolor="#99FFFF" uuid="c60f9c98-007d-4c92-8124-46162697f62a"/>
+				<reportElement mode="Opaque" x="461" y="0" width="111" height="25" backcolor="#99FFFF" uuid="c60f9c98-007d-4c92-8124-46162697f62a"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -185,7 +203,7 @@ order by part.num]]>
 				<text><![CDATA[List of SO #s]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="145" y="0" width="45" height="25" backcolor="#99FFFF" uuid="6e3f727d-533b-496c-80ee-0e95581f5337"/>
+				<reportElement mode="Opaque" x="140" y="0" width="40" height="25" backcolor="#99FFFF" uuid="6e3f727d-533b-496c-80ee-0e95581f5337"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -199,7 +217,7 @@ order by part.num]]>
 				<text><![CDATA[Qty on PO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="235" y="0" width="35" height="25" backcolor="#99FFFF" uuid="eaf5b0ea-ce62-40d8-b401-673bad0ab4ba"/>
+				<reportElement mode="Opaque" x="220" y="0" width="35" height="25" backcolor="#99FFFF" uuid="eaf5b0ea-ce62-40d8-b401-673bad0ab4ba"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -213,7 +231,7 @@ order by part.num]]>
 				<text><![CDATA[SO UOM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="270" y="0" width="60" height="25" backcolor="#99FFFF" uuid="329cd728-20dd-454c-a7f8-c4a5cd5ca2f3"/>
+				<reportElement mode="Opaque" x="255" y="0" width="60" height="25" backcolor="#99FFFF" uuid="329cd728-20dd-454c-a7f8-c4a5cd5ca2f3"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -225,6 +243,20 @@ order by part.num]]>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Qty on SO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="315" y="0" width="35" height="25" backcolor="#99FFFF" uuid="4e48994d-bd3e-4fb5-bc8d-678d41d35e7e"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[On Hand]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -247,7 +279,7 @@ order by part.num]]>
 				<hyperlinkReferenceExpression><![CDATA[$F{PARTNUM}]]></hyperlinkReferenceExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="330" y="0" width="121" height="16" uuid="38e4c681-b72c-4acc-8bc0-d6c756294ff5"/>
+				<reportElement stretchType="RelativeToTallestObject" x="350" y="0" width="111" height="16" uuid="38e4c681-b72c-4acc-8bc0-d6c756294ff5"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -261,7 +293,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA[$F{POLIST}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="451" y="0" width="121" height="16" uuid="af0b31dc-1ebc-434f-83d1-0882a1a166f1"/>
+				<reportElement stretchType="RelativeToTallestObject" x="461" y="0" width="111" height="16" uuid="af0b31dc-1ebc-434f-83d1-0882a1a166f1"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -275,7 +307,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA[$F{SOLIST}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.##" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="100" y="0" width="45" height="16" uuid="e3758b39-0f14-4be7-ba58-a202725d7cc0"/>
+				<reportElement stretchType="RelativeToTallestObject" x="100" y="0" width="40" height="16" uuid="e3758b39-0f14-4be7-ba58-a202725d7cc0"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -289,7 +321,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA[$F{MINORDERQTY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.##" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="145" y="0" width="45" height="16" uuid="90a00af6-43eb-436f-a407-83aad1fb0ea8"/>
+				<reportElement stretchType="RelativeToTallestObject" x="140" y="0" width="40" height="16" uuid="90a00af6-43eb-436f-a407-83aad1fb0ea8"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -303,7 +335,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA[$F{QTYONPO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.##" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="190" y="0" width="45" height="16" uuid="b8d87691-895d-4217-8a85-d75469268795"/>
+				<reportElement stretchType="RelativeToTallestObject" x="180" y="0" width="40" height="16" uuid="b8d87691-895d-4217-8a85-d75469268795"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -317,7 +349,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA[$F{QTYONSO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="235" y="0" width="35" height="16" uuid="140c6fc7-f5ad-4ded-a023-2d325b26e83b"/>
+				<reportElement stretchType="RelativeToTallestObject" x="220" y="0" width="35" height="16" uuid="140c6fc7-f5ad-4ded-a023-2d325b26e83b"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -331,7 +363,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA[$F{SOUOM}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.##" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="270" y="0" width="60" height="16" uuid="cf85eb66-b582-4d26-9a3d-cc8b5820fbc0"/>
+				<reportElement stretchType="RelativeToTallestObject" x="255" y="0" width="60" height="16" uuid="cf85eb66-b582-4d26-9a3d-cc8b5820fbc0"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -344,12 +376,26 @@ order by part.num]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalqtyonso}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.##" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="315" y="0" width="35" height="16" uuid="b017c1b9-78f0-478d-9fca-50c5e57915c2"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTYONHAND}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="19" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-37" mode="Transparent" x="270" y="5" width="181" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="10931cbd-0a4d-4c80-add3-79d75ab92079"/>
+				<reportElement key="textField-37" mode="Transparent" x="255" y="5" width="206" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="10931cbd-0a4d-4c80-add3-79d75ab92079"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -363,7 +409,7 @@ order by part.num]]>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-38" mode="Transparent" x="451" y="5" width="121" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4de08c55-e1f6-4f18-8675-7d2b021a8e0b"/>
+				<reportElement key="textField-38" mode="Transparent" x="461" y="5" width="111" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4de08c55-e1f6-4f18-8675-7d2b021a8e0b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
