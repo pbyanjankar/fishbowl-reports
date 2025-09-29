@@ -1110,8 +1110,7 @@ GROUP BY
 					<textFieldExpression><![CDATA[($F{SHIPTONAME} == null ? "" : $F{SHIPTONAME} + "\n") +
 ($F{SHIPTOADDRESS} == null ? "" : $F{SHIPTOADDRESS} + "\n") +
 ($F{SHIPTOCITY} == null ? "" : $F{SHIPTOCITY} + ", ") + ($F{SHIPTOSTATE} == null ? "  " : $F{SHIPTOSTATE} + "  ") + ($F{SHIPTOZIP} == null ? "" : $F{SHIPTOZIP}) +
-($P{ShowCountry} ? "\n" + $F{SHIPTOCOUNTRY} : "")
-+ "\n" + "Phone: (246) 434-0159"]]></textFieldExpression>
+($P{ShowCountry} ? "\n" + $F{SHIPTOCOUNTRY} : "")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement key="staticText-1" mode="Opaque" x="184" y="0" width="184" height="17" forecolor="#000000" backcolor="#EAEAEA" uuid="bf09a587-b53f-4696-b661-d4b57c7d928e"/>
