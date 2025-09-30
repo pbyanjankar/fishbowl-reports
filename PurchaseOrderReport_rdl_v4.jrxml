@@ -392,6 +392,7 @@ WHERE po.id = $P{poId}]]>
     TAXRATE.CODE AS TAXCODE,
     POITEM.TAXRATE,
     CustomFieldByName(POITEM.customfields, 'Cost Code') costcode,
+    CustomFieldByName(POITEM.customfields, 'Job Cost Code') jobcostcode,
     CASE COALESCE(UPPER(SYSPROPERTIES.SYSVALUE), 'US')
         WHEN 'US' THEN (POITEM.UNITCOST / COALESCE(PO.CURRENCYRATE,1)) * COALESCE(UOMCONVERSION.FACTOR / UOMCONVERSION.MULTIPLY,1)
         WHEN 'CA' THEN POITEM.UNITCOST * COALESCE(UOMCONVERSION.FACTOR / UOMCONVERSION.MULTIPLY,1) / COALESCE(PO.CURRENCYRATE,1)
@@ -495,6 +496,7 @@ ORDER BY poitem.polineitem]]>
 		<field name="HOMECURRENCYCODE" class="java.lang.String"/>
 		<field name="revlevel" class="java.lang.String"/>
 		<field name="costcode" class="java.lang.String"/>
+		<field name="jobcostcode" class="java.lang.String"/>
 		<variable name="isUnitedStates" class="java.lang.Boolean">
 			<variableExpression><![CDATA[!(com.evnt.eve.modules.AccountingModule.isInternational())]]></variableExpression>
 		</variable>
@@ -1953,9 +1955,9 @@ GROUP BY
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="38" uuid="541f6bc0-2bfb-405d-b062-48fe4ab65bfa">
+					<jr:column width="24" uuid="541f6bc0-2bfb-405d-b062-48fe4ab65bfa">
 						<printWhenExpression><![CDATA[$P{colItem#}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -1964,11 +1966,12 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="38" height="20" backcolor="#EAEAEA" uuid="f9c71845-f5a3-4bfe-b9de-cf0707037584"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="24" height="28" backcolor="#EAEAEA" uuid="f9c71845-f5a3-4bfe-b9de-cf0707037584"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Item #]]></text>
+								<text><![CDATA[Item
+#]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
@@ -1978,7 +1981,7 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="38" height="13" uuid="74a681d5-7f66-4dd6-9b29-5afc55783e6e"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="24" height="13" uuid="74a681d5-7f66-4dd6-9b29-5afc55783e6e"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center">
 									<font fontName="Open Sans" size="9"/>
@@ -1989,7 +1992,7 @@ GROUP BY
 					</jr:column>
 					<jr:column width="50" uuid="e54d15ea-4a53-46e8-bd46-c059ea9857ac">
 						<printWhenExpression><![CDATA[$P{colItemType}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -1998,9 +2001,9 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="50" height="20" backcolor="#EAEAEA" uuid="dc11eef6-41aa-4410-b6fe-6cc85e209feb"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="50" height="28" backcolor="#EAEAEA" uuid="dc11eef6-41aa-4410-b6fe-6cc85e209feb"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Type]]></text>
 							</staticText>
@@ -2023,7 +2026,7 @@ GROUP BY
 					</jr:column>
 					<jr:column width="50" uuid="d6a184dc-8714-4a55-9b67-acdda973f7d3">
 						<printWhenExpression><![CDATA[$P{colItemRevision}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2032,9 +2035,9 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="50" height="20" backcolor="#EAEAEA" uuid="68722200-0c9e-4214-949a-3f44976e02d4"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="50" height="28" backcolor="#EAEAEA" uuid="68722200-0c9e-4214-949a-3f44976e02d4"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Revision]]></text>
 							</staticText>
@@ -2057,7 +2060,7 @@ GROUP BY
 					</jr:column>
 					<jr:column width="70" uuid="69070849-5050-4eb3-94ba-45a448d661e3">
 						<printWhenExpression><![CDATA[$P{colItemFulfillmentDate}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2066,9 +2069,9 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="70" height="20" backcolor="#EAEAEA" uuid="e23bcc0b-a70b-4c04-ba5c-aafaedc89eba"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="70" height="28" backcolor="#EAEAEA" uuid="e23bcc0b-a70b-4c04-ba5c-aafaedc89eba"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Fulfillment Date]]></text>
 							</staticText>
@@ -2094,7 +2097,7 @@ GROUP BY
 					</jr:column>
 					<jr:column width="245" uuid="b9298f2b-f7b2-4f3d-ac88-ce64f452648f">
 						<printWhenExpression><![CDATA[$P{colItemNumberAndDescription}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2103,10 +2106,10 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="245" height="20" backcolor="#EAEAEA" uuid="782633a9-02d1-43d2-a88f-97feb4534c0e"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="245" height="28" backcolor="#EAEAEA" uuid="782633a9-02d1-43d2-a88f-97feb4534c0e"/>
 								<box leftPadding="3"/>
 								<textElement verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[SKU / Description]]></text>
 							</staticText>
@@ -2131,7 +2134,7 @@ GROUP BY
 					</jr:column>
 					<jr:column width="88" uuid="3567d595-0b9b-43f4-aea2-c8014af212fc">
 						<printWhenExpression><![CDATA[$P{colItemPart}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2140,7 +2143,7 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="88" height="20" backcolor="#EAEAEA" uuid="1ed235fd-9e45-42f2-9979-a133daca4de2"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="88" height="28" backcolor="#EAEAEA" uuid="1ed235fd-9e45-42f2-9979-a133daca4de2"/>
 								<box leftPadding="3">
 									<topPen lineWidth="0.0"/>
 									<leftPen lineWidth="0.0"/>
@@ -2148,7 +2151,7 @@ GROUP BY
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textElement verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[SKU]]></text>
 							</staticText>
@@ -2175,7 +2178,7 @@ GROUP BY
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="57" uuid="2a0ba56b-45ff-48ae-b621-1887678ba63d">
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -2183,7 +2186,7 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="57" height="20" backcolor="#EAEAEA" uuid="01307c64-cbe1-4838-aa61-0b0d5bb044db"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="57" height="28" backcolor="#EAEAEA" uuid="01307c64-cbe1-4838-aa61-0b0d5bb044db"/>
 								<box leftPadding="3">
 									<topPen lineWidth="0.0"/>
 									<leftPen lineWidth="0.0"/>
@@ -2191,9 +2194,9 @@ GROUP BY
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textElement verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Cost Code]]></text>
+								<text><![CDATA[PB Cost Code]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
@@ -2213,9 +2216,48 @@ GROUP BY
 							</textField>
 						</jr:detailCell>
 					</jr:column>
+					<jr:column width="57" uuid="2a0ba56b-45ff-48ae-b621-1887678ba63d">
+						<jr:columnHeader height="28" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="57" height="28" backcolor="#EAEAEA" uuid="01307c64-cbe1-4838-aa61-0b0d5bb044db"/>
+								<box leftPadding="3">
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Job Cost Code]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="14" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="57" height="13" uuid="79f8354b-879e-4a68-9d51-3ef05f4b79a4"/>
+								<box leftPadding="3" rightPadding="3"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{jobcostcode}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 					<jr:column width="152" uuid="fa0917dc-6f90-4628-8235-672d7be7a804">
 						<printWhenExpression><![CDATA[$P{colItemDescription}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2224,10 +2266,10 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="152" height="20" backcolor="#EAEAEA" uuid="e992c90d-7dd9-4243-b6f2-9c5bad56c4d6"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="152" height="28" backcolor="#EAEAEA" uuid="e992c90d-7dd9-4243-b6f2-9c5bad56c4d6"/>
 								<box leftPadding="3"/>
 								<textElement verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Description]]></text>
 							</staticText>
@@ -2251,9 +2293,9 @@ GROUP BY
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="62" uuid="56ce94b5-73e6-4530-8ee2-47188bcbdfa3">
+					<jr:column width="44" uuid="56ce94b5-73e6-4530-8ee2-47188bcbdfa3">
 						<printWhenExpression><![CDATA[$P{colItemUnitPrice}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2262,9 +2304,9 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="62" height="20" backcolor="#EAEAEA" uuid="5333dc56-d0be-492a-956f-66f0a3d8ac5d"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="44" height="28" backcolor="#EAEAEA" uuid="5333dc56-d0be-492a-956f-66f0a3d8ac5d"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Unit Cost]]></text>
 							</staticText>
@@ -2276,7 +2318,7 @@ GROUP BY
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="62" height="13" uuid="acbf5df9-eaae-4fe4-9e45-ed953c773c20"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="44" height="13" uuid="acbf5df9-eaae-4fe4-9e45-ed953c773c20"/>
 								<box leftPadding="3" rightPadding="5"/>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="9"/>
@@ -2289,9 +2331,9 @@ $F{UNITCOST}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="67" uuid="b1b28e67-007a-45f7-acc4-a8609637a762">
+					<jr:column width="44" uuid="b1b28e67-007a-45f7-acc4-a8609637a762">
 						<printWhenExpression><![CDATA[$P{colItemCurrencyUnitCost}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2300,9 +2342,9 @@ $F{UNITCOST}]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="67" height="20" backcolor="#EAEAEA" uuid="80aa68d8-a84c-4839-bdf8-d4b9728ef7f0"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="44" height="28" backcolor="#EAEAEA" uuid="80aa68d8-a84c-4839-bdf8-d4b9728ef7f0"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{SYMBOL} == null ?
 "Unit Cost" :
@@ -2316,7 +2358,7 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="67" height="13" uuid="acbf5df9-eaae-4fe4-9e45-ed953c773c20"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="44" height="13" uuid="acbf5df9-eaae-4fe4-9e45-ed953c773c20"/>
 								<box leftPadding="3" rightPadding="5"/>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="9" isBold="false"/>
@@ -2328,9 +2370,9 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="84" uuid="a2423fe1-011f-4c9b-b21c-c58139ec58f4">
+					<jr:column width="69" uuid="a2423fe1-011f-4c9b-b21c-c58139ec58f4">
 						<printWhenExpression><![CDATA[$P{colItemOtyOrdered}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2339,22 +2381,22 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="50" height="20" backcolor="#EAEAEA" uuid="3cef931b-169a-4f4e-880e-d9ca129d2bea"/>
-								<box rightPadding="3">
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="44" height="28" backcolor="#EAEAEA" uuid="3cef931b-169a-4f4e-880e-d9ca129d2bea"/>
+								<box rightPadding="1">
 									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 								</box>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Quantity]]></text>
 							</staticText>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="50" y="0" width="34" height="20" backcolor="#EAEAEA" uuid="b7e551a9-d438-4a3c-a121-a32314c9ee33"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="44" y="0" width="25" height="28" backcolor="#EAEAEA" uuid="b7e551a9-d438-4a3c-a121-a32314c9ee33"/>
 								<box>
 									<leftPen lineWidth="0.5"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[UOM]]></text>
 							</staticText>
@@ -2366,8 +2408,8 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="13" uuid="f6f97e30-80d6-401e-8c7b-ebe62f657635"/>
-								<box leftPadding="0" rightPadding="3">
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="44" height="13" uuid="f6f97e30-80d6-401e-8c7b-ebe62f657635"/>
+								<box leftPadding="0" rightPadding="1">
 									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 								</box>
 								<textElement textAlignment="Right">
@@ -2377,7 +2419,7 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="50" y="0" width="34" height="13" uuid="58762299-d7bc-47a6-89e7-c077053fb55b"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="44" y="0" width="25" height="13" uuid="58762299-d7bc-47a6-89e7-c077053fb55b"/>
 								<box>
 									<leftPen lineWidth="0.5"/>
 								</box>
@@ -2388,9 +2430,9 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="72" uuid="9af3b0d0-5212-4479-b4b4-e942d9b18b29">
+					<jr:column width="62" uuid="9af3b0d0-5212-4479-b4b4-e942d9b18b29">
 						<printWhenExpression><![CDATA[$P{colItemCurrencyTotal}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2399,9 +2441,9 @@ $F{CURRENCYCODE} + " Unit Cost"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="72" height="20" backcolor="#EAEAEA" uuid="2eaffded-3279-4d2b-a9c5-3783b7a418e4"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="62" height="28" backcolor="#EAEAEA" uuid="2eaffded-3279-4d2b-a9c5-3783b7a418e4"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{SYMBOL} == null ?
 "Total" :
@@ -2415,7 +2457,7 @@ $F{CURRENCYCODE} + " Total"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="13" uuid="78fa7779-2ff2-4b46-b769-2bff6cbc195a"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="62" height="13" uuid="78fa7779-2ff2-4b46-b769-2bff6cbc195a"/>
 								<box leftPadding="3" rightPadding="5"/>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="9"/>
@@ -2427,9 +2469,9 @@ $F{CURRENCYCODE} + " Total"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="72" uuid="07886c98-c080-4f46-82ad-e65845dea212">
+					<jr:column width="62" uuid="07886c98-c080-4f46-82ad-e65845dea212">
 						<printWhenExpression><![CDATA[$P{colItemExtendedPrice}]]></printWhenExpression>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="28" rowSpan="1">
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -2438,9 +2480,10 @@ $F{CURRENCYCODE} + " Total"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="72" height="20" backcolor="#EAEAEA" uuid="abb123de-b839-4e28-ab3a-ce81055b257a"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Open Sans" size="10" isBold="true"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="62" height="28" backcolor="#EAEAEA" uuid="abb123de-b839-4e28-ab3a-ce81055b257a"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Total Cost]]></text>
 							</staticText>
@@ -2452,8 +2495,8 @@ $F{CURRENCYCODE} + " Total"]]></textFieldExpression>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="13" uuid="78fa7779-2ff2-4b46-b769-2bff6cbc195a"/>
-								<box leftPadding="3" rightPadding="5"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="62" height="13" uuid="78fa7779-2ff2-4b46-b769-2bff6cbc195a"/>
+								<box leftPadding="0" rightPadding="3"/>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="9"/>
 								</textElement>
@@ -2500,7 +2543,7 @@ $F{TOTALCOST}]]></textFieldExpression>
 					<font fontName="Open Sans" size="9"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement key="textField-39" mode="Transparent" x="0" y="0" width="323" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="691f894f-92ee-46e5-84ee-bb19594123ae"/>
