@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="1"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="413"/>
 	<property name="ireport.callouts" value="##Tue May 15 13:41:18 MDT 2018\ncallouts.1.text=dallen.baldwin\nrevision 5/15/18\ncallouts.1.bounds=608,19,150,75"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -245,7 +245,6 @@ WHERE so.id = $P{soId}]]>
     COALESCE(SOITEM.QTYTOFULFILL,0) AS QTYTOFULFILL,
     UOM.CODE AS UOMCODE,
     COALESCE(SOITEM.ADJUSTAMOUNT,0) AS ADJUSTAMOUNT,
-    SOITEMTOMOITEM.SOITEMID AS SOITEMTOMOITEMID,
     SOITEM.DATELASTFULFILLMENT,
     SOITEM.DATESCHEDULEDFULFILLMENT,
     SOITEM.REVLEVEL,
@@ -301,7 +300,8 @@ WHERE so.id = $P{soId}]]>
     END AS SOITEMTAXAMOUNT,
 
     SOITEM.TAXRATE * SOITEM.TOTALPRICE AS NONROUNDEDSOITEMTAX,
-    HOMECURRENCY.SYMBOL AS HOMECURRENCYSYMBOL, LEFT(PRODUCT.UPC,11) AS UPC
+    HOMECURRENCY.SYMBOL AS HOMECURRENCYSYMBOL, LEFT(PRODUCT.UPC,11) AS UPC,
+    MOITEM.SOITEMID AS SOITEMTOMOITEMID
 
 FROM
     so
@@ -314,12 +314,12 @@ FROM
     LEFT OUTER JOIN taxRate ON soItem.taxId = taxRate.id
     LEFT OUTER JOIN objecttoobject ON soitem.id = objecttoobject.recordid1
         AND objecttoobject.typeid = 30
-    LEFT OUTER JOIN soitemtomoitem ON soitem.id = soitemtomoitem.soitemid
     LEFT OUTER JOIN uomConversion ON uom.id = uomConversion.fromUomId
         AND soitem.uomId = uomConversion.toUomId
     LEFT OUTER JOIN sysProperties ON sysProperties.sysKey = 'QBVersion'
     LEFT OUTER JOIN currency ON customer.currencyid = currency.id
     LEFT OUTER JOIN currency AS homeCurrency ON homeCurrency.homeCurrency = 1
+    LEFT OUTER JOIN moitem ON soitem.id = moitem.soitemid
 
 WHERE
     so.id = $P{soId}
@@ -359,7 +359,6 @@ ORDER BY soitem.solineitem]]>
 		<field name="ADJUSTAMOUNT" class="java.lang.Double">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="SOITEMTOMOITEMID" class="java.lang.Integer"/>
 		<field name="DATELASTFULFILLMENT" class="java.sql.Timestamp">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
@@ -402,6 +401,7 @@ ORDER BY soitem.solineitem]]>
 		<field name="NONROUNDEDSOITEMTAX" class="java.lang.Double"/>
 		<field name="HOMECURRENCYSYMBOL" class="java.lang.Integer"/>
 		<field name="UPC" class="java.lang.String"/>
+		<field name="SOITEMTOMOITEMID" class="java.lang.Integer"/>
 		<variable name="SubTotal" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{TYPEID} == 40 ?
     new Double(0) :
