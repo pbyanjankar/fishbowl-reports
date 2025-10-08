@@ -4758,7 +4758,7 @@ $F{CURRENCYCODE} + " Total:"]]></textFieldExpression>
 					<subreportParameterExpression><![CDATA[new String("397076832")]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["../Custom/" + "SOReportWithImages_UPC_aplus/TermsAndConditions.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["../Custom/" + "TermsAndConditions.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
