@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TermsAndConditions" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="36" rightMargin="57" topMargin="36" bottomMargin="0" isTitleNewPage="true" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" uuid="4cbe809a-aceb-4e09-a884-0819150eeb83">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="39"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Zebra" fontName="Open Sans" fontSize="9">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#EAEAEA" pattern="" fontName="Open Sans" fontSize="9"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Applications/Fishbowl/server/reports/Custom/SOReportWithImages_UPC_aplus/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<group name="t" isStartNewPage="true" minHeightToStartNewPage="500">
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true">
+					<reportElement key="textField-2" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="497" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d14ab59c-a900-4422-b26d-dbf3cbe01d6c"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Open Sans" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["A+ DISTRIBUTORS LLC sells exclusively to licensed business retailers and distributors. Purchasers are solely responsible for ensuring that all products ordered comply with all applicable federal, state, and local laws, including but not limited to:"
++"\n"+"Laws governing the sale and shipment of vapor products"
++"\n"+"State or local flavor bans"
++"\n"+"PACT Act requirements"
++"\n"+"FDA PMTA regulations"
++"\n"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="t2">
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true">
+					<reportElement key="textField-2" positionType="Float" isPrintRepeatedValues="false" mode="Transparent" x="0" y="0" width="497" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="85fd9a5c-47d6-4f09-b352-cccfbac500b9"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+						<font fontName="Open Sans" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["A+ DISTRIBUTORS LLC DOES NOT collect or remit taxes for any other states. The retailer is responsible for reporting, collecting, and remitting any applicable taxes."
++"<BR>"+ "Please inspect and verify the contents of your shipment within 72 Hours from the time of delivery and report any damages or discrepancies to <u><a href='mailto:aplussdistributors@gmail.com'><font color='#000FF'>aplussdistributors@gmail.com</font></a></u> or 1 (888) 993-3323 (9AM - 7PM ET  Mon-Fri, Closed Sun)."
++"<BR>"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="t3">
+		<groupHeader>
+			<band height="30">
+				<textField isStretchWithOverflow="true">
+					<reportElement key="textField-2" positionType="Float" mode="Transparent" x="0" y="0" width="497" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="9045ab3b-cc6c-40ab-9d9b-626ed572f082"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Open Sans" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Important:"
++"\n"+"A+ DISTRIBUTORS LLC DOES NOT provide legal, tax or accounting advice and makes no guarantees about the legality of products in any specific jurisdiction."
++"\n\n"+"By placing an order, purchasers confirm full compliance with all applicable laws and agree to indemnify and hold harmless A+ DISTRIBUTORS LLC, its officers, agents, and employees from any penalties, claims, or legal actions resulting from re-sales or use of products in violation of the law."
++"\n"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="t4">
+		<groupHeader>
+			<band height="50">
+				<textField isStretchWithOverflow="true">
+					<reportElement key="textField-2" positionType="Float" mode="Transparent" x="0" y="0" width="497" height="50" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="85bece79-f36f-4de9-bec0-2a6f1e7b57ff"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+						<font fontName="Open Sans" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Shipping Claims & Inspection"
++ "<br>Parcel and Freight Shipping Inspection – Buyer Claims Process"
++ "<br>1. Immediate Inspection Upon Delivery - Buyer’s Responsibility:"
++ "<br>Inspect shipment immediately upon delivery."
++ "<br>Check for visible damage to packaging"
++ "<br>Verify quantity and content."
++ "<br>Take clear photos or videos of any damage or discrepancies. For Freight shipment damage, sign the BOL and mention &quot;Damage Shipment&quot;."
++ "<br><br>"
+
++ "2. Document the Issue - Collect the following:"
++ "<br>Photos: Outer packaging, label, damaged goods, BOL."
++ "<br>Delivery Receipt/BOL, mention damage upon delivery."
++ "<br><br>"
+
++ "3. Notify A+ DISTRIBUTORS LLC<"
++ "<br>Timing: Within 2 business days of delivery"
+
++ "<br><<br>"
++ "a. Include in your message:"
++ "<br>Order Number / Tracking Number"
++ "<br>Description of issue"
++ "<br>Number of Boxes damaged"
++ "<br>Supporting photos/documents"
++ "<br>"
++ "<br>N20 Cream Charger are sold strictly for food preparation purposes only. Any misuse or use outside of approved culinary applications is strictly prohibited and may result in refusal of sale or legal consequences.<br><br>"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="t5">
+		<groupHeader>
+			<band height="62">
+				<textField isStretchWithOverflow="true">
+					<reportElement key="textField-2" positionType="Float" mode="Transparent" x="0" y="1" width="497" height="60" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="548411a5-9827-49ab-ae6a-4472376877cd"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+						<font fontName="Open Sans" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Shelf Life & Expiry Dates: Customers are responsible for verifying expiration dates upon delivery. A+ DISTRIBUTORS LLC is not liable for expired or near-expiry food items after shipment is accepted."
++"<BR><BR>"+
+"Food Returns: Due to health and safety standards, food items are non-returnable, except in cases of damage or order errors. All issues must be reported within 72 hours of delivery with clear photo documentation and details sent to <u><a href='mailto:aplussdistributors@gmail.com'><font color='#0000FF'>aplussdistributors@gmail.com</font></a></u>."
++"<BR><BR>"+
+"Temperature Control: Buyers are responsible for proper handling and storage of food items. A+ DISTRIBUTORS LLC is not liable for spoilage caused by improper storage or transportation. Damage or shortage claims, or products ordered by mistake by the customer must be reported with in 72 Hours. All returns are at the owners discretion."
++"<BR><BR>"+
+"**Refund Policy:**"
++"<BR><BR>"+
+"We do not offer cash or check refunds. For eligible returns, **store credit** will be provided for use on future purchases. The store credit will be issued in the form of a gift card or account credit."
++"<BR><BR>"+
+"**Returned Checks:**"
++"<BR><BR>"+
+"A $50 **NSF (Non-Sufficient Funds) fee** will be applied for all returned checks. This fee is non-refundable and must be paid promptly. Failure to resolve the NSF fee may result in restricted future transactions."]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="t6">
+		<groupHeader>
+			<band height="50">
+				<textField isStretchWithOverflow="true">
+					<reportElement key="textField-2" positionType="Float" mode="Transparent" x="0" y="0" width="497" height="50" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="31e35a7f-6b40-48fc-b696-f68494e11aca"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+						<font fontName="Open Sans" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["**Additional Terms:**"
++"<br><br>"+
+"**Cash & Carry Only:** All transactions are final and must be paid in full at the time of purchase."
++"<br>"
++"<br>"+"Wire details"
++"<br>"+"Chase Bank"
++"<br>"+"Bank address"
++"<br>"+"J.P. Morgan chase"
++"<br>"+"<u><a href='https://www.google.com/maps/search/270+park+Ave+Ny+Ny+10017?entry=gmail&source=g'><font color='#0000FF'>270 park Ave Ny Ny 10017</font></a></u>"
++"<br>"
++"<br>"+"Routing number 021000021"
++"<br>"+"Account number 692639597"
++"<br>"+"Beneficiary name"
++"<br>"+"A+ Distributors LLC"
++"<br>"
++"<br>"+"Zelle payments At <u><a href='mailto:info@vipsales.us'><font color='#0000FF'>info@vipsales.us</font></a></u>"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+</jasperReport>
