@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="80"/>
+	<property name="ireport.y" value="452"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1539,228 +1539,6 @@ $F{TOTALPRICE}]]></variableExpression>
 			</band>
 			<band height="36">
 				<componentElement>
-					<reportElement key="SOInfo 2" x="0" y="0" width="552" height="36" uuid="0dd3774f-7394-4297-a445-f27159afdfe3"/>
-					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-						<datasetRun subDataset="SOInfo" uuid="a1782eef-1a79-49da-a1d1-df89152e16f2">
-							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
-							<datasetParameter name="cbDisplaySeller">
-								<datasetParameterExpression><![CDATA[$P{cbDisplaySeller}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colSalesOrderCarrier">
-								<datasetParameterExpression><![CDATA[$P{colSalesOrderCarrier}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colSalesOrderShippingTerms">
-								<datasetParameterExpression><![CDATA[$P{colSalesOrderShippingTerms}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colSalesOrderFOBPoint">
-								<datasetParameterExpression><![CDATA[$P{colSalesOrderFOBPoint}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colSalesOrderPaymentTerms">
-								<datasetParameterExpression><![CDATA[$P{colSalesOrderPaymentTerms}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colSalesOrderSeller">
-								<datasetParameterExpression><![CDATA[$P{colSalesOrderSeller}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="soId">
-								<datasetParameterExpression><![CDATA[$F{RECORDID}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colSalesOrderShipService">
-								<datasetParameterExpression><![CDATA[$P{colSalesOrderShipService}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colOrderCurrencyRate">
-								<datasetParameterExpression><![CDATA[$P{colOrderCurrencyRate}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colOrderCurrencyCode">
-								<datasetParameterExpression><![CDATA[$P{colOrderCurrencyCode}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="colOrderEstimatedTax">
-								<datasetParameterExpression><![CDATA[$P{colTaxIntegrationEstimatedTax}]]></datasetParameterExpression>
-							</datasetParameter>
-							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-						</datasetRun>
-						<jr:column width="92" uuid="30588108-bec6-4fe0-a65e-a743158e0836">
-							<printWhenExpression><![CDATA[$P{colSalesOrderFOBPoint}]]></printWhenExpression>
-							<jr:columnHeader height="15" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="fed33e03-c004-4b37-b001-b734e9aa05ed"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans" size="10" isBold="true"/>
-									</textElement>
-									<text><![CDATA[FOB Point ]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="14" rowSpan="1">
-								<box leftPadding="0" rightPadding="0">
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="0c8e74bb-88de-4683-af9c-27cb3f197e64"/>
-									<box leftPadding="3" rightPadding="3"/>
-									<textElement textAlignment="Center">
-										<font fontName="Open Sans" size="10"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{FOBPOINT}]]></textFieldExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="92" uuid="03c8796d-b890-4e03-b80c-6540d12933ee">
-							<printWhenExpression><![CDATA[$P{colSalesOrderShippingTerms}]]></printWhenExpression>
-							<jr:columnHeader height="15" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="078ede6d-724e-44bb-a36d-b9348888fd36"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans" size="10" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Shipping Terms]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="14" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="b4724dc2-bd21-48df-826e-ca96fd16c735"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans" size="10"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{SHIPPINGTERMS}]]></textFieldExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="92" uuid="d8b2310a-6a27-4be6-9290-5b075ef0abca">
-							<printWhenExpression><![CDATA[$P{colOrderCurrencyCode}]]></printWhenExpression>
-							<jr:columnHeader height="15" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="c763d5fa-ccd5-46ac-bab6-ed3ba1fe7ea1"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Currency Code]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="14" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="f6082601-706d-4e1d-a074-e95ee483e6e3"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{CURRENCYCODE} == null ? $F{HOMECURRENCYCODE} : $F{CURRENCYCODE}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="92" uuid="5ea01e07-7866-4eb2-b1ab-d8b11ff32d00">
-							<printWhenExpression><![CDATA[$P{colOrderCurrencyRate}]]></printWhenExpression>
-							<jr:columnHeader height="15" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="d4ec65ae-8bdd-4759-8910-ff7ac09ff949"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Currency Rate]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="14" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textField isStretchWithOverflow="true" pattern=" #,##0.0#######" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="b4d567eb-c281-4950-be76-90ecb88ed9cd"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{CURRENCYRATE}]]></textFieldExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="92" uuid="1ca4bae9-20a0-493b-b451-fffe9ae82cb1">
-							<printWhenExpression><![CDATA[$P{colTaxIntegrationEstimatedTax}]]></printWhenExpression>
-							<jr:columnHeader height="15" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="35cd1d81-61d4-4366-a5ea-502985db5e60"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Estimated Tax]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="14" rowSpan="1">
-								<box>
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="60785cb2-e379-40db-bcaa-c36b6dc6c803"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{ESTIMATEDTAX}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-					</jr:table>
-				</componentElement>
-			</band>
-			<band height="36">
-				<componentElement>
 					<reportElement key="Year" positionType="Float" x="0" y="0" width="552" height="36" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4fd8b45f-a4de-4a33-919e-d7bca6a633a3"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 						<datasetRun subDataset="SOInfo" uuid="c82a7703-9c7c-4fc0-be02-e734af6e5101">
@@ -1769,7 +1547,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
-						<jr:column width="92" uuid="73d3c3bb-7521-4a46-b5dd-2fcd957ad21c">
+						<jr:column width="75" uuid="73d3c3bb-7521-4a46-b5dd-2fcd957ad21c">
 							<printWhenExpression><![CDATA[$F{cfYear}!=null && $F{cfYear}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1780,7 +1558,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="3502348c-d3bd-4cd9-acfc-2c34a1ab83cb"/>
+									<reportElement mode="Opaque" x="0" y="0" width="75" height="14" backcolor="#EAEAEA" uuid="3502348c-d3bd-4cd9-acfc-2c34a1ab83cb"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1796,7 +1574,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="efb05d48-dfe4-4766-9025-344e39102aed"/>
+									<reportElement x="0" y="0" width="75" height="14" uuid="efb05d48-dfe4-4766-9025-344e39102aed"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -1874,7 +1652,7 @@ $F{TOTALPRICE}]]></variableExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="92" uuid="62228115-8cfe-40f0-9f3a-b55acda7f66e">
+						<jr:column width="109" uuid="62228115-8cfe-40f0-9f3a-b55acda7f66e">
 							<printWhenExpression><![CDATA[$F{cfVIN}!=null && $F{cfVIN}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
@@ -1885,7 +1663,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="92" height="14" backcolor="#EAEAEA" uuid="11d7f695-2f81-40fa-913b-916d9b8e84e7"/>
+									<reportElement mode="Opaque" x="0" y="0" width="109" height="14" backcolor="#EAEAEA" uuid="11d7f695-2f81-40fa-913b-916d9b8e84e7"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
@@ -1901,7 +1679,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="92" height="14" uuid="8ccfc443-9f4b-46b7-9a73-f47291d978dd"/>
+									<reportElement x="0" y="0" width="109" height="14" uuid="8ccfc443-9f4b-46b7-9a73-f47291d978dd"/>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
@@ -4221,7 +3999,7 @@ $F{CURRENCYCODE} + "\nTotal Price"]]></textFieldExpression>
 		<band height="24">
 			<printWhenExpression><![CDATA[(($F{PAYMENTAMOUNT} != null) && $P{ShowPayments})]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="table" positionType="Float" x="0" y="10" width="552" height="14" uuid="ff08e067-6191-4198-8b47-af2ede5a2677">
+				<reportElement key="table" positionType="Float" x="0" y="8" width="552" height="16" uuid="ff08e067-6191-4198-8b47-af2ede5a2677">
 					<printWhenExpression><![CDATA[(($F{PAYMENTAMOUNT} != null) && $P{ShowPayments})]]></printWhenExpression>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
