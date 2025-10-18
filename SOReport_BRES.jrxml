@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="308"/>
+	<property name="ireport.y" value="80"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1394,7 +1394,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="47d17295-e578-4ece-b6d1-93f09d64937f">
-							<printWhenExpression><![CDATA[$P{colSalesOrderFOBPoint}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{colPONumber}]]></printWhenExpression>
 							<jr:columnHeader height="15" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1408,7 +1408,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10" isBold="true"/>
 									</textElement>
-									<text><![CDATA[FOB Point]]></text>
+									<text><![CDATA[Customer PO]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="14" rowSpan="1">
@@ -1424,7 +1424,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{FOBPOINT}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{CUSTOMERPO}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -1579,7 +1579,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 						<jr:column width="92" uuid="30588108-bec6-4fe0-a65e-a743158e0836">
-							<printWhenExpression><![CDATA[$P{colPONumber}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{colSalesOrderFOBPoint}]]></printWhenExpression>
 							<jr:columnHeader height="15" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1593,7 +1593,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans" size="10" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Customer PO]]></text>
+									<text><![CDATA[FOB Point ]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="14" rowSpan="1">
@@ -1610,7 +1610,7 @@ $F{TOTALPRICE}]]></variableExpression>
 									<textElement textAlignment="Center">
 										<font fontName="Open Sans" size="10"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{CUSTOMERPO}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{FOBPOINT}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -1770,7 +1770,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 						<jr:column width="92" uuid="73d3c3bb-7521-4a46-b5dd-2fcd957ad21c">
-							<printWhenExpression><![CDATA[$F{cfYear}!=null || $F{cfYear}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfYear}!=null && $F{cfYear}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1805,7 +1805,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="ced375fe-4ee7-4347-9ac3-322f71d2024c">
-							<printWhenExpression><![CDATA[$F{cfMake}!=null || $F{cfMake}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfMake}!=null && $F{cfMake}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1840,7 +1840,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="72f9373d-1057-4426-b4f0-fa25c41d2b7f">
-							<printWhenExpression><![CDATA[$F{cfModel}!=null || $F{cfModel}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfModel}!=null && $F{cfModel}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1875,7 +1875,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="62228115-8cfe-40f0-9f3a-b55acda7f66e">
-							<printWhenExpression><![CDATA[$F{cfVIN}!=null || $F{cfVIN}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfVIN}!=null && $F{cfVIN}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1910,7 +1910,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="568e5718-0e0e-4519-95ff-60dc875d39e1">
-							<printWhenExpression><![CDATA[$F{cfLicense}!=null || $F{cfLicense}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfLicense}!=null && $F{cfLicense}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1945,7 +1945,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="5367e403-5c0d-431d-934b-e55e37e21114">
-							<printWhenExpression><![CDATA[$F{cfOdometer}!=null || $F{cfOdometer}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfOdometer}!=null && $F{cfOdometer}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -1980,7 +1980,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="d141292c-c439-4e19-af77-4d30db0750b8">
-							<printWhenExpression><![CDATA[$F{cfRegistration}!=null || $F{cfRegistration}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfRegistration}!=null && $F{cfRegistration}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -2015,7 +2015,7 @@ $F{TOTALPRICE}]]></variableExpression>
 							</jr:detailCell>
 						</jr:column>
 						<jr:column width="92" uuid="d141292c-c439-4e19-af77-4d30db0750b8">
-							<printWhenExpression><![CDATA[$F{cfUnitNumber}!=null || $F{cfUnitNumber}.length()>0]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$F{cfUnitNumber}!=null && $F{cfUnitNumber}.trim().length()>0]]></printWhenExpression>
 							<jr:columnHeader height="14" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
@@ -2053,7 +2053,7 @@ $F{TOTALPRICE}]]></variableExpression>
 				</componentElement>
 			</band>
 			<band height="36">
-				<printWhenExpression><![CDATA[$F{BODYSERIALNUMBER}!=null || $F{BODYSERIALNUMBER}.trim().length()>0]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{BODYSERIALNUMBER}!=null && $F{BODYSERIALNUMBER}.trim().length()>0]]></printWhenExpression>
 				<componentElement>
 					<reportElement key="SerialNumber" x="0" y="0" width="92" height="36" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="b1462fd3-ecf4-4d3d-9b09-3c36cdb417e3"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -2104,7 +2104,7 @@ $F{TOTALPRICE}]]></variableExpression>
 				</componentElement>
 			</band>
 			<band height="36">
-				<printWhenExpression><![CDATA[$F{CUSTOMERCONCERN}!=null || $F{CUSTOMERCONCERN}.trim().length()>0]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{CUSTOMERCONCERN}!=null && $F{CUSTOMERCONCERN}.trim().length()>0]]></printWhenExpression>
 				<componentElement>
 					<reportElement key="Customer Concern" x="0" y="0" width="552" height="36" isRemoveLineWhenBlank="true" uuid="ee5758da-5767-474a-937e-f1eb62ee616e"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -2155,7 +2155,7 @@ $F{TOTALPRICE}]]></variableExpression>
 				</componentElement>
 			</band>
 			<band height="28">
-				<printWhenExpression><![CDATA[$F{REPAIRSUMMARY}!=null || $F{REPAIRSUMMARY}.trim().length()>0]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{REPAIRSUMMARY}!=null && $F{REPAIRSUMMARY}.trim().length()>0]]></printWhenExpression>
 				<componentElement>
 					<reportElement key="Repair Summary" positionType="Float" x="0" y="0" width="552" height="28" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="8a075e46-cf11-4784-914f-accba087dee5"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
