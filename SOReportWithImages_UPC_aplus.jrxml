@@ -602,8 +602,14 @@ FROM
     INNER JOIN uom ON soitem.uomid = uom.id
     LEFT OUTER JOIN producttotree ON producttotree.PRODUCTID = product.ID
     LEFT OUTER JOIN producttree ON producttotree.PRODUCTTREEID = producttree.ID
+    LEFT OUTER JOIN
+	(select soitem.id AS soitemid from objecttoobject
+	INNER JOIN soitem ON soitem.id = objecttoobject.recordid1 AND tableId1 = 1002104832 AND tableId2 = 1002104832
+	WHERE soitem.soid = $P{soId}
+	) AS result ON result.soitemid = soitem.id
 WHERE
     so.id = $P{soId}
+    AND result.soitemid IS NULL
     AND soitem.showitemflag = 1
     AND IF($P{ShowZeroPriceItems} = false,(soitem.unitprice + soitem.adjustamount) <> 0, 1 = 1)
 GROUP BY 1,2
