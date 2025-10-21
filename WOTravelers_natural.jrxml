@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WOTravelersNatural" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7c08e62f-1f9e-4ef4-adc0-6730189ab4e9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Basic Report for Work Orders."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRangeNone" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDescription" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colUsed" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colScrapped" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colPart#" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colFinished" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colBOMQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./WOTravelers_natural/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DisplayTime" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCategory" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCategoryColor" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colHeader:Status" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colHeader:Location" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colHeader:CustomerJob" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colHeader:Priority" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colHeader:WOQty" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colHeader:Class" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colBOMInstructions:Description" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colBOMInstructions:Order" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colBOMInstructions:Name" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colBOMInstructions:Details" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colBOMInstructions:URL" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="WOReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="cbShowInstructions" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[none,None,wo,Work Order Instructions,bom,BOM Instructions]]></parameterDescription>
+		<defaultValueExpression><![CDATA["none"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOInstructions: Completed" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOInstructions: Instructions" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOInstructions: Ready" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOInstructions: Status" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOInstructions: Step" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colWOInstructions: URL" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckEntered" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="WO Status"/>
+		<parameterDescription><![CDATA[10,900]]></parameterDescription>
+		<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckStarted" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="WO Status"/>
+		<parameterDescription><![CDATA[30,900]]></parameterDescription>
+		<defaultValueExpression><![CDATA["30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckFinished" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="WO Status"/>
+		<parameterDescription><![CDATA[40,900]]></parameterDescription>
+		<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PartNumber" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PartDescription" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbIncludeInSearch" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Show All,Show All,Show Has Fulfillable,Show Has Fulfillable,Show Completely Fulfillable,Show Completely Fulfillable]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Show All"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+    pickl1.id, wo.num AS WONUM
+FROM
+    pick AS pickl1
+    INNER JOIN
+    pickitem ON pickitem.pickid = pickl1.id
+    INNER JOIN part p ON p.id = pickitem.partid
+    LEFT OUTER JOIN woitem ON pickitem.woItemId = woitem.id
+    LEFT OUTER JOIN
+    wo ON woitem.woId = wo.id
+WHERE
+    pickl1.statusId <> 40
+    AND wo.statusId IN ($P{ckEntered},$P{ckStarted},$P{ckFinished})
+
+        AND (SELECT
+            COUNT(DISTINCT pickiteml2.id)
+        FROM
+            pickitem pickiteml2
+                INNER JOIN
+            part AS partl2 ON pickiteml2.partId = partl2.id
+        WHERE
+                pickiteml2.statusId IN (10 , 11, 5, 20)
+                AND pickiteml2.typeId <> 30
+                AND pickiteml2.pickId = pickl1.id
+                AND (
+		-- Check pickitem is completely fulfillable
+		(SELECT
+                    	   SUM(tag.qty - tag.qtyCommitted)
+               	 FROM
+                    	tag
+                     WHERE
+                    	pickiteml2.partId = tag.partId) >= (SELECT
+                    COALESCE(SUM(CASE
+                                    WHEN
+                                        pickiteml3.uomId <> partl3.uomId
+                                            AND (touomconversion.id IS NOT NULL)
+                                    THEN
+                                        pickiteml3.qty * touomconversion.multiply / touomconversion.factor
+                                    ELSE pickiteml3.qty
+                                END),
+                                0)
+                FROM
+                    pickitem pickiteml3
+                        INNER JOIN
+                    Part partl3 ON pickiteml3.partId = partl3.id
+                        INNER JOIN
+                    uom ON partl3.uomId = uom.id
+                        LEFT OUTER JOIN
+                    UOMConversion touomconversion ON uom.id = touomconversion.toUomId
+                        AND (touomconversion.fromUomId = pickiteml3.uomId)
+                WHERE
+                    (pickiteml3.statusId IN (10 , 11, 5, 20))
+                        AND pickiteml3.pickId = pickl1.id
+                        AND pickiteml3.partId = partl2.id)
+		-- End of checkin pickitem is completely fulfillable
+                OR partl2.typeId <> 10)) =
+
+
+		-- Count Pick Items (This need to match), exclude commited & fulfilled.
+				(SELECT
+            			COUNT(pickitem.id)
+        				FROM
+            			pickitem
+       				WHERE
+            			pickitem.statusId IN (10 , 11, 5, 6, 20)
+        				AND pickitem.pickId = pickl1.id)
+        AND pickitem.ordertypeid = 30
+        AND p.num like concat("%",$P{PartNumber},"%")
+        AND p.description like concat("%",$P{PartDescription},"%")
+        and  "Show Completely Fulfillable" = $P{cbIncludeInSearch}
+
+UNION
+
+
+select
+	DISTINCT
+				pick.id,
+				wo.num AS WONUM
+
+                from
+                    pickitem
+                inner join
+                    pick
+                        on pickitem.pickId=pick.id
+                inner join
+                    part
+                        on pickitem.partId=part.id
+
+ 	     left outer join
+        woitem
+            on pickitem.woItemId = woitem.id
+
+ left outer join
+        wo
+            on woitem.woId=wo.id
+
+                left outer join
+                    tag
+                        on part.id=tag.partId
+
+                where
+                     (
+                        pickitem.typeId=30
+                        and pickitem.statusId=30
+                        or pickitem.typeId<>30
+                    )
+                    AND pickitem.statusid IN (10,11,5,6,20)
+ 	          AND wo.statusId IN ($P{ckEntered},$P{ckStarted},$P{ckFinished})
+                    and pickitem.ordertypeid = 30
+	          and  "Show Has Fulfillable" = $P{cbIncludeInSearch}
+                    AND part.num like concat("%",$P{PartNumber},"%")
+                    AND part.description like concat("%",$P{PartDescription},"%")
+
+                group by
+                    pickitem.id ,
+                    pickitem.qty ,
+                    pickitem.pickId ,
+                    part.typeId ,
+                    pickitem.statusId
+                having
+					-- show any part having inventory > 0
+                    sum(tag.qty-tag.qtyCommitted)>0
+                    -- show non inventory types
+                    or part.typeId<>10
+                    -- pick item is commited thus show it
+                    or pickitem.statusId=30
+
+
+UNION
+
+select
+
+distinct
+	pick.id,
+	wo.num as WONUM
+
+    from
+        pick
+
+inner join
+        pickitem
+            on pick.id=pickitem.pickId
+left outer join part on part.id = pickitem.partid
+left outer join
+        woitem
+            on pickitem.woItemId = woitem.id
+
+ left outer join
+        wo
+            on woitem.woId=wo.id
+WHERE
+ pickitem.orderTypeId=30
+AND wo.statusId IN ($P{ckEntered},$P{ckStarted},$P{ckFinished})
+AND  "Show All" = $P{cbIncludeInSearch}
+AND part.num like concat("%",$P{PartNumber},"%")
+AND part.description like concat("%",$P{PartDescription},"%")
+ORDER BY 1
+;]]>
+	</queryString>
+	<field name="WONUM" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<subreport runToBottom="true">
+				<reportElement x="0" y="0" width="612" height="14" isPrintInFirstWholeBand="true" uuid="e0b593de-604b-4c25-ade9-d10af7e0770a"/>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<subreportParameter name="woNum">
+					<subreportParameterExpression><![CDATA[$F{WONUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ReportTitle">
+					<subreportParameterExpression><![CDATA[$P{WOReportTitle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path}+"WOTraveler.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
