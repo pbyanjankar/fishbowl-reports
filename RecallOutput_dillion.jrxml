@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecallOutputDillion" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="7ad7244c-ca05-420e-9cad-ab81ce9adfb9">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="45"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="28"/>
+	<property name="ireport.y" value="24"/>
 	<subDataset name="receiptitem" uuid="235236c8-d872-415a-b50f-236ef90a7af5">
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
@@ -121,6 +121,136 @@ trackinginfo.info = $P{LotNumber};]]>
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="qtyOnHand" class="java.lang.Double"/>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="finishedgoods" uuid="638d8b94-f7f1-4ff3-8e24-3ca84d3afd7e">
+		<parameter name="LotNumber" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT
+PART.NUM AS FINISHEDPART,
+PART.DESCRIPTION AS PARTDESCRIPTION,
+mo.num AS MONUM,
+mo.dateCompleted AS MODATECOMPLETED,
+woitem.qtyTarget,
+trackinginfo.info AS FGLOTNUMBER,
+woitem.qtyTarget AS FGQtyProduced,
+shipitem.qtyShipped AS FGQtyShipped,
+woitem.qtyScrapped,
+uom.code AS UOM,
+(woitem.qtyused - shipitem.qtyShipped) AS FGQtyRemaining
+FROM woitem
+INNER JOIN part ON part.id = woitem.partid
+INNER JOIN wo ON woitem.woid = wo.id
+INNER JOIN moitem ON moitem.id = wo.moitemid
+INNER JOIN mo ON moitem.moid = mo.id
+INNER JOIN uom ON uom.id = woitem.uomid
+LEFT OUTER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND trackinginfo.parttrackingid = 1
+LEFT OUTER JOIN trackinginfo ti ON ti.info = trackinginfo.info AND ti.tableid = 1555030112 AND trackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
+LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
+WHERE woitem.woid in
+(SELECT
+woid
+FROM woitem
+INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
+WHERE
+trackinginfo.info = $P{LotNumber}
+)
+AND woitem.typeid in (10,31);]]>
+		</queryString>
+		<field name="FINISHEDPART" class="java.lang.String"/>
+		<field name="MODATECOMPLETED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="MONUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FGQtyProduced" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="uom" class="java.lang.String"/>
+		<field name="FGQtyShipped" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FGQtyRemaining" class="java.lang.Double"/>
+		<field name="qtyScrapped" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="PARTDESCRIPTION" class="java.lang.String"/>
+		<field name="FGLOTNUMBER" class="java.lang.String"/>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="isMultiCurrency" class="java.lang.Boolean">
+			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="customers" uuid="f057b049-c438-4c22-beb5-59041c632713">
+		<parameter name="LotNumber" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT
+PART.NUM AS FINISHEDPART,
+PART.DESCRIPTION AS PARTDESCRIPTION,
+trackinginfo.info AS FGLOTNUMBER,
+shipitem.qtyShipped AS FGQtyShipped,
+uom.code AS UOM,
+so.num AS INVOICENUMBER,
+customer.name AS CUSTOMER,
+so.customerContact AS CONTACT,
+so.phone AS PHONE,
+ship.dateShipped AS DATESHIPPED
+FROM woitem
+INNER JOIN part ON part.id = woitem.partid
+INNER JOIN wo ON woitem.woid = wo.id
+INNER JOIN moitem ON moitem.id = wo.moitemid
+INNER JOIN mo ON moitem.moid = mo.id
+INNER JOIN uom ON uom.id = woitem.uomid
+LEFT OUTER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND trackinginfo.parttrackingid = 1
+LEFT OUTER JOIN trackinginfo ti ON ti.info = trackinginfo.info AND ti.tableid = 1555030112 AND trackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
+LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
+LEFT OUTER JOIN so ON shipitem.orderid = so.id AND shipitem.ordertypeid = 20
+INNER JOIN customer ON customer.id = so.customerId
+LEFT OUTER JOIN ship ON ship.id = shipitem.shipid
+WHERE woitem.woid in
+(SELECT
+woid
+FROM woitem
+INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
+WHERE
+trackinginfo.info = $P{LotNumber}
+)
+AND woitem.typeid in (10,31);]]>
+		</queryString>
+		<field name="FINISHEDPART" class="java.lang.String"/>
+		<field name="PARTDESCRIPTION" class="java.lang.String"/>
+		<field name="FGLOTNUMBER" class="java.lang.String"/>
+		<field name="DATESHIPPED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FGQtyShipped" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="uom" class="java.lang.String"/>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="CONTACT" class="java.lang.String"/>
+		<field name="PHONE" class="java.lang.String"/>
+		<field name="INVOICENUMBER" class="java.lang.String"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -717,6 +847,638 @@ Received]]></text>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{qtyScrapped}]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="46" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="0" y="14" width="752" height="32" uuid="dffc578d-6e04-4908-9c45-91350119a97b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="finishedgoods" uuid="e589b466-dd24-4a11-824a-77a532516dda">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="724" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+						<jr:columnHeader height="22" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="724" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
+								<box leftPadding="3" bottomPadding="3">
+									<bottomPen lineWidth="1.25"/>
+								</box>
+								<textElement verticalAlignment="Bottom" markup="none">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Finished Products produced with the lot code of Ingredient or Packaging]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="80" uuid="7a6294a0-05bf-4eec-9044-518ed8e8241c">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="107a3572-97ea-4917-883a-1f4847970057"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Part No.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="0">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FINISHEDPART}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="140" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="140" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Part Name]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PARTDESCRIPTION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Lot No.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FGLOTNUMBER}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="64" uuid="7a6294a0-05bf-4eec-9044-518ed8e8241c">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="64" height="31" backcolor="#EAEAEA" uuid="107a3572-97ea-4917-883a-1f4847970057"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Produced Dated]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="64" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="0">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{MODATECOMPLETED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Qty Produced]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FGQtyProduced}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="40" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="40" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
+									<box>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[UOM]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{uom}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Qty Remaining]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FGQtyRemaining}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Qty Shipped]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FGQtyShipped}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[MO ID]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{MONUM}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="1" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Inventory Adjustments]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{qtyScrapped}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="46" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="0" y="14" width="752" height="32" uuid="dffc578d-6e04-4908-9c45-91350119a97b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="customers" uuid="2e4dd2e5-baca-47bb-b884-18cd5c013994">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="743" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+						<jr:columnHeader height="22" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="743" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
+								<box leftPadding="3" bottomPadding="3">
+									<bottomPen lineWidth="1.25"/>
+								</box>
+								<textElement verticalAlignment="Bottom" markup="none">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Customer name and contact info who we shipped the finished product that contained the ingredient or packaging lot code]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="80" uuid="7a6294a0-05bf-4eec-9044-518ed8e8241c">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="107a3572-97ea-4917-883a-1f4847970057"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Part No.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="0">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FINISHEDPART}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="140" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="140" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Part Name]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PARTDESCRIPTION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[FG Lot No.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FGLOTNUMBER}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="64" uuid="7a6294a0-05bf-4eec-9044-518ed8e8241c">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="64" height="31" backcolor="#EAEAEA" uuid="107a3572-97ea-4917-883a-1f4847970057"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Customer Name]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="64" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="0">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Customer Contact]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CONTACT}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="59" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="59" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
+									<box>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Customer Phone]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="59" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PHONE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Date Shipped]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DATESHIPPED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Qty Shipped]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FGQtyShipped}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="40" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="40" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[UOM]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{uom}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Invoice Number]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{INVOICENUMBER}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
