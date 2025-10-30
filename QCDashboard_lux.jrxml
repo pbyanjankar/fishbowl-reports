@@ -209,10 +209,11 @@
        CUSTOMFIELDBYNAME(XO.CUSTOMFIELDS, "Shipped Via") SHIPPEDVIA,
        XOSTATUS.NAME STATUS,
        XOITEM.DATELASTFULFILLMENT DATECOMPLETE,
-       SO.dateScheduled AS DATESCHEDULED,
+       coalesce(SO.dateScheduled, DATE(CONCAT(YEAR(CURDATE()),"-12-31"))) AS DATESCHEDULED,
        COALESCE(onhand.qty,0) AS qoh,
        SO.customers AS CUSTOMERS,
-       SO.CONTRACTMANUFACTURER
+       locationgroup.name AS SHIPFROM,
+       SO.CUSTOMERPOS
 
 FROM XO
      INNER JOIN XOITEM ON XOITEM.XOID = XO.ID
@@ -220,8 +221,10 @@ FROM XO
      LEFT OUTER JOIN PART ON PART.ID = XOITEM.PARTID
      LEFT OUTER JOIN PRODUCT ON PRODUCT.PARTID = PART.ID
      LEFT OUTER JOIN SHIPITEM ON SHIPITEM.XOITEMID = XOITEM.ID
+     LEFT OUTER JOIN locationgroup ON locationgroup.id = XO.fromLGid
      LEFT OUTER JOIN (SELECT
 			PRODUCT.PARTID,
+			GROUP_CONCAT(DISTINCT so.customerpo) AS CUSTOMERPOS,
 			GROUP_CONCAT(DISTINCT SO.NUM) NUM,
 			min(soitem.datescheduledfulfillment) AS dateScheduled,
 		          GROUP_CONCAT(DISTINCT customer.name) customers,
@@ -264,7 +267,8 @@ ORDER BY $P!{cbSortBy}, XO.NUM, XOITEM.LINEITEM]]>
 		<field name="DATESCHEDULED" class="java.sql.Timestamp"/>
 		<field name="qoh" class="java.lang.Double"/>
 		<field name="CUSTOMERS" class="java.lang.String"/>
-		<field name="CONTRACTMANUFACTURER" class="java.lang.String"/>
+		<field name="SHIPFROM" class="java.lang.String"/>
+		<field name="CUSTOMERPOS" class="java.lang.String"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -687,6 +691,34 @@ Number]]></text>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
+					<jr:column width="80" uuid="95fed8da-4118-408d-bf2d-2300e3fe42e9">
+						<printWhenExpression><![CDATA[$P{ProductNumber}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="4e07d34b-0f20-4c31-a716-5c76fb079467"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Customer POs]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="13" uuid="5c202472-427a-4a47-9828-3b6b48520f51"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CUSTOMERPOS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 					<jr:column width="80" uuid="c93dbdef-12cb-4fba-b579-b0f5c842f050">
 						<printWhenExpression><![CDATA[$P{ImpactedSOs}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
@@ -767,7 +799,7 @@ Number]]></text>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Contract Manufacturer]]></text>
+								<text><![CDATA[Ship From]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="13" rowSpan="1">
@@ -780,7 +812,7 @@ Number]]></text>
 								<textElement>
 									<font fontName="Open Sans" size="9"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{CONTRACTMANUFACTURER}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{SHIPFROM}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
