@@ -5441,18 +5441,32 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="45" uuid="f8df4940-4c5b-4c70-b093-00a65646eada">
+					<jr:column width="20" uuid="f8df4940-4c5b-4c70-b093-00a65646eada">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="94" rowSpan="1"/>
+							<jr:cell height="70" rowSpan="1"/>
 						</jr:groupFooter>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:column width="69" uuid="e5c2711e-de4a-4518-b1aa-5abf8631521a">
+					<jr:column width="99" uuid="e5c2711e-de4a-4518-b1aa-5abf8631521a">
+						<jr:tableFooter height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement mode="Opaque" x="0" y="0" width="99" height="30" backcolor="#FFFFFF" uuid="992515c4-7586-481f-a52d-d9ec3e6e270d">
+									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+								</reportElement>
+								<box rightPadding="3">
+									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{PercentDue} + "% Advance Payment Required:"]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="94" rowSpan="1">
+							<jr:cell height="70" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="28" width="69" height="14" backcolor="#EAEAEA" uuid="66b386d0-fff6-4d1b-89de-98c1964ffabf"/>
+									<reportElement mode="Opaque" x="0" y="28" width="99" height="14" backcolor="#EAEAEA" uuid="66b386d0-fff6-4d1b-89de-98c1964ffabf"/>
 									<box rightPadding="3">
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
@@ -5463,7 +5477,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="42" width="69" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="a053d4fc-31af-4fdb-8c8d-51b7ade9daa0">
+									<reportElement mode="Opaque" x="0" y="42" width="99" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="a053d4fc-31af-4fdb-8c8d-51b7ade9daa0">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
@@ -5476,7 +5490,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="56" width="69" height="14" backcolor="#EAEAEA" uuid="dfba9995-9eff-41e7-9b50-844d6a94e6ad">
+									<reportElement mode="Opaque" x="0" y="56" width="99" height="14" backcolor="#EAEAEA" uuid="dfba9995-9eff-41e7-9b50-844d6a94e6ad">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
@@ -5489,7 +5503,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="0" width="69" height="14" backcolor="#EAEAEA" uuid="7910caac-6d9d-479a-bd12-e99ddea1f539"/>
+									<reportElement mode="Opaque" x="0" y="0" width="99" height="14" backcolor="#EAEAEA" uuid="7910caac-6d9d-479a-bd12-e99ddea1f539"/>
 									<box rightPadding="3">
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
@@ -5500,7 +5514,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="14" width="69" height="14" backcolor="#FFFFFF" uuid="265b12a8-b961-4a3f-b4ae-d0ed5f051d89"/>
+									<reportElement mode="Opaque" x="0" y="14" width="99" height="14" backcolor="#FFFFFF" uuid="265b12a8-b961-4a3f-b4ae-d0ed5f051d89"/>
 									<box rightPadding="3">
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
@@ -5513,12 +5527,30 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 						</jr:groupFooter>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:column width="145" uuid="8d61ef98-685e-4ccd-8fa6-b1cd0d6e972e">
+					<jr:column width="140" uuid="8d61ef98-685e-4ccd-8fa6-b1cd0d6e972e">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
+						<jr:tableFooter height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement mode="Opaque" x="0" y="0" width="140" height="30" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="42c3ddea-f666-406c-bf43-c5db67b28b81">
+									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+								</reportElement>
+								<box rightPadding="3">
+									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, ($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format( ($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}) )]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+							</textField>
+						</jr:tableFooter>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="94" rowSpan="1">
+							<jr:cell height="70" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="56" width="145" height="14" isRemoveLineWhenBlank="true" backcolor="#EAEAEA" uuid="87d39297-2d41-4a9b-ad1e-28299657e6c7">
+									<reportElement mode="Opaque" x="0" y="56" width="140" height="14" isRemoveLineWhenBlank="true" backcolor="#EAEAEA" uuid="87d39297-2d41-4a9b-ad1e-28299657e6c7">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
@@ -5534,7 +5566,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="0" width="145" height="14" backcolor="#EAEAEA" uuid="8fd37f45-cf0e-49c2-9984-e316ddc35803"/>
+									<reportElement mode="Opaque" x="0" y="0" width="140" height="14" backcolor="#EAEAEA" uuid="8fd37f45-cf0e-49c2-9984-e316ddc35803"/>
 									<box rightPadding="3">
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5548,7 +5580,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="42" width="145" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="0dd96e01-cc04-4a86-a613-064c2b668a73">
+									<reportElement mode="Opaque" x="0" y="42" width="140" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="0dd96e01-cc04-4a86-a613-064c2b668a73">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
@@ -5566,7 +5598,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="14" width="145" height="14" backcolor="#FFFFFF" uuid="8dcd7cbf-6f74-48a0-bbd9-4175b4cd0bd7"/>
+									<reportElement mode="Opaque" x="0" y="14" width="140" height="14" backcolor="#FFFFFF" uuid="8dcd7cbf-6f74-48a0-bbd9-4175b4cd0bd7"/>
 									<box rightPadding="3">
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5580,7 +5612,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="28" width="145" height="14" backcolor="#EAEAEA" uuid="59d3fd28-1b29-4610-9c6f-c7349cc50443"/>
+									<reportElement mode="Opaque" x="0" y="28" width="140" height="14" backcolor="#EAEAEA" uuid="59d3fd28-1b29-4610-9c6f-c7349cc50443"/>
 									<box rightPadding="3">
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5600,7 +5632,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					<jr:column width="95" uuid="263a3d24-4625-45e8-b5b6-1299fee9c504">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="94" rowSpan="1">
+							<jr:cell height="70" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 									<reportElement mode="Opaque" x="0" y="0" width="95" height="14" backcolor="#EAEAEA" uuid="5dba7e67-b6f3-483e-b49e-db40428a7d55"/>
 									<box rightPadding="3">
@@ -5698,7 +5730,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					<jr:column width="95" uuid="4f39724a-e0c6-45e5-924a-b37680cb715d">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="94" rowSpan="1">
+							<jr:cell height="70" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 									<reportElement mode="Opaque" x="0" y="0" width="95" height="14" backcolor="#EAEAEA" uuid="13031827-b652-4fd6-b4d1-1eb90c4ec205"/>
 									<box rightPadding="3">
