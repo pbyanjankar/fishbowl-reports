@@ -757,6 +757,14 @@ WHERE 	so.id = $P{soId}]]>
 			<parameterDescription><![CDATA[Display field]]></parameterDescription>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
+		<parameter name="PercentDue" class="java.lang.Double" isForPrompting="false">
+			<property name="Group" value="Payment Due"/>
+			<defaultValueExpression><![CDATA[50]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowPercentDue" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Group" value="Payment Due"/>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT DISTINCT
     SOITEM.ID AS ITEMID,
@@ -1889,6 +1897,14 @@ WHERE $P{soId} = so.id]]>
 		<property name="Group" value="Item Custom Field 3"/>
 		<property name="Sort" value="4"/>
 		<parameterDescription><![CDATA[Display field]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PercentDue" class="java.lang.Double" isForPrompting="false">
+		<property name="Group" value="Payment Due"/>
+		<defaultValueExpression><![CDATA[50]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowPercentDue" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Payment Due"/>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -5428,13 +5444,13 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 					<jr:column width="45" uuid="f8df4940-4c5b-4c70-b093-00a65646eada">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="70" rowSpan="1"/>
+							<jr:cell height="94" rowSpan="1"/>
 						</jr:groupFooter>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="69" uuid="e5c2711e-de4a-4518-b1aa-5abf8631521a">
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="70" rowSpan="1">
+							<jr:cell height="94" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 									<reportElement mode="Opaque" x="0" y="28" width="69" height="14" backcolor="#EAEAEA" uuid="66b386d0-fff6-4d1b-89de-98c1964ffabf"/>
 									<box rightPadding="3">
@@ -5500,7 +5516,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 					<jr:column width="145" uuid="8d61ef98-685e-4ccd-8fa6-b1cd0d6e972e">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="70" rowSpan="1">
+							<jr:cell height="94" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 									<reportElement mode="Opaque" x="0" y="56" width="145" height="14" isRemoveLineWhenBlank="true" backcolor="#EAEAEA" uuid="87d39297-2d41-4a9b-ad1e-28299657e6c7">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
@@ -5584,7 +5600,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					<jr:column width="95" uuid="263a3d24-4625-45e8-b5b6-1299fee9c504">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="70" rowSpan="1">
+							<jr:cell height="94" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 									<reportElement mode="Opaque" x="0" y="0" width="95" height="14" backcolor="#EAEAEA" uuid="5dba7e67-b6f3-483e-b49e-db40428a7d55"/>
 									<box rightPadding="3">
@@ -5682,7 +5698,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					<jr:column width="95" uuid="4f39724a-e0c6-45e5-924a-b37680cb715d">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
 						<jr:groupFooter groupName="Total Info">
-							<jr:cell height="70" rowSpan="1">
+							<jr:cell height="94" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 									<reportElement mode="Opaque" x="0" y="0" width="95" height="14" backcolor="#EAEAEA" uuid="13031827-b652-4fd6-b4d1-1eb90c4ec205"/>
 									<box rightPadding="3">
