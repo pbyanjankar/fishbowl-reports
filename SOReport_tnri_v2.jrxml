@@ -758,11 +758,11 @@ WHERE 	so.id = $P{soId}]]>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<parameter name="PercentDue" class="java.lang.Double" isForPrompting="false">
-			<property name="Group" value="Payment Due"/>
+			<property name="Group" value="Advance Payment Required"/>
 			<defaultValueExpression><![CDATA[50]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ShowPercentDue" class="java.lang.Boolean" isForPrompting="false">
-			<property name="Group" value="Payment Due"/>
+			<property name="Group" value="Advance Payment Required"/>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<queryString>
@@ -1900,11 +1900,11 @@ WHERE $P{soId} = so.id]]>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PercentDue" class="java.lang.Double" isForPrompting="false">
-		<property name="Group" value="Payment Due"/>
+		<property name="Group" value="Advance Payment Required"/>
 		<defaultValueExpression><![CDATA[50]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowPercentDue" class="java.lang.Boolean" isForPrompting="false">
-		<property name="Group" value="Payment Due"/>
+		<property name="Group" value="Advance Payment Required"/>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -5449,9 +5449,9 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="99" uuid="e5c2711e-de4a-4518-b1aa-5abf8631521a">
-						<jr:tableFooter height="30" rowSpan="1">
+						<jr:tableFooter height="39" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement mode="Opaque" x="0" y="0" width="99" height="30" backcolor="#FFFFFF" uuid="992515c4-7586-481f-a52d-d9ec3e6e270d">
+								<reportElement mode="Opaque" x="0" y="0" width="99" height="38" backcolor="#FFFFFF" uuid="992515c4-7586-481f-a52d-d9ec3e6e270d">
 									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
 								</reportElement>
 								<box rightPadding="3">
@@ -5529,9 +5529,9 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 					</jr:column>
 					<jr:column width="140" uuid="8d61ef98-685e-4ccd-8fa6-b1cd0d6e972e">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
-						<jr:tableFooter height="30" rowSpan="1">
+						<jr:tableFooter height="39" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement mode="Opaque" x="0" y="0" width="140" height="30" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="42c3ddea-f666-406c-bf43-c5db67b28b81">
+								<reportElement mode="Opaque" x="0" y="0" width="140" height="38" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="42c3ddea-f666-406c-bf43-c5db67b28b81">
 									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
 								</reportElement>
 								<box rightPadding="3">
@@ -5631,6 +5631,24 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					</jr:column>
 					<jr:column width="95" uuid="263a3d24-4625-45e8-b5b6-1299fee9c504">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
+						<jr:tableFooter height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement mode="Opaque" x="0" y="0" width="95" height="38" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="fb76983f-eead-49e4-bb88-fcca953837b8">
+									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+								</reportElement>
+								<box rightPadding="3">
+									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL},($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}))]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+							</textField>
+						</jr:tableFooter>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="70" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
@@ -5729,6 +5747,24 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					</jr:column>
 					<jr:column width="95" uuid="4f39724a-e0c6-45e5-924a-b37680cb715d">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
+						<jr:tableFooter height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement mode="Opaque" x="0" y="0" width="95" height="38" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="106a8a4f-eda6-496a-ba57-2bb452b84c50">
+									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+								</reportElement>
+								<box rightPadding="3">
+									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Open Sans" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, ($P{PercentDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{PercentDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}))]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+							</textField>
+						</jr:tableFooter>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="70" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
