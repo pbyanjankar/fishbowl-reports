@@ -757,11 +757,11 @@ WHERE 	so.id = $P{soId}]]>
 			<parameterDescription><![CDATA[Display field]]></parameterDescription>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
-		<parameter name="PercentDue" class="java.lang.Double" isForPrompting="false">
+		<parameter name="DepositDue" class="java.lang.Double" isForPrompting="false">
 			<property name="Group" value="Advance Payment Required"/>
 			<defaultValueExpression><![CDATA[50]]></defaultValueExpression>
 		</parameter>
-		<parameter name="ShowPercentDue" class="java.lang.Boolean" isForPrompting="false">
+		<parameter name="ShowDepositDue" class="java.lang.Boolean" isForPrompting="false">
 			<property name="Group" value="Advance Payment Required"/>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
@@ -1899,12 +1899,12 @@ WHERE $P{soId} = so.id]]>
 		<parameterDescription><![CDATA[Display field]]></parameterDescription>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PercentDue" class="java.lang.Double" isForPrompting="false">
-		<property name="Group" value="Advance Payment Required"/>
+	<parameter name="DepositDue" class="java.lang.Double" isForPrompting="false">
+		<property name="Group" value="Deposit Due"/>
 		<defaultValueExpression><![CDATA[50]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ShowPercentDue" class="java.lang.Boolean" isForPrompting="false">
-		<property name="Group" value="Advance Payment Required"/>
+	<parameter name="ShowDepositDue" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Deposit Due"/>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -5444,7 +5444,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 						<jr:tableFooter height="39" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="0" width="99" height="38" backcolor="#FFFFFF" uuid="992515c4-7586-481f-a52d-d9ec3e6e270d">
-									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+									<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
 								</reportElement>
 								<box rightPadding="3">
 									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5452,7 +5452,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 								<textElement textAlignment="Right" verticalAlignment="Bottom">
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$P{PercentDue} + "% Deposit Due:"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$P{DepositDue} + "% Deposit Due:"]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
 						<jr:groupFooter groupName="Total Info">
@@ -5524,7 +5524,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 						<jr:tableFooter height="39" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="0" width="140" height="38" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="42c3ddea-f666-406c-bf43-c5db67b28b81">
-									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+									<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
 								</reportElement>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5534,8 +5534,8 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
-    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, ($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
-    : new DecimalFormat($V{totalsDecimalNoSymbol}).format( ($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}) )]]></textFieldExpression>
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, ($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format( ($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}) )]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 							</textField>
 						</jr:tableFooter>
@@ -5626,7 +5626,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 						<jr:tableFooter height="39" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="0" width="95" height="38" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="fb76983f-eead-49e4-bb88-fcca953837b8">
-									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+									<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
 								</reportElement>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5636,8 +5636,8 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
-    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL},($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
-    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{PercentDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}))]]></textFieldExpression>
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL},($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}))]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 							</textField>
 						</jr:tableFooter>
@@ -5742,7 +5742,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 						<jr:tableFooter height="39" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="0" width="95" height="38" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="106a8a4f-eda6-496a-ba57-2bb452b84c50">
-									<printWhenExpression><![CDATA[$P{ShowPercentDue}]]></printWhenExpression>
+									<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
 								</reportElement>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5752,8 +5752,8 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<font fontName="Open Sans" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
-    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, ($P{PercentDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}), $V{TotalsDecimal})
-    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{PercentDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}))]]></textFieldExpression>
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, ($P{DepositDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{DepositDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}))]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 							</textField>
 						</jr:tableFooter>
