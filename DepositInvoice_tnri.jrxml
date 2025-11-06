@@ -5441,7 +5441,6 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="99" uuid="e5c2711e-de4a-4518-b1aa-5abf8631521a">
-						<jr:tableFooter height="16" rowSpan="1"/>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="85" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
@@ -5520,7 +5519,6 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 					</jr:column>
 					<jr:column width="140" uuid="8d61ef98-685e-4ccd-8fa6-b1cd0d6e972e">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
-						<jr:tableFooter height="16" rowSpan="1"/>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="85" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
@@ -5621,7 +5619,6 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					</jr:column>
 					<jr:column width="95" uuid="263a3d24-4625-45e8-b5b6-1299fee9c504">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
-						<jr:tableFooter height="16" rowSpan="1"/>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="85" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
@@ -5736,7 +5733,6 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					</jr:column>
 					<jr:column width="95" uuid="4f39724a-e0c6-45e5-924a-b37680cb715d">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
-						<jr:tableFooter height="16" rowSpan="1"/>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="85" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
