@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="395"/>
+	<property name="ireport.y" value="357"/>
 	<property name="ireport.callouts" value="##Wed Aug 10 12:18:02 CST 2022"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -5701,7 +5701,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement key="6" mode="Opaque" x="0" y="0" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="fb76983f-eead-49e4-bb88-fcca953837b8">
+									<reportElement key="6" mode="Opaque" x="0" y="70" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="fb76983f-eead-49e4-bb88-fcca953837b8">
 										<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
