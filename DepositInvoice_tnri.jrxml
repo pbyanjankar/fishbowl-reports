@@ -1117,7 +1117,7 @@ WHERE $P{soId} = so.id]]>
 	</parameter>
 	<parameter name="dateRangeNone" class="java.util.Date" isForPrompting="false"/>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String">
-		<defaultValueExpression><![CDATA["Basic Report for Sales Orders. If you display the customer part number it will be in parentheses."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Basic Report for Sales Order is customized for Deposit Due"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowBillToPhoneNumber" class="java.lang.Boolean" isForPrompting="false">
 		<property name="Tab" value="Address"/>
