@@ -5511,7 +5511,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 									<textElement textAlignment="Right" verticalAlignment="Bottom">
 										<font fontName="Open Sans" isBold="true"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$P{DepositDue} + "% Deposit Due:"]]></textFieldExpression>
+									<textFieldExpression><![CDATA[new DecimalFormat($V{QtyDecimal}).format($P{DepositDue}) + "% Deposit Due:"]]></textFieldExpression>
 								</textField>
 							</jr:cell>
 						</jr:groupFooter>
