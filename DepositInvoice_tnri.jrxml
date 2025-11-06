@@ -5736,28 +5736,11 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 					</jr:column>
 					<jr:column width="95" uuid="4f39724a-e0c6-45e5-924a-b37680cb715d">
 						<printWhenExpression><![CDATA[$P{ShowHomeCurrencyTotals} && $V{isMultiCurrency} && $F{CURRENCYCODE} != null]]></printWhenExpression>
-						<jr:tableFooter height="16" rowSpan="1">
-							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement key="6" mode="Opaque" x="0" y="0" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="106a8a4f-eda6-496a-ba57-2bb452b84c50">
-									<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
-								</reportElement>
-								<box rightPadding="3">
-									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								</box>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<font fontName="Open Sans" isBold="true"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
-    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, ($P{DepositDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}), $V{TotalsDecimal})
-    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{DepositDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}))]]></textFieldExpression>
-								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
-							</textField>
-						</jr:tableFooter>
+						<jr:tableFooter height="16" rowSpan="1"/>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="85" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="0" width="95" height="14" backcolor="#EAEAEA" uuid="13031827-b652-4fd6-b4d1-1eb90c4ec205"/>
+									<reportElement key="1" mode="Opaque" x="0" y="0" width="95" height="14" backcolor="#EAEAEA" uuid="13031827-b652-4fd6-b4d1-1eb90c4ec205"/>
 									<box rightPadding="3">
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5771,13 +5754,13 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="28" width="95" height="14" backcolor="#EAEAEA" uuid="24143ea8-2567-4ec2-a9c5-fddef805b961"/>
+									<reportElement key="3" mode="Opaque" x="0" y="28" width="95" height="14" backcolor="#EAEAEA" uuid="24143ea8-2567-4ec2-a9c5-fddef805b961"/>
 									<box rightPadding="3">
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<textElement textAlignment="Right" verticalAlignment="Middle">
-										<font fontName="Open Sans" size="10" isBold="true"/>
+										<font fontName="Open Sans" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$V{CanDisplaySymbol} ?
 com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, $V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal}, $V{TotalsDecimal})
@@ -5785,7 +5768,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="56" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#EAEAEA" uuid="8045c7b0-2fff-4deb-bdab-34691e61999d">
+									<reportElement key="5" mode="Opaque" x="0" y="56" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#EAEAEA" uuid="8045c7b0-2fff-4deb-bdab-34691e61999d">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
@@ -5801,7 +5784,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="14" width="95" height="14" backcolor="#FFFFFF" uuid="fbb7c9ba-0f83-4df1-82db-cd54db230431"/>
+									<reportElement key="2" mode="Opaque" x="0" y="14" width="95" height="14" backcolor="#FFFFFF" uuid="fbb7c9ba-0f83-4df1-82db-cd54db230431"/>
 									<box rightPadding="3">
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -5815,7 +5798,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement mode="Opaque" x="0" y="42" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="17c32149-c616-4ff5-b551-e74d0fc749db">
+									<reportElement key="4" mode="Opaque" x="0" y="42" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="17c32149-c616-4ff5-b551-e74d0fc749db">
 										<printWhenExpression><![CDATA[$P{ShowPayments}]]></printWhenExpression>
 									</reportElement>
 									<box rightPadding="3">
@@ -5830,6 +5813,22 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
  : $V{CanDisplaySymbol}
       ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, (BigDecimal.valueOf($V{homeCurrencyPaymentTotal}).setScale(2, BigDecimal.ROUND_HALF_UP)), $V{TotalsDecimal})
       : new DecimalFormat($V{totalsDecimalNoSymbol}).format((BigDecimal.valueOf($V{homeCurrencyPaymentTotal}).setScale(2, BigDecimal.ROUND_HALF_UP)))]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+								</textField>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement key="6" mode="Opaque" x="0" y="0" width="95" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="106a8a4f-eda6-496a-ba57-2bb452b84c50">
+										<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
+									</reportElement>
+									<box rightPadding="3">
+										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURRENCYSYMBOL}, ($P{DepositDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format(($P{DepositDue}/100) * ($V{homeCurrencySubtotal} + $V{homeCurrencyTaxTotal} - $V{homeCurrencyPaymentTotal}))]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 							</jr:cell>
