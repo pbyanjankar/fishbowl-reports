@@ -5520,24 +5520,7 @@ $F{COALESCESYMBOL} == null || $P{ShowHomeCurrency}
 					</jr:column>
 					<jr:column width="140" uuid="8d61ef98-685e-4ccd-8fa6-b1cd0d6e972e">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
-						<jr:tableFooter height="16" rowSpan="1">
-							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement key="6" mode="Opaque" x="0" y="0" width="140" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="42c3ddea-f666-406c-bf43-c5db67b28b81">
-									<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
-								</reportElement>
-								<box rightPadding="3">
-									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-									<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-								</box>
-								<textElement textAlignment="Right" verticalAlignment="Bottom">
-									<font fontName="Open Sans" isBold="true"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
-    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, ($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
-    : new DecimalFormat($V{totalsDecimalNoSymbol}).format( ($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}) )]]></textFieldExpression>
-								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
-							</textField>
-						</jr:tableFooter>
+						<jr:tableFooter height="16" rowSpan="1"/>
 						<jr:groupFooter groupName="Total Info">
 							<jr:cell height="85" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
@@ -5579,7 +5562,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<textElement textAlignment="Right" verticalAlignment="Middle">
-										<font fontName="Open Sans" size="10" isBold="true"/>
+										<font fontName="Open Sans" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$V{paymentTotal} == null
  ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, new Double(0), $V{TotalsDecimal})
@@ -5614,6 +5597,22 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCE
 									<textFieldExpression><![CDATA[$V{CanDisplaySymbol} ?
 com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, $V{SubTotal} + $V{taxTotal}, $V{TotalsDecimal})
 : new DecimalFormat($V{totalsDecimalNoSymbol}).format($V{SubTotal} + $V{taxTotal})]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+								</textField>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement key="6" mode="Opaque" x="0" y="71" width="140" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="42c3ddea-f666-406c-bf43-c5db67b28b81">
+										<printWhenExpression><![CDATA[$P{ShowDepositDue}]]></printWhenExpression>
+									</reportElement>
+									<box rightPadding="3">
+										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{CanDisplaySymbol}
+    ? com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{COALESCESYMBOL}, ($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}), $V{TotalsDecimal})
+    : new DecimalFormat($V{totalsDecimalNoSymbol}).format( ($P{DepositDue}/100) * ($V{SubTotal} + $V{taxTotal} - $V{paymentTotal}) )]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 								</textField>
 							</jr:cell>
