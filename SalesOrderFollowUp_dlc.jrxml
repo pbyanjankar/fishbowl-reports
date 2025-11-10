@@ -211,27 +211,12 @@ select username from so_aud
 
 where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'In-Stock Notification') AS DATE) is not null
 order by rev desc limit 1),'') as stuser,
-coalesce((
-select username from so_aud
 
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Estimate Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as euser,
-coalesce((
-select username from so_aud
+sysuser_estimate_follow_up.userName as euser,
+sysuser_so_follow_up.userName as suser,
+sysuser_age_follow_up.userName as aguser,
+sysuser_fulfilled_follow_up.userName as luser,
 
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'SO Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as suser,
-
-coalesce((
-select username from so_aud
-
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Fulfilled Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as luser,
-coalesce((
-select username from so_aud
-
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Ageing Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as aguser,
 coalesce(CustomFieldByName(so.CUSTOMFIELDS, 'Canceled / Voided Reason'),'') as creason,
 CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
 CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
@@ -285,6 +270,62 @@ FROM
         GROUP BY soitem.soid
     ) AS sorder ON so.id = sorder.soid
 left join sysuser sa1 on sa1.id=so.createdbyuserid
+
+
+
+-- Estimate Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "Estimate Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_estimate_follow_up ON result_estimate_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_estimate_follow_up ON revinfo_estimate_follow_up.id = result_estimate_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_estimate_follow_up ON sysuser_estimate_follow_up.id = revinfo_estimate_follow_up.modifieduserid
+
+
+
+
+-- SO Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "SO Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_so_follow_up ON result_so_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_so_follow_up ON revinfo_so_follow_up.id = result_so_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_so_follow_up ON sysuser_so_follow_up.id = revinfo_so_follow_up.modifieduserid
+
+
+-- Aging Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "Ageing Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_age_follow_up ON result_age_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_age_follow_up ON revinfo_age_follow_up.id = result_age_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_age_follow_up ON sysuser_age_follow_up.id = revinfo_age_follow_up.modifieduserid
+
+-- Fulfilled Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "Fulfilled Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_fulfilled_follow_up ON result_fulfilled_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_fulfilled_follow_up ON revinfo_fulfilled_follow_up.id = result_fulfilled_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_fulfilled_follow_up ON sysuser_fulfilled_follow_up.id = revinfo_fulfilled_follow_up.modifieduserid
+
+
 WHERE
     soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
     AND so.locationgroupid IN ($P!{locationGroupID})
@@ -568,6 +609,7 @@ FROM
         GROUP BY
             soitem.soid, soitem.qbclassid
     ) AS sorder ON so.id = sorder.soid AND sorder.qbclassid = soitem.qbclassid
+
 
 WHERE
     soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
@@ -900,27 +942,12 @@ select username from so_aud
 
 where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'In-Stock Notification') AS DATE) is not null
 order by rev desc limit 1),'') as stuser,
-coalesce((
-select username from so_aud
 
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Estimate Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as euser,
-coalesce((
-select username from so_aud
+sysuser_estimate_follow_up.userName as euser,
+sysuser_so_follow_up.userName as suser,
+sysuser_age_follow_up.userName as aguser,
+sysuser_fulfilled_follow_up.userName as luser,
 
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'SO Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as suser,
-
-coalesce((
-select username from so_aud
-
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Fulfilled Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as luser,
-coalesce((
-select username from so_aud
-
-where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'Ageing Follow Up') AS DATE) is not null
-order by rev desc limit 1),'') as aguser,
 coalesce(CustomFieldByName(so.CUSTOMFIELDS, 'Canceled / Voided Reason'),'') as creason,
 CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
 CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
@@ -973,6 +1000,61 @@ FROM
         GROUP BY soitem.soid
     ) AS sorder ON so.id = sorder.soid
 left join sysuser sa1 on sa1.id=so.createdbyuserid
+
+
+-- Estimate Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "Estimate Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_estimate_follow_up ON result_estimate_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_estimate_follow_up ON revinfo_estimate_follow_up.id = result_estimate_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_estimate_follow_up ON sysuser_estimate_follow_up.id = revinfo_estimate_follow_up.modifieduserid
+
+
+
+
+-- SO Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "SO Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_so_follow_up ON result_so_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_so_follow_up ON revinfo_so_follow_up.id = result_so_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_so_follow_up ON sysuser_so_follow_up.id = revinfo_so_follow_up.modifieduserid
+
+
+-- Aging Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "Ageing Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_age_follow_up ON result_age_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_age_follow_up ON revinfo_age_follow_up.id = result_age_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_age_follow_up ON sysuser_age_follow_up.id = revinfo_age_follow_up.modifieduserid
+
+-- Fulfilled Follow UP BY
+LEFT OUTER JOIN
+	(SELECT
+		so.id,
+		min(so_aud.rev) AS rev
+ 	FROM so
+ 	LEFT OUTER JOIN so_aud ON so.id = so_aud.id
+	where cast(CustomFieldByName(so_aud.customfields, "Fulfilled Follow Up") AS CHAR CHARACTER SET utf8) <> ""
+	GROUP BY so.id) AS result_fulfilled_follow_up ON result_fulfilled_follow_up.id = so.id
+LEFT OUTER JOIN revinfo revinfo_fulfilled_follow_up ON revinfo_fulfilled_follow_up.id = result_fulfilled_follow_up.rev
+LEFT OUTER JOIN sysuser sysuser_fulfilled_follow_up ON sysuser_fulfilled_follow_up.id = revinfo_fulfilled_follow_up.modifieduserid
+
+
 WHERE
     soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
     AND so.locationgroupid IN ($P!{locationGroupID})
