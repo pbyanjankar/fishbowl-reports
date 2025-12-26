@@ -80,12 +80,18 @@
 			<parameterDescription><![CDATA[1 $P!{cbOrder},SO Number,2 $P!{cbOrder},Part Number,3 $P!{cbOrder},Description,4 $P!{cbOrder},Qty Fulfilled,5 $P!{cbOrder},Qty Return,6 $P!{cbOrder},Qty Open]]></parameterDescription>
 			<defaultValueExpression><![CDATA["1 $P!{cbOrder}"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
 count(*) AS ESTIMATECOUNT,
 sum(if(dateIssued IS NOT NULL, 1, 0)) AS ISSUEDCOUNT,
-sum(so.totalprice) AS TOTALPRICE
+sum(if(dateIssued IS NULL, 0, so.totalprice)) AS ORDEREDAMOUNT
 FROM so
+
+INNER JOIN customer ON customer.id = so.customerid
+LEFT OUTER JOIN sysuser ON sysuser.id = customer.defaultsalesmanid
 
 INNER JOIN (
 
@@ -102,11 +108,14 @@ INNER JOIN revinfo ON revinfo.id = so_aud.rev
 WHERE so_aud.statusId = 10
 GROUP BY so_aud.id, so_aud.statusid) as result ON result.id = so.id
 WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, dateIssued)  > 60 OR dateIssued IS NULL)
-	   	AND so.dateCreated BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND);]]>
+	   	AND so.dateCreated BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND UPPER(coalesce(sysuser.username,"")) LIKE UPPER($P{salesPerson})
+    AND customer.id LIKE '$P!{customerID}'
+;]]>
 		</queryString>
 		<field name="ESTIMATECOUNT" class="java.lang.Double"/>
 		<field name="ISSUEDCOUNT" class="java.lang.Double"/>
-		<field name="TOTALPRICE" class="java.lang.Double"/>
+		<field name="ORDEREDAMOUNT" class="java.lang.Double"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -147,6 +156,9 @@ WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, dateIssued)  > 60 OR dateIssued IS NU
 		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
 		<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
 			<property name="Group" value="Column Sorting"/>
 			<property name="Sort" value="4"/>
@@ -158,8 +170,8 @@ WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, dateIssued)  > 60 OR dateIssued IS NU
 			<property name="Group" value="Column Sorting"/>
 			<property name="Sort" value="3"/>
 			<property name="Tooltip" value="Choose which column will be used to sort the report"/>
-			<parameterDescription><![CDATA[1 $P!{cbOrder},SO Number,2 $P!{cbOrder},Part Number,3 $P!{cbOrder},Description,4 $P!{cbOrder},Qty Fulfilled,5 $P!{cbOrder},Qty Return,6 $P!{cbOrder},Qty Open]]></parameterDescription>
-			<defaultValueExpression><![CDATA["1 $P!{cbOrder}"]]></defaultValueExpression>
+			<parameterDescription><![CDATA[3 $P!{cbOrder},Date Estimate,4 $P!{cbOrder},Date Issued,6 $P!{cbOrder},Customer,7 $P!{cbOrder},Defulat Salesperson,8 $P!{cbOrder},Order Amount]]></parameterDescription>
+			<defaultValueExpression><![CDATA["8 $P!{cbOrder}"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
@@ -170,7 +182,7 @@ dateIssued AS DATEISSUED,
 TIMESTAMPDIFF(HOUR, dateEstimate, dateIssued) AS AGE,
 customer.name AS CUSTOMER,
 concat(sysuser.firstname, ' ', sysuser.lastname)  AS DEFAULTSALESPERSON,
-so.totalprice AS SOTOTALPRICE
+so.totalprice AS ORDEREDAMOUNT
 FROM so
 
 INNER JOIN customer ON customer.id = so.customerid
@@ -192,7 +204,13 @@ INNER JOIN revinfo ON revinfo.id = so_aud.rev
 WHERE so_aud.statusId = 10
 GROUP BY so_aud.id, so_aud.statusid) as result ON result.id = so.id
 WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, if(dateIssued IS NOT NULL,dateIssued,now()) )  > 60 OR dateIssued IS NULL)
-	   	AND so.dateCreated BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND);]]>
+	   	AND so.dateCreated BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+  AND UPPER(coalesce(sysuser.username, "")) LIKE UPPER($P{salesPerson})
+   		AND customer.id LIKE '$P!{customerID}'
+
+ORDER BY $P!{cbSortBy}
+;]]>
 		</queryString>
 		<field name="DATEESTIMATE" class="java.sql.Timestamp"/>
 		<field name="DATEISSUED" class="java.sql.Timestamp"/>
@@ -200,7 +218,7 @@ WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, if(dateIssued IS NOT NULL,dateIssued,
 		<field name="AGE" class="java.lang.Double"/>
 		<field name="CUSTOMER" class="java.lang.String"/>
 		<field name="DEFAULTSALESPERSON" class="java.lang.String"/>
-		<field name="SOTOTALPRICE" class="java.lang.Double"/>
+		<field name="ORDEREDAMOUNT" class="java.lang.Double"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -216,9 +234,9 @@ WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, if(dateIssued IS NOT NULL,dateIssued,
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
-		<variable name="TOTALPRICE" class="java.lang.Double" calculation="Sum">
-			<variableExpression><![CDATA[$F{SOTOTALPRICE}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{SOTOTALPRICE}]]></initialValueExpression>
+		<variable name="TOTALORDEREDAMOUNT" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{ORDEREDAMOUNT}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{ORDEREDAMOUNT}]]></initialValueExpression>
 		</variable>
 	</subDataset>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
@@ -244,6 +262,26 @@ WHERE (TIMESTAMPDIFF(MINUTE, dateEstimate, if(dateIssued IS NOT NULL,dateIssued,
 	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
 		<property name="Group" value="Select a SO created date range"/>
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="4"/>
+		<property name="Tooltip" value="Choose if the report should be sorted in ascending or descending order"/>
+		<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="3"/>
+		<property name="Tooltip" value="Choose which column will be used to sort the report"/>
+		<parameterDescription><![CDATA[3 $P!{cbOrder},Date Estimate,4 $P!{cbOrder},Date Issued,6 $P!{cbOrder},Customer,7 $P!{cbOrder},Defulat Salesperson,8 $P!{cbOrder},Order Amount]]></parameterDescription>
+		<defaultValueExpression><![CDATA["8 $P!{cbOrder}"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -399,7 +437,7 @@ WHERE id = 1]]>
 								<textElement textAlignment="Right" verticalAlignment="Bottom">
 									<font fontName="Open Sans" size="10" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Dollar Amount]]></text>
+								<text><![CDATA[Total Converted Amount]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="14" rowSpan="1">
@@ -409,7 +447,7 @@ WHERE id = 1]]>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{TOTALPRICE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{ORDEREDAMOUNT}]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
@@ -596,7 +634,7 @@ WHERE id = 1]]>
 								<textElement textAlignment="Right" verticalAlignment="Bottom">
 									<font fontName="Open Sans" size="10" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Dollar Amount]]></text>
+								<text><![CDATA[Order Amount]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter height="15" rowSpan="1">
@@ -608,7 +646,7 @@ WHERE id = 1]]>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{TOTALPRICE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{TOTALORDEREDAMOUNT}]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 							</textField>
 						</jr:columnFooter>
@@ -619,7 +657,7 @@ WHERE id = 1]]>
 								<textElement textAlignment="Right">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{SOTOTALPRICE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{ORDEREDAMOUNT}]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
