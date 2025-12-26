@@ -50,8 +50,8 @@
 			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+			<parameterDescription><![CDATA[so.datecreated,Date Created,so.dateissued,Date Issued]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.dateCreated"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
 			<parameterDescription><![CDATA[60,100]]></parameterDescription>
@@ -166,6 +166,7 @@ so_audit_efu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 
 ),
 
@@ -180,6 +181,7 @@ so_audit_sofu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 ),
 
 so_audit_ffu AS (
@@ -193,6 +195,7 @@ so_audit_ffu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+      AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 ),
 so_audit_afu AS (
     SELECT
@@ -205,6 +208,7 @@ so_audit_afu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+       AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 
 )
 
@@ -464,10 +468,10 @@ customer.name,so.num]]>
 		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
 		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
 		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
-		<field name="NextEstimateFollowUpDate" class="java.sql.Timestamp">
+		<field name="NextEstimateFollowUpDate" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="NextSOFollowUpDate" class="java.sql.Timestamp">
+		<field name="NextSOFollowUpDate" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="AgedOut" class="java.lang.String"/>
@@ -512,8 +516,8 @@ customer.name,so.num]]>
 			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+			<parameterDescription><![CDATA[so.datecreated,Date Created,so.dateissued,Date Issued]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.dateCreated"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
 			<parameterDescription><![CDATA[60,100]]></parameterDescription>
@@ -781,8 +785,8 @@ ORDER BY
 	</subDataset>
 	<subDataset name="SOXOInfo" uuid="818e0b81-ec24-4efc-9f44-bfefc64efc25">
 		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
+			<parameterDescription><![CDATA[so.datecreated,Date Created,so.dateissued,Date Issued]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.dateCreated"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
@@ -961,7 +965,7 @@ so_audit_efu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
-
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 ),
 
 so_audit_sofu AS (
@@ -975,6 +979,7 @@ so_audit_sofu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 ),
 
 so_audit_ffu AS (
@@ -988,6 +993,7 @@ so_audit_ffu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 ),
 so_audit_afu AS (
     SELECT
@@ -1000,7 +1006,7 @@ so_audit_afu AS (
     FROM so_aud
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
-
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 )
 
 
@@ -1321,10 +1327,10 @@ rtype,1,2]]>
 		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
 		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
 		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
-		<field name="NextEstimateFollowUpDate" class="java.sql.Timestamp">
+		<field name="NextEstimateFollowUpDate" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="NextSOFollowUpDate" class="java.sql.Timestamp">
+		<field name="NextSOFollowUpDate" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="AgedOut" class="java.lang.String"/>
@@ -1369,27 +1375,27 @@ rtype,1,2]]>
 	<parameter name="ckIssued" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
 		<parameterDescription><![CDATA[20,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["20"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckInProgress" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
 		<parameterDescription><![CDATA[25,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["25"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
 		<parameterDescription><![CDATA[60,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckClosedShort" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
 		<parameterDescription><![CDATA[70,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["70"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckVoided" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
 		<parameterDescription><![CDATA[80,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["80"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
@@ -1398,14 +1404,14 @@ rtype,1,2]]>
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
+		<parameterDescription><![CDATA[so.datecreated,Date Created,so.dateissued,Date Issued]]></parameterDescription>
 		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
-		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<parameterDescription><![CDATA[Yesterday]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
@@ -1424,7 +1430,7 @@ rtype,1,2]]>
 	<parameter name="ckExpired" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="SO Status"/>
 		<parameterDescription><![CDATA[90,0]]></parameterDescription>
-		<defaultValueExpression><![CDATA["90"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cbShipToState/Province" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA['%',All,'Alabama',Alabama,'Alberta',Alberta,'Alaska',Alaska,'Arizona',Arizona,'Arkansas',Arkansas,'Australian Capital Territory',Australian Capital Territory,'British Columbia',British Columbia,'California',California, 'Colorado',Colorado,'Connecticut',Connecticut,'Delaware',Delaware,'District of Columbia',District of Columbia,'Florida',Florida,'Georgia',Georgia, 'Hawaii',Hawaii, 'Idaho',Idaho,'Illinois',Illinois,'Indiana',Indiana,'Iowa',Iowa,'Kansas',Kansas,'Kentucky',Kentucky,'Louisiana',Louisiana,'Maine',Maine,'Manitoba',Manitoba,'Maryland',Maryland,'Massachusetts',Massachusetts,'Michigan',Michigan, 'Minnesota',Minnesota, 'Mississippi',Mississippi,'Missouri',Missouri,'Montana',Montana,'Nebraska',Nebraska,'Nevada',Nevada,'Newfoundland',Newfoundland,'New Brunswick',New Brunswick,'New Hampshire',New Hampshire,'New Jersey',New Jersey, 'New Mexico',New Mexico,'New South Wales',New South Wales,'New York',New York, 'North Carolina',North Carolina, 'North Dakota',North Dakota,'Northern Territory',Northern Territory,'Northwest Territories',Northwest Territories,'Nova Scotia',Nova Scotia,'Nunavut',Nunavut,'Ohio',Ohio,'Oklahoma',Oklahoma,'Ontario',Ontario,'Oregon',Oregon, 'Pennsylvania',Pennsylvania, 'Prince Edward Island',Prince Edward Island,'Quebec',Quebec,'Queensland',Queensland, 'Rhode Island',Rhode Island, 'Saskatchewan',Saskatchewan,'South Australia',South Australia,'South Carolina',South Carolina, 'South Dakota',South Dakota,'Tasmania',Tasmania, 'Tennessee',Tennessee,'Texas',Texas, 'Utah',Utah,'Vermont',Vermont,'Victoria',Victoria,'Virginia',Virginia,'Washington',Washington,'West Virginia',West Virginia,'Western Australia',Western Australia,'Wisconsin',Wisconsin,'Wyoming',Wyoming,'Yukon',Yukon]]></parameterDescription>
@@ -2157,7 +2163,6 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{NextEstimateFollowUpDate}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
