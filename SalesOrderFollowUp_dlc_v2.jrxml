@@ -167,7 +167,6 @@ so_audit_efu AS (
     INNER JOIN so ON so.id = so_aud.id
     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
     AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-
 ),
 
 so_audit_sofu AS (
@@ -334,66 +333,115 @@ left join sysuser sa1 on sa1.id=so.createdbyuserid
 
 -- Estimate Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+  SELECT
+    id,
+    rev,
+    username,
+    efu,
+    prev_efu
+FROM (
+    SELECT
         id,
         rev,
         username,
         efu,
-        prev_efu
- FROM so_audit_efu
-where
- (efu Is Not null
-    And prev_efu IS NULL) OR efu <> prev_efu OR (efu Is null
-    And prev_efu IS Not NULL)
- order by rev desc limit 1) AS efu_audit ON efu_audit.id = so.id
+        prev_efu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
+    FROM so_audit_efu
+    WHERE
+        (efu IS NOT NULL AND prev_efu IS NULL)
+        OR (efu IS NULL AND prev_efu IS NOT NULL)
+        OR efu <> prev_efu
+) AS t
+WHERE rn = 1
+ORDER BY rev
+) AS efu_audit ON efu_audit.id = so.id
 
 
 -- SO Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+
+ SElECT
         id,
         rev,
         username,
         sofu,
         prev_sofu
+FROM(
+   SElECT
+        id,
+        rev,
+        username,
+        sofu,
+        prev_sofu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
  FROM so_audit_sofu
 where
- (sofu Is Not null
-    And prev_sofu IS NULL) OR sofu <> prev_sofu OR (sofu Is null
-    And prev_sofu IS Not NULL)
- order by rev desc limit 1) AS sofu_audit ON sofu_audit.id = so.id
+    (sofu Is Not NULL AND prev_sofu IS NULL)
+    OR (sofu Is NULL And prev_sofu IS Not NULL)
+    OR sofu <> prev_sofu
+
+) AS t
+
+WHERE rn = 1
+ORDER BY rev
+)  AS sofu_audit ON sofu_audit.id = so.id
 
 
 
 -- Aging Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+
+ SElECT
         id,
         rev,
         username,
         afu,
         prev_afu
+FROM (
+   SElECT
+        id,
+        rev,
+        username,
+        afu,
+        prev_afu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
  FROM so_audit_afu
 where
- (afu Is Not null
-    And prev_afu IS NULL) OR afu <> prev_afu OR (afu Is null
-    And prev_afu IS Not NULL)
- order by rev desc limit 1) AS afu_audit ON afu_audit.id = so.id
+  (afu Is Not null AND prev_afu IS NULL)
+  OR (afu Is null And prev_afu IS Not NULL)
+  OR afu <> prev_afu
+) t
+WHERE rn = 1
+ORDER BY rev
+) AS afu_audit ON afu_audit.id = so.id
 
 -- Fulfilled Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+
+ SElECT
         id,
         rev,
         username,
         ffu,
         prev_ffu
+FROM(
+   SElECT
+        id,
+        rev,
+        username,
+        ffu,
+        prev_ffu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
  FROM so_audit_ffu
 where
- (ffu Is Not null
-    And prev_ffu IS NULL) OR ffu <> prev_ffu OR (ffu Is null
-    And prev_ffu IS Not NULL)
- order by rev desc limit 1) AS ffu_audit ON ffu_audit.id = so.id
+    (ffu Is Not NULL And prev_ffu IS NULL)
+    OR (ffu Is null AND prev_ffu IS Not NULL)
+    OR ffu <> prev_ffu
+) AS t
+WHERE rn = 1
+ORDER BY rev
+) AS ffu_audit ON ffu_audit.id = so.id
 
 WHERE
     soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
@@ -1129,72 +1177,117 @@ FROM
     ) AS sorder ON so.id = sorder.soid
 left join sysuser sa1 on sa1.id=so.createdbyuserid
 
-
-
 -- Estimate Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+  SELECT
+    id,
+    rev,
+    username,
+    efu,
+    prev_efu
+FROM (
+    SELECT
         id,
         rev,
         username,
         efu,
-        prev_efu
- FROM so_audit_efu
-where
- (efu Is Not null
-    And prev_efu IS NULL) OR efu <> prev_efu OR (efu Is null
-    And prev_efu IS Not NULL)
- order by rev desc limit 1) AS efu_audit ON efu_audit.id = so.id
+        prev_efu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
+    FROM so_audit_efu
+    WHERE
+        (efu IS NOT NULL AND prev_efu IS NULL)
+        OR (efu IS NULL AND prev_efu IS NOT NULL)
+        OR efu <> prev_efu
+) AS t
+WHERE rn = 1
+ORDER BY rev
+) AS efu_audit ON efu_audit.id = so.id
 
 
 -- SO Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+
+ SElECT
         id,
         rev,
         username,
         sofu,
         prev_sofu
+FROM(
+   SElECT
+        id,
+        rev,
+        username,
+        sofu,
+        prev_sofu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
  FROM so_audit_sofu
 where
- (sofu Is Not null
-    And prev_sofu IS NULL) OR sofu <> prev_sofu OR (sofu Is null
-    And prev_sofu IS Not NULL)
- order by rev desc limit 1) AS sofu_audit ON sofu_audit.id = so.id
+    (sofu Is Not NULL AND prev_sofu IS NULL)
+    OR (sofu Is NULL And prev_sofu IS Not NULL)
+    OR sofu <> prev_sofu
+
+) AS t
+
+WHERE rn = 1
+ORDER BY rev
+)  AS sofu_audit ON sofu_audit.id = so.id
 
 
 
 -- Aging Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+
+ SElECT
         id,
         rev,
         username,
         afu,
         prev_afu
+FROM (
+   SElECT
+        id,
+        rev,
+        username,
+        afu,
+        prev_afu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
  FROM so_audit_afu
 where
- (afu Is Not null
-    And prev_afu IS NULL) OR afu <> prev_afu OR (afu Is null
-    And prev_afu IS Not NULL)
- order by rev desc limit 1) AS afu_audit ON afu_audit.id = so.id
+  (afu Is Not null AND prev_afu IS NULL)
+  OR (afu Is null And prev_afu IS Not NULL)
+  OR afu <> prev_afu
+) t
+WHERE rn = 1
+ORDER BY rev
+) AS afu_audit ON afu_audit.id = so.id
 
 -- Fulfilled Follow UP BY
 LEFT OUTER JOIN (
-   SElECT
+
+ SElECT
         id,
         rev,
         username,
         ffu,
         prev_ffu
+FROM(
+   SElECT
+        id,
+        rev,
+        username,
+        ffu,
+        prev_ffu,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
  FROM so_audit_ffu
 where
- (ffu Is Not null
-    And prev_ffu IS NULL) OR ffu <> prev_ffu OR (ffu Is null
-    And prev_ffu IS Not NULL)
- order by rev desc limit 1) AS ffu_audit ON ffu_audit.id = so.id
-
-
+    (ffu Is Not NULL And prev_ffu IS NULL)
+    OR (ffu Is null AND prev_ffu IS Not NULL)
+    OR ffu <> prev_ffu
+) AS t
+WHERE rn = 1
+ORDER BY rev
+) AS ffu_audit ON ffu_audit.id = so.id
 
 WHERE
     soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
