@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="44"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Sat Nov 22 21:20:22 NPT 2025"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -70,10 +70,6 @@
 			<parameterDescription><![CDATA[10,100]]></parameterDescription>
 			<defaultValueExpression><![CDATA["10"]]></defaultValueExpression>
 		</parameter>
-		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-			<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed,postso.postdate,SO Item Date Fulfilled]]></parameterDescription>
-			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
-		</parameter>
 		<parameter name="ckFulfilled" class="java.lang.String" isForPrompting="false">
 			<parameterDescription><![CDATA[60,100]]></parameterDescription>
 			<defaultValueExpression><![CDATA["60"]]></defaultValueExpression>
@@ -103,6 +99,10 @@
 			<property name="Tab" value="SO Status"/>
 			<parameterDescription><![CDATA[85,0]]></parameterDescription>
 			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[so.datecreated,Date Created,so.dateissued,Date Issued]]></parameterDescription>
+			<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[WITH
@@ -330,7 +330,7 @@ ORDER BY total desc, sysuser.username;]]>
 		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cbApplyDateFilter" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[so.datefirstship,Scheduled Fulfillment Date,so.datecreated,Date Created,so.dateissued,Date Issued,so.datecompleted,SO Date Completed,so.datelastmodified,Date Last Changed]]></parameterDescription>
+		<parameterDescription><![CDATA[so.datecreated,Date Created,so.dateissued,Date Issued]]></parameterDescription>
 		<defaultValueExpression><![CDATA["so.datefirstship"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
