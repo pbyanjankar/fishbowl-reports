@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecallOutputDillion" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="7ad7244c-ca05-420e-9cad-ab81ce9adfb9">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="28"/>
-	<property name="ireport.y" value="24"/>
+	<property name="ireport.y" value="136"/>
 	<subDataset name="receiptitem" uuid="235236c8-d872-415a-b50f-236ef90a7af5">
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
@@ -73,13 +73,12 @@ trackinginfo.info = $P{LotNumber};]]>
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
-mo.datecompleted AS MODATE,
+date(mo.datecompleted) AS MODATE,
 mo.num AS MONUM,
-woitem.qtyUsed,
-woitem.qtyTarget - woitem.qtyUsed AS qtyRemaining,
-woitem.qtyScrapped,
 uom.code AS uom,
-coalesce(result.lotQtyOnHand,0) AS QTYONHAND
+coalesce(result.lotQtyOnHand,0) AS QTYONHAND,
+SUM(woitem.qtyUsed) AS qtyUsed,
+SUM(woitem.qtyScrapped) AS qtyScrapped
 FROM woitem
   INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
   INNER JOIN moitem ON woitem.moitemid = moitem.id
@@ -105,7 +104,8 @@ LEFT OUTER JOIN (
 ) result ON 1 = 1
 
 WHERE
-trackinginfo.info = $P{LotNumber};]]>
+trackinginfo.info = $P{LotNumber}
+GROUP BY 1,2,3,4;]]>
 		</queryString>
 		<field name="MODATE" class="java.sql.Timestamp">
 			<fieldDescription><![CDATA[]]></fieldDescription>
@@ -138,19 +138,19 @@ trackinginfo.info = $P{LotNumber};]]>
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
-PART.NUM AS FINISHEDPART,
-PART.DESCRIPTION AS PARTDESCRIPTION,
+product.num AS FINISHEDPART,
+product.description AS PARTDESCRIPTION,
 mo.num AS MONUM,
 mo.dateCompleted AS MODATECOMPLETED,
-woitem.qtyTarget,
-trackinginfo.info AS FGLOTNUMBER,
-woitem.qtyTarget AS FGQtyProduced,
-shipitem.qtyShipped AS FGQtyShipped,
-woitem.qtyScrapped,
 uom.code AS UOM,
-(woitem.qtyused - shipitem.qtyShipped) AS FGQtyRemaining
+trackinginfo.info AS FGLOTNUMBER,
+sum(woitem.qtyTarget) AS FGQtyProduced,
+sum(shipitem.qtyShipped) AS FGQtyShipped,
+sum(woitem.qtyScrapped) AS qtyScrapped,
+sum(woitem.qtyused - shipitem.qtyShipped) AS FGQtyRemaining
 FROM woitem
 INNER JOIN part ON part.id = woitem.partid
+INNER JOIN product ON product.partId = part.id
 INNER JOIN wo ON woitem.woid = wo.id
 INNER JOIN moitem ON moitem.id = wo.moitemid
 INNER JOIN mo ON moitem.moid = mo.id
@@ -166,7 +166,8 @@ INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.ta
 WHERE
 trackinginfo.info = $P{LotNumber}
 )
-AND woitem.typeid in (10,31);]]>
+AND woitem.typeid in (10,31)
+GROUP BY 1,2,3,4,5,6;]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="MODATECOMPLETED" class="java.sql.Timestamp">
@@ -205,18 +206,19 @@ AND woitem.typeid in (10,31);]]>
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
-PART.NUM AS FINISHEDPART,
-PART.DESCRIPTION AS PARTDESCRIPTION,
+product.num AS FINISHEDPART,
+product.description AS PARTDESCRIPTION,
 trackinginfo.info AS FGLOTNUMBER,
-shipitem.qtyShipped AS FGQtyShipped,
 uom.code AS UOM,
+ship.dateShipped AS DATESHIPPED,
 so.num AS INVOICENUMBER,
 customer.name AS CUSTOMER,
 so.customerContact AS CONTACT,
 so.phone AS PHONE,
-ship.dateShipped AS DATESHIPPED
+sum(shipitem.qtyShipped) AS FGQtyShipped
 FROM woitem
 INNER JOIN part ON part.id = woitem.partid
+INNER JOIN product ON product.partid = part.id
 INNER JOIN wo ON woitem.woid = wo.id
 INNER JOIN moitem ON moitem.id = wo.moitemid
 INNER JOIN mo ON moitem.moid = mo.id
@@ -235,7 +237,8 @@ INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.ta
 WHERE
 trackinginfo.info = $P{LotNumber}
 )
-AND woitem.typeid in (10,31);]]>
+AND woitem.typeid in (10,31)
+GROUP BY 1,2,3,4,5,6,7,8,9;]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="PARTDESCRIPTION" class="java.lang.String"/>
