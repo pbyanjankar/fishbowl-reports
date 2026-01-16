@@ -166,7 +166,7 @@ FROM customer
 			<property name="Group" value="Column Sorting"/>
 			<property name="Sort" value="3"/>
 			<property name="Tooltip" value="Choose which column will be used to sort the report"/>
-			<parameterDescription><![CDATA[1 $P!{cbOrder},Customer,3 $P!{cbOrder},Default Salesperson,4 $P!{cbOrder},Total Sales Amount]]></parameterDescription>
+			<parameterDescription><![CDATA[1 $P!{cbOrder},Customer,2 $P!{cbOrder},New or Existing,3 $P!{cbOrder},Default Salesperson,4 $P!{cbOrder},Total Sales Amount]]></parameterDescription>
 			<defaultValueExpression><![CDATA["4 $P!{cbOrder}"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
@@ -274,7 +274,7 @@ ORDER BY $P!{cbSortBy};]]>
 		<property name="Group" value="Column Sorting"/>
 		<property name="Sort" value="3"/>
 		<property name="Tooltip" value="Choose which column will be used to sort the report"/>
-		<parameterDescription><![CDATA[1 $P!{cbOrder},Customer,3 $P!{cbOrder},Default Salesperson,4 $P!{cbOrder},Total Sales Amount]]></parameterDescription>
+		<parameterDescription><![CDATA[1 $P!{cbOrder},Customer,2 $P!{cbOrder},New or Existing,3 $P!{cbOrder},Default Salesperson,4 $P!{cbOrder},Total Sales Amount]]></parameterDescription>
 		<defaultValueExpression><![CDATA["4 $P!{cbOrder}"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
