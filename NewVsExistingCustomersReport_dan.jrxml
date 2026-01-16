@@ -89,19 +89,19 @@
 		<queryString>
 			<![CDATA[SELECT
     SUM(CASE
-            WHEN EXTRACT(YEAR FROM customer.dateCreated) = EXTRACT(YEAR FROM CURRENT_DATE)
+            WHEN TIMESTAMPDIFF(MONTH, customer.dateCreated, CURDATE() ) < 12
             THEN 1 ELSE 0
         END) AS NEWCUSTOMERCOUNT,
     SUM(CASE
-            WHEN EXTRACT(YEAR FROM customer.dateCreated) < EXTRACT(YEAR FROM CURRENT_DATE)
+            WHEN TIMESTAMPDIFF(MONTH, customer.dateCreated, CURDATE() ) >= 12
             THEN 1 ELSE 0
         END) AS EXISTINGCUSTOMERCOUNT,
      SUM(CASE
-            WHEN EXTRACT(YEAR FROM customer.dateCreated) = EXTRACT(YEAR FROM CURRENT_DATE)
+            WHEN TIMESTAMPDIFF(MONTH, customer.dateCreated, CURDATE() ) < 12
             THEN POSTSOITEM.TOTALPRICE ELSE 0
         END) AS NEWCUSTOMERSALES,
     SUM(CASE
-            WHEN EXTRACT(YEAR FROM customer.dateCreated) < EXTRACT(YEAR FROM CURRENT_DATE)
+            WHEN TIMESTAMPDIFF(MONTH, customer.dateCreated, CURDATE() )  >= 12
             THEN POSTSOITEM.TOTALPRICE ELSE 0
     END)  AS EXISTINGCUSTOMERSALES
 
@@ -115,10 +115,7 @@ FROM customer
   		soitem.qtyfulfilled > 0
   		AND soitem.typeid IN (10,$P{ckIncludeMiscSales},12,$P{ckIncludeReturns},21,60,80)
  		AND postso.postdate BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-		AND UPPER(coalesce(sysuser.username,"")) LIKE UPPER($P{salesPersonDefaultSalesperson})
-
-
-]]>
+		AND UPPER(coalesce(sysuser.username,"")) LIKE UPPER($P{salesPersonDefaultSalesperson})]]>
 		</queryString>
 		<field name="NEWCUSTOMERCOUNT" class="java.lang.Double"/>
 		<field name="EXISTINGCUSTOMERCOUNT" class="java.lang.Double"/>
@@ -188,8 +185,9 @@ FROM customer
 			<![CDATA[SELECT
     name AS CUSTOMER,
     CASE
-        WHEN EXTRACT(YEAR FROM customer.dateCreated) = EXTRACT(YEAR FROM CURRENT_DATE)
-        THEN "New" ELSE "Existing"
+        WHEN TIMESTAMPDIFF(MONTH, customer.dateCreated, CURDATE() ) < 12
+        THEN "New"
+       ELSE "Existing"
     END AS AGE,
     concat(sysuser.firstname, ' ', sysuser.lastname)  AS DEFAULTSALESPERSON,
     SUM(POSTSOITEM.TOTALPRICE) AS CUSTOMERSALES
