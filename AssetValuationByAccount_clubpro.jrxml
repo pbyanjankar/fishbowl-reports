@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AssetValuationByAccountClubPro" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="732" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="9e0653a1-589c-4862-8577-d22b854dc04e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AssetValuationByAccountClubPro1" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="732" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="9e0653a1-589c-4862-8577-d22b854dc04e">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="374"/>
+	<property name="ireport.x" value="240"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -60,24 +60,27 @@
 		<parameterDescription><![CDATA[end]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
-	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-    locationgroup.name AS LG,
-    qtyonhand.qty AS QOH,
-    clayer.LIFOFIFOTotalCost,
+		<![CDATA[SELECT 
     COALESCE(partcost.totalcost, 0) AS AverageTotalCost,
     (COALESCE(part.stdcost, 0) * COALESCE(partcost.qty, 0)) AS StandardTotalCost,
-    part.id AS partId,
-    Part.num AS PartNumber,
+    SUM(COALESCE(costlayer.totalcost, 0)) AS LIFOFIFOTotalCost,
+    Part.num AS PartNumber, 
     Part.Description As PartDescription,
     COALESCE(asaccount.name, 'Use Default') AS "InventoryAccount",
-    company.name AS company, currency.symbol,
+    company.name AS company, 
+    currency.symbol,
+
+    concat(locationgroup.name, " - ", location.name) AS LG,
+    qoh.qty AS QOH,
+    concat(reclocationgroup.name, " - ", reclocation.name) AS RECLG,
+    rqoh.qty AS RECQOH,
     (COALESCE(PartCostHistory.stdcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalStandardTotalCost,
     (COALESCE(PartCostHistory.nextcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalLIFOFIFOTotalCost,
     (COALESCE(PartCostHistory.avgcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalAverageTotalCost
+    
+    
+
 FROM Part
     LEFT JOIN partcost ON partcost.partid = part.id
     JOIN (SELECT max(partcosthistory.id) AS costid, partcosthistory.partid AS partcostid
@@ -85,30 +88,36 @@ FROM Part
            WHERE partcosthistory.datecaptured <= DATE_SUB($P{PartCostAsOfDate}, INTERVAL 1 SECOND)
            GROUP BY partcosthistory.partid) AS maxcostdate ON part.id = maxcostdate.partcostid
     LEFT JOIN PartCostHistory ON maxcostdate.costid = partcosthistory.id
-    LEFT OUTER JOIN
-	(
-             SELECT partId AS partId,
-	          SUM(COALESCE(costlayer.totalcost, 0)) AS LIFOFIFOTotalCost
-	   FROM costlayer
-             WHERE costlayer.statusid = 10
-             GROUP BY partId
-	) AS clayer ON clayer.partId = part.id
+    LEFT JOIN costlayer ON (costlayer.partid = part.id AND costlayer.statusid = 10)
+    LEFT OUTER JOIN inventorylog ON inventorylog.id = costlayer.recordId AND costlayer.tableId = -1081854656    
+    LEFT OUTER JOIN locationgroup ON locationgroup.id = inventorylog.locationgroupid
+    LEFT OUTER JOIN location ON location.id = inventorylog.endlocationid
     LEFT JOIN asaccount ON part.inventoryaccountid = asaccount.id
     JOIN company ON company.id = 1
     LEFT JOIN currency ON currency.homeCurrency = 1
-    LEFT JOIN (SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid
+    LEFT JOIN (SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid 
 		FROM qtyonhand
-		GROUP BY partid, locationgroupid
-              ) AS qtyonhand ON qtyonhand.partid = part.id
-    LEFT JOIN locationgroup ON locationgroup.id = qtyonhand.locationgroupid
+		GROUP BY partid, locationgroupid) AS qoh ON qoh.partId = part.id AND locationgroup.id = qoh.locationgroupid
+   LEFT OUTER JOIN receiptitem ON receiptitem.id = costlayer.recordId AND costlayer.tableId = 1259138490
+   LEFT OUTER JOIN location AS recLocation ON recLocation.id = receiptitem.locationid
+   LEFT OUTER JOIN locationgroup AS recLocationGroup ON recLocationGroup.id = recLocation.locationgroupid
+   LEFT OUTER JOIN
+(SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid 
+		FROM qtyonhand
+		GROUP BY partid, locationgroupid) AS rqoh ON rqoh.partId = part.id AND recLocationGroup.id = rqoh.locationgroupid
+
+
+
 WHERE part.typeid = 10
   AND UPPER(part.num) LIKE UPPER($P{partNum})
   AND UPPER(coalesce(asaccount.name, 'Use Default')) LIKE UPPER($P{AssetAccount})
   AND IF($P{HideInactive}=true,part.activeflag = 1,1=1)
-  AND IF($P{HideZeroQty}=1,qtyonhand.qty>0,1=1)
-  AND locationgroup.id IN ($P!{locationGroupID})
 
-ORDER BY InventoryAccount, part.num;]]>
+GROUP BY 1,2,4,5,6,7, currency.symbol, 9 ,10, 11, 12
+
+HAVING IF($P{HideZeroQty}=1,SUM(qoh.qty>0),1=1)
+
+ORDER BY 6, part.num]]>
 	</queryString>
 	<field name="AVERAGETOTALCOST" class="java.lang.Double"/>
 	<field name="STANDARDTOTALCOST" class="java.lang.Double"/>
@@ -123,6 +132,8 @@ ORDER BY InventoryAccount, part.num;]]>
 	<field name="HistoricalAverageTotalCost" class="java.lang.Double"/>
 	<field name="LG" class="java.lang.String"/>
 	<field name="QOH" class="java.lang.Double"/>
+	<field name="RECLG" class="java.lang.String"/>
+	<field name="RECQOH" class="java.lang.Double"/>
 	<variable name="avgAccountTotal" class="java.lang.Double" resetType="Group" resetGroup="Account" calculation="Sum">
 		<variableExpression><![CDATA[$V{UsePartCostHistory} ? $F{HistoricalAverageTotalCost} : $F{AVERAGETOTALCOST}]]></variableExpression>
 	</variable>
@@ -172,7 +183,7 @@ ORDER BY InventoryAccount, part.num;]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="Open Sans" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{InventoryAccount}]]></textFieldExpression>
@@ -188,7 +199,7 @@ ORDER BY InventoryAccount, part.num;]]>
 		<groupFooter>
 			<band height="14" splitType="Stretch">
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-5" mode="Transparent" x="510" y="0" width="110" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="99de46f6-5757-4b8b-ba67-21778a86935f"/>
+					<reportElement key="textField-5" mode="Transparent" x="607" y="0" width="125" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="99de46f6-5757-4b8b-ba67-21778a86935f"/>
 					<box rightPadding="5">
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -196,7 +207,7 @@ ORDER BY InventoryAccount, part.num;]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-						<font fontName="Open Sans" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
@@ -205,26 +216,8 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 $V{lfAccountTotal}]]></textFieldExpression>
 					<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
 				</textField>
-				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-3" mode="Transparent" x="620" y="0" width="112" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a1737bcd-c29c-43ae-b235-5d1c99d8badd"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-						<font fontName="Open Sans" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{avgAccountTotal}, $V{CostDecimal})
-:
-$V{avgAccountTotal}]]></textFieldExpression>
-					<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
-				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-9" mode="Transparent" x="350" y="0" width="160" height="14" uuid="22854037-700c-4e61-847b-89a4deed0db2"/>
+					<reportElement key="textField-9" mode="Transparent" x="521" y="0" width="86" height="14" uuid="22854037-700c-4e61-847b-89a4deed0db2"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -237,7 +230,7 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<textFieldExpression><![CDATA[$F{InventoryAccount} + " Totals:"]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
-					<reportElement key="textField-12" mode="Transparent" x="0" y="0" width="100" height="14" forecolor="#000099" backcolor="#FFFFFF" uuid="6ad78692-4f8b-4f4f-9a04-55fc80cfbdb2"/>
+					<reportElement key="textField-12" mode="Transparent" x="0" y="0" width="125" height="14" forecolor="#000099" backcolor="#FFFFFF" uuid="6ad78692-4f8b-4f4f-9a04-55fc80cfbdb2"/>
 					<box leftPadding="7">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -251,7 +244,7 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<textFieldExpression><![CDATA[" "]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-19" style="note" x="100" y="0" width="250" height="14" uuid="495da67c-22a2-4a8b-b28a-0474494605b1"/>
+					<reportElement key="textField-19" style="note" x="125" y="0" width="127" height="14" uuid="495da67c-22a2-4a8b-b28a-0474494605b1"/>
 					<textElement>
 						<font fontName="Open Sans"/>
 					</textElement>
@@ -315,9 +308,9 @@ $V{avgAccountTotal}]]></textFieldExpression>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Prevent">
+		<band height="17" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-3" mode="Transparent" x="0" y="0" width="100" height="16" forecolor="#000000" backcolor="#999999" uuid="9501afba-0efe-4aeb-afa7-5f1cf12527af"/>
+				<reportElement key="staticText-3" mode="Transparent" x="0" y="0" width="125" height="16" forecolor="#000000" backcolor="#999999" uuid="9501afba-0efe-4aeb-afa7-5f1cf12527af"/>
 				<box leftPadding="7" rightPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -325,13 +318,13 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[Part #]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" mode="Transparent" x="100" y="0" width="250" height="16" forecolor="#000000" backcolor="#999999" uuid="e1c94b9c-434f-45f7-9f1a-9211a88d0411"/>
+				<reportElement key="staticText-4" mode="Transparent" x="125" y="0" width="220" height="16" forecolor="#000000" backcolor="#999999" uuid="e1c94b9c-434f-45f7-9f1a-9211a88d0411"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -339,13 +332,13 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-5" mode="Transparent" x="510" y="0" width="110" height="16" forecolor="#000000" backcolor="#999999" uuid="04d332ea-0282-47d3-bc89-083bac263d5e"/>
+				<reportElement key="staticText-5" mode="Transparent" x="607" y="0" width="125" height="16" forecolor="#000000" backcolor="#999999" uuid="04d332ea-0282-47d3-bc89-083bac263d5e"/>
 				<box rightPadding="5">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -353,45 +346,38 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[LIFO/FIFO Cost]]></text>
 			</staticText>
-			<staticText>
-				<reportElement key="staticText-9" mode="Transparent" x="620" y="0" width="112" height="16" forecolor="#000000" backcolor="#999999" uuid="d0150465-a249-41b3-a8b3-3159e224e9d7"/>
-				<box rightPadding="4">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-17" style="note" x="345" y="0" width="5" height="16" uuid="4ab1506a-5d85-4384-8a2e-121e7c3ade0e"/>
+				<textElement>
+					<font fontName="Open Sans" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Average Cost]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
 			<line>
 				<reportElement x="0" y="16" width="732" height="1" uuid="1bd3f151-d9dc-4673-947a-cb9692e1d2cf"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-6" mode="Transparent" x="350" y="0" width="84" height="16" forecolor="#000000" backcolor="#999999" uuid="0745ee99-eb8d-46d8-8144-eccbaf12ea74"/>
-				<box rightPadding="5">
+				<reportElement key="staticText-6" mode="Transparent" x="348" y="0" width="86" height="16" forecolor="#000000" backcolor="#999999" uuid="786bea66-fb07-49c0-ae61-c073a6de71ac"/>
+				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+				<textElement verticalAlignment="Top" rotation="None">
 					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[Location Group]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-6" mode="Transparent" x="434" y="0" width="76" height="16" forecolor="#000000" backcolor="#999999" uuid="b701de94-2943-4bf0-b087-c07c4cc90600"/>
-				<box rightPadding="5">
+				<reportElement key="staticText-6" mode="Transparent" x="521" y="0" width="86" height="16" forecolor="#000000" backcolor="#999999" uuid="ab135bf7-4b12-4dc5-b108-8134680294c7"/>
+				<box leftPadding="3" rightPadding="12">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -401,7 +387,7 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[On Hand]]></text>
+				<text><![CDATA[QOH]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -409,7 +395,7 @@ $V{avgAccountTotal}]]></textFieldExpression>
 		<band height="14" splitType="Prevent">
 			<printWhenExpression><![CDATA[$P{ShowPartDetails}]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
-				<reportElement key="textField" mode="Transparent" x="0" y="0" width="100" height="14" forecolor="#000099" backcolor="#FFFFFF" uuid="c4075ecb-10d8-4ae8-b7bc-ff01f22eb4da"/>
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="125" height="14" forecolor="#000099" backcolor="#FFFFFF" uuid="c4075ecb-10d8-4ae8-b7bc-ff01f22eb4da"/>
 				<box leftPadding="7" rightPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -417,33 +403,15 @@ $V{avgAccountTotal}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PARTNUMBER}]]></textFieldExpression>
 				<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
 				<hyperlinkReferenceExpression><![CDATA[$F{PARTNUMBER}]]></hyperlinkReferenceExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="620" y="0" width="112" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="20190abd-1e93-497e-becf-e2690621f5cc"/>
-				<box rightPadding="2">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{UsePartCostHistory} ? $F{HistoricalAverageTotalCost} : $F{AVERAGETOTALCOST}, $V{CostDecimal})
-:
-$V{UsePartCostHistory} ? $F{HistoricalAverageTotalCost} : $F{AVERAGETOTALCOST}]]></textFieldExpression>
-				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="100" y="0" width="250" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3ad7db13-6b5c-4e87-bc10-d8957b6608f4"/>
+				<reportElement key="textField" mode="Transparent" x="125" y="0" width="220" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3ad7db13-6b5c-4e87-bc10-d8957b6608f4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -451,13 +419,13 @@ $V{UsePartCostHistory} ? $F{HistoricalAverageTotalCost} : $F{AVERAGETOTALCOST}]]
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PARTDESCRIPTION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-2" mode="Transparent" x="510" y="0" width="110" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="73dbbb13-776a-468c-929e-8722405224cc"/>
+				<reportElement key="textField-2" mode="Transparent" x="607" y="0" width="125" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="73dbbb13-776a-468c-929e-8722405224cc"/>
 				<box rightPadding="5">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -465,7 +433,7 @@ $V{UsePartCostHistory} ? $F{HistoricalAverageTotalCost} : $F{AVERAGETOTALCOST}]]
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
@@ -474,34 +442,42 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="434" y="0" width="76" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="6ad25e30-2cf0-4455-929b-a49aa23f9c4e"/>
-				<box>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-18" style="note" x="345" y="0" width="5" height="14" uuid="9261e39e-d151-4e77-82bf-0e00dc379bfb"/>
+				<textElement>
+					<font fontName="Open Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-2" mode="Transparent" x="350" y="0" width="84" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c74cd726-da15-4ac4-956a-fd02ce8ef366"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LG} == null ? $F{RECLG} : $F{LG}]]></textFieldExpression>
+				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-2" mode="Transparent" x="521" y="0" width="86" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="8ee0fe44-b441-4827-80d9-da5d86a50966"/>
+				<box rightPadding="5">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{QOH}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{LG} == null ? $F{RECQOH} : $F{QOH}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="350" y="0" width="84" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="09625202-191c-4165-aa96-f2222577d5d7"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{LG}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -511,7 +487,7 @@ $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}
 	<pageFooter>
 		<band height="14" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="501" y="0" width="183" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a6892971-8c0f-4945-8a90-aa546879b3bc"/>
+				<reportElement key="textField" mode="Transparent" x="607" y="0" width="77" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a6892971-8c0f-4945-8a90-aa546879b3bc"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -557,7 +533,7 @@ $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}
 	<lastPageFooter>
 		<band height="33" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-11" style="note" mode="Transparent" x="434" y="0" width="76" height="14" uuid="b7dcfb3d-ef90-4826-85dd-a3d79d31fb69"/>
+				<reportElement key="staticText-11" style="note" mode="Transparent" x="521" y="0" width="86" height="14" uuid="b7dcfb3d-ef90-4826-85dd-a3d79d31fb69"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -570,7 +546,7 @@ $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}
 				<text><![CDATA[Grand Totals:]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-6" mode="Transparent" x="510" y="0" width="110" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f98b0203-7ecc-458e-8064-66d15f6942f0"/>
+				<reportElement key="textField-6" mode="Transparent" x="607" y="0" width="125" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f98b0203-7ecc-458e-8064-66d15f6942f0"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -578,31 +554,13 @@ $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
 com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{lfReportTotal}, $V{CostDecimal})
 :
 $V{lfReportTotal}]]></textFieldExpression>
-				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" mode="Transparent" x="620" y="0" width="112" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="481e76ee-01be-4459-bfc3-d50832a0e30f"/>
-				<box rightPadding="2">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{avgReportTotal}, $V{CostDecimal})
-:
-$V{avgReportTotal}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
@@ -642,7 +600,7 @@ $V{avgReportTotal}]]></textFieldExpression>
 				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-22" mode="Transparent" x="501" y="19" width="183" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="b2b00c9b-52fa-446a-a70b-8323a5fe06cf"/>
+				<reportElement key="textField-22" mode="Transparent" x="607" y="19" width="77" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="b2b00c9b-52fa-446a-a70b-8323a5fe06cf"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -656,7 +614,7 @@ $V{avgReportTotal}]]></textFieldExpression>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-23" mode="Transparent" x="0" y="19" width="501" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f9c09e03-abf7-43a0-bc19-d66f91ab760c"/>
+				<reportElement key="textField-23" mode="Transparent" x="0" y="19" width="607" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f9c09e03-abf7-43a0-bc19-d66f91ab760c"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
