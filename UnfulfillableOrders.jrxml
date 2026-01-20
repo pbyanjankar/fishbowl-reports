@@ -1,0 +1,1186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UnfulfillableOrdersDLC" pageWidth="2110" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="2070" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="44af956a-d3c0-4855-ba7b-245825539dd5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="ColumnHeader" mode="Opaque" forecolor="#000000" backcolor="#EAEAEA" hAlign="Center" vAlign="Bottom" fontName="Open Sans" fontSize="10">
+		<box>
+			<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Zebra" fontName="Open Sans">
+		<box leftPadding="3" rightPadding="3">
+			<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{COLUMN_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EAEAEA"/>
+		</conditionalStyle>
+	</style>
+	<style name="CenterBarcode" hAlign="Center" vAlign="Middle"/>
+	<style name="TopBarcode" hAlign="Center" vAlign="Top"/>
+	<style name="BottomBarcode" hAlign="Center" vAlign="Bottom"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="qryqoh" uuid="c40297d0-c52a-4a05-af19-47f49e0660d0">
+		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+			<parameterDescription><![CDATA[This Year]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT DISTINCT
+   so.num AS SONUM,
+   customer.name AS CUSTOMERNAME,
+   so.dateissued AS DATEISSUED,
+   sostatus.name AS SOSTATUS,
+   part.num AS PartNUM,
+   COALESCE((SELECT SUM(qtyonorder.qty)
+                FROM qtyonorder
+               WHERE qtyonorder.partid = part.id
+                 AND qtyonorder.locationgroupid = so.locationgroupid), 0) AS ONORDER,
+   CASE WHEN ((COALESCE(jax.totalOnHand, 0) -  COALESCE(jax.totalAllocated, 0) -COALESCE(jax.totalNotAvailable, 0)) + COALESCE(jax.totalDropship,0)) >0 THEN
+((COALESCE(jax.totalOnHand, 0) -  COALESCE(jax.totalAllocated, 0) -COALESCE(jax.totalNotAvailable, 0)) + COALESCE(jax.totalDropship,0)) ELSE 0 END
+  AS JAXQTY,
+case when (1  IN ($P!{locationGroupID})) then coalesce(atxtrans.qty,0) else 0 end  as atxtransqty,
+case when (9  IN ($P!{locationGroupID})) then coalesce(jaxtrans.qty,0) else 0 end as jaxtransqty,
+case when (6  IN ($P!{locationGroupID})) then coalesce(dctrans.qty,0) else 0 end as dctransqty,
+case when (4  IN ($P!{locationGroupID})) then coalesce(orltrans.qty,0) else 0 end as orltransqty,
+case when (3  IN ($P!{locationGroupID})) then coalesce(tpatrans.qty,0) else 0 end as tpatransqty,
+case when (5  IN ($P!{locationGroupID})) then coalesce(nolatrans.qty,0) else 0 end as nolatransqty,
+case when (7  IN ($P!{locationGroupID})) then coalesce(nshtrans.qty,0) else 0 end as nshtransqty,
+CASE WHEN ((COALESCE(dc.totalOnHand, 0) -  COALESCE(dc.totalAllocated, 0) -COALESCE(dc.totalNotAvailable, 0)) + COALESCE(dc.totalDropship,0)) >0 THEN
+((COALESCE(dc.totalOnHand, 0) -  COALESCE(dc.totalAllocated, 0) -COALESCE(dc.totalNotAvailable, 0)) + COALESCE(dc.totalDropship,0)) ELSE 0 END
+  AS DCQTY,
+
+CASE WHEN ((COALESCE(nsh.totalOnHand, 0) -  COALESCE(nsh.totalAllocated, 0) -COALESCE(nsh.totalNotAvailable, 0)) + COALESCE(nsh.totalDropship,0)) >0 THEN
+((COALESCE(nsh.totalOnHand, 0) -  COALESCE(nsh.totalAllocated, 0) -COALESCE(nsh.totalNotAvailable, 0)) + COALESCE(nsh.totalDropship,0)) ELSE 0 END
+  AS NSHQTY,
+
+CASE WHEN ((COALESCE(orl.totalOnHand, 0) -  COALESCE(orl.totalAllocated, 0) -COALESCE(orl.totalNotAvailable, 0)) + COALESCE(orl.totalDropship,0)) >0 THEN
+((COALESCE(orl.totalOnHand, 0) -  COALESCE(orl.totalAllocated, 0) -COALESCE(orl.totalNotAvailable, 0)) + COALESCE(orl.totalDropship,0)) ELSE 0 END
+   AS ORLQTY,
+   CASE WHEN ((COALESCE(TPA.totalOnHand, 0) -  COALESCE(TPA.totalAllocated, 0) -COALESCE(TPA.totalNotAvailable, 0)) + COALESCE(TPA.totalDropship,0)) >0 THEN
+((COALESCE(TPA.totalOnHand, 0) -  COALESCE(TPA.totalAllocated, 0) -COALESCE(TPA.totalNotAvailable, 0)) + COALESCE(TPA.totalDropship,0)) ELSE 0 END
+ AS TPAQTY,
+CASE WHEN ((COALESCE(atx.totalOnHand, 0) -  COALESCE(atx.totalAllocated, 0) -COALESCE(atx.totalNotAvailable, 0)) + COALESCE(atx.totalDropship,0)) >0 THEN
+((COALESCE(atx.totalOnHand, 0) -  COALESCE(atx.totalAllocated, 0) -COALESCE(atx.totalNotAvailable, 0)) + COALESCE(atx.totalDropship,0)) ELSE 0 END
+ AS AXLQTY,
+
+CASE WHEN ((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -COALESCE(nola.totalNotAvailable, 0)) + COALESCE(nola.totalDropship,0)) >0 THEN
+((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -COALESCE(nola.totalNotAvailable, 0)) + COALESCE(nola.totalDropship,0)) ELSE 0 END
+ AS NOLAQTY,
+  sum( COALESCE(soitem.qtytofulfill-soitem.qtyfulfilled, 0)) AS QTYNEEDED,
+ COALESCE((SELECT SUM(qtynotavailable.qty)
+                FROM qtynotavailable
+               WHERE qtynotavailable.partid = part.id
+                 AND qtynotavailable.locationgroupid = so.locationgroupid), 0) AS QTYNOTAVAILABLE,
+   COALESCE((SELECT SUM(qtyonhand.qty)
+                FROM qtyonhand
+               WHERE qtyonhand.partid = part.id
+                 AND qtyonhand.locationgroupid = so.locationgroupid), 0) AS onHandTotal,
+   COALESCE((SELECT SUM(qtyonhand.qty)
+                FROM qtyonhand
+               WHERE qtyonhand.partid = part.id
+                 AND qtyonhand.locationgroupid = so.locationgroupid), 0)-
+    COALESCE((SELECT SUM(qtynotavailable.qty)
+                FROM qtynotavailable
+               WHERE qtynotavailable.partid = part.id
+                 AND qtynotavailable.locationgroupid = so.locationgroupid), 0) as onHand,
+   totneed.totneeded AS totalNeeded,
+case when COALESCE(invloc.totalAllocated, 0)- (COALESCE(invloc.totalOnHand, 0)-COALESCE(invloc.totalNotAvailable, 0)) >=0 then
+COALESCE(invloc.totalAllocated, 0)- (COALESCE(invloc.totalOnHand, 0)-COALESCE(invloc.totalNotAvailable, 0))
+else 0 end as invlocShort,COALESCE(invloc.totalAllocated, 0) AS qalloc
+
+FROM so
+   LEFT JOIN customer ON so.customerid = customer.id
+   LEFT JOIN sostatus ON so.statusid = sostatus.id
+   LEFT JOIN soitem ON soitem.soid = so.id
+   LEFT JOIN product ON soitem.productid = product.id
+   LEFT JOIN part ON product.partid = part.id
+
+
+left join (
+SELECT SUM(COALESCE((soitem.qtytofulfill - soitem.qtyfulfilled), 0)) as totneeded,product.partid,
+s1.locationgroupid
+FROM soitem
+inner JOIN product ON soitem.productid = product.id
+inner join part p2 on p2.id=product.partid
+inner JOIN so s1 ON soitem.soid = s1.id
+WHERE s1.statusid IN (10,20,25) AND
+s1.dateissued BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+  AND p2.typeid IN (10)
+  group by product.partid,
+s1.locationgroupid
+
+
+) totneed on   totneed.partid=part.id and so.locationgroupid=totneed.locationgroupid
+
+
+   LEFT JOIN (
+       SELECT
+           partId,
+           SUM(qtyOnHand) AS totalOnHand,
+           SUM(qtyNotAvailable) AS totalNotAvailable,
+           SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+           SUM(qtyDropship) AS totalDropship,
+           SUM(qtyAllocated) AS totalAllocated,
+           SUM(qtyOnOrder) AS totalOnOrder
+       FROM
+           qtyInventoryTotals
+       GROUP BY partId
+   ) AS inventoryTotals ON inventoryTotals.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN ($P!{locationGroupID})
+        GROUP BY partId
+    ) AS invloc ON invloc.partId = part.id
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (1)
+        GROUP BY partId
+    ) AS atx ON atx.partId = part.id
+
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=1
+GROUP BY partid) as atxtrans on atxtrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (9)
+        GROUP BY partId
+    ) AS jax ON jax.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=9
+GROUP BY partid) as jaxtrans on jaxtrans.partId = part.id
+
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (3)
+        GROUP BY partId
+    ) AS tpa ON tpa.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=3
+GROUP BY partid) as tpatrans on tpatrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (4)
+        GROUP BY partId
+    ) AS orl ON orl.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=4
+GROUP BY partid) as orltrans on orltrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (5)
+        GROUP BY partId
+    ) AS nola ON nola.partId = part.id
+
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=5
+GROUP BY partid) as nolatrans on nolatrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+         WHERE locationGroupId IN (6)
+        GROUP BY partId
+    ) AS dc ON dc.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=6
+GROUP BY partid) as dctrans on dctrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+         WHERE locationGroupId IN (7)
+        GROUP BY partId
+    ) AS nsh ON nsh.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=7
+GROUP BY partid) as nshtrans on nshtrans.partId = part.id
+
+where so.statusid in (10,20,25)
+and soitem.typeid=10 and part.typeid=10
+and soitem.statusid <50
+and so.locationgroupid IN ($P!{locationGroupID})
+and so.dateissued BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+GROUP BY so.num, part.num
+union all
+SELECT DISTINCT
+   xo.num AS SONUM,
+   xo.shiptoname AS CUSTOMERNAME,
+   xo.dateissued AS DATEISSUED,
+   xostatus.name AS SOSTATUS,
+   part.num AS PartNUM,
+   COALESCE((SELECT SUM(qtyonorder.qty)
+                FROM qtyonorder
+               WHERE qtyonorder.partid = part.id
+                 AND qtyonorder.locationgroupid = xo.fromlgid), 0) AS ONORDER,
+   CASE WHEN ((COALESCE(jax.totalOnHand, 0) -  COALESCE(jax.totalAllocated, 0) -COALESCE(jax.totalNotAvailable, 0)) + COALESCE(jax.totalDropship,0)) >0 THEN
+((COALESCE(jax.totalOnHand, 0) -  COALESCE(jax.totalAllocated, 0) -COALESCE(jax.totalNotAvailable, 0)) + COALESCE(jax.totalDropship,0)) ELSE 0 END
+  AS JAXQTY,
+
+case when (1  IN ($P!{locationGroupID})) then coalesce(atxtrans.qty,0) else 0 end  as atxtransqty,
+case when (9  IN ($P!{locationGroupID})) then coalesce(jaxtrans.qty,0) else 0 end as jaxtransqty,
+case when (6  IN ($P!{locationGroupID})) then coalesce(dctrans.qty,0) else 0 end as dctransqty,
+case when (4  IN ($P!{locationGroupID})) then coalesce(orltrans.qty,0) else 0 end as orltransqty,
+case when (3  IN ($P!{locationGroupID})) then coalesce(tpatrans.qty,0) else 0 end as tpatransqty,
+case when (5  IN ($P!{locationGroupID})) then coalesce(nolatrans.qty,0) else 0 end as nolatransqty,
+case when (7  IN ($P!{locationGroupID})) then coalesce(nshtrans.qty,0) else 0 end as nshtransqty,
+CASE WHEN ((COALESCE(dc.totalOnHand, 0) -  COALESCE(dc.totalAllocated, 0) -COALESCE(dc.totalNotAvailable, 0)) + COALESCE(dc.totalDropship,0)) >0 THEN
+((COALESCE(dc.totalOnHand, 0) -  COALESCE(dc.totalAllocated, 0) -COALESCE(dc.totalNotAvailable, 0)) + COALESCE(dc.totalDropship,0)) ELSE 0 END
+  AS DCQTY,
+
+CASE WHEN ((COALESCE(nsh.totalOnHand, 0) -  COALESCE(nsh.totalAllocated, 0) -COALESCE(nsh.totalNotAvailable, 0)) + COALESCE(nsh.totalDropship,0)) >0 THEN
+((COALESCE(nsh.totalOnHand, 0) -  COALESCE(nsh.totalAllocated, 0) -COALESCE(nsh.totalNotAvailable, 0)) + COALESCE(nsh.totalDropship,0)) ELSE 0 END
+  AS NSHQTY,
+
+CASE WHEN ((COALESCE(orl.totalOnHand, 0) -  COALESCE(orl.totalAllocated, 0) -COALESCE(orl.totalNotAvailable, 0)) + COALESCE(orl.totalDropship,0)) >0 THEN
+((COALESCE(orl.totalOnHand, 0) -  COALESCE(orl.totalAllocated, 0) -COALESCE(orl.totalNotAvailable, 0)) + COALESCE(orl.totalDropship,0)) ELSE 0 END
+   AS ORLQTY,
+   CASE WHEN ((COALESCE(TPA.totalOnHand, 0) -  COALESCE(TPA.totalAllocated, 0) -COALESCE(TPA.totalNotAvailable, 0)) + COALESCE(TPA.totalDropship,0)) >0 THEN
+((COALESCE(TPA.totalOnHand, 0) -  COALESCE(TPA.totalAllocated, 0) -COALESCE(TPA.totalNotAvailable, 0)) + COALESCE(TPA.totalDropship,0)) ELSE 0 END
+ AS TPAQTY,
+CASE WHEN ((COALESCE(atx.totalOnHand, 0) -  COALESCE(atx.totalAllocated, 0) -COALESCE(atx.totalNotAvailable, 0)) + COALESCE(atx.totalDropship,0)) >0 THEN
+((COALESCE(atx.totalOnHand, 0) -  COALESCE(atx.totalAllocated, 0) -COALESCE(atx.totalNotAvailable, 0)) + COALESCE(atx.totalDropship,0)) ELSE 0 END
+ AS AXLQTY,
+
+CASE WHEN ((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -COALESCE(nola.totalNotAvailable, 0)) + COALESCE(nola.totalDropship,0)) >0 THEN
+((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -COALESCE(nola.totalNotAvailable, 0)) + COALESCE(nola.totalDropship,0)) ELSE 0 END
+ AS NOLAQTY,
+  SUM( COALESCE(xoitem.qtytofulfill-xoitem.qtyfulfilled, 0)) AS QTYNEEDED,
+COALESCE((SELECT SUM(qtynotavailable.qty)
+                FROM qtynotavailable
+               WHERE qtynotavailable.partid = part.id
+                 AND qtynotavailable.locationgroupid = xo.fromlgid), 0) AS QTYNOTAVAILABLE,
+   COALESCE((SELECT SUM(qtyonhand.qty)
+                FROM qtyonhand
+               WHERE qtyonhand.partid = part.id
+                 AND qtyonhand.locationgroupid = xo.fromlgid), 0) AS onHandTotal,
+   COALESCE((SELECT SUM(qtyonhand.qty)
+                FROM qtyonhand
+               WHERE qtyonhand.partid = part.id
+                 AND qtyonhand.locationgroupid = xo.fromlgid), 0)-
+    COALESCE((SELECT SUM(qtynotavailable.qty)
+                FROM qtynotavailable
+               WHERE qtynotavailable.partid = part.id
+                 AND qtynotavailable.locationgroupid = xo.fromlgid), 0) AS onHand,
+   totneed.totneeded AS totalNeeded,
+case when COALESCE(invloc.totalAllocated, 0)- (COALESCE(invloc.totalOnHand, 0)-COALESCE(invloc.totalNotAvailable, 0)) >=0 then
+COALESCE(invloc.totalAllocated, 0)- (COALESCE(invloc.totalOnHand, 0)-COALESCE(invloc.totalNotAvailable, 0))
+else 0 end as invlocShort,COALESCE(invloc.totalAllocated, 0) AS qalloc
+
+FROM xo
+
+   LEFT JOIN xostatus ON xo.statusid = xostatus.id
+   LEFT JOIN xoitem ON xoitem.xoid = xo.id
+
+   LEFT JOIN part ON xoitem.partid = part.id
+
+left join (
+
+SELECT SUM(COALESCE((xoitem.qtytofulfill - xoitem.qtyfulfilled), 0)) as totneeded,xoitem.partid,
+x1.fromlgid
+FROM xoitem
+inner join part p2 on p2.id=xoitem.partid
+inner JOIN xo x1 ON xoitem.xoid = x1.id
+WHERE x1.statusid IN (10,20,25) AND
+x1.dateissued BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+  AND p2.typeid IN (10)
+  group by xoitem.partid,
+x1.fromlgid) totneed on   totneed.partid=part.id and xo.fromlgid=totneed.fromlgid
+   LEFT JOIN (
+       SELECT
+           partId,
+           SUM(qtyOnHand) AS totalOnHand,
+           SUM(qtyNotAvailable) AS totalNotAvailable,
+           SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+           SUM(qtyDropship) AS totalDropship,
+           SUM(qtyAllocated) AS totalAllocated,
+           SUM(qtyOnOrder) AS totalOnOrder
+       FROM
+           qtyInventoryTotals
+       GROUP BY partId
+   ) AS inventoryTotals ON inventoryTotals.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN ($P!{locationGroupID})
+        GROUP BY partId
+    ) AS invloc ON invloc.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (1)
+        GROUP BY partId
+    ) AS atx ON atx.partId = part.id
+
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=1
+GROUP BY partid) as atxtrans on atxtrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (9)
+        GROUP BY partId
+    ) AS jax ON jax.partId = part.id
+
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=9
+GROUP BY partid) as jaxtrans on jaxtrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (3)
+        GROUP BY partId
+    ) AS tpa ON tpa.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=3
+GROUP BY partid) as tpatrans on tpatrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (4)
+        GROUP BY partId
+    ) AS orl ON orl.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=4
+GROUP BY partid) as orltrans on orltrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (5)
+        GROUP BY partId
+    ) AS nola ON nola.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=5
+GROUP BY partid) as nolatrans on nolatrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+         WHERE locationGroupId IN (6)
+        GROUP BY partId
+    ) AS dc ON dc.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=6
+GROUP BY partid) as dctrans on dctrans.partId = part.id
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+         WHERE locationGroupId IN (7)
+        GROUP BY partId
+    ) AS nsh ON nsh.partId = part.id
+
+left join (
+
+SELECT SUM(tag.qty) AS qty,tag.partid FROM location l1
+INNER JOIN tag ON tag.locationid=l1.id
+WHERE  l1.name LIKE 'Transit%' AND l1.locationgroupid=7
+GROUP BY partid) as nshtrans on nshtrans.partId = part.id
+
+
+WHERE xo.statusid IN (20,30,40,50)
+and xoitem.typeid=10 AND part.typeid=10
+AND xoitem.statusid < 50
+AND xo.fromlgid in ($P!{locationGroupID})
+AND xo.dateissued BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+GROUP BY xo.num, part.num
+order by 5,3]]>
+		</queryString>
+		<field name="SONUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CUSTOMERNAME" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DATEISSUED" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SOSTATUS" class="java.lang.String"/>
+		<field name="PartNUM" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ONORDER" class="java.lang.Double"/>
+		<field name="JAXQTY" class="java.lang.Double"/>
+		<field name="DCQTY" class="java.lang.Double"/>
+		<field name="NSHQTY" class="java.lang.Double"/>
+		<field name="ORLQTY" class="java.lang.Double"/>
+		<field name="TPAQTY" class="java.lang.Double"/>
+		<field name="AXLQTY" class="java.lang.Double"/>
+		<field name="NOLAQTY" class="java.lang.Double"/>
+		<field name="QTYNEEDED" class="java.math.BigDecimal"/>
+		<field name="onHandTotal" class="java.math.BigDecimal"/>
+		<field name="onHand" class="java.math.BigDecimal"/>
+		<field name="totalNeeded" class="java.math.BigDecimal"/>
+		<field name="atxtransqty" class="java.lang.Double"/>
+		<field name="jaxtransqty" class="java.lang.Double"/>
+		<field name="dctransqty" class="java.lang.Double"/>
+		<field name="orltransqty" class="java.lang.Double"/>
+		<field name="tpatransqty" class="java.lang.Double"/>
+		<field name="nolatransqty" class="java.lang.Double"/>
+		<field name="nshtransqty" class="java.lang.Double"/>
+		<field name="invlocShort" class="java.lang.Double"/>
+		<field name="qalloc" class="java.lang.Double"/>
+		<field name="QTYNOTAVAILABLE" class="java.lang.Double"/>
+		<variable name="totalshort" class="java.lang.Double" resetType="Group" resetGroup="part">
+			<variableExpression><![CDATA[($F{onHand}.doubleValue()
+ - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty}))
+- $F{totalNeeded}.doubleValue()]]></variableExpression>
+		</variable>
+		<variable name="totqneeded" class="java.lang.Double" resetType="Group" resetGroup="part" calculation="Sum">
+			<variableExpression><![CDATA[$F{QTYNEEDED}.doubleValue()]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Qtyremain" class="java.lang.Double" resetType="Group" resetGroup="part">
+			<variableExpression><![CDATA[$V{Qtyremain}-$F{QTYNEEDED}.doubleValue()]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{onHand}.doubleValue()]]></initialValueExpression>
+		</variable>
+		<variable name="pcnt" class="java.lang.Integer" resetType="Group" resetGroup="part" calculation="Count">
+			<variableExpression><![CDATA[$F{PartNUM}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<group name="part">
+			<groupExpression><![CDATA[$F{PartNUM}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Report Description"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Custom/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTooltips" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+   company.name as company from company where id=1]]>
+	</queryString>
+	<field name="company" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<variable name="CostDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+	</variable>
+	<variable name="TotalsDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_TOTAL")]]></variableExpression>
+	</variable>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<variable name="isMultiCurrency" class="java.lang.Boolean">
+		<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+	</variable>
+	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+	</variable>
+	<group name="PRODUCT">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<columnHeader>
+		<band height="2" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="50">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="2070" height="50" uuid="0d9cde1b-6bb3-444f-8ac1-3c7df3060d31"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="qryqoh" uuid="036ce6dd-ff15-4ae4-bbd0-5b0bc88a6dba">
+						<datasetParameter name="dateRange1">
+							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dateRange2">
+							<datasetParameterExpression><![CDATA[$P{dateRange2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locationGroupID">
+							<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="a3d8a048-f521-446f-8604-ac3eb84b2d15">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="243172f9-bbfd-4d3d-9bf2-19311318b132"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[SO STATUS]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="00b37c50-0bc2-459a-9228-efacd16865f5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SOSTATUS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="5e9c0234-49e0-46d5-b6ed-c0599e58bdae">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="ba820fad-df6d-4ec3-8683-c92f2ac72b0e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[DATE ISSUED]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="MM/dd/yyyy" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="607a8646-42c6-4a93-91e8-6ae8bce1c60c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DATEISSUED}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="300" uuid="26cfc09b-0b08-4b7c-9007-a34540c36404">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="300" height="30" uuid="c5479a61-05bb-45b0-a920-15b903c5e1b2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CUSTOMER NAME]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="300" height="20" uuid="dedb6bd7-1092-45ad-bc36-99e2d270c46c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CUSTOMERNAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="5848cdb1-6e89-4c91-8c34-e749a7b0d9cd">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="596c60ff-f831-4e78-b5df-581368197208"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[SONUM]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="100" height="20" uuid="975ee61c-2093-4a0f-a0f1-de977a2f94ad"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SONUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="3d5e318e-c49b-47aa-b3ef-24342aa468df">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="140" height="30" uuid="9acc5334-6145-4f4b-88c6-4ae189802212"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[PART NUM]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="140" height="20" uuid="d8ad70f3-bf98-4aa9-a18f-a18a7ad344c2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PartNUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="6d6a91ce-547a-485f-a2b2-9e952d03c731">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="14fd0de9-ed73-4910-bb84-844d759f185d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL QTY NEEDED TO FULFILL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="5c813212-c7be-4797-a6fa-c9bc7c86489f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c354ec77-4b11-4f5f-99c6-e8c44071069f">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="84ef113a-c8a9-4027-b9f5-d3132ab2ae01"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[QTY ABLE TO FULFILL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="21" uuid="e1c45ee3-ccf0-40a8-ab55-91c308b5bef3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1))>0 ?
+$F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1):0]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7514bcde-1a50-473e-9cb3-03edf004087c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8ce0d1d5-b8db-4812-937d-9f3d57427e58"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NEEDED]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="d6fd9e91-09ea-42db-8d42-0057e2e0252e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{QTYNEEDED}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="378151a5-5c4e-4c0c-b67d-82bfe7af078f">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="576ced24-a79a-4792-83ca-588b552306a6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[On Hand (No Xfers)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="0914fde0-82c6-4a6e-ae67-0ce1dc6d02be"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})-$F{QTYNOTAVAILABLE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7514bcde-1a50-473e-9cb3-03edf004087c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8ce0d1d5-b8db-4812-937d-9f3d57427e58"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Not Available]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="d6fd9e91-09ea-42db-8d42-0057e2e0252e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{QTYNOTAVAILABLE}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="0eed329a-5200-4eb6-80cd-bb20ed32b685">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="ae318abc-4fbd-458f-85b1-6261d2798a0a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ALLOCATED]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="fed03073-0c3a-41eb-96d1-934fa4c5737d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{qalloc}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9e2e7949-b2d6-48ab-8e44-7b4616b440ff">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c3fccf1d-8d05-4fca-9e8a-37309ffb3530"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL SHORT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="d4ab7fef-9369-41bd-ada2-0f1833ae0295"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{invlocShort}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="5ce4d670-1a6a-43a0-bb35-4b7b3955625d">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="f646afb1-145d-4d58-871b-9e66146146cd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ON ORDER]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="82542d78-083b-48eb-b33a-a540251d20f8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ONORDER}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9fd8b999-ae77-491b-bfcd-1e80329bc513">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="bc46b589-82ad-4ece-a071-44c81c4236db"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NEEDS ORDER]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="21" uuid="833aa800-78d2-4d93-b185-3e273094186d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{invlocShort} -$F{ONORDER}.doubleValue()) <=0 ?0:($F{invlocShort} -$F{ONORDER}.doubleValue())]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="1f412ed7-ce1d-4091-8929-4ac4ed2a4441">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="fb02911f-6cf5-4e60-9345-df77cdb35507"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ATX QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="8d5d6f21-afaa-48e0-a154-2239acbf051e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{AXLQTY}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="864a5141-20c7-41b8-9725-16e84be5d2d0">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c20dadb9-f0a0-43e8-9527-4b103fd356c5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[JAX QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="21" uuid="f0667513-428f-4a40-bd8e-270157514411"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{JAXQTY}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="f7cb9c85-3490-402a-bed6-c7c80b949c2c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="4ab96b45-ee37-418e-86bc-769dd1954e42"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NOLA QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="5104f205-f079-4187-924f-8e00bd77b093"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NOLAQTY}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="879a17ed-d634-4060-be5b-7e2bbe6c7dfb">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="e1e6605c-9ed7-4cf2-b6bd-4d2f32d8341b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NSH QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="1e38b0f4-597d-4590-bab0-ae96e4fa3f03"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NSHQTY}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="cf76f01a-406b-4b70-9829-14c2fefe0e6a">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8b0b33a3-ab9a-4ef0-a1b4-c41ad6403e36"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ORL QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="4c1d29d9-c086-404d-aa11-1280ab245326"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ORLQTY}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="3bef8b0c-f875-4c2d-aefd-b126cbed87df">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="bf35a235-03d1-4cbb-aafb-b38f70ef0cc6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TPA QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="662743df-96a5-4873-b27a-98474a9f0aa3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TPAQTY}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" mode="Transparent" x="0" y="0" width="263" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="ec04a534-31fd-498f-a64f-85944e58bee4"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="38">
+			<staticText>
+				<reportElement key="" mode="Transparent" x="0" y="14" width="2070" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="3fa3f603-01c0-4492-985a-5672c772cca6"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="17" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[No data found in selection]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="spacer" positionType="Float" mode="Transparent" x="0" y="0" width="853" height="10" uuid="f7078fc4-ff46-431d-a14a-f337b01f682e"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</noData>
+</jasperReport>
