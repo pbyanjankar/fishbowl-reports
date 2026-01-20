@@ -61,14 +61,14 @@
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT 
+		<![CDATA[SELECT
     COALESCE(partcost.totalcost, 0) AS AverageTotalCost,
     (COALESCE(part.stdcost, 0) * COALESCE(partcost.qty, 0)) AS StandardTotalCost,
     SUM(COALESCE(costlayer.totalcost, 0)) AS LIFOFIFOTotalCost,
-    Part.num AS PartNumber, 
+    Part.num AS PartNumber,
     Part.Description As PartDescription,
     COALESCE(asaccount.name, 'Use Default') AS "InventoryAccount",
-    company.name AS company, 
+    company.name AS company,
     currency.symbol,
 
     concat(locationgroup.name, " - ", location.name) AS LG,
@@ -78,8 +78,8 @@
     (COALESCE(PartCostHistory.stdcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalStandardTotalCost,
     (COALESCE(PartCostHistory.nextcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalLIFOFIFOTotalCost,
     (COALESCE(PartCostHistory.avgcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalAverageTotalCost
-    
-    
+
+
 
 FROM Part
     LEFT JOIN partcost ON partcost.partid = part.id
@@ -89,20 +89,20 @@ FROM Part
            GROUP BY partcosthistory.partid) AS maxcostdate ON part.id = maxcostdate.partcostid
     LEFT JOIN PartCostHistory ON maxcostdate.costid = partcosthistory.id
     LEFT JOIN costlayer ON (costlayer.partid = part.id AND costlayer.statusid = 10)
-    LEFT OUTER JOIN inventorylog ON inventorylog.id = costlayer.recordId AND costlayer.tableId = -1081854656    
+    LEFT OUTER JOIN inventorylog ON inventorylog.id = costlayer.recordId AND costlayer.tableId = -1081854656
     LEFT OUTER JOIN locationgroup ON locationgroup.id = inventorylog.locationgroupid
     LEFT OUTER JOIN location ON location.id = inventorylog.endlocationid
     LEFT JOIN asaccount ON part.inventoryaccountid = asaccount.id
     JOIN company ON company.id = 1
     LEFT JOIN currency ON currency.homeCurrency = 1
-    LEFT JOIN (SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid 
+    LEFT JOIN (SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid
 		FROM qtyonhand
 		GROUP BY partid, locationgroupid) AS qoh ON qoh.partId = part.id AND locationgroup.id = qoh.locationgroupid
    LEFT OUTER JOIN receiptitem ON receiptitem.id = costlayer.recordId AND costlayer.tableId = 1259138490
    LEFT OUTER JOIN location AS recLocation ON recLocation.id = receiptitem.locationid
    LEFT OUTER JOIN locationgroup AS recLocationGroup ON recLocationGroup.id = recLocation.locationgroupid
    LEFT OUTER JOIN
-(SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid 
+(SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid
 		FROM qtyonhand
 		GROUP BY partid, locationgroupid) AS rqoh ON rqoh.partId = part.id AND recLocationGroup.id = rqoh.locationgroupid
 
