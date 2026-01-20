@@ -73,8 +73,7 @@
 
     concat(locationgroup.name, " - ", location.name) AS LG,
     qoh.qty AS QOH,
-    concat(reclocationgroup.name, " - ", reclocation.name) AS RECLG,
-    rqoh.qty AS RECQOH,
+
     (COALESCE(PartCostHistory.stdcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalStandardTotalCost,
     (COALESCE(PartCostHistory.nextcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalLIFOFIFOTotalCost,
     (COALESCE(PartCostHistory.avgcost, 0) * COALESCE(PartCostHistory.quantity, 0)) AS HistoricalAverageTotalCost
@@ -98,14 +97,6 @@ FROM Part
     LEFT JOIN (SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid
 		FROM qtyonhand
 		GROUP BY partid, locationgroupid) AS qoh ON qoh.partId = part.id AND locationgroup.id = qoh.locationgroupid
-   LEFT OUTER JOIN receiptitem ON receiptitem.id = costlayer.recordId AND costlayer.tableId = 1259138490
-   LEFT OUTER JOIN location AS recLocation ON recLocation.id = receiptitem.locationid
-   LEFT OUTER JOIN locationgroup AS recLocationGroup ON recLocationGroup.id = recLocation.locationgroupid
-   LEFT OUTER JOIN
-(SELECT SUM(qtyonhand.qty) AS qty, qtyonhand.partid AS partid, qtyonhand.locationgroupid AS locationgroupid
-		FROM qtyonhand
-		GROUP BY partid, locationgroupid) AS rqoh ON rqoh.partId = part.id AND recLocationGroup.id = rqoh.locationgroupid
-
 
 
 WHERE part.typeid = 10
@@ -113,7 +104,7 @@ WHERE part.typeid = 10
   AND UPPER(coalesce(asaccount.name, 'Use Default')) LIKE UPPER($P{AssetAccount})
   AND IF($P{HideInactive}=true,part.activeflag = 1,1=1)
 
-GROUP BY 1,2,4,5,6,7, currency.symbol, 9 ,10, 11, 12
+GROUP BY 1,2,4,5,6,7, currency.symbol, 9 ,10
 
 HAVING IF($P{HideZeroQty}=1,SUM(qoh.qty>0),1=1)
 
@@ -461,8 +452,7 @@ $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{LG} == null ? $F{RECLG} : $F{LG}]]></textFieldExpression>
-				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
+				<textFieldExpression><![CDATA[$F{LG}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement key="textField-2" mode="Transparent" x="521" y="0" width="86" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="8ee0fe44-b441-4827-80d9-da5d86a50966"/>
@@ -476,7 +466,7 @@ $V{UsePartCostHistory} ? $F{HistoricalLIFOFIFOTotalCost} : $F{LIFOFIFOTOTALCOST}
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{LG} == null ? $F{RECQOH} : $F{QOH}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{QOH}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 			</textField>
 		</band>
