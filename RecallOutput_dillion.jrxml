@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecallOutputDillion" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="7ad7244c-ca05-420e-9cad-ab81ce9adfb9">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="28"/>
-	<property name="ireport.y" value="136"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="receiptitem" uuid="235236c8-d872-415a-b50f-236ef90a7af5">
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
@@ -138,36 +138,33 @@ GROUP BY 1,2,3,4;]]>
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
-product.num AS FINISHEDPART,
-product.description AS PARTDESCRIPTION,
+part.num AS FINISHEDPART,
+product.num AS FINISHEDProduct,
+part.description AS PARTDESCRIPTION,
+product.description AS PRODUCTDESCRIPTION,
 mo.num AS MONUM,
 mo.dateCompleted AS MODATECOMPLETED,
 uom.code AS UOM,
-trackinginfo.info AS FGLOTNUMBER,
-sum(woitem.qtyTarget) AS FGQtyProduced,
-sum(shipitem.qtyShipped) AS FGQtyShipped,
-sum(woitem.qtyScrapped) AS qtyScrapped,
-sum(woitem.qtyused - shipitem.qtyShipped) AS FGQtyRemaining
-FROM woitem
-INNER JOIN part ON part.id = woitem.partid
-INNER JOIN product ON product.partId = part.id
-INNER JOIN wo ON woitem.woid = wo.id
-INNER JOIN moitem ON moitem.id = wo.moitemid
-INNER JOIN mo ON moitem.moid = mo.id
-INNER JOIN uom ON uom.id = woitem.uomid
-LEFT OUTER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND trackinginfo.parttrackingid = 1
-LEFT OUTER JOIN trackinginfo ti ON ti.info = trackinginfo.info AND ti.tableid = 1555030112 AND trackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
-LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
-WHERE woitem.woid in
-(SELECT
-woid
+finishgoodtrackinginfo.info AS FGLOTNUMBER,
+sum(finishwoitem.qtyTarget) AS FGQtyProduced,
+coalesce(sum(shipitem.qtyShipped),0) AS FGQtyShipped,
+coalesce(sum(finishwoitem.qtyScrapped),0) AS qtyScrapped,
+sum(finishwoitem.qtyTarget) - coalesce(sum(shipitem.qtyShipped),0) AS FGQtyRemaining
 FROM woitem
 INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
+INNER JOIN moitem ON moitem.id = woitem.moitemid
+INNER JOIN mo ON moitem.moid = mo.id
+INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10
+INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
+INNER JOIN uom ON uom.id = finishwoitem.uomid
+INNER JOIN part ON part.id = finishwoitem.partid
+LEFT JOIN product ON product.id = product.partid
+LEFT OUTER JOIN trackinginfo finishgoodtrackinginfo ON finishgoodtrackinginfo.recordid = finishwoitem.id AND finishgoodtrackinginfo.tableid =  -355941248 AND finishgoodtrackinginfo.parttrackingid = 1
+LEFT OUTER JOIN trackinginfo ti ON ti.info = finishgoodtrackinginfo.info AND ti.tableid = 1555030112 AND finishgoodtrackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
+LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
 WHERE
 trackinginfo.info = $P{LotNumber}
-)
-AND woitem.typeid in (10,31)
-GROUP BY 1,2,3,4,5,6;]]>
+GROUP BY 1,2,3,4,5,6,7,8]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="MODATECOMPLETED" class="java.sql.Timestamp">
@@ -206,39 +203,39 @@ GROUP BY 1,2,3,4,5,6;]]>
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
-product.num AS FINISHEDPART,
-product.description AS PARTDESCRIPTION,
-trackinginfo.info AS FGLOTNUMBER,
+part.num AS FINISHEDPART,
+product.num AS FINISHEDProduct,
+part.description AS PARTDESCRIPTION,
+product.description AS PRODUCTDESCRIPTION,
+mo.num AS MONUM,
+mo.dateCompleted AS MODATECOMPLETED,
 uom.code AS UOM,
+finishgoodtrackinginfo.info AS FGLOTNUMBER,
 ship.dateShipped AS DATESHIPPED,
 so.num AS INVOICENUMBER,
 customer.name AS CUSTOMER,
 so.customerContact AS CONTACT,
 so.phone AS PHONE,
-sum(shipitem.qtyShipped) AS FGQtyShipped
+coalesce(sum(shipitem.qtyShipped),0) AS FGQtyShipped
 FROM woitem
-INNER JOIN part ON part.id = woitem.partid
-INNER JOIN product ON product.partid = part.id
-INNER JOIN wo ON woitem.woid = wo.id
-INNER JOIN moitem ON moitem.id = wo.moitemid
+INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
+INNER JOIN moitem ON moitem.id = woitem.moitemid
 INNER JOIN mo ON moitem.moid = mo.id
-INNER JOIN uom ON uom.id = woitem.uomid
-LEFT OUTER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND trackinginfo.parttrackingid = 1
-LEFT OUTER JOIN trackinginfo ti ON ti.info = trackinginfo.info AND ti.tableid = 1555030112 AND trackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
+INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10
+INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
+INNER JOIN uom ON uom.id = finishwoitem.uomid
+INNER JOIN part ON part.id = finishwoitem.partid
+LEFT JOIN product ON product.id = product.partid
+LEFT OUTER JOIN trackinginfo finishgoodtrackinginfo ON finishgoodtrackinginfo.recordid = finishwoitem.id AND finishgoodtrackinginfo.tableid =  -355941248 AND finishgoodtrackinginfo.parttrackingid = 1
+LEFT OUTER JOIN trackinginfo ti ON ti.info = finishgoodtrackinginfo.info AND ti.tableid = 1555030112 AND finishgoodtrackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
 LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
 LEFT OUTER JOIN so ON shipitem.orderid = so.id AND shipitem.ordertypeid = 20
 INNER JOIN customer ON customer.id = so.customerId
 LEFT OUTER JOIN ship ON ship.id = shipitem.shipid
-WHERE woitem.woid in
-(SELECT
-woid
-FROM woitem
-INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
 WHERE
 trackinginfo.info = $P{LotNumber}
-)
-AND woitem.typeid in (10,31)
-GROUP BY 1,2,3,4,5,6,7,8,9;]]>
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
+]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="PARTDESCRIPTION" class="java.lang.String"/>
@@ -319,7 +316,7 @@ WHERE company.id = 1]]>
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Lot Number: " + $P{LotNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
