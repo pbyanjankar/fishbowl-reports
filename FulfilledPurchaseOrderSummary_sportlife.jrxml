@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="295"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -164,8 +164,26 @@ ORDER BY 1
 		<groupExpression><![CDATA[$F{Group}]]></groupExpression>
 		<groupHeader>
 			<band height="14" splitType="Stretch">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Group" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField" mode="Transparent" x="550" y="0" width="182" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="738054b4-dc2e-4c47-9770-2c2b09482242"/>
+					<box>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
+com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{subtotal}, $V{CostDecimal})
+:
+$V{subtotal}]]></textFieldExpression>
+					<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
+				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
-					<reportElement key="textField-12" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="731" height="14" forecolor="#000099" uuid="df6f906a-4596-4546-8d42-92fd93c77c42"/>
+					<reportElement key="textField-12" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="550" height="14" forecolor="#000099" uuid="df6f906a-4596-4546-8d42-92fd93c77c42"/>
 					<box leftPadding="0">
 						<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -179,24 +197,6 @@ ORDER BY 1
 					<textFieldExpression><![CDATA[$F{Group}]]></textFieldExpression>
 					<anchorNameExpression><![CDATA[$P{cbGroupBy}.equals("part.num") ? "PartNum" : "poNum"]]></anchorNameExpression>
 					<hyperlinkReferenceExpression><![CDATA[$F{Group}]]></hyperlinkReferenceExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Group" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField" mode="Transparent" x="550" y="0" width="182" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="738054b4-dc2e-4c47-9770-2c2b09482242"/>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
-						<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{isMultiCurrency} ?
-com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL}, $V{subtotal}, $V{CostDecimal})
-:
-$V{subtotal}]]></textFieldExpression>
-					<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -337,7 +337,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 			<textField pattern="" isBlankWhenNull="true" hyperlinkType="Reference">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="130" height="14" forecolor="#000099" backcolor="#FFFFFF" uuid="85137451-e306-46cb-b5da-0fd0db3f9dc3"/>
 				<box leftPadding="5">
-					<bottomPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -350,7 +350,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="426" y="0" width="124" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="184fc34c-0071-46ff-9e60-3c675251031e"/>
 				<box>
-					<bottomPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -362,7 +362,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 			<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="550" y="0" width="182" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="15b995dd-ccf4-4101-ae73-0a1d55bdad2b"/>
 				<box>
-					<bottomPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -376,7 +376,11 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="130" y="0" width="296" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="00540c1c-5be8-4a6e-af77-7b151b8efe23"/>
 				<box leftPadding="3" rightPadding="3">
-					<bottomPen lineWidth="0.25"/>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
 				</box>
 				<textElement verticalAlignment="Top" rotation="None">
 					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -389,7 +393,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 	<pageFooter>
 		<band height="14" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="501" y="0" width="209" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="ade7cf98-07c9-4cee-96e8-7acb8c356411">
+				<reportElement key="textField" mode="Transparent" x="550" y="0" width="160" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="ade7cf98-07c9-4cee-96e8-7acb8c356411">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="4">
@@ -421,7 +425,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" mode="Transparent" x="0" y="0" width="501" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c02d00ba-0e5b-4c74-8ee2-94fcf634b0a9">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="550" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c02d00ba-0e5b-4c74-8ee2-94fcf634b0a9">
 					<printWhenExpression><![CDATA[$P{ShowTimestamp}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -441,7 +445,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 	<summary>
 		<band height="14">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-3" mode="Transparent" x="550" y="0" width="181" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a806b802-63c9-4172-b1ef-5b0578e0cc89"/>
+				<reportElement key="textField-3" mode="Transparent" x="550" y="0" width="182" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a806b802-63c9-4172-b1ef-5b0578e0cc89"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
