@@ -1182,10 +1182,10 @@ Received]]></text>
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="773" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+					<jr:columnGroup width="745" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
 						<jr:columnHeader height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="771" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
+								<reportElement x="0" y="0" width="745" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
 								<box leftPadding="3" bottomPadding="3">
 									<bottomPen lineWidth="1.25"/>
 								</box>
@@ -1222,11 +1222,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="140" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+						<jr:column width="120" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="140" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<reportElement mode="Opaque" x="0" y="0" width="120" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
 									<box leftPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1243,7 +1243,7 @@ Received]]></text>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
@@ -1487,15 +1487,15 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="73" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+						<jr:column width="65" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<reportElement mode="Opaque" x="0" y="0" width="65" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
 									<box rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
 									<text><![CDATA[Invoice Number]]></text>
@@ -1503,11 +1503,11 @@ Received]]></text>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="65" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Top">
+									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="8"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{INVOICENUMBER}]]></textFieldExpression>
