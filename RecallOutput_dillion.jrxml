@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecallOutputDillion" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="7ad7244c-ca05-420e-9cad-ab81ce9adfb9">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="28"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="receiptitem" uuid="235236c8-d872-415a-b50f-236ef90a7af5">
 		<parameter name="LotNumber" class="java.lang.String"/>
@@ -138,6 +138,8 @@ GROUP BY 1,2,3,4;]]>
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
+moitem.bomid AS stagedBomid,
+finishItem.bomid AS parentbomId,
 part.num AS FINISHEDPART,
 product.num AS FINISHEDProduct,
 part.description AS PARTDESCRIPTION,
@@ -154,7 +156,8 @@ FROM woitem
 INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
 INNER JOIN moitem ON moitem.id = woitem.moitemid
 INNER JOIN mo ON moitem.moid = mo.id
-INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10
+INNER JOIN bomitem ON bomitem.stageBomId = moitem.bomid
+INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10 AND finishItem.bomid = bomitem.bomid
 INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
 INNER JOIN uom ON uom.id = finishwoitem.uomid
 INNER JOIN part ON part.id = finishwoitem.partid
@@ -164,7 +167,7 @@ LEFT OUTER JOIN trackinginfo ti ON ti.info = finishgoodtrackinginfo.info AND ti.
 LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
 WHERE
 trackinginfo.info = $P{LotNumber}
-GROUP BY 1,2,3,4,5,6,7,8]]>
+GROUP BY 1,2,3,4,5,6,7,8, 9, 10]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="MODATECOMPLETED" class="java.sql.Timestamp">
@@ -215,13 +218,15 @@ ship.dateShipped AS DATESHIPPED,
 so.num AS INVOICENUMBER,
 customer.name AS CUSTOMER,
 so.customerContact AS CONTACT,
+so.email AS EMAIl,
 so.phone AS PHONE,
 coalesce(sum(shipitem.qtyShipped),0) AS FGQtyShipped
 FROM woitem
 INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
 INNER JOIN moitem ON moitem.id = woitem.moitemid
 INNER JOIN mo ON moitem.moid = mo.id
-INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10
+INNER JOIN bomitem ON bomitem.stageBomId = moitem.bomid
+INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10 AND finishItem.bomid = bomitem.bomid
 INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
 INNER JOIN uom ON uom.id = finishwoitem.uomid
 INNER JOIN part ON part.id = finishwoitem.partid
@@ -234,8 +239,7 @@ INNER JOIN customer ON customer.id = so.customerId
 LEFT OUTER JOIN ship ON ship.id = shipitem.shipid
 WHERE
 trackinginfo.info = $P{LotNumber}
-GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
-]]>
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="PARTDESCRIPTION" class="java.lang.String"/>
@@ -251,6 +255,7 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
 		<field name="CONTACT" class="java.lang.String"/>
 		<field name="PHONE" class="java.lang.String"/>
 		<field name="INVOICENUMBER" class="java.lang.String"/>
+		<field name="EMAIL" class="java.lang.String"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -749,7 +754,7 @@ Received]]></text>
 									<textElement textAlignment="Center" verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Qty Used]]></text>
+									<text><![CDATA[Qty]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
@@ -1177,10 +1182,10 @@ Received]]></text>
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="743" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+					<jr:columnGroup width="773" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
 						<jr:columnHeader height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="743" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
+								<reportElement x="0" y="0" width="771" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
 								<box leftPadding="3" bottomPadding="3">
 									<bottomPen lineWidth="1.25"/>
 								</box>
@@ -1190,11 +1195,11 @@ Received]]></text>
 								<text><![CDATA[Customer name and contact info who we shipped the finished product that contained the ingredient or packaging lot code]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="80" uuid="7a6294a0-05bf-4eec-9044-518ed8e8241c">
+						<jr:column width="70" uuid="7a6294a0-05bf-4eec-9044-518ed8e8241c">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="107a3572-97ea-4917-883a-1f4847970057"/>
+									<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="107a3572-97ea-4917-883a-1f4847970057"/>
 									<box leftPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1206,7 +1211,7 @@ Received]]></text>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="0">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
@@ -1289,7 +1294,7 @@ Received]]></text>
 									<box leftPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
 									<text><![CDATA[Customer Name]]></text>
@@ -1301,7 +1306,7 @@ Received]]></text>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="0">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Top">
+									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="8"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
@@ -1316,7 +1321,7 @@ Received]]></text>
 									<box rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
 									<text><![CDATA[Customer Contact]]></text>
@@ -1328,18 +1333,45 @@ Received]]></text>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Top">
+									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="8"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{CONTACT}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="59" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
+						<jr:column width="90" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="59" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Customer Email]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="18" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{EMAIL}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
 									<box>
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1351,7 +1383,7 @@ Received]]></text>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="59" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
@@ -1362,11 +1394,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="70" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+						<jr:column width="51" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<reportElement mode="Opaque" x="0" y="0" width="51" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
 									<box rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1378,7 +1410,7 @@ Received]]></text>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="51" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
@@ -1390,11 +1422,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="60" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+						<jr:column width="45" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<reportElement mode="Opaque" x="0" y="0" width="45" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
 									<box leftPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1411,7 +1443,7 @@ Received]]></text>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="45" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
@@ -1423,11 +1455,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="40" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+						<jr:column width="30" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="40" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<reportElement mode="Opaque" x="0" y="0" width="30" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
 									<box leftPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1444,7 +1476,7 @@ Received]]></text>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
@@ -1455,11 +1487,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="80" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+						<jr:column width="73" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="80" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<reportElement mode="Opaque" x="0" y="0" width="70" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
 									<box rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1471,7 +1503,7 @@ Received]]></text>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
