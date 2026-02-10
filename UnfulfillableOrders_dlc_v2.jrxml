@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UnfulfillableOrdersDLC V2" pageWidth="2200" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="2160" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="44af956a-d3c0-4855-ba7b-245825539dd5">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UnfulfillableOrdersDLC V2" pageWidth="2290" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="2250" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="44af956a-d3c0-4855-ba7b-245825539dd5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -747,7 +747,7 @@ order by 5,3]]>
 	<detail>
 		<band height="50">
 			<componentElement>
-				<reportElement key="table" style="table" x="0" y="0" width="2160" height="50" uuid="0d9cde1b-6bb3-444f-8ac1-3c7df3060d31"/>
+				<reportElement key="table" style="table" x="0" y="0" width="2250" height="50" uuid="0d9cde1b-6bb3-444f-8ac1-3c7df3060d31"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="qryqoh" uuid="036ce6dd-ff15-4ae4-bbd0-5b0bc88a6dba">
 						<datasetParameter name="dateRange1">
@@ -877,7 +877,7 @@ order by 5,3]]>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($F{onHandTotal}.doubleValue() - $F{EXCLUDEFROMUORQTY} - $F{QTYNOTAVAILABLE} - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - $F{EXCLUDEFROMUORQTY} - $F{QTYNOTAVAILABLE} - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1]]></textFieldExpression>
+								<textFieldExpression><![CDATA[($F{onHandTotal}.doubleValue() - $F{QTYNOTAVAILABLE} - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - $F{QTYNOTAVAILABLE} - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -888,7 +888,8 @@ order by 5,3]]>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
-								<text><![CDATA[QTY ABLE TO FULFILL]]></text>
+								<text><![CDATA[QTY ABLE
+TO FULFILL]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="21" rowSpan="1">
@@ -1009,26 +1010,6 @@ $F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
-								<text><![CDATA[NEEDS ORDER / MOVE]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="21" rowSpan="1">
-							<textField pattern="###0" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="90" height="21" uuid="833aa800-78d2-4d93-b185-3e273094186d"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[($F{invlocShort} -$F{ONORDER}.doubleValue()) <=0 ?0:($F{invlocShort} -$F{ONORDER}.doubleValue())]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="90" uuid="9fd8b999-ae77-491b-bfcd-1e80329bc513">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="bc46b589-82ad-4ece-a071-44c81c4236db"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8" isBold="true"/>
-								</textElement>
 								<text><![CDATA[EXCLUDED]]></text>
 							</staticText>
 						</jr:columnHeader>
@@ -1059,6 +1040,46 @@ $F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}
 									<font size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{QTYNOTAVAILABLE}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9fd8b999-ae77-491b-bfcd-1e80329bc513">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="bc46b589-82ad-4ece-a071-44c81c4236db"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NEEDS ORDER / MOVE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="21" uuid="833aa800-78d2-4d93-b185-3e273094186d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{invlocShort} -$F{ONORDER}.doubleValue()) <=0 ?0:($F{invlocShort} -$F{ONORDER}.doubleValue())]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7514bcde-1a50-473e-9cb3-03edf004087c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8ce0d1d5-b8db-4812-937d-9f3d57427e58"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ABLE TO MOVE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="###0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="d6fd9e91-09ea-42db-8d42-0057e2e0252e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{QTYNOTAVAILABLE}.doubleValue() - $F{EXCLUDEFROMUORQTY}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1207,7 +1228,7 @@ $F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}
 	<noData>
 		<band height="38">
 			<staticText>
-				<reportElement key="" mode="Transparent" x="0" y="14" width="2160" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="3fa3f603-01c0-4492-985a-5672c772cca6"/>
+				<reportElement key="" mode="Transparent" x="0" y="14" width="2250" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="3fa3f603-01c0-4492-985a-5672c772cca6"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
