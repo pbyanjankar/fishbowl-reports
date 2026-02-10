@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReconcileReportDAN" pageWidth="1102" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1042" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="d223075f-8c71-496d-931b-2529a627db2b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReconcileReportDAN" pageWidth="1222" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1162" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="d223075f-8c71-496d-931b-2529a627db2b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="85"/>
+	<property name="ireport.x" value="801"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -148,6 +148,14 @@
 		<parameter name="colReconciledBy" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
+		<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Date Filter"/>
+			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colVendor" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT po.num AS poNum, part.num AS partNum, poItem.poLineItem AS lineItem,
 
@@ -182,7 +190,8 @@
      receiptItem.qty AS QUANTITY,
      po.dateIssued AS DATEISSUED,
      receiptitem.dateReceived AS DATERECEIVED,
-     sysuser.username AS RECONCILEDBY
+     sysuser.username AS RECONCILEDBY,
+     vendor.name AS VENDORNAME
 
 FROM receiptItem
     LEFT OUTER JOIN receipt ON (receiptItem.receiptId = receipt.id)
@@ -200,7 +209,7 @@ GROUP BY poid) AS reconciledreceipt ON reconciledreceipt.id = receipt.id
     LEFT OUTER JOIN sysuser ON sysuser.id = receipt_aud.userid
 
 WHERE receiptItem.statusId > 10
-    AND receiptItem.dateReconciled BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND $P!{cbDateFilter} BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND UPPER(part.num) LIKE UPPER($P{partNum})
     AND UPPER(po.num) LIKE UPPER($P{poNum})
 
@@ -231,6 +240,7 @@ ORDER BY poNum, lineItem]]>
 		<field name="DATEISSUED" class="java.sql.Timestamp"/>
 		<field name="DATERECEIVED" class="java.sql.Timestamp"/>
 		<field name="RECONCILEDBY" class="java.lang.String"/>
+		<field name="VENDORNAME" class="java.lang.String"/>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
@@ -404,6 +414,11 @@ $V{poCurrencyLandedTotalNotRounded}]]></variableExpression>
 			<parameterDescription><![CDATA[]]></parameterDescription>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
+		<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Date Filter"/>
+			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT SUM(round(COALESCE(receiptItem.qty * poItem.unitCost, 0), 2)) AS totalOriginalCost,
     SUM(receiptItem.billedTotalCost) AS totalBilledCost,
@@ -422,7 +437,7 @@ FROM receiptItem
     LEFT OUTER JOIN currency AS homeCurrency ON homeCurrency.homeCurrency = 1
 
 WHERE receiptItem.statusid > 10
-    AND receiptItem.dateReconciled BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND $P!{cbDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND UPPER(part.num) LIKE UPPER($P{partNum})
     AND UPPER(po.num) LIKE UPPER($P{poNum})
 
@@ -471,10 +486,12 @@ GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]
 		</variable>
 	</subDataset>
 	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<property name="Group" value="Date Filter"/>
 		<parameterDescription><![CDATA[This Month]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<property name="Group" value="Date Filter"/>
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
 	<parameter name="partNum" class="java.lang.String" isForPrompting="false">
@@ -537,6 +554,14 @@ GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]
 	<parameter name="colReconciledBy" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
+	<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Date Filter"/>
+		<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colVendor" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT SUM(COALESCE (receiptItem.qty * poItem.unitCost, 0)) AS totalOriginalCost,
     SUM(receiptItem.billedTotalCost) AS totalBilledCost,
@@ -551,7 +576,7 @@ FROM receiptItem
     LEFT OUTER JOIN company ON company.id = 1
 
 WHERE receiptItem.statusId > 10
-    AND receiptItem.dateReconciled BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+    AND $P!{cbDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND UPPER(part.num) LIKE UPPER($P{partNum})
     AND UPPER(po.num) LIKE UPPER($P{poNum})
 
@@ -581,7 +606,7 @@ GROUP BY company.name]]>
 	<pageHeader>
 		<band height="64" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-17" mode="Transparent" x="0" y="18" width="1042" height="21" forecolor="#000000" backcolor="#FFFFFF" uuid="f061ba35-ce9c-4952-821b-0d72539e4afe"/>
+				<reportElement key="staticText-17" mode="Transparent" x="0" y="18" width="1162" height="21" forecolor="#000000" backcolor="#FFFFFF" uuid="f061ba35-ce9c-4952-821b-0d72539e4afe"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -589,13 +614,13 @@ GROUP BY company.name]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Open Sans" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[Reconcile Report]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-1" mode="Transparent" x="0" y="40" width="1042" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="3032dbfd-89c2-440e-931b-a6a72bee1d4b"/>
+				<reportElement key="textField-1" mode="Transparent" x="0" y="40" width="1162" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="3032dbfd-89c2-440e-931b-a6a72bee1d4b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -612,14 +637,14 @@ GROUP BY company.name]]>
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-86400000)]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" x="0" y="0" width="1042" height="17" uuid="ae67df01-fa60-4c62-b103-560f53e97a4e"/>
+				<reportElement key="textField-2" x="0" y="0" width="1162" height="17" uuid="ae67df01-fa60-4c62-b103-560f53e97a4e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans" size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-3" x="0" y="54" width="1042" height="9" uuid="3c2257dc-fa6e-4542-913c-fc7ab9a04519"/>
+				<reportElement key="textField-3" x="0" y="54" width="1162" height="9" uuid="3c2257dc-fa6e-4542-913c-fc7ab9a04519"/>
 				<textElement>
 					<font fontName="Open Sans"/>
 				</textElement>
@@ -630,7 +655,7 @@ GROUP BY company.name]]>
 	<columnHeader>
 		<band height="18" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table 1" x="0" y="0" width="1042" height="17" uuid="b74c65a9-17ed-444a-a2f0-3ca582343462"/>
+				<reportElement key="table 1" x="0" y="0" width="1162" height="17" uuid="b74c65a9-17ed-444a-a2f0-3ca582343462"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TotalQuery" uuid="14d66ea5-8a3b-40c2-8b42-476661ec245d">
 						<datasetParameter name="dateRange1">
@@ -703,7 +728,7 @@ GROUP BY company.name]]>
 						<jr:columnHeader height="0" rowSpan="1"/>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:columnGroup width="330" uuid="1e28d6db-6e6b-44a3-a4fb-b18954a5b522">
+					<jr:columnGroup width="450" uuid="1e28d6db-6e6b-44a3-a4fb-b18954a5b522">
 						<jr:column width="90" uuid="ccdd81f5-c9ff-471a-b33e-2e60d06c6250">
 							<printWhenExpression><![CDATA[$P{colProductParts}]]></printWhenExpression>
 							<jr:tableHeader height="37" rowSpan="1">
@@ -740,6 +765,29 @@ GROUP BY company.name]]>
 										<paragraph lineSpacing="Single"/>
 									</textElement>
 									<text><![CDATA[Vendor Number]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="0" rowSpan="1"/>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="0" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="120" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
+							<printWhenExpression><![CDATA[$P{colVendor}]]></printWhenExpression>
+							<jr:tableHeader height="37" rowSpan="1">
+								<staticText>
+									<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="120" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
+									<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+										<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+									</box>
+									<textElement rotation="None">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+										<paragraph lineSpacing="Single"/>
+									</textElement>
+									<text><![CDATA[Vendor]]></text>
 								</staticText>
 							</jr:tableHeader>
 							<jr:tableFooter height="0" rowSpan="1"/>
@@ -976,7 +1024,7 @@ GROUP BY company.name]]>
 		<band height="53" splitType="Stretch">
 			<printWhenExpression><![CDATA[new Boolean(true)]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="Line Item Table" positionType="Float" isPrintRepeatedValues="false" x="0" y="0" width="1042" height="52" uuid="bb63618c-4d5e-4077-975b-470111d806f7"/>
+				<reportElement key="Line Item Table" positionType="Float" isPrintRepeatedValues="false" x="0" y="1" width="1162" height="52" uuid="bb63618c-4d5e-4077-975b-470111d806f7"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="POLineItem" uuid="1fcc4d5b-98ea-42a9-8b9f-41fce055c6b2">
 						<datasetParameter name="dateRange1">
@@ -1008,7 +1056,7 @@ GROUP BY company.name]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="1132" uuid="ed1ef1ba-4574-41be-8eb6-2768c261a986">
+					<jr:columnGroup width="1252" uuid="ed1ef1ba-4574-41be-8eb6-2768c261a986">
 						<jr:column width="90" uuid="1b861b4b-bef2-4b9c-a803-cb5c96c451a6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="0" rowSpan="1"/>
@@ -1048,7 +1096,7 @@ GROUP BY company.name]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="330" uuid="15bbdb29-ca30-4f0a-acfc-296c7c665e01">
+						<jr:columnGroup width="450" uuid="15bbdb29-ca30-4f0a-acfc-296c7c665e01">
 							<jr:groupFooter groupName="PO">
 								<jr:cell height="20" rowSpan="1"/>
 							</jr:groupFooter>
@@ -1087,7 +1135,25 @@ GROUP BY company.name]]>
 											<font fontName="Open Sans" size="9"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{VENDORNUMBER}]]></textFieldExpression>
-										<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="120" uuid="04df78b5-4db2-44ac-b093-41338e6f1f6b">
+								<printWhenExpression><![CDATA[$P{colVendor}]]></printWhenExpression>
+								<jr:tableHeader height="0" rowSpan="1"/>
+								<jr:tableFooter height="0" rowSpan="1"/>
+								<jr:columnHeader height="0" rowSpan="1"/>
+								<jr:columnFooter height="0" rowSpan="1"/>
+								<jr:detailCell height="20" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233">
+											<printWhenExpression><![CDATA[$P{colVendor}]]></printWhenExpression>
+										</reportElement>
+										<box topPadding="3" leftPadding="3" rightPadding="3"/>
+										<textElement textAlignment="Left" verticalAlignment="Top">
+											<font fontName="Open Sans" size="9"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{VENDORNAME}]]></textFieldExpression>
 									</textField>
 								</jr:detailCell>
 							</jr:column>
@@ -1437,7 +1503,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-4" mode="Transparent" x="210" y="0" width="784" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="bc789628-5480-4a39-b718-5c58a58eddad"/>
+				<reportElement key="textField-4" mode="Transparent" x="210" y="0" width="904" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="bc789628-5480-4a39-b718-5c58a58eddad"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1451,7 +1517,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-5" mode="Transparent" x="994" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="23bf1e20-f25e-4a22-ac49-2b7cbd9c3543"/>
+				<reportElement key="textField-5" mode="Transparent" x="1114" y="0" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="23bf1e20-f25e-4a22-ac49-2b7cbd9c3543"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1469,7 +1535,7 @@ GROUP BY company.name]]>
 	<lastPageFooter>
 		<band height="32" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-7" mode="Transparent" x="210" y="18" width="784" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="11e1d3e9-2191-435a-b6bf-7f48071fe338">
+				<reportElement key="textField-7" mode="Transparent" x="210" y="18" width="904" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="11e1d3e9-2191-435a-b6bf-7f48071fe338">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -1485,7 +1551,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" mode="Transparent" x="994" y="18" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4ff80009-e59f-48f5-9db4-dbdc122d41df">
+				<reportElement key="textField-8" mode="Transparent" x="1114" y="18" width="48" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="4ff80009-e59f-48f5-9db4-dbdc122d41df">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -1515,7 +1581,7 @@ GROUP BY company.name]]>
 				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement key="table 1" x="0" y="0" width="1042" height="18" uuid="dc177bd4-9f84-4509-a74d-bcb8cf36e830"/>
+				<reportElement key="table 1" x="0" y="0" width="1162" height="18" uuid="dc177bd4-9f84-4509-a74d-bcb8cf36e830"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TotalQuery" uuid="b350aa8f-0e34-4efc-951f-8bfb9790c265">
 						<datasetParameter name="dateRange1">
@@ -1563,6 +1629,11 @@ GROUP BY company.name]]>
 					</jr:column>
 					<jr:column width="90" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
 						<printWhenExpression><![CDATA[$P{colVendorNumber}]]></printWhenExpression>
+						<jr:columnFooter height="16" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="120" uuid="db36d9d7-83b3-4558-9188-e260f191c8f4">
+						<printWhenExpression><![CDATA[$P{colVendor}]]></printWhenExpression>
 						<jr:columnFooter height="16" rowSpan="1"/>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
