@@ -57,10 +57,10 @@
 	<queryString>
 		<![CDATA[SELECT
 part.id,
-part.num,
+part.num AS PARTNUM,
 part.description AS DESCRIPTION,
 company.name AS COMPANYNAME,
--- soitem.description AS DESCRIPTION,
+soitem.description AS SOITEMDESCRIPTION,
 sum(IF(soitem.typeid = 20, (soitem.qtytofulfill * -1),soitem.qtytofulfill)) AS QTYSOLD,
 avg(IF(soitem.typeid = 20, (soitem.unitprice * -1),soitem.unitprice)) AS SALESAMOUNT,
 sum(soitem.totalprice) AS SALESTOTAL
@@ -72,7 +72,7 @@ LEFT OUTER JOIN product ON soitem.productid = product.id
 LEFT OUTER JOIN part ON part.id = product.partid
 INNER JOIN company ON company.id = 1
 
-WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,80)
+WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21)
   AND so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided})
   AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
   AND soitem.productnum LIKE $P{productNum}
@@ -80,7 +80,7 @@ WHERE soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,80)
   AND so.customerid LIKE $P{customerID}
   AND UPPER(so.salesman) LIKE UPPER($P{salesPerson})
 
-GROUP BY part.id, part.num,part.description,company.name
+GROUP BY part.id, part.num,part.description,company.name, soitem.description
 ORDER BY so.dateissued, part.num]]>
 	</queryString>
 	<field name="DESCRIPTION" class="java.lang.String">
@@ -90,6 +90,10 @@ ORDER BY so.dateissued, part.num]]>
 	<field name="SALESAMOUNT" class="java.lang.Double"/>
 	<field name="SALESTOTAL" class="java.lang.Double"/>
 	<field name="COMPANYNAME" class="java.lang.String"/>
+	<field name="PARTNUM" class="java.lang.String"/>
+	<field name="SOITEMDESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 	</variable>
@@ -155,7 +159,7 @@ ORDER BY so.dateissued, part.num]]>
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement key="element-90" mode="Opaque" x="0" y="0" width="245" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="16b7ea34-4f98-483f-945b-9ca66084b270"/>
+				<reportElement key="element-90" mode="Opaque" x="80" y="0" width="208" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="16b7ea34-4f98-483f-945b-9ca66084b270"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="11" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -163,7 +167,7 @@ ORDER BY so.dateissued, part.num]]>
 				<text><![CDATA[Part Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="element-90" mode="Opaque" x="245" y="0" width="109" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="a49f7dad-516c-4941-90a4-03011f967941"/>
+				<reportElement key="element-90" mode="Opaque" x="288" y="0" width="66" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="a49f7dad-516c-4941-90a4-03011f967941"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
 					<font fontName="Open Sans" size="11" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -186,19 +190,27 @@ ORDER BY so.dateissued, part.num]]>
 				</textElement>
 				<text><![CDATA[Sales Total]]></text>
 			</staticText>
+			<staticText>
+				<reportElement key="element-90" mode="Opaque" x="0" y="0" width="80" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="ae4a084f-fff6-454a-8c8a-484f84ebd21e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="Open Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Part Description]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="245" height="20" uuid="83ee8e0f-27f4-462d-9528-6e2fd3826e09"/>
+				<reportElement stretchType="RelativeToTallestObject" x="80" y="0" width="208" height="20" uuid="83ee8e0f-27f4-462d-9528-6e2fd3826e09"/>
 				<textElement>
 					<font fontName="Open Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SOITEMDESCRIPTION}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="245" y="0" width="109" height="20" uuid="bd122da2-1e05-4b9f-9428-9d2f67bb7b88"/>
+				<reportElement stretchType="RelativeToTallestObject" x="288" y="0" width="66" height="20" uuid="bd122da2-1e05-4b9f-9428-9d2f67bb7b88"/>
 				<textElement textAlignment="Right">
 					<font fontName="Open Sans"/>
 				</textElement>
@@ -221,12 +233,19 @@ ORDER BY so.dateissued, part.num]]>
 				<textFieldExpression><![CDATA[$F{SALESTOTAL}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="80" height="20" uuid="b4a10821-0e51-4229-92a5-bff2c1fd2c6f"/>
+				<textElement>
+					<font fontName="Open Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTNUM}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>
 		<band height="20">
 			<textField isBlankWhenNull="true">
-				<reportElement x="245" y="0" width="109" height="20" uuid="7c80b825-a40f-4ea0-a391-8ac888f37ca0"/>
+				<reportElement x="288" y="0" width="66" height="20" uuid="7c80b825-a40f-4ea0-a391-8ac888f37ca0"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>
