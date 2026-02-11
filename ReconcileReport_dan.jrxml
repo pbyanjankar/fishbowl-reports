@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="801"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -148,13 +148,13 @@
 		<parameter name="colReconciledBy" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
-		<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
-			<property name="Group" value="Date Filter"/>
-			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled"]]></parameterDescription>
-			<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
-		</parameter>
 		<parameter name="colVendor" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Date Filter"/>
+			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled","receiptItem.dateBilled","Bill Date"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT po.num AS poNum, part.num AS partNum, poItem.poLineItem AS lineItem,
@@ -416,7 +416,7 @@ $V{poCurrencyLandedTotalNotRounded}]]></variableExpression>
 		</parameter>
 		<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
 			<property name="Group" value="Date Filter"/>
-			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled"]]></parameterDescription>
+			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled","receiptItem.dateBilled","Bill Date"]]></parameterDescription>
 			<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
@@ -556,7 +556,7 @@ GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]
 	</parameter>
 	<parameter name="cbDateFilter" class="java.lang.String" isForPrompting="false">
 		<property name="Group" value="Date Filter"/>
-		<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled"]]></parameterDescription>
+		<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled","receiptItem.dateBilled","Bill Date"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="colVendor" class="java.lang.Boolean" isForPrompting="false">
