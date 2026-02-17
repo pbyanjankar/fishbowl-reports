@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="1030"/>
-	<property name="ireport.y" value="88"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -159,6 +159,9 @@
 		<parameter name="colCustomerSO" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
+		<parameter name="colDateReconciled" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT po.num AS poNum, part.num AS partNum, poItem.poLineItem AS lineItem,
 
@@ -193,6 +196,7 @@
      receiptItem.qty AS QUANTITY,
      po.dateIssued AS DATEISSUED,
      receiptitem.dateReceived AS DATERECEIVED,
+     receiptitem.dateReconciled AS DATERECONCILED,
      sysuser.username AS RECONCILEDBY,
      vendor.name AS VENDORNAME,
      po.customerSO AS CUSTOMERSO
@@ -207,10 +211,22 @@ FROM receiptItem
     INNER JOIN uom ON poItem.uomid = uom.id
     LEFT OUTER JOIN uomConversion ON uom.id = uomConversion.fromUomId AND poItem.uomId = uomConversion.toUomId
     LEFT OUTER JOIN currency AS homeCurrency ON homeCurrency.homeCurrency = 1
-LEFT OUTER JOIN ( SELECT max(REV) as REVISIONID, id from receipt_aud where statusid = 20 AND poid is not null
-GROUP BY poid) AS reconciledreceipt ON reconciledreceipt.id = receipt.id
-    LEFT OUTER JOIN receipt_aud ON receipt_aud.rev = reconciledreceipt.REVISIONID AND receipt_aud.id = receipt.id
-    LEFT OUTER JOIN sysuser ON sysuser.id = receipt_aud.userid
+LEFT OUTER JOIN
+	(select receiptitem_aud.id, max(rev) AS revision
+	 from receiptitem_aud
+           INNER JOIN receiptitem ON receiptitem.id = receiptitem_aud.id
+           INNER JOIN poitem ON poitem.id = receiptitem.poitemid
+	 INNER JOIN po ON poitem.poId = po.id
+	 LEFT OUTER JOIN part ON (receiptItem.partId = part.id)
+	 where receiptitem.statusId IN (20,40) AND receiptitem_aud.dateReconciled IS NOT NULL
+		    AND $P!{cbDateFilter} BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+		    AND UPPER(part.num) LIKE UPPER($P{partNum})
+		    AND UPPER(po.num) LIKE UPPER($P{poNum})
+	 group by receiptitem_aud.id
+         ) AS RecItem ON receiptitem.id =  RecItem.id
+
+LEFT OUTER JOIN revinfo ON RecItem.revision = revinfo.id
+LEFT OUTER JOIN sysuser ON sysuser.id = revinfo.modifieduserid
 
 WHERE receiptItem.statusId > 10
     AND $P!{cbDateFilter} BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
@@ -246,6 +262,7 @@ ORDER BY poNum, lineItem]]>
 		<field name="RECONCILEDBY" class="java.lang.String"/>
 		<field name="VENDORNAME" class="java.lang.String"/>
 		<field name="CUSTOMERSO" class="java.lang.String"/>
+		<field name="DATERECONCILED" class="java.sql.Timestamp"/>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
 		</variable>
@@ -569,6 +586,9 @@ GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]
 	</parameter>
 	<parameter name="colCustomerSO" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colDateReconciled" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT SUM(COALESCE (receiptItem.qty * poItem.unitCost, 0)) AS totalOriginalCost,
@@ -1024,11 +1044,11 @@ GROUP BY company.name]]>
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="0" rowSpan="1"/>
 					</jr:column>
-					<jr:column width="100" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
-						<printWhenExpression><![CDATA[$P{colReconciledBy}]]></printWhenExpression>
+					<jr:column width="60" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
+						<printWhenExpression><![CDATA[$P{colDateReconciled}]]></printWhenExpression>
 						<jr:tableHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="100" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
+								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="60" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
 								<box leftPadding="2" rightPadding="4">
 									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1036,6 +1056,29 @@ GROUP BY company.name]]>
 									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 								</box>
 								<textElement textAlignment="Center" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Date Reconciled]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1"/>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="0" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="100" uuid="de303ac4-777a-4b2f-aa7f-a040f3d0c1f8">
+						<printWhenExpression><![CDATA[$P{colReconciledBy}]]></printWhenExpression>
+						<jr:tableHeader height="37" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-6" style="Header" mode="Transparent" x="0" y="0" width="100" height="37" forecolor="#000000" backcolor="#999999" uuid="7cbbc65b-ec9c-435f-b081-dc02402345e6"/>
+								<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="3">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement rotation="None">
 									<font fontName="Open Sans" size="10" isBold="true"/>
 									<paragraph lineSpacing="Single"/>
 								</textElement>
@@ -1087,7 +1130,7 @@ GROUP BY company.name]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="1352" uuid="ed1ef1ba-4574-41be-8eb6-2768c261a986">
+					<jr:columnGroup width="1412" uuid="ed1ef1ba-4574-41be-8eb6-2768c261a986">
 						<jr:column width="90" uuid="1b861b4b-bef2-4b9c-a803-cb5c96c451a6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="0" rowSpan="1"/>
@@ -1505,6 +1548,38 @@ GROUP BY company.name]]>
 										<font fontName="Open Sans" size="9"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{DATERECEIVED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="04df78b5-4db2-44ac-b093-41338e6f1f6b">
+							<printWhenExpression><![CDATA[$P{colDateReconciled}]]></printWhenExpression>
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupFooter groupName="PO">
+								<jr:cell height="20" rowSpan="1">
+									<textField pattern="" isBlankWhenNull="true">
+										<reportElement style="Money" x="0" y="0" width="60" height="20" uuid="5c246b00-09c6-4f86-abbd-799bab33d12b"/>
+										<box>
+											<topPen lineWidth="0.0"/>
+										</box>
+										<textElement>
+											<font fontName="Open Sans" size="9" isBold="true"/>
+										</textElement>
+										<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader height="0" rowSpan="1"/>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement style="Money" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="20" uuid="3d45bcad-6f46-458d-92b4-f319857f5233"/>
+									<box topPadding="3" leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Top">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DATERECONCILED}]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 								</textField>
 							</jr:detailCell>
