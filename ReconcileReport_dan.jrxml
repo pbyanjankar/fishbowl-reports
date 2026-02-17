@@ -237,7 +237,8 @@ WHERE receiptItem.statusId > 10
     AND $P!{cbDateFilter} BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND UPPER(part.num) LIKE UPPER($P{partNum})
     AND UPPER(po.num) LIKE UPPER($P{poNum})
-    AND if($P{vendorID} = "%", 1=1, vendor.id = $P{vendorID})
+    AND vendor.id LIKE '$P!{vendorID}'
+
 
 ORDER BY poNum, lineItem]]>
 		</queryString>
