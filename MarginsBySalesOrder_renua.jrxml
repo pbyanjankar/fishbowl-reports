@@ -132,6 +132,7 @@ WHERE UPPER(so.num) LIKE UPPER($P{soNum})
   AND so.locationgroupid IN ($P!{locationGroupID})
   AND soitem.qtyToFulFill > 0
   AND UPPER(COALESCE(customfieldbyname(so.customfields, "Sale Category"),"")) LIKE UPPER($P{cbSaleCategory})
+  AND UPPER(customer.name) <> "VERNON CAPITAL LTD"
 
 GROUP BY 1,3,2,4,5,6,7,8,9,10,11,12,13,14,15
 
@@ -148,6 +149,7 @@ SELECT "QUERY 2" AS query, so.num, (CASE WHEN so.billtoname = '' or so.billtonam
     (CASE WHEN (soitem.typeid = 20) THEN (postsoitem.QTY * -1) WHEN (soitem.typeid <> 20) THEN (postsoitem.QTY) END) AS "QtyToFulfill",
     company.name AS company, postsoitem.id as postsoitemid, currency.symbol,
     COALESCE(customfieldbyname(so.customfields, "Sale Category"),"") AS SALECATEGORY
+
 
 FROM so
     INNER JOIN soitem ON so.id = soitem.soid
@@ -166,6 +168,7 @@ WHERE UPPER(so.num) LIKE UPPER($P{soNum})
   AND so.locationgroupid IN ($P!{locationGroupID})
   AND soitem.qtyToFulFill > 0
     AND UPPER(COALESCE(customfieldbyname(so.customfields, "Sale Category"),"")) LIKE UPPER($P{cbSaleCategory})
+  AND UPPER(customer.name) <> "VERNON CAPITAL LTD"
 
 GROUP BY 1,3,2,4,5,6,7,8,9,10,11,12,13,14,15
 
@@ -221,6 +224,7 @@ WHERE UPPER(so.num) LIKE UPPER($P{soNum})
   AND $P!{ckShowOnlyShippedItems} != 200
   AND soitem.qtyToFulFill > 0
   AND UPPER(COALESCE(customfieldbyname(so.customfields, "Sale Category"),"")) LIKE UPPER($P{cbSaleCategory})
+  AND UPPER(customer.name) <> "VERNON CAPITAL LTD"
 
 GROUP BY 2,4,3,5,6,7,8,9,10,11,12,13,14,15,16
 
