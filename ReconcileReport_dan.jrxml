@@ -162,6 +162,9 @@
 		<parameter name="colDateReconciled" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
+		<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT po.num AS poNum, part.num AS partNum, poItem.poLineItem AS lineItem,
 
@@ -218,10 +221,12 @@ LEFT OUTER JOIN
            INNER JOIN poitem ON poitem.id = receiptitem.poitemid
 	 INNER JOIN po ON poitem.poId = po.id
 	 LEFT OUTER JOIN part ON (receiptItem.partId = part.id)
+	 INNER JOIN vendor ON po.vendorid = vendor.id
 	 where receiptitem.statusId IN (20,40) AND receiptitem_aud.dateReconciled IS NOT NULL
 		    AND $P!{cbDateFilter} BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 		    AND UPPER(part.num) LIKE UPPER($P{partNum})
 		    AND UPPER(po.num) LIKE UPPER($P{poNum})
+  		    AND vendor.id LIKE '$P!{vendorID}'
 	 group by receiptitem_aud.id
          ) AS RecItem ON receiptitem.id =  RecItem.id
 
@@ -232,6 +237,7 @@ WHERE receiptItem.statusId > 10
     AND $P!{cbDateFilter} BETWEEN $P{dateRange1} ANd DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND UPPER(part.num) LIKE UPPER($P{partNum})
     AND UPPER(po.num) LIKE UPPER($P{poNum})
+    AND if($P{vendorID} = "%", 1=1, vendor.id = $P{vendorID})
 
 ORDER BY poNum, lineItem]]>
 		</queryString>
@@ -441,6 +447,9 @@ $V{poCurrencyLandedTotalNotRounded}]]></variableExpression>
 			<parameterDescription><![CDATA["receiptitem.dateReceived","Date Received","receiptitem.dateReconciled","Date Reconciled","receiptItem.dateBilled","Bill Date"]]></parameterDescription>
 			<defaultValueExpression><![CDATA["receiptitem.dateReceived"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT SUM(round(COALESCE(receiptItem.qty * poItem.unitCost, 0), 2)) AS totalOriginalCost,
     SUM(receiptItem.billedTotalCost) AS totalBilledCost,
@@ -462,6 +471,7 @@ WHERE receiptItem.statusid > 10
     AND $P!{cbDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
     AND UPPER(part.num) LIKE UPPER($P{partNum})
     AND UPPER(po.num) LIKE UPPER($P{poNum})
+    AND vendor.id LIKE '$P!{vendorID}'
 
 GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]>
 		</queryString>
@@ -590,40 +600,22 @@ GROUP BY company.name, currency.symbol, homeCurrency.symbol, homeCurrency.code]]
 	<parameter name="colDateReconciled" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
+	<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT SUM(COALESCE (receiptItem.qty * poItem.unitCost, 0)) AS totalOriginalCost,
-    SUM(receiptItem.billedTotalCost) AS totalBilledCost,
-    SUM(receiptItem.landedTotalCost) AS totalLandedCost,
-    0 AS billedCost, 0 AS originalCost,
+		<![CDATA[SELECT
     company.name as Company
-FROM receiptItem
-    LEFT OUTER JOIN receipt ON (receiptItem.receiptid = receipt.id)
-    LEFT OUTER JOIN po ON (receipt.poId = po.id AND receipt.orderTypeId=10)
-    LEFT OUTER JOIN part ON (receiptItem.partId = part.id)
-    LEFT OUTER JOIN poItem ON (poItem.id = receiptItem.poItemId AND receipt.orderTypeId=10)
-    LEFT OUTER JOIN company ON company.id = 1
+FROM
+ company
 
-WHERE receiptItem.statusId > 10
-    AND $P!{cbDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
-    AND UPPER(part.num) LIKE UPPER($P{partNum})
-    AND UPPER(po.num) LIKE UPPER($P{poNum})
+WHERE company.id = 1
 
 GROUP BY company.name]]>
 	</queryString>
-	<field name="TOTALORIGINALCOST" class="java.lang.Double"/>
-	<field name="TOTALBILLEDCOST" class="java.lang.Double"/>
-	<field name="TOTALLANDEDCOST" class="java.lang.Double"/>
-	<field name="BILLEDCOST" class="java.lang.Integer"/>
-	<field name="ORIGINALCOST" class="java.lang.Integer"/>
 	<field name="COMPANY" class="java.lang.String"/>
 	<variable name="DateFormat" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
-	</variable>
-	<variable name="billedTotal" class="java.lang.Double" resetType="None">
-		<variableExpression><![CDATA[$F{TOTALBILLEDCOST}]]></variableExpression>
-	</variable>
-	<variable name="originalTotal" class="java.lang.Double" resetType="None">
-		<variableExpression><![CDATA[$F{TOTALBILLEDCOST}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -685,7 +677,7 @@ GROUP BY company.name]]>
 			<componentElement>
 				<reportElement key="table 1" x="0" y="0" width="1262" height="17" uuid="b74c65a9-17ed-444a-a2f0-3ca582343462"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="TotalQuery" uuid="14d66ea5-8a3b-40c2-8b42-476661ec245d">
+					<datasetRun subDataset="TotalQuery" uuid="8473e51a-fec1-4d09-a9bf-870e3eb1fc0e">
 						<datasetParameter name="dateRange1">
 							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -712,6 +704,9 @@ GROUP BY company.name]]>
 						</datasetParameter>
 						<datasetParameter name="colCurrencyBilledTotal">
 							<datasetParameterExpression><![CDATA[$P{colCurrencyBilledTotal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="vendorID">
+							<datasetParameterExpression><![CDATA[$P{vendorID}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
@@ -1100,7 +1095,7 @@ GROUP BY company.name]]>
 			<componentElement>
 				<reportElement key="Line Item Table" positionType="Float" isPrintRepeatedValues="false" x="0" y="1" width="1262" height="52" uuid="bb63618c-4d5e-4077-975b-470111d806f7"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="POLineItem" uuid="1fcc4d5b-98ea-42a9-8b9f-41fce055c6b2">
+					<datasetRun subDataset="POLineItem" uuid="ed6524b1-98fa-44a2-a927-4da7cc68b30e">
 						<datasetParameter name="dateRange1">
 							<datasetParameterExpression><![CDATA[$P{dateRange1}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -1127,6 +1122,15 @@ GROUP BY company.name]]>
 						</datasetParameter>
 						<datasetParameter name="colCurrencyBilledTotal">
 							<datasetParameterExpression><![CDATA[$P{colCurrencyBilledTotal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="vendorID">
+							<datasetParameterExpression><![CDATA[$P{vendorID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colDateReconciled">
+							<datasetParameterExpression><![CDATA[$P{colDateReconciled}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="colCustomerSO">
+							<datasetParameterExpression><![CDATA[$P{colCustomerSO}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
