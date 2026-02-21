@@ -9,7 +9,7 @@
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Provides a list of Salesperson, total price sold, profits and cost. The date filter is based off of the SO date posted."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Provides a list of Salesperson, total price sold, profits and cost. The cost used is [Part CUSTOM field COST]. The date filter is based off of the SO date posted."]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
 		<parameterDescription><![CDATA[Last 30 Days]]></parameterDescription>
