@@ -95,10 +95,7 @@ CASE WHEN ((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -C
 ((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -COALESCE(nola.totalNotAvailable, 0)) + COALESCE(nola.totalDropship,0)) ELSE 0 END
  AS NOLAQTY,
   sum( COALESCE(soitem.qtytofulfill-soitem.qtyfulfilled, 0)) AS QTYNEEDED,
- COALESCE((SELECT SUM(qtynotavailable.qty)
-                FROM qtynotavailable
-               WHERE qtynotavailable.partid = part.id
-                 AND qtynotavailable.locationgroupid = so.locationgroupid), 0) AS QTYNOTAVAILABLE,
+  coalesce(notavailable.QTYNOTAVAILABLE,0) AS QTYNOTAVAILABLE,
    COALESCE((SELECT SUM(qtyonhand.qty)
                 FROM qtyonhand
                WHERE qtyonhand.partid = part.id
@@ -331,13 +328,29 @@ GROUP BY partid) as nshtrans on nshtrans.partId = part.id
 
 left join (
 
-SELECT SUM(tag.qty) AS qty, tag.partid
-FROM location l1
-INNER JOIN tag ON tag.locationid=l1.id
-WHERE
-CustomFieldByName(l1.customfields,'Exclude From UOR') COLLATE utf8mb4_unicode_ci = "true" COLLATE utf8mb4_unicode_ci
+	SELECT SUM(tag.qty) AS qty, tag.partid,  l1.locationgroupid
+		FROM location l1
+		INNER JOIN tag ON tag.locationid=l1.id
+		WHERE
+	CustomFieldByName(l1.customfields,'Exclude From UOR') COLLATE utf8mb4_unicode_ci = "true" COLLATE utf8mb4_unicode_ci
 
-GROUP BY partid) as excludeUOR on excludeUOR.partId = part.id
+	GROUP BY partid, l1.locationgroupid) as excludeUOR on excludeUOR.partId = part.id AND so.locationgroupid = excludeUOR.locationgroupid
+
+LEFT OUTER JOIN(
+
+SELECT
+        tag.partId AS PARTID,
+        location.locationGroupId AS LOCATIONGROUPID,
+        COALESCE(SUM((tag.qty - tag.qtyCommitted)),
+                0) AS QTYNOTAVAILABLE
+    FROM
+        tag JOIN location ON location.id = tag.locationId
+    WHERE
+        ((tag.typeId IN (30 , 40)) AND (location.countedAsAvailable = 0) AND (location.typeId <> 100))
+	OR (CustomFieldByName(location.customfields,'Exclude From UOR') COLLATE utf8mb4_unicode_ci = "true" COLLATE utf8mb4_unicode_ci)
+    GROUP BY
+location.locationGroupId ,
+tag.partId) AS notavailable ON notavailable.partId = part.id AND so.locationgroupid = notavailable.locationgroupid
 
 
 where so.statusid in (10,20,25)
@@ -391,10 +404,7 @@ CASE WHEN ((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -C
 ((COALESCE(nola.totalOnHand, 0) -  COALESCE(nola.totalAllocated, 0) -COALESCE(nola.totalNotAvailable, 0)) + COALESCE(nola.totalDropship,0)) ELSE 0 END
  AS NOLAQTY,
   SUM( COALESCE(xoitem.qtytofulfill-xoitem.qtyfulfilled, 0)) AS QTYNEEDED,
-COALESCE((SELECT SUM(qtynotavailable.qty)
-                FROM qtynotavailable
-               WHERE qtynotavailable.partid = part.id
-                 AND qtynotavailable.locationgroupid = xo.fromlgid), 0) AS QTYNOTAVAILABLE,
+  coalesce(notavailable.QTYNOTAVAILABLE,0) AS QTYNOTAVAILABLE,
    COALESCE((SELECT SUM(qtyonhand.qty)
                 FROM qtyonhand
                WHERE qtyonhand.partid = part.id
@@ -620,13 +630,31 @@ GROUP BY partid) as nshtrans on nshtrans.partId = part.id
 
 left join (
 
-SELECT SUM(tag.qty) AS qty, tag.partid
+SELECT SUM(tag.qty) AS qty, tag.partid,  l1.locationgroupid
 FROM location l1
 INNER JOIN tag ON tag.locationid=l1.id
 WHERE
 CustomFieldByName(l1.customfields,'Exclude From UOR') COLLATE utf8mb4_unicode_ci = "true" COLLATE utf8mb4_unicode_ci
 
-GROUP BY partid) as excludeUOR on excludeUOR.partId = part.id
+GROUP BY partid, l1.locationgroupid) as excludeUOR on excludeUOR.partId = part.id AND xo.fromlgid = excludeUOR.locationgroupid
+
+LEFT OUTER JOIN(
+
+SELECT
+        tag.partId AS PARTID,
+        location.locationGroupId AS LOCATIONGROUPID,
+        COALESCE(SUM((tag.qty - tag.qtyCommitted)),
+                0) AS QTYNOTAVAILABLE
+    FROM
+        tag JOIN location ON location.id = tag.locationId
+    WHERE
+        ((tag.typeId IN (30 , 40)) AND (location.countedAsAvailable = 0) AND (location.typeId <> 100))
+	OR (CustomFieldByName(location.customfields,'Exclude From UOR') COLLATE utf8mb4_unicode_ci = "true" COLLATE utf8mb4_unicode_ci)
+    GROUP BY
+location.locationGroupId,
+tag.partId) AS notavailable ON notavailable.partId = part.id AND xo.fromlgid = notavailable.locationgroupid
+
+
 
 
 WHERE xo.statusid IN (20,30,40,50)
@@ -878,28 +906,6 @@ order by 5,3]]>
 									<font size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[($F{onHandTotal}.doubleValue() - $F{QTYNOTAVAILABLE} - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - $F{QTYNOTAVAILABLE} - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="90" uuid="c354ec77-4b11-4f5f-99c6-e8c44071069f">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="84ef113a-c8a9-4027-b9f5-d3132ab2ae01"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8" isBold="true"/>
-								</textElement>
-								<text><![CDATA[QTY ABLE
-TO FULFILL]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="21" rowSpan="1">
-							<textField pattern="###0" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="90" height="21" uuid="e1c45ee3-ccf0-40a8-ab55-91c308b5bef3"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[($F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1))>0 ?
-$F{QTYNEEDED}.doubleValue() - (($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded} >=0 ?0 :(($F{onHandTotal}.doubleValue() - ($F{atxtransqty}+$F{jaxtransqty}+$F{dctransqty}+$F{orltransqty}+$F{tpatransqty}+$F{nolatransqty}+$F{nshtransqty})) -$V{totqneeded})*-1):0]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
