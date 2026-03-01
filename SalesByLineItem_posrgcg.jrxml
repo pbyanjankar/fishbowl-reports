@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="362"/>
+	<property name="ireport.x" value="271"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -66,6 +66,9 @@
 	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 
@@ -94,6 +97,7 @@ WHERE
   AND so.dateIssued BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
   AND soitem.typeid IN (10,11,12,$P{ckIncludeReturns},21,60,80)
   AND COALESCE(product.num,'') LIKE $P{productNum}
+  AND UPPER(sysuser.username) LIKE UPPER($P{salesPerson})
 
 ORDER BY 3]]>
 	</queryString>
