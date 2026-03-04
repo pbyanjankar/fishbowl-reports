@@ -174,7 +174,6 @@
     part.num AS PARTNUM,
     orgSo.num AS OriginalSO,
     concat(orgSOCreator.firstname, " ", orgSOCreator.lastname)  AS ORIGINALSOCREATEDBY,
-    rma.dateCreated AS RMADATECREATED,
     so.dateCreated AS SODATECREATED,
     orgSo.dateCreated AS ORIGINALSODATECREATED
 
@@ -197,7 +196,6 @@ FROM
     INNER JOIN uom ON uom.id = soitem.uomid
     INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
     LEFT JOIN sysuser ON sysuser.id = so.salesmanId
-    LEFT OUTER JOIN rma ON rma.id = rmaitem.rmaid
 
 WHERE
     soitem.qtyfulfilled > 0
@@ -234,7 +232,6 @@ ORDER BY
 		</field>
 		<field name="OriginalSO" class="java.lang.String"/>
 		<field name="ORIGINALSOCREATEDBY" class="java.lang.String"/>
-		<field name="RMADATECREATED" class="java.sql.Timestamp"/>
 		<field name="ORIGINALSODATECREATED" class="java.sql.Timestamp"/>
 		<field name="SODATECREATED" class="java.sql.Timestamp"/>
 		<variable name="TotalPrice" class="java.lang.Double" calculation="Sum">
@@ -679,7 +676,7 @@ WHERE id = 1]]>
 								<textElement verticalAlignment="Bottom">
 									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[RMA Date Created]]></text>
+								<text><![CDATA[SO Date Created]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="16" rowSpan="1">
@@ -689,7 +686,7 @@ WHERE id = 1]]>
 								<textElement verticalAlignment="Top">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{RMADATECREATED} == null ? $F{SODATECREATED} : $F{RMADATECREATED}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{SODATECREATED}]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
