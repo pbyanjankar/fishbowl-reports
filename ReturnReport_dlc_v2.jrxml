@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReturnReportDLCV2" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="732" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReturnReportDLCV2" pageWidth="902" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="842" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="8"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Tue Apr 05 11:19:13 MDT 2022"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -173,8 +173,9 @@
     CustomFieldByName(part.customfields, 'Part Category') AS PARTCATEGORY,
     part.num AS PARTNUM,
     orgSo.num AS OriginalSO,
-    concat(orgSOCreator.firstname, " ", orgSOCreator.lastname)  AS ORIGINALSOCREATEDBY
-
+    concat(orgSOCreator.firstname, " ", orgSOCreator.lastname)  AS ORIGINALSOCREATEDBY,
+    rma.dateCreated AS RMADATECREATED,
+    orgSo.dateCreated AS ORIGINALSODATECREATED
 
 FROM
     so
@@ -195,6 +196,7 @@ FROM
     INNER JOIN uom ON uom.id = soitem.uomid
     INNER JOIN soitemstatus ON soitem.statusid = soitemstatus.id
     LEFT JOIN sysuser ON sysuser.id = so.salesmanId
+    LEFT OUTER JOIN rma ON rma.id = rmaitem.rmaid
 
 WHERE
     soitem.qtyfulfilled > 0
@@ -231,6 +233,8 @@ ORDER BY
 		</field>
 		<field name="OriginalSO" class="java.lang.String"/>
 		<field name="ORIGINALSOCREATEDBY" class="java.lang.String"/>
+		<field name="RMADATECREATED" class="java.sql.Timestamp"/>
+		<field name="ORIGINALSODATECREATED" class="java.sql.Timestamp"/>
 		<variable name="TotalPrice" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{FPRICE}]]></variableExpression>
 		</variable>
@@ -376,7 +380,7 @@ WHERE id = 1]]>
 		<band height="64" splitType="Prevent">
 			<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="0" y="40" width="732" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="842" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
 					<printWhenExpression><![CDATA[true]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
@@ -395,7 +399,7 @@ WHERE id = 1]]>
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2}.getTime()-129600000)]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="0" width="732" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
+				<reportElement key="" x="0" y="0" width="842" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans" size="13" isBold="true"/>
@@ -403,7 +407,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="54" width="732" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
+				<reportElement key="" x="0" y="54" width="842" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement>
 					<font fontName="Open Sans"/>
@@ -411,7 +415,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" mode="Transparent" x="0" y="18" width="732" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="842" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
 				<box leftPadding="3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -424,7 +428,7 @@ WHERE id = 1]]>
 	<detail>
 		<band height="30">
 			<componentElement>
-				<reportElement key="Show Details" x="0" y="0" width="732" height="30" uuid="3f5f93ed-b926-456d-9431-9255f472873a"/>
+				<reportElement key="Show Details" x="0" y="0" width="842" height="30" uuid="3f5f93ed-b926-456d-9431-9255f472873a"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="SOInfo" uuid="23bb1805-d948-4413-8fa1-33a05080e335">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
@@ -665,6 +669,68 @@ WHERE id = 1]]>
 								<textElement verticalAlignment="Bottom">
 									<font fontName="Open Sans" size="9" isBold="true"/>
 								</textElement>
+								<text><![CDATA[RMA Date Created]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="16" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="16" forecolor="#000000" uuid="30f00911-456c-4185-9448-f5ddf8d10010"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement verticalAlignment="Top">
+									<font fontName="Open Sans" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{RMADATECREATED}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
+						<printWhenExpression><![CDATA[$P{OriginalSO#}]]></printWhenExpression>
+						<jr:tableFooter height="20" rowSpan="1">
+							<box>
+								<topPen lineWidth="1.0"/>
+							</box>
+						</jr:tableFooter>
+						<jr:columnHeader height="28" rowSpan="1">
+							<staticText>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="28" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Original SO Date Created]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="16" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="16" forecolor="#000000" uuid="30f00911-456c-4185-9448-f5ddf8d10010"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement verticalAlignment="Top">
+									<font fontName="Open Sans" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ORIGINALSODATECREATED}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
+						<printWhenExpression><![CDATA[$P{OriginalSO#}]]></printWhenExpression>
+						<jr:tableFooter height="20" rowSpan="1">
+							<box>
+								<topPen lineWidth="1.0"/>
+							</box>
+						</jr:tableFooter>
+						<jr:columnHeader height="28" rowSpan="1">
+							<staticText>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="28" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="9" isBold="true"/>
+								</textElement>
 								<text><![CDATA[Original SO #]]></text>
 							</staticText>
 						</jr:columnHeader>
@@ -867,7 +933,7 @@ $F{FPRICE}]]></textFieldExpression>
 	<pageFooter>
 		<band height="15" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="558" y="0" width="104" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
+				<reportElement key="" mode="Transparent" x="668" y="0" width="104" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="3">
@@ -883,7 +949,7 @@ $F{FPRICE}]]></textFieldExpression>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="662" y="0" width="70" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
+				<reportElement key="" mode="Transparent" x="772" y="0" width="70" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="0">
