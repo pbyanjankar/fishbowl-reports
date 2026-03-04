@@ -175,6 +175,7 @@
     orgSo.num AS OriginalSO,
     concat(orgSOCreator.firstname, " ", orgSOCreator.lastname)  AS ORIGINALSOCREATEDBY,
     rma.dateCreated AS RMADATECREATED,
+    so.dateCreated AS SODATECREATED,
     orgSo.dateCreated AS ORIGINALSODATECREATED
 
 FROM
@@ -235,6 +236,7 @@ ORDER BY
 		<field name="ORIGINALSOCREATEDBY" class="java.lang.String"/>
 		<field name="RMADATECREATED" class="java.sql.Timestamp"/>
 		<field name="ORIGINALSODATECREATED" class="java.sql.Timestamp"/>
+		<field name="SODATECREATED" class="java.sql.Timestamp"/>
 		<variable name="TotalPrice" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{FPRICE}]]></variableExpression>
 		</variable>
@@ -360,6 +362,14 @@ ORDER BY
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<parameter name="OriginalSOCreatedBy" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OriginalSODateCreated" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RMADateCreated" class="java.lang.Boolean" isForPrompting="false">
 		<property name="Tab" value="Hide/Show"/>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -654,7 +664,7 @@ WHERE id = 1]]>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="55" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
-						<printWhenExpression><![CDATA[$P{OriginalSO#}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{RMADateCreated}]]></printWhenExpression>
 						<jr:tableFooter height="20" rowSpan="1">
 							<box>
 								<topPen lineWidth="1.0"/>
@@ -679,13 +689,13 @@ WHERE id = 1]]>
 								<textElement verticalAlignment="Top">
 									<font fontName="Open Sans" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{RMADATECREATED}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{RMADATECREATED} == null ? $F{SODATECREATED} : $F{RMADATECREATED}]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="55" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
-						<printWhenExpression><![CDATA[$P{OriginalSO#}]]></printWhenExpression>
+					<jr:column width="70" uuid="72633b80-2562-4def-baa1-3be6c410b78c">
+						<printWhenExpression><![CDATA[$P{OriginalSODateCreated}]]></printWhenExpression>
 						<jr:tableFooter height="20" rowSpan="1">
 							<box>
 								<topPen lineWidth="1.0"/>
@@ -693,7 +703,7 @@ WHERE id = 1]]>
 						</jr:tableFooter>
 						<jr:columnHeader height="28" rowSpan="1">
 							<staticText>
-								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="28" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
+								<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="28" uuid="56c83d74-3170-4795-87a9-843b2c810f11"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -705,7 +715,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="16" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="16" forecolor="#000000" uuid="30f00911-456c-4185-9448-f5ddf8d10010"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="16" forecolor="#000000" uuid="30f00911-456c-4185-9448-f5ddf8d10010"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement verticalAlignment="Top">
 									<font fontName="Open Sans" size="8"/>
