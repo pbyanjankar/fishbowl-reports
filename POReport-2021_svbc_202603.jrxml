@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.026316236461414"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="307"/>
+	<property name="ireport.y" value="195"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -627,7 +627,7 @@ ORDER BY LINE]]>
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="180" y="0" width="180" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="0f0ae051-6bc1-4a43-82cf-27b443be933e"/>
+				<reportElement positionType="Float" mode="Opaque" x="190" y="0" width="180" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="0f0ae051-6bc1-4a43-82cf-27b443be933e"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -655,7 +655,7 @@ ORDER BY LINE]]>
 				<text><![CDATA[Qty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="430" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="93981a49-aec0-4b16-9102-e9d79f72d0af"/>
+				<reportElement positionType="Float" mode="Opaque" x="440" y="0" width="50" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="93981a49-aec0-4b16-9102-e9d79f72d0af"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -683,7 +683,7 @@ ORDER BY LINE]]>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="360" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="559599af-b2ce-4926-8417-4c05b82a86d2"/>
+				<reportElement positionType="Float" mode="Opaque" x="370" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="559599af-b2ce-4926-8417-4c05b82a86d2"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -711,7 +711,7 @@ ORDER BY LINE]]>
 				<text><![CDATA[Received]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="74" y="0" width="106" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="1e6e8194-f795-473f-9669-98be80919c41"/>
+				<reportElement positionType="Float" mode="Opaque" x="74" y="0" width="116" height="20" isPrintWhenDetailOverflows="true" backcolor="#E696B4" uuid="1e6e8194-f795-473f-9669-98be80919c41"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -729,7 +729,7 @@ ORDER BY LINE]]>
 	<detail>
 		<band height="20">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="180" y="0" width="180" height="20" isPrintWhenDetailOverflows="true" uuid="d9162755-d33e-434d-8004-4e9b9ef710fd"/>
+				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="190" y="0" width="180" height="20" isPrintWhenDetailOverflows="true" uuid="d9162755-d33e-434d-8004-4e9b9ef710fd"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -774,7 +774,7 @@ ORDER BY LINE]]>
 				<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="360" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="7f3cfda7-acbf-43f6-97ce-66454aaff128"/>
+				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="370" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="7f3cfda7-acbf-43f6-97ce-66454aaff128"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -788,7 +788,7 @@ ORDER BY LINE]]>
 				<textFieldExpression><![CDATA[$F{CONDISH}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="430" y="0" width="50" height="20" isPrintWhenDetailOverflows="true" uuid="f1bef63d-95a3-4790-a267-95065b618c16"/>
+				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="440" y="0" width="50" height="20" isPrintWhenDetailOverflows="true" uuid="f1bef63d-95a3-4790-a267-95065b618c16"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -818,7 +818,7 @@ ORDER BY LINE]]>
 				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="74" y="0" width="106" height="20" isPrintWhenDetailOverflows="true" uuid="22cf9b20-1027-4358-931d-b7ec061206e7"/>
+				<reportElement style="Alt" stretchType="RelativeToTallestObject" mode="Opaque" x="74" y="0" width="116" height="20" isPrintWhenDetailOverflows="true" uuid="22cf9b20-1027-4358-931d-b7ec061206e7"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
