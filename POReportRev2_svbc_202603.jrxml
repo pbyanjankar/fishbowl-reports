@@ -2824,7 +2824,7 @@ $P{FieldTitle:ReportTitle}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="140" uuid="3567d595-0b9b-43f4-aea2-c8014af212fc">
+					<jr:column width="160" uuid="3567d595-0b9b-43f4-aea2-c8014af212fc">
 						<printWhenExpression><![CDATA[$P{ItemPart}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<box>
@@ -2835,7 +2835,7 @@ $P{FieldTitle:ReportTitle}]]></textFieldExpression>
 								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="140" height="28" backcolor="#EAEAEA" uuid="b358d007-9589-4e68-bdd7-4ece4a726293"/>
+								<reportElement mode="Opaque" x="0" y="0" width="160" height="28" backcolor="#EAEAEA" uuid="b358d007-9589-4e68-bdd7-4ece4a726293"/>
 								<box leftPadding="3"/>
 								<textElement verticalAlignment="Bottom" markup="none">
 									<font fontName="Open Sans" size="10" isBold="true"/>
@@ -2852,7 +2852,7 @@ $P{FieldTitle:ReportTitle}]]></textFieldExpression>
 								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="13" uuid="647f19b3-3087-44b3-82eb-b9fc02b23be7"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="13" uuid="647f19b3-3087-44b3-82eb-b9fc02b23be7"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement>
 									<font fontName="Open Sans" size="9"/>
@@ -3394,7 +3394,7 @@ $F{TOTALCOST}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="140" uuid="114d9780-c992-4c6d-aff5-0f3b6e0f93e6">
+					<jr:column width="160" uuid="114d9780-c992-4c6d-aff5-0f3b6e0f93e6">
 						<printWhenExpression><![CDATA[$P{ItemPart}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<box>
@@ -3405,7 +3405,7 @@ $F{TOTALCOST}]]></textFieldExpression>
 								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="140" height="28" backcolor="#EAEAEA" uuid="4fad1bde-8b3c-4fda-b5ad-844a0fbc2bf5"/>
+								<reportElement mode="Opaque" x="0" y="0" width="160" height="28" backcolor="#EAEAEA" uuid="4fad1bde-8b3c-4fda-b5ad-844a0fbc2bf5"/>
 								<box leftPadding="3"/>
 								<textElement verticalAlignment="Bottom" markup="none">
 									<font fontName="Open Sans" size="10" isBold="true"/>
@@ -3419,7 +3419,7 @@ $F{TOTALCOST}]]></textFieldExpression>
 								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="13" uuid="ed089c52-15c6-4843-87be-bf1c0fe58fc9"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="13" uuid="ed089c52-15c6-4843-87be-bf1c0fe58fc9"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement>
 									<font fontName="Open Sans" size="9"/>
@@ -4030,7 +4030,7 @@ $F{CURRENCYCODE} + " " + ($P{FieldTitle:Tax}.equals("%") ? "Tax" : $P{FieldTitle
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="140" uuid="4b5def5d-e4b4-459c-a9f0-4c32e7740105">
+					<jr:column width="160" uuid="4b5def5d-e4b4-459c-a9f0-4c32e7740105">
 						<printWhenExpression><![CDATA[$P{ItemPart}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<box>
@@ -4041,7 +4041,7 @@ $F{CURRENCYCODE} + " " + ($P{FieldTitle:Tax}.equals("%") ? "Tax" : $P{FieldTitle
 								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="140" height="28" backcolor="#EAEAEA" uuid="09f7e4de-4582-4986-a7b8-7adc3b3c38f7"/>
+								<reportElement mode="Opaque" x="0" y="0" width="160" height="28" backcolor="#EAEAEA" uuid="09f7e4de-4582-4986-a7b8-7adc3b3c38f7"/>
 								<box leftPadding="3"/>
 								<textElement verticalAlignment="Bottom" markup="none">
 									<font fontName="Open Sans" size="10" isBold="true"/>
@@ -4055,7 +4055,7 @@ $F{CURRENCYCODE} + " " + ($P{FieldTitle:Tax}.equals("%") ? "Tax" : $P{FieldTitle
 								<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 							</box>
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="13" uuid="3687d25e-efd5-4adc-aa27-fb62653c66e1"/>
+								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="13" uuid="3687d25e-efd5-4adc-aa27-fb62653c66e1"/>
 								<box leftPadding="3" rightPadding="3"/>
 								<textElement>
 									<font fontName="Open Sans" size="9"/>

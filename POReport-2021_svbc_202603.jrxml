@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.026316236461414"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="195"/>
+	<property name="ireport.y" value="515"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -24,6 +24,9 @@
 	</parameter>
 	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowWatermark" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -230,7 +233,9 @@ ORDER BY LINE]]>
 	<background>
 		<band height="752">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="0" y="70" width="550" height="50" forecolor="#C3C3C3" uuid="d7708b67-48f3-40a7-9b07-1babb4b3b3e3"/>
+				<reportElement mode="Transparent" x="0" y="70" width="550" height="50" forecolor="#C3C3C3" uuid="d7708b67-48f3-40a7-9b07-1babb4b3b3e3">
+					<printWhenExpression><![CDATA[$P{ShowWatermark}]]></printWhenExpression>
+				</reportElement>
 				<box rightPadding="10"/>
 				<textElement textAlignment="Center">
 					<font size="25"/>
@@ -238,7 +243,9 @@ ORDER BY LINE]]>
 				<textFieldExpression><![CDATA[$F{CAR} + " " + $F{SVC}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="0" y="702" width="550" height="50" forecolor="#C3C3C3" uuid="2e7e1110-6f28-4e3b-902c-a7456dac74af"/>
+				<reportElement mode="Transparent" x="0" y="702" width="550" height="50" forecolor="#C3C3C3" uuid="2e7e1110-6f28-4e3b-902c-a7456dac74af">
+					<printWhenExpression><![CDATA[$P{ShowWatermark}]]></printWhenExpression>
+				</reportElement>
 				<box rightPadding="10"/>
 				<textElement textAlignment="Center">
 					<font size="25"/>
@@ -246,7 +253,9 @@ ORDER BY LINE]]>
 				<textFieldExpression><![CDATA[$F{CAR} + " " + $F{SVC}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="0" y="400" width="550" height="50" forecolor="#C3C3C3" uuid="e27cc8b5-bc25-42e8-bf49-253c93969a46"/>
+				<reportElement mode="Transparent" x="0" y="400" width="550" height="50" forecolor="#C3C3C3" uuid="e27cc8b5-bc25-42e8-bf49-253c93969a46">
+					<printWhenExpression><![CDATA[$P{ShowWatermark}]]></printWhenExpression>
+				</reportElement>
 				<box rightPadding="10"/>
 				<textElement textAlignment="Center">
 					<font size="25"/>
