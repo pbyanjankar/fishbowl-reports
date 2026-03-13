@@ -1449,7 +1449,7 @@ $V{CustomerPO}]]></textFieldExpression>
 										<font fontName="Open Sans" size="17" isBold="true"/>
 										<paragraph lineSpacing="Single"/>
 									</textElement>
-									<textFieldExpression><![CDATA["Sales Order"]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$P{IsInvoice} == true ? "Invoice" : "Sales Order"]]></textFieldExpression>
 								</textField>
 								<image scaleImage="RetainShape" vAlign="Bottom" isUsingCache="true">
 									<reportElement key="Logo" mode="Opaque" x="0" y="0" width="180" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="f2078c08-ab14-461d-b887-5b5d5ef12d19">
@@ -1942,7 +1942,7 @@ $F{UOMCODE}]]></textFieldExpression>
 								<bottomPen lineWidth="1.0"/>
 								<rightPen lineWidth="1.0"/>
 							</box>
-							<textField isStretchWithOverflow="true" pattern="#,##0.####" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="80" height="18" uuid="31effe03-47e5-4377-a00c-3b4723819aae"/>
 								<box rightPadding="3"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
