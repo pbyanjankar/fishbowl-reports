@@ -1,0 +1,3413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalInventoryAvailability" pageWidth="5410" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="5350" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="454c2e49-eb23-41eb-a428-c61ceb94346b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="New Dataset 1" uuid="0b469340-b56a-4449-86df-55ac4f01e942">
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Other Settings"/>
+			<parameterDescription><![CDATA[20,0]]></parameterDescription>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+    PART.NUM AS PART,
+    PART.DESCRIPTION,
+    UOM.CODE AS UOMCODE,
+    (SELECT NAME FROM COMPANY WHERE ID = 1) AS COMPANY,
+    COALESCE(invAtx.TOTALONHAND,0) AS AtxQTY,
+    COALESCE(invAtx.TOTALNOTAVAILABLE,0) AS AtxUNAVAILABLE,
+    COALESCE(invAtx.TOTALDROPSHIP,0) AS AtxDROPSHIP,
+
+    COALESCE(invAtx.TOTALALLOCATED,0) AS AtxALLOCATED,
+    COALESCE(invAtx.TOTALONORDER,0) AS AtxONORDER,
+    COALESCE(invAtx.totalNotAvailabletopick,0) AtxtotalNotAvailabletopick,
+
+    COALESCE(invAtxNew.TOTALONHAND,0) AS AtxNewQTY,
+    COALESCE(invAtxNew.TOTALNOTAVAILABLE,0) AS AtxNewUNAVAILABLE,
+    COALESCE(invAtxNew.TOTALDROPSHIP,0) AS AtxNewDROPSHIP,
+
+    COALESCE(invAtxNew.TOTALALLOCATED,0) AS AtxNewALLOCATED,
+    COALESCE(invAtxNew.TOTALONORDER,0) AS AtxNewONORDER,
+    COALESCE(invAtxNew.totalNotAvailabletopick,0) AtxNewtotalNotAvailabletopick,
+
+    COALESCE(invJax.TOTALONHAND,0) AS JaxQTY,
+    COALESCE(invJax.TOTALNOTAVAILABLE,0) AS JaxUNAVAILABLE,
+    COALESCE(invJax.TOTALDROPSHIP,0) AS JaxDROPSHIP,
+
+    COALESCE(invJax.TOTALALLOCATED,0) AS JaxALLOCATED,
+    COALESCE(invJax.TOTALONORDER,0) AS JaxONORDER,
+    COALESCE(invJax.totalNotAvailabletopick,0) JaxtotalNotAvailabletopick,
+
+
+    COALESCE(invTPA.TOTALONHAND,0) AS TPAQTY,
+    COALESCE(invTPA.TOTALNOTAVAILABLE,0) AS TPAUNAVAILABLE,
+    COALESCE(invTPA.TOTALDROPSHIP,0) AS TPADROPSHIP,
+
+    COALESCE(invTPA.TOTALALLOCATED,0) AS TPAALLOCATED,
+    COALESCE(invTPA.TOTALONORDER,0) AS TPAONORDER,
+    COALESCE(invTPA.totalNotAvailabletopick,0) TPAtotalNotAvailabletopick,
+
+ COALESCE(invORL.TOTALONHAND,0) AS ORLQTY,
+    COALESCE(invORL.TOTALNOTAVAILABLE,0) AS ORLUNAVAILABLE,
+    COALESCE(invORL.TOTALDROPSHIP,0) AS ORLDROPSHIP,
+
+    COALESCE(invORL.TOTALALLOCATED,0) AS ORLALLOCATED,
+    COALESCE(invORL.TOTALONORDER,0) AS ORLONORDER,
+    COALESCE(invORL.totalNotAvailabletopick,0) ORLtotalNotAvailabletopick,
+
+COALESCE(invORLNew.TOTALONHAND,0) AS ORLNewQTY,
+    COALESCE(invORLNew.TOTALNOTAVAILABLE,0) AS ORLNewUNAVAILABLE,
+    COALESCE(invORLNew.TOTALDROPSHIP,0) AS ORLNewDROPSHIP,
+
+    COALESCE(invORLNew.TOTALALLOCATED,0) AS ORLNewALLOCATED,
+    COALESCE(invORLNew.TOTALONORDER,0) AS ORLNewONORDER,
+    COALESCE(invORLNew.totalNotAvailabletopick,0) ORLNewtotalNotAvailabletopick,
+
+    COALESCE(invNola.TOTALONHAND,0) AS NolaQTY,
+    COALESCE(invNola.TOTALNOTAVAILABLE,0) AS NolaUNAVAILABLE,
+    COALESCE(invNola.TOTALDROPSHIP,0) AS NolaDROPSHIP,
+
+    COALESCE(invNola.TOTALALLOCATED,0) AS NolaALLOCATED,
+    COALESCE(invNola.TOTALONORDER,0) AS NolaONORDER,
+    COALESCE(invNola.totalNotAvailabletopick,0) NolatotalNotAvailabletopick,
+
+    0 AS DCQTY,
+    COALESCE(invDC.TOTALNOTAVAILABLE,0) AS DCUNAVAILABLE,
+    0 AS DCDROPSHIP,
+
+    0 AS DCALLOCATED,
+    0 AS DCONORDER,
+    0 DCtotalNotAvailabletopick,
+
+COALESCE(invNSH.TOTALONHAND,0) AS NSHQTY,
+    COALESCE(invNSH.TOTALNOTAVAILABLE,0) AS NSHUNAVAILABLE,
+    COALESCE(invNSH.TOTALDROPSHIP,0) AS NSHDROPSHIP,
+
+    COALESCE(invNSH.TOTALALLOCATED,0) AS NSHALLOCATED,
+    COALESCE(invNSH.TOTALONORDER,0) AS NSHONORDER,
+    COALESCE(invNSH.totalNotAvailabletopick,0) NSHtotalNotAvailabletopick,
+
+coalesce((select sum(qtytofulfill-qtyfulfilled) from poitem
+inner join po on po.id=poitem.poid
+where po.statusid=10 and poitem.partid=part.id and po.locationgroupid=1),0) as ATXBid,
+
+coalesce((select sum(qtytofulfill-qtyfulfilled) from poitem
+inner join po on po.id=poitem.poid
+where po.statusid=10 and poitem.partid=part.id and po.locationgroupid=10),0) as ATXNewBid,
+
+COALESCE((SELECT SUM(qtytofulfill-qtyfulfilled) FROM poitem
+INNER JOIN po ON po.id=poitem.poid
+WHERE po.statusid=10 AND poitem.partid=part.id AND po.locationgroupid=9),0) AS JAXBid,
+COALESCE((SELECT SUM(qtytofulfill-qtyfulfilled) FROM poitem
+INNER JOIN po ON po.id=poitem.poid
+WHERE po.statusid=10 AND poitem.partid=part.id AND po.locationgroupid=3),0) AS TPABid,
+
+COALESCE((SELECT SUM(qtytofulfill-qtyfulfilled) FROM poitem
+INNER JOIN po ON po.id=poitem.poid
+WHERE po.statusid=10 AND poitem.partid=part.id AND po.locationgroupid=4),0) AS ORLBid,
+
+COALESCE((SELECT SUM(qtytofulfill-qtyfulfilled) FROM poitem
+INNER JOIN po ON po.id=poitem.poid
+WHERE po.statusid=10 AND poitem.partid=part.id AND po.locationgroupid=8),0) AS ORLNewBid,
+
+COALESCE((SELECT SUM(qtytofulfill-qtyfulfilled) FROM poitem
+INNER JOIN po ON po.id=poitem.poid
+WHERE po.statusid=10 AND poitem.partid=part.id AND po.locationgroupid=5),0) AS NOLABid,
+
+0 AS DCBid,
+
+COALESCE((SELECT SUM(qtytofulfill-qtyfulfilled) FROM poitem
+INNER JOIN po ON po.id=poitem.poid
+WHERE po.statusid=10 AND poitem.partid=part.id AND po.locationgroupid=7),0) AS NSHBid,
+coalesce(prAtx.orderuptolevel,0) as atxOL,
+coalesce(prAtxNew.orderuptolevel,0) as atxNewOL,
+coalesce(prJax.orderuptolevel,0) as jaxOL,
+coalesce(prTPA.orderuptolevel,0) as tpaOL,
+coalesce(prORL.orderuptolevel,0) as orlOL,
+coalesce(prORLNew.orderuptolevel,0) as orlNewOL,
+coalesce(prNOLA.orderuptolevel,0) as nolaOL,
+0 as dcOL
+,
+coalesce(prNSH.orderuptolevel,0) as nshOL,
+coalesce(prAtx.reorderpoint,0) as atxRP,
+coalesce(prAtxNew.reorderpoint,0) as atxNewRP,
+coalesce(prJax.reorderpoint,0) as jaxRP,
+coalesce(prTPA.reorderpoint,0) as tpaRP,
+coalesce(prORL.reorderpoint,0) as orlRP,
+coalesce(prORLNew.reorderpoint,0) as orlNewRP,
+coalesce(prNOLA.reorderpoint,0) as nolaRP,
+coalesce(prDC.reorderpoint,0) as dcRP,
+coalesce(prNSH.reorderpoint,0) as nshRP,
+COALESCE(atxLast6.last6,0) AS ATXLast6mnts,
+COALESCE(atxNewLast6.last6,0) AS ATXNewLast6mnts,
+COALESCE(jaxLast6.last6,0) AS JAXLast6mnts,
+COALESCE(tpaLast6.last6,0) AS  TPALast6mnts,
+COALESCE(orlLast6.last6,0) AS ORLLast6mnts,
+COALESCE(orlNewLast6.last6,0) AS ORLNewLast6mnts,
+COALESCE(nolaLast6.last6,0) AS NOLALast6mnts,
+0 AS DCLast6mnts,
+COALESCE(nshLast6.last6,0) AS NSHLast6mnts,
+
+COALESCE(invAll.TOTALONHAND,0) AS AllQTY,
+    COALESCE(invAll.TOTALNOTAVAILABLE,0) AS AllUNAVAILABLE,
+    COALESCE(invAll.TOTALDROPSHIP,0) AS AllDROPSHIP,
+
+    COALESCE(invAll.TOTALALLOCATED,0) AS AllALLOCATED,
+    COALESCE(invAll.TOTALONORDER,0) AS AllONORDER,
+    COALESCE(invAll.totalNotAvailabletopick,0) AllotalNotAvailabletopick,
+CustomFieldByName(part.CUSTOMFIELDS, 'Part Category') AS PartCategory,
+CustomFieldByName(part.CUSTOMFIELDS, 'cu ft (Each)') AS cuftEach,
+upper(CustomFieldByName(part.CUSTOMFIELDS, 'Key Item')) AS KeyItem
+
+
+
+
+
+
+
+
+FROM
+    part
+    LEFT JOIN uom ON part.uomid = uom.id
+
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+
+        GROUP BY partId
+    ) AS invAll ON invAll .partId = part.id
+
+    LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (1)
+        GROUP BY partId
+    ) AS invAtx ON invAtx .partId = part.id
+left join partreorder prAtx on prAtx.partid=part.id and prAtx.locationgroupid=1
+
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (10)
+        GROUP BY partId
+    ) AS invAtxNew ON invAtxNew.partId = part.id
+left join partreorder prAtxNew on prAtxNew.partid=part.id and prAtxNew.locationgroupid=10
+
+    LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (9)
+        GROUP BY partId
+    ) AS invJax ON invJax.partId = part.id
+left join partreorder prJax on prJax.partid=part.id and prJax.locationgroupid=9
+    LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (3)
+        GROUP BY partId
+    ) AS invTPA ON invTPA.partId = part.id
+
+left join partreorder prTPA on prTPA.partid=part.id and prTPA.locationgroupid=3
+
+    LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (4)
+        GROUP BY partId
+    ) AS invORL ON invORL.partId = part.id
+left join partreorder prORL on prORL.partid=part.id and prORL.locationgroupid=4
+
+
+ LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (8)
+        GROUP BY partId
+    ) AS invORLNew ON invORLNew.partId = part.id
+left join partreorder prORLNew on prORLNew.partid=part.id and prORLNew.locationgroupid=8
+
+   LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (5)
+        GROUP BY partId
+    ) AS invNOLA ON invNOLA.partId = part.id
+left join partreorder prNOLA on prNOLA.partid=part.id and prNOLA.locationgroupid=5
+
+    LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (6)
+        GROUP BY partId
+    ) AS invDC ON invDC.partId = part.id
+left join partreorder prDC on prDC.partid=part.id and prDC.locationgroupid=6
+
+LEFT JOIN (
+        SELECT
+            partId,
+            SUM(qtyOnHand) AS totalOnHand,
+            SUM(qtyNotAvailable) AS totalNotAvailable,
+            SUM(qtyNotAvailabletopick) AS totalNotAvailabletopick,
+            SUM(qtyDropship) AS totalDropship,
+            SUM(qtyAllocated) AS totalAllocated,
+            SUM(qtyOnOrder) AS totalOnOrder
+        FROM
+            qtyInventoryTotals
+        WHERE locationGroupId IN (7)
+        GROUP BY partId
+    ) AS invNSH ON invNSH.partId = part.id
+left join partreorder prNSH on prNSH.partid=part.id and prNSH.locationgroupid=7
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (1)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as atxLast6 on atxLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (10)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as atxNewLast6 on atxNewLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (9)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as jaxLast6 on jaxLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (3)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as tpaLast6 on tpaLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (4)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as orlLast6 on orlLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (8)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as orlNewLast6 on orlNewLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (5)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as nolaLast6 on nolaLast6.partId = part.id
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (6)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as dcLast6 on dcLast6.partId = part.id
+
+
+left join
+(
+SELECT SUM(soitem.qtyfulfilled) as last6,product.partid FROM so
+INNER JOIN soitem ON so.id=soitem.soid
+
+INNER JOIN product ON product.id=soitem.productid
+WHERE so.locationgroupid  IN (7)
+AND soitem.datelastfulfillment BETWEEN CAST(DATE_SUB(NOW(),INTERVAL 6 MONTH) AS DATE) AND CURRENT_DATE
+AND  soitem.typeid IN (10,11,12,$P!{ckIncludeReturns},21,30,31,50,60,80)
+
+
+GROUP BY product.partid
+) as nshLast6 on nshLast6.partId = part.id
+WHERE
+    part.num LIKE $P{partNum}
+    AND part.id != 0
+    AND part.typeid = 10
+    AND part.activeflag = 1
+
+ORDER BY part.num]]>
+		</queryString>
+		<field name="PART" class="java.lang.String"/>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="UOMCODE" class="java.lang.String"/>
+		<field name="COMPANY" class="java.lang.String"/>
+		<field name="AtxQTY" class="java.lang.Double"/>
+		<field name="AtxUNAVAILABLE" class="java.lang.Double"/>
+		<field name="AtxDROPSHIP" class="java.lang.Double"/>
+		<field name="AtxALLOCATED" class="java.lang.Double"/>
+		<field name="AtxONORDER" class="java.lang.Double"/>
+		<field name="AtxtotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="JaxQTY" class="java.lang.Double"/>
+		<field name="JaxUNAVAILABLE" class="java.lang.Double"/>
+		<field name="JaxDROPSHIP" class="java.lang.Double"/>
+		<field name="JaxALLOCATED" class="java.lang.Double"/>
+		<field name="JaxONORDER" class="java.lang.Double"/>
+		<field name="JaxtotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="TPAQTY" class="java.lang.Double"/>
+		<field name="TPAUNAVAILABLE" class="java.lang.Double"/>
+		<field name="TPADROPSHIP" class="java.lang.Double"/>
+		<field name="TPAALLOCATED" class="java.lang.Double"/>
+		<field name="TPAONORDER" class="java.lang.Double"/>
+		<field name="TPAtotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="ORLQTY" class="java.lang.Double"/>
+		<field name="ORLUNAVAILABLE" class="java.lang.Double"/>
+		<field name="ORLDROPSHIP" class="java.lang.Double"/>
+		<field name="ORLALLOCATED" class="java.lang.Double"/>
+		<field name="ORLONORDER" class="java.lang.Double"/>
+		<field name="ORLtotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="NolaQTY" class="java.lang.Double"/>
+		<field name="NolaUNAVAILABLE" class="java.lang.Double"/>
+		<field name="NolaDROPSHIP" class="java.lang.Double"/>
+		<field name="NolaALLOCATED" class="java.lang.Double"/>
+		<field name="NolaONORDER" class="java.lang.Double"/>
+		<field name="NolatotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="DCQTY" class="java.lang.Double"/>
+		<field name="DCUNAVAILABLE" class="java.lang.Double"/>
+		<field name="DCDROPSHIP" class="java.lang.Double"/>
+		<field name="DCALLOCATED" class="java.lang.Double"/>
+		<field name="DCONORDER" class="java.lang.Double"/>
+		<field name="DCtotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="NSHQTY" class="java.lang.Double"/>
+		<field name="NSHUNAVAILABLE" class="java.lang.Double"/>
+		<field name="NSHDROPSHIP" class="java.lang.Double"/>
+		<field name="NSHALLOCATED" class="java.lang.Double"/>
+		<field name="NSHONORDER" class="java.lang.Double"/>
+		<field name="NSHtotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="ATXBid" class="java.math.BigDecimal"/>
+		<field name="JAXBid" class="java.math.BigDecimal"/>
+		<field name="TPABid" class="java.math.BigDecimal"/>
+		<field name="ORLBid" class="java.math.BigDecimal"/>
+		<field name="NOLABid" class="java.math.BigDecimal"/>
+		<field name="DCBid" class="java.math.BigDecimal"/>
+		<field name="NSHBid" class="java.math.BigDecimal"/>
+		<field name="atxOL" class="java.math.BigDecimal"/>
+		<field name="jaxOL" class="java.math.BigDecimal"/>
+		<field name="tpaOL" class="java.math.BigDecimal"/>
+		<field name="orlOL" class="java.math.BigDecimal"/>
+		<field name="nolaOL" class="java.math.BigDecimal"/>
+		<field name="dcOL" class="java.math.BigDecimal"/>
+		<field name="nshOL" class="java.math.BigDecimal"/>
+		<field name="atxRP" class="java.math.BigDecimal"/>
+		<field name="jaxRP" class="java.math.BigDecimal"/>
+		<field name="tpaRP" class="java.math.BigDecimal"/>
+		<field name="orlRP" class="java.math.BigDecimal"/>
+		<field name="nolaRP" class="java.math.BigDecimal"/>
+		<field name="dcRP" class="java.math.BigDecimal"/>
+		<field name="nshRP" class="java.math.BigDecimal"/>
+		<field name="ATXLast6mnts" class="java.math.BigDecimal"/>
+		<field name="JAXLast6mnts" class="java.math.BigDecimal"/>
+		<field name="TPALast6mnts" class="java.math.BigDecimal"/>
+		<field name="ORLLast6mnts" class="java.math.BigDecimal"/>
+		<field name="NOLALast6mnts" class="java.math.BigDecimal"/>
+		<field name="DCLast6mnts" class="java.math.BigDecimal"/>
+		<field name="NSHLast6mnts" class="java.math.BigDecimal"/>
+		<field name="AllQTY" class="java.lang.Double"/>
+		<field name="AllUNAVAILABLE" class="java.lang.Double"/>
+		<field name="AllDROPSHIP" class="java.lang.Double"/>
+		<field name="AllALLOCATED" class="java.lang.Double"/>
+		<field name="AllONORDER" class="java.lang.Double"/>
+		<field name="AllotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="KeyItem" class="java.lang.String"/>
+		<field name="PartCategory" class="java.lang.String"/>
+		<field name="cuftEach" class="java.lang.String"/>
+		<field name="AtxNewQTY" class="java.lang.Double"/>
+		<field name="AtxNewUNAVAILABLE" class="java.lang.Double"/>
+		<field name="AtxNewDROPSHIP" class="java.lang.Double"/>
+		<field name="AtxNewALLOCATED" class="java.lang.Double"/>
+		<field name="AtxNewONORDER" class="java.lang.Double"/>
+		<field name="AtxNewTotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="atxNewOL" class="java.math.BigDecimal"/>
+		<field name="atxNewRP" class="java.math.BigDecimal"/>
+		<field name="ATXNewBid" class="java.math.BigDecimal"/>
+		<field name="ATXNewLast6mnts" class="java.math.BigDecimal"/>
+		<field name="ORLNewQTY" class="java.lang.Double"/>
+		<field name="ORLNewUNAVAILABLE" class="java.lang.Double"/>
+		<field name="ORLNewDROPSHIP" class="java.lang.Double"/>
+		<field name="ORLNewALLOCATED" class="java.lang.Double"/>
+		<field name="ORLNewONORDER" class="java.lang.Double"/>
+		<field name="ORLNewTotalNotAvailabletopick" class="java.lang.Double"/>
+		<field name="orlNewOL" class="java.math.BigDecimal"/>
+		<field name="orlNewRP" class="java.math.BigDecimal"/>
+		<field name="ORLNewBid" class="java.math.BigDecimal"/>
+		<field name="ORLNewLast6mnts" class="java.math.BigDecimal"/>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		</variable>
+		<variable name="ATXNeeded" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{AtxQTY}.doubleValue() + $F{AtxONORDER}.doubleValue() - $F{AtxALLOCATED}.doubleValue()- $F{AtxUNAVAILABLE}) <= $F{atxRP}.doubleValue() ?
+($F{AtxQTY}.doubleValue() + $F{AtxONORDER}.doubleValue() - $F{AtxALLOCATED}.doubleValue()-$F{AtxUNAVAILABLE}) <= $F{atxOL}.doubleValue() ?
+    new Double($F{atxOL}.doubleValue() - ($F{AtxQTY}.doubleValue() + $F{AtxONORDER}.doubleValue() - $F{AtxALLOCATED}.doubleValue()-$F{AtxUNAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<variable name="JAXNeeded" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{JaxQTY}.doubleValue() + $F{JaxONORDER}.doubleValue() - $F{JaxALLOCATED}.doubleValue()- $F{JaxUNAVAILABLE}) <= $F{jaxRP}.doubleValue() ?
+($F{JaxQTY}.doubleValue() + $F{JaxONORDER}.doubleValue() - $F{JaxALLOCATED}.doubleValue()-$F{JaxUNAVAILABLE}) <= $F{jaxOL}.doubleValue() ?
+    new Double($F{jaxOL}.doubleValue() - ($F{JaxQTY}.doubleValue() + $F{JaxONORDER}.doubleValue() - $F{JaxALLOCATED}.doubleValue()-$F{JaxUNAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<variable name="DCNeeded" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{DCQTY}.doubleValue() + $F{DCONORDER}.doubleValue() - $F{DCALLOCATED}.doubleValue()- $F{DCUNAVAILABLE}) <= $F{dcRP}.doubleValue() ?
+($F{DCQTY}.doubleValue() + $F{DCONORDER}.doubleValue() - $F{DCALLOCATED}.doubleValue()-$F{DCUNAVAILABLE}) <= $F{dcOL}.doubleValue() ?
+    new Double($F{dcOL}.doubleValue() - ($F{DCQTY}.doubleValue() + $F{DCONORDER}.doubleValue() - $F{DCALLOCATED}.doubleValue()-$F{DCUNAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<variable name="TPANeeded" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{TPAQTY}.doubleValue() + $F{TPAONORDER}.doubleValue() - $F{TPAALLOCATED}.doubleValue()- $F{TPAUNAVAILABLE}) <= $F{tpaRP}.doubleValue() ?
+($F{TPAQTY}.doubleValue() + $F{TPAONORDER}.doubleValue() - $F{TPAALLOCATED}.doubleValue()-$F{TPAUNAVAILABLE}) <= $F{tpaOL}.doubleValue() ?
+    new Double($F{tpaOL}.doubleValue() - ($F{TPAQTY}.doubleValue() + $F{TPAONORDER}.doubleValue() - $F{TPAALLOCATED}.doubleValue()-$F{TPAUNAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<variable name="NOLANeeded" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{NolaQTY}.doubleValue() + $F{NolaONORDER}.doubleValue() - $F{NolaALLOCATED}.doubleValue()- $F{NolaUNAVAILABLE}) <= $F{nolaRP}.doubleValue() ?
+($F{NolaQTY}.doubleValue() + $F{NolaONORDER}.doubleValue() - $F{NolaALLOCATED}.doubleValue()-$F{NolaUNAVAILABLE}) <= $F{nolaOL}.doubleValue() ?
+    new Double($F{nolaOL}.doubleValue() - ($F{NolaQTY}.doubleValue() + $F{NolaONORDER}.doubleValue() - $F{NolaALLOCATED}.doubleValue()-$F{NolaUNAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<variable name="ORLNeeded" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{ORLQTY}.doubleValue() + $F{ORLONORDER}.doubleValue() - $F{ORLALLOCATED}.doubleValue()- $F{ORLUNAVAILABLE}) <= $F{orlRP}.doubleValue() ?
+($F{ORLQTY}.doubleValue() + $F{ORLONORDER}.doubleValue() - $F{ORLALLOCATED}.doubleValue()-$F{ORLUNAVAILABLE}) <= $F{orlOL}.doubleValue() ?
+    new Double($F{orlOL}.doubleValue() - ($F{ORLQTY}.doubleValue() + $F{ORLONORDER}.doubleValue() - $F{ORLALLOCATED}.doubleValue()-$F{ORLUNAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<group name="PART">
+			<groupExpression><![CDATA[$F{PART}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/Inventory/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRangeNone" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["This is a consolidated report of the Inventory Module. The Count parameter specifies the number of records to return. The Skip parameter skips that many records before starting the count."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<parameterDescription><![CDATA[20,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT name AS COMPANY
+FROM company
+WHERE id = 1]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="54" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-16" x="0" y="0" width="5350" height="18" uuid="9ef6cd41-4489-49f1-a8ab-ce5c1eef835b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-9" mode="Transparent" x="0" y="18" width="5350" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="e94dbedd-b0f3-4dbd-8ef9-7d5348453658"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Inventory Availability" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-15" mode="Transparent" x="0" y="40" width="5350" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="738a4433-dab8-49ec-9b54-e7a3ce12ed2c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["  "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="16">
+			<componentElement>
+				<reportElement key="table 1" x="0" y="0" width="5350" height="16" uuid="1b6b2e7d-97eb-4ad9-8701-781e09d2325c"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="New Dataset 1" uuid="d94b008b-9634-451f-ba81-ea5d326c028c">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<datasetParameter name="partNum">
+							<datasetParameterExpression><![CDATA[$P{partNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ckIncludeReturns">
+							<datasetParameterExpression><![CDATA[$P{ckIncludeReturns}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="5408" uuid="d5cd5be8-1830-4c28-8cba-7d09bcb40d66">
+						<jr:column width="110" uuid="cdd3da05-0d05-4a26-8c4d-b83a7abcf7f9">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="110" height="30" uuid="428f90fe-923a-473d-a532-60882b89a5b6"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Part]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+									<reportElement x="0" y="0" width="110" height="13" forecolor="#000099" uuid="1b6a1b7e-d228-45b7-afcb-aa043ce7f11c"/>
+									<box leftPadding="0" rightPadding="3"/>
+									<textElement>
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PART}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
+									<hyperlinkReferenceExpression><![CDATA[$F{PART}]]></hyperlinkReferenceExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="120" uuid="c37a89ac-ba74-47ed-bfd4-a276f6ac9df8">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="120" height="30" uuid="8dac74ac-559f-4594-967f-6ef3f733bca2"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Part Category]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="120" height="13" forecolor="#000000" uuid="d464bad6-b794-4581-975e-064bf652d3d0"/>
+									<box leftPadding="0" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PartCategory}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="1bcfc8b9-2eff-498a-bc9c-175885ef2259">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="0fa99284-33cc-464f-a36b-7049dd5ac3af"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[cu ft (Each)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="90" height="13" forecolor="#000000" uuid="8dfe6bd0-2039-4871-a490-cce214423858"/>
+									<box leftPadding="0" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cuftEach}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="d5536235-aaee-4528-a892-5db4eadf6ab1">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="db5a6946-1897-40b1-9e7f-b616c910165e"/>
+									<box rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Key Item]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" forecolor="#000000" uuid="35f9374a-8dfc-467a-9756-7e5baceccd10"/>
+									<box leftPadding="0" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{KeyItem}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="30ce3965-e89a-469a-b94a-87a274bfd0d3">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="e43ae2d1-ed59-41aa-8dc2-64b526c7127c"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="ba8f72bb-ac92-4fde-939b-bf6328467ee0"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP}) > 0 ?
+    $F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="49" uuid="7af603b1-88ed-4d5f-909a-60d0cb729a3d">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="49" height="30" uuid="c45b0dce-a3f8-4283-af77-2fa3946572a9"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="49" height="13" uuid="42e05faa-c051-44dc-997b-9b9d2e2df750"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) >= 0 ?
+    $F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The total amount in stock."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="58" uuid="9e7e37ee-1207-43d1-a449-5779f429861f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="58" height="30" uuid="018a6181-16e6-4d1b-b378-d69fbd65950f"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="58" height="13" uuid="8a1fb259-2177-436b-add9-8b3555a79456"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AtxONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="1de04d0a-02b1-4ef6-9e5a-ffc303f0091d">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="57" height="30" uuid="4d7fcb6c-b2d3-428e-b0eb-9ffca7fceee3"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="57" height="13" uuid="fc54063b-2be0-4504-a8be-aae8eab0cb0e"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ATXBid}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="49" uuid="a9549921-f2d8-4adb-ad0c-a920512771a2">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="49" height="30" uuid="e0e08eeb-260e-4592-8ccb-2295eff3084c"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="49" height="13" uuid="2277f2ae-98b5-498d-b683-0581348ef770"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP}) > 0 ?
+    $F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP} :
+    0) -
+
+($F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) >= 0 ?
+    $F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) :
+    new Double(0)) +$F{AtxONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The qty being drop shipped directly to customers."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="e85a471e-4584-4f20-8b9e-b9b18d5d838f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="55" height="30" uuid="7a06755f-65fa-42d9-830e-b76a61413169"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="55" height="13" uuid="22353684-959f-4af5-9598-41b2ce402461"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{atxOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="073fe5be-e692-4ab5-b15c-8deda5c72977">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="ca657266-92e8-4b96-aca8-b5e1ff900437"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="a826b146-31e8-46ec-9939-08d197f26cc5"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{atxRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="64b11202-1d6e-439e-9bb6-ca0a5cb0f714">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="6280a753-d601-4d8c-b1b0-4161b30e8205"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="a7c48283-d4be-40eb-a045-ab7d1ba73604"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP}) > 0 ?
+    $F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP} :
+    0) -
+$F{atxOL}.doubleValue()) >0 ?
+(($F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP}) > 0 ?
+    $F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP} :
+    0) -
+$F{atxOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="df3a0c1d-618c-4591-ac56-5e0f91165d88">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="431f5f78-66c1-40bc-a69d-5c638958fe61"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="0706be90-2829-48fd-a6ac-3696b07ba534"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{atxOL}.doubleValue() -
+
+((($F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP}) > 0 ?
+    $F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP} :
+    0) -
+
+($F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) >= 0 ?
+    $F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) :
+    new Double(0)) +$F{AtxONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="76a22b29-530f-4f2f-970c-567a6e2f586a">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="e224814f-c2b3-4fb1-a4ff-bc179ab8754d"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="9f213bcc-dd23-4e24-9367-2bde5cd9af8e"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP}) > 0 ?
+    $F{AtxQTY} - $F{AtxALLOCATED} - $F{AtxUNAVAILABLE} + $F{AtxDROPSHIP} :
+    0) -
+
+($F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) >= 0 ?
+    $F{AtxALLOCATED} - ($F{AtxQTY} - $F{AtxUNAVAILABLE}) :
+    new Double(0)) +$F{AtxONORDER}) <=$F{atxRP}.doubleValue()? "TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["The qty being drop shipped directly to customers."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="a47d5bb7-5441-4208-903b-9359d808332f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="d5b0b497-ad66-4e1a-af12-d6b12969e3eb"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="49f720a0-8c9b-4406-855e-ae9d173ffcda"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ATXLast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="30ce3965-e89a-469a-b94a-87a274bfd0d3">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="e43ae2d1-ed59-41aa-8dc2-64b526c7127c"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="ba8f72bb-ac92-4fde-939b-bf6328467ee0"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP}) > 0 ?
+    $F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="49" uuid="7af603b1-88ed-4d5f-909a-60d0cb729a3d">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="49" height="30" uuid="c45b0dce-a3f8-4283-af77-2fa3946572a9"/>
+									<box leftPadding="0" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="49" height="13" uuid="42e05faa-c051-44dc-997b-9b9d2e2df750"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) >= 0 ?
+    $F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The total amount in stock."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="58" uuid="9e7e37ee-1207-43d1-a449-5779f429861f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="58" height="30" uuid="018a6181-16e6-4d1b-b378-d69fbd65950f"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="58" height="13" uuid="8a1fb259-2177-436b-add9-8b3555a79456"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{AtxNewONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="1de04d0a-02b1-4ef6-9e5a-ffc303f0091d">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="57" height="30" uuid="4d7fcb6c-b2d3-428e-b0eb-9ffca7fceee3"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="57" height="13" uuid="fc54063b-2be0-4504-a8be-aae8eab0cb0e"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ATXNewBid}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="49" uuid="a9549921-f2d8-4adb-ad0c-a920512771a2">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="49" height="30" uuid="e0e08eeb-260e-4592-8ccb-2295eff3084c"/>
+									<box leftPadding="0" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="10" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<box>
+									<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="49" height="13" uuid="2277f2ae-98b5-498d-b683-0581348ef770"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP}) > 0 ?
+    $F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP} :
+    0) -
+
+($F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) >= 0 ?
+    $F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) :
+    new Double(0)) +$F{AtxNewONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The qty being drop shipped directly to customers."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="e85a471e-4584-4f20-8b9e-b9b18d5d838f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="55" height="30" uuid="7a06755f-65fa-42d9-830e-b76a61413169"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="55" height="13" uuid="22353684-959f-4af5-9598-41b2ce402461"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{atxNewOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="66" uuid="073fe5be-e692-4ab5-b15c-8deda5c72977">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="66" height="30" uuid="ca657266-92e8-4b96-aca8-b5e1ff900437"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="66" height="13" uuid="a826b146-31e8-46ec-9939-08d197f26cc5"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{atxNewRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="64b11202-1d6e-439e-9bb6-ca0a5cb0f714">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="6280a753-d601-4d8c-b1b0-4161b30e8205"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="a7c48283-d4be-40eb-a045-ab7d1ba73604"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP}) > 0 ?
+    $F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP} :
+    0) -
+$F{atxNewOL}.doubleValue()) >0 ?
+(($F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP}) > 0 ?
+    $F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP} :
+    0) -
+$F{atxNewOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="df3a0c1d-618c-4591-ac56-5e0f91165d88">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="431f5f78-66c1-40bc-a69d-5c638958fe61"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="0706be90-2829-48fd-a6ac-3696b07ba534"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{atxNewOL}.doubleValue() -
+
+((($F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP}) > 0 ?
+    $F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP} :
+    0) -
+
+($F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) >= 0 ?
+    $F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) :
+    new Double(0)) +$F{AtxNewONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="66" uuid="76a22b29-530f-4f2f-970c-567a6e2f586a">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="66" height="30" uuid="e224814f-c2b3-4fb1-a4ff-bc179ab8754d"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="66" height="13" uuid="9f213bcc-dd23-4e24-9367-2bde5cd9af8e"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP}) > 0 ?
+    $F{AtxNewQTY} - $F{AtxNewALLOCATED} - $F{AtxNewUNAVAILABLE} + $F{AtxNewDROPSHIP} :
+    0) -
+
+($F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) >= 0 ?
+    $F{AtxNewALLOCATED} - ($F{AtxNewQTY} - $F{AtxNewUNAVAILABLE}) :
+    new Double(0)) +$F{AtxNewONORDER}) <=$F{atxNewRP}.doubleValue()? "TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["The qty being drop shipped directly to customers."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="a47d5bb7-5441-4208-903b-9359d808332f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="d5b0b497-ad66-4e1a-af12-d6b12969e3eb"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ATX New Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="80" height="13" uuid="49f720a0-8c9b-4406-855e-ae9d173ffcda"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ATXNewLast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="797e8817-0a92-4771-9b03-7755c4547fb4">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="447aee6c-c28b-4982-b5b6-4fc6acf65f7f"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="4c6e9481-54e3-4a8e-9a1f-b982c0587049"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP}) > 0 ?
+    $F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="f9eaf1b7-ff9b-44b6-8f8a-12f4fbe9427b">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="5d72cc9b-05ad-4ede-923a-36913f238c23"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="a75014e7-7214-49b5-a180-5d93d285809e"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) >= 0 ?
+    $F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Committed - Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="088b5834-492f-4f14-9959-b00fb37aaedf">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="4541356d-a210-4b52-a158-e2d207658c99"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="5c77e0c1-c45a-44b0-b33d-26052b15cd3d"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{JaxONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled PO/SO/TO/WO items entering the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="a234e8e2-70f6-4f7e-baf6-9b573403b5bb">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="03d89c7c-1983-4e73-8efe-a6539e2bae34"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="30b7bef4-0464-4bed-98eb-af867907392b"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{JAXBid}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Items picked for shipping or work orders."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="926a9424-f450-4546-bff1-a2e311e467ff">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="4bca3bdb-9418-4687-be61-d507cc06ccea"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="9fde4bd0-7ab7-4b71-91eb-d88708c3b021"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP}) > 0 ?
+    $F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP} :
+    0) -
+
+($F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) >= 0 ?
+    $F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) :
+    new Double(0)) +$F{JaxONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="8fc44243-c70f-42f9-8467-0fa5899d3c19">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="30d18946-9ae4-448b-a902-f3cff03c9568"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="7e109274-266f-40dc-ae60-25d04ae2f6c7"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{jaxOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="73fadf71-3e3c-4e6e-82ea-ef3d08c1fc9a">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="4d0f43e8-f287-49a3-ac74-773488a2162e"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="719f4c2a-3d4e-4352-9a51-08f729de5b0d"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{jaxRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="b0a32d56-ac0c-414a-af9c-ce91fcaae1f6">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="63771d13-c9b4-4a70-be96-23ef6b698fc2"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="3b588f92-fb54-432e-9db3-9ddf3b697bf2"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP}) > 0 ?
+    $F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP} :
+    0) -
+$F{jaxOL}.doubleValue()>0 ?
+(($F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP}) > 0 ?
+    $F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP} :
+    0) -
+$F{jaxOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="8fa35972-006f-4ad4-9515-1a2a4043b4ae">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="64c77dc3-c49e-4ebe-9563-ca5f5e6720fe"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="49acad34-2318-4cd3-983a-39b40db73c1b"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{jaxOL}.doubleValue() - ((($F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP}) > 0 ?
+    $F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP} :
+    0) -
+
+($F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) >= 0 ?
+    $F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) :
+    new Double(0)) +$F{JaxONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="71e4ea21-2113-4ea6-9131-420fb9df7cf2">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="cf3c39f7-c067-46ea-b78f-348aab223b61"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="0a363e94-9490-46c6-8873-340140b2bdce"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP}) > 0 ?
+    $F{JaxQTY} - $F{JaxALLOCATED} - $F{JaxUNAVAILABLE} + $F{JaxDROPSHIP} :
+    0) -
+
+($F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) >= 0 ?
+    $F{JaxALLOCATED} - ($F{JaxQTY} - $F{JaxUNAVAILABLE}) :
+    new Double(0)) +$F{JaxONORDER})<=$F{jaxRP}.doubleValue()?"TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="e502f1e0-3391-402e-8257-d7f0034f0022">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="a9d094bc-0e90-4e17-8efd-a7aa37a2a023"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[JAX Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="462c3f33-185e-4eac-aeae-571bfb02c19b"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{JAXLast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="e685ffe0-25b4-4a33-a7a8-14fcb426332f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="04c26c4b-9695-487a-81dd-60bff15ee1a2"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="03c353c3-e515-40a2-847d-026948afbd08"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP}) > 0 ?
+    $F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="7724a79e-de98-4664-8719-ef91ac63e931">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="861a7cf8-ba6f-47e5-9d0f-fb46f2762ad9"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="926c608f-08d3-4cb0-8a79-8c16f9759afd"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) >= 0 ?
+    $F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Committed - Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="67f46798-f8aa-4032-80ee-e8b921c494c8">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="42e214dd-ddb1-48ef-8e69-f51ba5eef7b6"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="720975ee-fca0-4ec4-8cf9-96b99d6a6bc3"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NSHONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled PO/SO/TO/WO items entering the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="26b7ed25-f2bd-4550-a3b6-6da9a3828296">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="86b7f407-142b-4766-843b-ab6671cda292"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="6db07905-a6db-4cb8-81b6-cc4e0d907ad5"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NSHBid}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Items picked for shipping or work orders."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="2a52b0c6-e838-476b-b24f-38c7dee08d71">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="9e0715a3-3478-4e27-8bc5-b86e572442d0"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="3dbfc29d-8851-47c1-8eaa-6ca0a54508c4"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP}) > 0 ?
+    $F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP} :
+    0) -
+
+($F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) >= 0 ?
+    $F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) :
+    new Double(0)) +$F{NSHONORDER}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="180faa13-46ce-410a-bb81-e09c7807dda1">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="10c3d3c2-7a84-43e9-aa56-151f10c04069"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="e584cd48-e938-4e13-9241-e2f4ab840e08"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nshOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="4c9acb2a-316e-4f5b-a74e-6c598aec18da">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="bf730d0b-aa90-4c61-8130-b3dd2bc164d9"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="0fc95fec-6309-4401-9bfc-7b8262916166"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nshRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="32089c20-9264-44b9-b198-bce35ad60c70">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="5e1aff63-e840-4bff-b4ba-367f56e22d4e"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="d600f53c-1f38-407c-9242-ce1bfd2739cf"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP}) > 0 ?
+    $F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP} :
+    0) - $F{nshOL}.doubleValue() >0 ?
+(($F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP}) > 0 ?
+    $F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP} :
+    0) - $F{nshOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="c5477f4b-f264-469c-b0ba-209908899338">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="9efe717d-fcff-40fb-8ae5-1445943a0977"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="c0e8ccd8-e17c-47c8-84c8-73a39b75c291"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nshOL}.doubleValue() - ((($F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP}) > 0 ?
+    $F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP} :
+    0) -
+
+($F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) >= 0 ?
+    $F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) :
+    new Double(0)) +$F{NSHONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="4deddb64-c8f8-4408-b94d-e4f711adc504">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="d2eff6ae-2da0-4448-93f0-b8647ecc32ab"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="a9e86093-cb03-46f2-a3d4-6420fa0c624e"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP}) > 0 ?
+    $F{NSHQTY} - $F{NSHALLOCATED} - $F{NSHUNAVAILABLE} + $F{NSHDROPSHIP} :
+    0) -
+
+($F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) >= 0 ?
+    $F{NSHALLOCATED} - ($F{NSHQTY} - $F{NSHUNAVAILABLE}) :
+    new Double(0)) +$F{NSHONORDER}.doubleValue())<=$F{nshRP}.doubleValue()?"TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="2f8d9595-99aa-448c-af03-1ca25c0b977c">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="55" height="30" uuid="c746fcd0-d804-44c1-ab79-08af732fd9ef"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NSH Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="61b886ff-1b3d-4bf2-b569-6e428d08434c"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NSHLast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3236c3db-62d8-4c06-96ac-be26a11ac268">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="3ec8937c-b6dc-49e8-a135-0d9791bb7d48"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="89ae3f00-fc07-40fd-9264-c0550bd5a635"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP}) > 0 ?
+    $F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="e0d27b40-bb07-4bdd-9164-edaded3bee81">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="0ce49376-9142-435b-b9d7-ef2b2076aa87"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="18be3155-408b-4be1-9c99-2142426426d4"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) >= 0 ?
+    $F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Committed - Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="9567b733-91d2-464d-b73a-74b7dfb2bf91">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="08e5ae95-6f47-41d3-acb7-c1f24f748c75"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="5599620f-a987-4cda-9f1f-1cf13f84e42b"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NolaONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled PO/SO/TO/WO items entering the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="ccd989b8-6b97-42c9-b89b-5efa35cb8bdd">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="12c335a0-174a-4e45-87a8-c7ed8bb5ff41"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="4928af6b-7e91-4703-b1b0-5fcbb59699ae"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOLABid}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Items picked for shipping or work orders."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="ce7ba7c6-631c-4fd9-b16f-55bc0bdfdd24">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="cf776c4a-801c-4d0c-8028-15244818e1d7"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="c5e6959c-9e3f-474a-bab8-c4c5156486f9"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP}) > 0 ?
+    $F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP} :
+    0) -
+
+($F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) >= 0 ?
+    $F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) :
+    new Double(0)) +$F{NolaONORDER}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="20f6c6d2-7b5a-47f7-88cb-a50f4647fe41">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="b0b73190-bc3c-4b20-ad72-2260b81d4300"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="93fefd1f-1b98-42bd-b72b-894b397274d8"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nolaOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="65" uuid="e4f8dc35-5a3e-464a-acbd-be68691cd9af">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="65" height="30" uuid="e1323d67-72ea-40ed-a882-563e9207907d"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="65" height="13" uuid="f3852b66-fed5-4d45-9b38-0e3f072f98cd"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nolaRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="921017b5-a4df-4bc9-8508-139462c96eb7">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="a54105f9-8d67-4791-8469-f001b3d5a05f"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="86bb22e1-3850-4594-b738-cdcc008f2dde"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP}) > 0 ?
+    $F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP} :
+    0) - $F{nolaOL}.doubleValue() >0 ?
+(($F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP}) > 0 ?
+    $F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP} :
+    0) - $F{nolaOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="d033815c-8c26-4875-b477-0aca30dbb438">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="58515c5b-0476-40f5-bee9-5556dd0b862c"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="289b89b9-8b07-448e-8265-378291d4bf8d"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nolaOL}.doubleValue() - ((($F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP}) > 0 ?
+    $F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP} :
+    0) -
+
+($F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) >= 0 ?
+    $F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) :
+    new Double(0)) +$F{NolaONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="72cb9b0b-b9bf-4799-9dd2-67ca103ccb21">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="70" height="30" uuid="b7656505-4228-4830-ab3b-f57b3019f26b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="70" height="13" uuid="6f446e0f-3632-4f13-9e23-9f5975de5faf"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP}) > 0 ?
+    $F{NolaQTY} - $F{NolaALLOCATED} - $F{NolaUNAVAILABLE} + $F{NolaDROPSHIP} :
+    0) -
+
+($F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) >= 0 ?
+    $F{NolaALLOCATED} - ($F{NolaQTY} - $F{NolaUNAVAILABLE}) :
+    new Double(0)) +$F{NolaONORDER}.doubleValue()) <=$F{nolaRP}.doubleValue()?"TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="711d3798-6975-425c-add1-93eb36821aac">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="7fab9407-8d5d-4b9b-aba2-db50eb4d7f9b"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOLA Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="652c72b6-8e23-40ea-8a99-5047de0e94d0"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOLALast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="45d91293-4797-4803-9071-75fee08b1882">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="d5f90263-1d49-4ae5-a00b-a95b8ee46c0c"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="642300e8-eca2-4c65-a4cb-e30f6c51c122"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP}) > 0 ?
+    $F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3897b750-0458-4cd9-aa3d-7f490103d38f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="d2e6c0bc-9d48-465b-8b31-2afe5b3b5b5b"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="1bb94042-e3ec-468e-9c8f-e7c369e10085"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) >= 0 ?
+    $F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Committed - Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="8e138ae4-e81d-4073-9bb0-56812debb685">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="26a31ef4-31a1-447c-b9e4-68cc1d8d9d29"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="be0a4791-8b4b-4dd7-b90a-5a370166c9c9"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled PO/SO/TO/WO items entering the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="55437640-b38a-4808-a14a-f2e5e450cd31">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="5396dfc2-9ec1-47da-871b-993d769df413"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="385a34af-b6e9-4313-b9c9-909583f5c367"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLBid}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Items picked for shipping or work orders."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3eec72d0-0bd4-44a4-85f2-491f225a695a">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="8e1c1e17-28ee-43b3-9729-f571e7cf8e74"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="52452f87-f0d4-4bcb-a1d6-f4a1a9f25a93"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP}) > 0 ?
+    $F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP} :
+    0) -
+
+($F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) >= 0 ?
+    $F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) :
+    new Double(0)) +$F{ORLONORDER}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="74d3189b-f893-4ffd-82e8-863705ae51e4">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="bc82570f-d0f6-4e62-b6f0-09c7337a2623"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="74f4306b-b8b7-4ac7-9207-5e69dd6ee0e4"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{orlOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="985f83c1-0f45-4252-a419-7f52459e8608">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="94cd5f54-212e-4c59-919a-31a3c0ec3ddf"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="88703429-e4b1-42ba-9812-22889b4265b5"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{orlRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="fc8c1851-978d-492e-8fef-63e35c271e87">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="563b30b1-c5c0-47f5-ab37-9d08a55d5192"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="d70124f3-0713-4b6d-9aab-dff21fc2c730"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP}) > 0 ?
+    $F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP} :
+    0)-$F{orlOL}.doubleValue() >0 ?
+(($F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP}) > 0 ?
+    $F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP} :
+    0)-$F{orlOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="2e39b1a2-393a-461d-9790-aa1ed777203c">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="f15fe927-7da3-4589-a6e4-f1940201a380"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="2db0e829-aa0f-4691-abbb-feb19dafa86f"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{orlOL}.doubleValue() - ((($F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP}) > 0 ?
+    $F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP} :
+    0) -
+
+($F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) >= 0 ?
+    $F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) :
+    new Double(0)) +$F{ORLONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="ae824275-d6a7-44fa-8a9f-002163c043cf">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="45be8dd3-ce13-4207-8441-f9fddde17662"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="c4272779-c62c-4976-94c1-70f215c54c0a"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP}) > 0 ?
+    $F{ORLQTY} - $F{ORLALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLDROPSHIP} :
+    0) -
+
+($F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) >= 0 ?
+    $F{ORLALLOCATED} - ($F{ORLQTY} - $F{ORLUNAVAILABLE}) :
+    new Double(0)) +$F{ORLONORDER}) <=$F{orlRP}.doubleValue()?"TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="e3636dd7-eb97-4f46-8a55-c75582ff8699">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="dfa7c1d2-355b-4e46-b2c3-2ac6e66b21a0"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="7b5de435-ed3c-4172-87d1-e8e70abcfff2"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLLast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="45d91293-4797-4803-9071-75fee08b1882">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="d5f90263-1d49-4ae5-a00b-a95b8ee46c0c"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="642300e8-eca2-4c65-a4cb-e30f6c51c122"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP}) > 0 ?
+    $F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3897b750-0458-4cd9-aa3d-7f490103d38f">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="d2e6c0bc-9d48-465b-8b31-2afe5b3b5b5b"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="1bb94042-e3ec-468e-9c8f-e7c369e10085"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) >= 0 ?
+    $F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Committed - Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="8e138ae4-e81d-4073-9bb0-56812debb685">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="26a31ef4-31a1-447c-b9e4-68cc1d8d9d29"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="be0a4791-8b4b-4dd7-b90a-5a370166c9c9"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLNewONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled PO/SO/TO/WO items entering the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="55437640-b38a-4808-a14a-f2e5e450cd31">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="5396dfc2-9ec1-47da-871b-993d769df413"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="385a34af-b6e9-4313-b9c9-909583f5c367"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLNewBid}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Items picked for shipping or work orders."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="3eec72d0-0bd4-44a4-85f2-491f225a695a">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="8e1c1e17-28ee-43b3-9729-f571e7cf8e74"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="52452f87-f0d4-4bcb-a1d6-f4a1a9f25a93"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP}) > 0 ?
+    $F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP} :
+    0) -
+
+($F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) >= 0 ?
+    $F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) :
+    new Double(0)) +$F{ORLNewONORDER}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="74d3189b-f893-4ffd-82e8-863705ae51e4">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="bc82570f-d0f6-4e62-b6f0-09c7337a2623"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="74f4306b-b8b7-4ac7-9207-5e69dd6ee0e4"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{orlNewOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="985f83c1-0f45-4252-a419-7f52459e8608">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="70" height="30" uuid="94cd5f54-212e-4c59-919a-31a3c0ec3ddf"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="70" height="13" uuid="88703429-e4b1-42ba-9812-22889b4265b5"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{orlNewRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="fc8c1851-978d-492e-8fef-63e35c271e87">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="563b30b1-c5c0-47f5-ab37-9d08a55d5192"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="d70124f3-0713-4b6d-9aab-dff21fc2c730"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP}) > 0 ?
+    $F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP} :
+    0)-$F{orlNewOL}.doubleValue() >0 ?
+(($F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP}) > 0 ?
+    $F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP} :
+    0)-$F{orlNewOL}.doubleValue():0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="2e39b1a2-393a-461d-9790-aa1ed777203c">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="f15fe927-7da3-4589-a6e4-f1940201a380"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="2db0e829-aa0f-4691-abbb-feb19dafa86f"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{orlNewOL}.doubleValue() - ((($F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLUNAVAILABLE} + $F{ORLNewDROPSHIP}) > 0 ?
+    $F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP} :
+    0) -
+
+($F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) >= 0 ?
+    $F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) :
+    new Double(0)) +$F{ORLNewONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="ae824275-d6a7-44fa-8a9f-002163c043cf">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="45be8dd3-ce13-4207-8441-f9fddde17662"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="c4272779-c62c-4976-94c1-70f215c54c0a"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP}) > 0 ?
+    $F{ORLNewQTY} - $F{ORLNewALLOCATED} - $F{ORLNewUNAVAILABLE} + $F{ORLNewDROPSHIP} :
+    0) -
+
+($F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) >= 0 ?
+    $F{ORLNewALLOCATED} - ($F{ORLNewQTY} - $F{ORLNewUNAVAILABLE}) :
+    new Double(0)) +$F{ORLNewONORDER}) <=$F{orlNewRP}.doubleValue()?"TRUE":"FALSE"]]></textFieldExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="80" uuid="e3636dd7-eb97-4f46-8a55-c75582ff8699">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="80" height="30" uuid="dfa7c1d2-355b-4e46-b2c3-2ac6e66b21a0"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ORL New Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="80" height="13" uuid="7b5de435-ed3c-4172-87d1-e8e70abcfff2"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORLNewLast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="bd80b037-65ff-4e49-9fc9-2b032ae3de96">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="2326ffaf-3810-4590-8eb2-01ed781beee6"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="a6ebfb83-1369-4088-9e55-cc0e37bc3c23"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[($F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP}) > 0 ?
+    $F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP} :
+    0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="b59bf0e7-e30e-4ba9-bafc-39f9b44a3993">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="01a1f575-3a8b-4dff-b337-866db827700f"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Short]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="3a0cc5fc-57eb-40f2-b345-a2670045e3c7"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) >= 0 ?
+    $F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) :
+    new Double(0)]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Committed - Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="11cf7f61-8759-477c-ac2a-57ffe05d7cdf">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="98f8b653-98a9-4e6c-ae49-89609268f684"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="e0b084ed-6427-4bd7-b9b8-c0cfe7c325ba"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{TPAONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled PO/SO/TO/WO items entering the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="6bf1fd4b-3300-4808-8cad-3b5541d1f4b5">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="bf603c01-81c7-4736-ba1e-7a20ee7ca3f3"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA On Bid Request]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="2310762b-ea8f-482a-8fb7-6ea4594013ba"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{TPABid}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Items picked for shipping or work orders."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="8ea027d0-fbfd-4446-9b18-86bbc86ad2f0">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="f2b70fa7-aad9-4526-9dc5-c74032aee9f5"/>
+									<box leftPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Total]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="d18508a6-5acc-46d8-a8e1-0b5d7cf8194c"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP}) > 0 ?
+    $F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP} :
+    0) -
+
+($F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) >= 0 ?
+    $F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) :
+    new Double(0)) +$F{TPAONORDER}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="0a181b09-010a-4fa8-b004-90195162ea87">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="843d6aa6-b9eb-42cc-8d31-a95d7b114069"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Order Up to]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="c23cbbb3-6342-42f8-b752-a1d50cbf0b07"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{tpaOL}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="9160809f-7758-43a3-be50-5de54d55c4d7">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="aa0aa519-b267-40f1-a085-d444bb2a9f55"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Reorder Point]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="b6f4027d-d8c9-471b-85d1-ef18345155bd"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{tpaRP}.doubleValue()]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="8a152678-0228-4751-baae-86a1df1238fb">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="f488eef3-f6ed-4163-a47e-5098c1e12f7c"/>
+									<box leftPadding="2" rightPadding="2">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Overstock]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="ad08bf63-fc3c-4ccc-9749-de7c584c8f46"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[(($F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP}) > 0 ?
+    $F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP} :
+    0) - $F{tpaOL}.doubleValue() >0 ?
+(($F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP}) > 0 ?
+    $F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP} :
+    0) - $F{tpaOL}.doubleValue() :0]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Available to Pick = On Hand - Allocated - Not Available + Drop Ship"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="0e1261f1-b9a7-4057-b3e0-456fb1863045">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="50" height="30" uuid="2f290c03-a8d0-4692-b265-235c2644ae3a"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="50" height="13" uuid="5fb64704-a39d-4814-958d-75e0737944df"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{tpaOL}.doubleValue() - ((($F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP}) > 0 ?
+    $F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP} :
+    0) -
+
+($F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) >= 0 ?
+    $F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) :
+    new Double(0)) +$F{TPAONORDER}.doubleValue())]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["The uncommitted qty in locations that are marked Not Available"]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="a227da4e-30ff-4c46-b296-c8bf00a24efb">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="84d1cd8d-e658-4f75-b2c1-39d4839cc420"/>
+									<box leftPadding="1" rightPadding="1">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Reorder ASAP]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="bdafa289-b34c-49ab-b920-4a6a4d1e2823"/>
+									<box leftPadding="3" rightPadding="0"/>
+									<textElement textAlignment="Right">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[((($F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP}) > 0 ?
+    $F{TPAQTY} - $F{TPAALLOCATED} - $F{TPAUNAVAILABLE} + $F{TPADROPSHIP} :
+    0) -
+
+($F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) >= 0 ?
+    $F{TPAALLOCATED} - ($F{TPAQTY} - $F{TPAUNAVAILABLE}) :
+    new Double(0)) +$F{TPAONORDER}) <=$F{tpaRP}.doubleValue()?"TRUE":"FALSE"]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Qty needed to fulfill demand."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="b5f3d0af-c0c4-4a1d-a196-971e29318073">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="60" height="30" uuid="9cd40913-f63d-4291-9673-a3970d6c8311"/>
+									<box leftPadding="0" rightPadding="0">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[TPA Shipped Last 6 Mths]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="13" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="60" height="13" uuid="c622e488-96ec-4bd0-b2e4-22e2665b27f1"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Center">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{TPALast6mnts}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									<hyperlinkTooltipExpression><![CDATA["Unfulfilled SO/PO/TO/WO items leaving the system."]]></hyperlinkTooltipExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Prevent"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Prevent"/>
+	</summary>
+</jasperReport>
