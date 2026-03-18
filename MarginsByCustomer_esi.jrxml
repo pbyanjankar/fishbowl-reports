@@ -54,25 +54,25 @@
 	<parameter name="ShowCOGS" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+	<parameter name="cbProductOrderBy" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="Sorting"/>
 		<property name="Group" value="Detail"/>
 		<parameterDescription><![CDATA[2,Product,6,Price,8,Gross Margin%]]></parameterDescription>
 		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbSortOrder" class="java.lang.String" isForPrompting="false">
+	<parameter name="cbProductSortOrder" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="Sorting"/>
 		<property name="Group" value="Detail"/>
 		<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbGroupOrderBy" class="java.lang.String" isForPrompting="false">
+	<parameter name="cbCustomerOrderBy" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="Sorting"/>
 		<property name="Group" value="Group Table"/>
-		<parameterDescription><![CDATA[1,Customer Name,9,Customer Gross Margin]]></parameterDescription>
+		<parameterDescription><![CDATA[1,Customer Name,10,Customer Gross Margin,11,Customer Gross Margin%]]></parameterDescription>
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cbGroupSortOrder" class="java.lang.String" isForPrompting="false">
+	<parameter name="cbCustomerSortOrder" class="java.lang.String" isForPrompting="false">
 		<property name="Tab" value="Sorting"/>
 		<property name="Group" value="Group Table"/>
 		<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
@@ -91,9 +91,12 @@ sum(((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))) A
 
 sum((((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))- (postsoitem.qty * COALESCE(customdecimal.info, 0)) )) AS grossmargins,
 
+sum((((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))- (postsoitem.qty * COALESCE(customdecimal.info, 0)) ))/sum(((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))) AS grossmarginpercent,
+
 sum((IF( ( soitem.typeid IN (20,21) ) ,-ABS(postsoitem.QTY), postsoitem.qty) )) AS "QtyToFulfill",
 
-result.customergrossmargins AS CUSTOMERGROSSMARGIN
+result.customergrossmargins AS CUSTOMERGROSSMARGIN,
+result.customergrossmarginspercent AS CUSTOMERGROSSMARGINPERCENT
 
 FROM postso
         join company on company.id = 1
@@ -120,7 +123,10 @@ FROM postso
 
 LEFT OUTER JOIN (SELECT
 so.customerId,
-sum((((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))- (postsoitem.qty * COALESCE(customdecimal.info, 0)) )) AS customergrossmargins
+sum((((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))- (postsoitem.qty * COALESCE(customdecimal.info, 0)) )) AS customergrossmargins,
+
+sum((((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))- (postsoitem.qty * COALESCE(customdecimal.info, 0)) )) / sum(((soitem.unitprice*postsoitem.qty)*(1-COALESCE(itemadjust.percentage,0)))) AS customergrossmarginspercent
+
 FROM postso
         join company on company.id = 1
         JOIN postsoitem on postsoitem.postsoid = postso.id
@@ -161,7 +167,7 @@ WHERE UPPER(so.num) LIKE UPPER($P{soNum})
 
 GROUP BY 1,2,3,4
 
-ORDER BY $P!{cbGroupOrderBy} $P!{cbGroupSortOrder}, $P!{cbOrderBy} $P!{cbSortOrder}]]>
+ORDER BY $P!{cbCustomerOrderBy} $P!{cbCustomerSortOrder}, $P!{cbProductOrderBy} $P!{cbProductSortOrder}]]>
 	</queryString>
 	<field name="BILLTONAME" class="java.lang.String"/>
 	<field name="COGS" class="java.lang.Double"/>
