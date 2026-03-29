@@ -282,7 +282,7 @@ cast(CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up #3') as date) AS so3,
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up') as date) AS FulfilledFollowUp,
 CustomFieldByName(so.CUSTOMFIELDS, 'Order Payment Warehouse') AS OrderPaymentWarehouse,
 
-CustomFieldByName(so.CUSTOMFIELDS, 'Next SO Follow Up Date') AS NextSOFollowUpDate,
+
 CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Aged Out') = 'true' THEN 'Yes' ELSE 'No' END AS AgedOut,
 
 so.DATECREATED,so.totalprice,
@@ -318,9 +318,7 @@ CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback') AS EstimateFol
 CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #2 Feedback') AS EstimateFollowUp2Feedback,
 CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #3 Feedback') AS EstimateFollowUp3Feedback,
 CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up Feedback') AS SOFollowUpFeedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up Feedback') AS AgeingFollowUpFeedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Negative') AS FulfilledFollowUpFeedbackN,
-CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Positive') AS FulfilledFollowUpFeedbackP,
+
 if(postCatch.totalPaid IS NULL, "False", "True") AS HASPAYMENT
 FROM
     so
@@ -1113,6 +1111,36 @@ so_audit_efu AS (
     AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
 ),
 
+so_audit_efu_2 AS (
+    SELECT
+        so_aud.id,
+        so_aud.rev,
+        so_aud.username,
+        CustomFieldByName(so_aud.customfields, 'Estimate Follow Up #2') AS efu_2,
+        LAG(CustomFieldByName(so_aud.customfields, 'Estimate Follow Up #2'))
+            OVER (PARTITION BY so_aud.id ORDER BY so_aud.rev) AS prev_efu_2
+    FROM so_aud
+    INNER JOIN so ON so.id = so_aud.id
+    WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+    AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+),
+
+so_audit_efu_3 AS (
+    SELECT
+        so_aud.id,
+        so_aud.rev,
+        so_aud.username,
+        CustomFieldByName(so_aud.customfields, 'Estimate Follow Up #3') AS efu_3,
+        LAG(CustomFieldByName(so_aud.customfields, 'Estimate Follow Up #3'))
+            OVER (PARTITION BY so_aud.id ORDER BY so_aud.rev) AS prev_efu_3
+    FROM so_aud
+    INNER JOIN so ON so.id = so_aud.id
+     WHERE so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired},$P{ckCancelled})
+     AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND DATE_SUB($P{dateRange2}, INTERVAL 1 SECOND)
+
+),
+
 so_audit_sofu AS (
     SELECT
         so_aud.id,
@@ -1179,7 +1207,9 @@ SELECT
     SO.DATECOMPLETED,
 
     so.shiptoname, so.shiptoaddress, so.shiptocity, so.shiptozip, shipcountry.name AS shiptocountry,
-    CustomFieldByName(so.CUSTOMFIELDS, 'Job Award Status (For Pros)') AS JobAwardStatus,
+    paymentterms.name AS PAYMENTTERM,
+    datediff(CURDATE(), so.datecreated) AS DAYSSINCECREATION,
+
 
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'In-Stock Notification') as date)  AS isn,
 cast(CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up') as date) AS est1,
@@ -1217,6 +1247,8 @@ where id=so.id and CAST(CustomFieldByName(so_aud.CUSTOMFIELDS, 'In-Stock Notific
 order by rev desc limit 1),'') as stuser,
 
 efu_audit.userName as euser,
+efu_audit_2.userName as euser2,
+efu_audit_3.userName as euser3,
 sofu_audit.userName as suser,
 afu_audit.username as aguser,
 ffu_audit.username as luser,
@@ -1225,10 +1257,9 @@ coalesce(CustomFieldByName(so.CUSTOMFIELDS, 'Canceled / Voided Reason'),'') as c
 CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
 CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
 CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback') AS EstimateFollowUpFeedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #2 Feedback') AS EstimateFollowUp2Feedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #3 Feedback') AS EstimateFollowUp3Feedback,
 CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up Feedback') AS SOFollowUpFeedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Ageing Follow Up Feedback') AS AgeingFollowUpFeedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Negative') AS FulfilledFollowUpFeedbackN,
-CustomFieldByName(so.CUSTOMFIELDS, 'Fulfilled Follow Up Feedback - Positive') AS FulfilledFollowUpFeedbackP,
 if(postCatch.totalPaid IS NULL, "False", "True") AS HASPAYMENT
 FROM
     so
@@ -1409,7 +1440,9 @@ null AS shiptoaddress,
 null AS shiptocity,
 null AS shiptozip,
 null AS shiptocountry,
-"" AS JobAwardStatus,
+ "" AS PAYMENTTERM,
+null  AS DAYSSINCECREATION,
+
 
 
 CustomFieldByName(xo.CUSTOMFIELDS, 'In-Stock Notification') AS isn,
@@ -1433,6 +1466,8 @@ AND memo.recordid = xo.id ORDER BY datecreated DESC LIMIT 1
 '' as MagentoEmail,
 '' as stuser,
 '' as euser,
+'' as euser2,
+'' as euser3,
 '' as suser,
 
 '' as luser,
@@ -1441,10 +1476,9 @@ AND memo.recordid = xo.id ORDER BY datecreated DESC LIMIT 1
 '' AS HasDesign,
 '' AS MarketingData,
 '' AS EstimateFollowUpFeedback,
+'' AS EstimateFollowUp2Feedback,
+'' AS EstimateFollowUp3Feedback,
 '' AS SOFollowUpFeedback,
-'' AS AgeingFollowUpFeedback,
-'' AS FulfilledFollowUpFeedbackN,
-'' AS FulfilledFollowUpFeedbackP,
 '' AS HASPAYMENT
  FROM xo
 INNER JOIN xostatus ON xostatus.id=xo.statusid
@@ -1513,24 +1547,22 @@ rtype,1,2]]>
 		<field name="MarketingData" class="java.lang.String"/>
 		<field name="EstimateFollowUpFeedback" class="java.lang.String"/>
 		<field name="SOFollowUpFeedback" class="java.lang.String"/>
-		<field name="AgeingFollowUpFeedback" class="java.lang.String"/>
-		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
-		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
 		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
-		<field name="NextEstimateFollowUpDate" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="NextSOFollowUpDate" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
 		<field name="AgedOut" class="java.lang.String"/>
-		<field name="JobAwardStatus" class="java.lang.String"/>
 		<field name="SHIPTONAME" class="java.lang.String"/>
 		<field name="SHIPTOADDRESS" class="java.lang.String"/>
 		<field name="SHIPTOCITY" class="java.lang.String"/>
 		<field name="SHIPTOZIP" class="java.lang.String"/>
 		<field name="SHIPTOCOUNTRY" class="java.lang.String"/>
 		<field name="HasPayment" class="java.lang.String"/>
+		<field name="euser2" class="java.lang.String"/>
+		<field name="euser3" class="java.lang.String"/>
+		<field name="PAYMENTTERM" class="java.lang.String"/>
+		<field name="DAYSSINCECREATION" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="EstimateFollowUp2Feedback" class="java.lang.String"/>
+		<field name="EstimateFollowUp3Feedback" class="java.lang.String"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -1818,7 +1850,7 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="3829" uuid="e94bacac-c0d6-4000-b813-e20a154a77c4">
+					<jr:columnGroup width="4099" uuid="e94bacac-c0d6-4000-b813-e20a154a77c4">
 						<jr:columnGroup width="1169" uuid="2a5922c8-cb7f-422f-997d-64a8c0d73fbc">
 							<jr:column width="80" uuid="42555978-00cf-40bd-832a-bd8983d21749">
 								<jr:columnHeader height="30" rowSpan="1">
@@ -2459,6 +2491,84 @@ WHERE id = 1]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
+						<jr:column width="90" uuid="e1637e6e-bc35-4562-bf9f-d32ae6699d26">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="1a80856b-f97e-4b2f-b6b3-7cd1af44c6a7"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #3]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="0046025c-7bec-4570-85f4-a40c10e68c28"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{est3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="941a38c6-4efa-4f45-86a6-b75c6ae38738">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="f4164491-8bd5-477d-acb7-cabfd3e94259"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #3 By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="944d1196-e099-4199-b145-c6b46fc4306a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{euser3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="f7c9e01f-083e-4466-8cd3-0fab9bdcd573">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="80da6c0d-50a5-4ea2-848d-eb0670431e21"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #3 Feedback ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="da06b53e-bac7-4ec5-b4c8-8a3f0adb217a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{EstimateFollowUp3Feedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 						<jr:column width="80" uuid="aae4bf65-47e6-4840-84f0-0152d28d623e">
 							<jr:tableFooter height="0" rowSpan="1">
 								<box>
@@ -2880,8 +2990,8 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="3879" uuid="af25c3db-cfaf-4988-bb82-d2c0af8a878f">
-						<jr:columnGroup width="1259" uuid="6b7d2526-e07f-463d-86d2-172139d4eb6b">
+					<jr:columnGroup width="4149" uuid="af25c3db-cfaf-4988-bb82-d2c0af8a878f">
+						<jr:columnGroup width="1169" uuid="6b7d2526-e07f-463d-86d2-172139d4eb6b">
 							<jr:column width="80" uuid="91c3e578-522d-4369-994b-6b9e996b25f3">
 								<jr:columnHeader height="30" rowSpan="1">
 									<staticText>
@@ -3020,30 +3130,6 @@ WHERE id = 1]]>
 										<box leftPadding="3" rightPadding="3">
 											<bottomPen lineWidth="1.0"/>
 										</box>
-										<textElement verticalAlignment="Bottom">
-											<font fontName="Open Sans" isBold="true" isItalic="false"/>
-										</textElement>
-										<text><![CDATA[Job Award Status (For Pros)]]></text>
-									</staticText>
-								</jr:columnHeader>
-								<jr:detailCell height="27" rowSpan="1">
-									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="4a7c1bfa-7876-431b-ac38-609eeded7fc6"/>
-										<box leftPadding="3" rightPadding="3"/>
-										<textElement verticalAlignment="Middle">
-											<font fontName="Open Sans"/>
-										</textElement>
-										<textFieldExpression><![CDATA[$F{JobAwardStatus}]]></textFieldExpression>
-									</textField>
-								</jr:detailCell>
-							</jr:column>
-							<jr:column width="90" uuid="e76b0500-e23c-429f-8746-e672585daeca">
-								<jr:columnHeader height="30" rowSpan="1">
-									<staticText>
-										<reportElement x="0" y="0" width="90" height="30" uuid="94c6d45b-1d7b-4990-8f29-b9ad887edd06"/>
-										<box leftPadding="3" rightPadding="3">
-											<bottomPen lineWidth="1.0"/>
-										</box>
 										<textElement textAlignment="Center" verticalAlignment="Bottom">
 											<font fontName="Open Sans" isBold="true" isItalic="false"/>
 										</textElement>
@@ -3155,7 +3241,31 @@ WHERE id = 1]]>
 								</jr:detailCell>
 							</jr:column>
 						</jr:columnGroup>
-						<jr:columnGroup width="860" uuid="8e2f279e-455b-4f37-85e6-30b70f1e3e8a">
+						<jr:columnGroup width="1130" uuid="8e2f279e-455b-4f37-85e6-30b70f1e3e8a">
+							<jr:column width="90" uuid="e76b0500-e23c-429f-8746-e672585daeca">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="94c6d45b-1d7b-4990-8f29-b9ad887edd06"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true" isItalic="false"/>
+										</textElement>
+										<text><![CDATA[Payment Terms]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="27" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="4a7c1bfa-7876-431b-ac38-609eeded7fc6"/>
+										<box leftPadding="3" rightPadding="3"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{PAYMENTTERM}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
 							<jr:column width="80" uuid="0095083e-60e8-4668-8eae-57d30ac7508e">
 								<jr:columnHeader height="30" rowSpan="1">
 									<staticText>
@@ -3263,6 +3373,30 @@ WHERE id = 1]]>
 										<textElement textAlignment="Center" verticalAlignment="Bottom">
 											<font fontName="Open Sans" isBold="true"/>
 										</textElement>
+										<text><![CDATA[Days Since Creation]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="27" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{DAYSSINCECREATION}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
 										<text><![CDATA[Date Issued]]></text>
 									</staticText>
 								</jr:columnHeader>
@@ -3273,6 +3407,30 @@ WHERE id = 1]]>
 											<font fontName="Open Sans"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{DATEISSUED}]]></textFieldExpression>
+										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
+								<jr:columnHeader height="30" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
+										<box leftPadding="3" rightPadding="3">
+											<bottomPen lineWidth="1.0"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Bottom">
+											<font fontName="Open Sans" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Date Fulfilled]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell height="27" rowSpan="1">
+									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font fontName="Open Sans"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{DATECOMPLETED}]]></textFieldExpression>
 										<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 									</textField>
 								</jr:detailCell>
@@ -3395,27 +3553,159 @@ WHERE id = 1]]>
 								</jr:detailCell>
 							</jr:column>
 						</jr:columnGroup>
-						<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
+						<jr:column width="90" uuid="862e0c3a-9f1c-4e2a-b5f4-ea894c6182ac">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
+									<reportElement x="0" y="0" width="90" height="30" uuid="979ea364-0e99-4b2c-8329-7fbed66e2593"/>
 									<box leftPadding="3" rightPadding="3">
 										<bottomPen lineWidth="1.0"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" isBold="true"/>
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
 									</textElement>
-									<text><![CDATA[Next Estimate Follow Up Date]]></text>
+									<text><![CDATA[Estimate Follow Up #2]]></text>
 								</staticText>
 							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
 							<jr:detailCell height="27" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="761bac62-44a1-4690-bf88-7af09572292e"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Open Sans"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{NextEstimateFollowUpDate}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+									<textFieldExpression><![CDATA[$F{est2}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="82318969-cd27-4b80-bb27-a789e3943b04">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="8b46ba3e-615f-4ba7-92b6-4568fe63098b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #2 By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="a90d200f-8f1c-4271-bc9c-60c91b23e7fe"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{euser2}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="58359549-0299-40e1-88fd-cd911916b659">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="e113697d-dd2e-43dc-897f-dcc1630af5b6"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #2 Feedback]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="d3cedd8e-93bb-4959-9224-b37cf5ef43fb"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{EstimateFollowUp2Feedback}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="862e0c3a-9f1c-4e2a-b5f4-ea894c6182ac">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="979ea364-0e99-4b2c-8329-7fbed66e2593"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #3]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="761bac62-44a1-4690-bf88-7af09572292e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{est3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="82318969-cd27-4b80-bb27-a789e3943b04">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="8b46ba3e-615f-4ba7-92b6-4568fe63098b"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #3 By]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="a90d200f-8f1c-4271-bc9c-60c91b23e7fe"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{euser3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="58359549-0299-40e1-88fd-cd911916b659">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="e113697d-dd2e-43dc-897f-dcc1630af5b6"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Bottom">
+										<font fontName="Open Sans" isBold="true" isItalic="false"/>
+									</textElement>
+									<text><![CDATA[Estimate Follow Up #3 Feedback]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="27" rowSpan="1">
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="d3cedd8e-93bb-4959-9224-b37cf5ef43fb"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{EstimateFollowUp3Feedback}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -3500,30 +3790,6 @@ WHERE id = 1]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="90" uuid="0e3adadb-365a-428d-b94a-593be18282e6">
-							<jr:columnHeader height="30" rowSpan="1">
-								<staticText>
-									<reportElement x="0" y="0" width="90" height="30" uuid="1a06c929-7791-4347-acc8-87e76e40ea75"/>
-									<box leftPadding="3" rightPadding="3">
-										<bottomPen lineWidth="1.0"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Next SO Follow Up Date]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="27" rowSpan="1">
-								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="f41beb06-90b1-4f8c-b10e-8aa2d2532cb0"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{NextSOFollowUpDate}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
 						<jr:column width="80" uuid="4418d82a-5429-409f-9428-398cde97e86a">
 							<jr:tableHeader height="0" rowSpan="1"/>
 							<jr:tableFooter height="0" rowSpan="1"/>
@@ -3574,32 +3840,6 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{aguser}]]></textFieldExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="90" uuid="862e0c3a-9f1c-4e2a-b5f4-ea894c6182ac">
-							<jr:tableHeader height="0" rowSpan="1"/>
-							<jr:tableFooter height="0" rowSpan="1"/>
-							<jr:columnHeader height="30" rowSpan="1">
-								<staticText>
-									<reportElement x="0" y="0" width="90" height="30" uuid="979ea364-0e99-4b2c-8329-7fbed66e2593"/>
-									<box leftPadding="3" rightPadding="3">
-										<bottomPen lineWidth="1.0"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" isBold="true" isItalic="false"/>
-									</textElement>
-									<text><![CDATA[Ageing Follow Up Feedback]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="27" rowSpan="1">
-								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="761bac62-44a1-4690-bf88-7af09572292e"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{AgeingFollowUpFeedback}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -3676,58 +3916,6 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{luser}]]></textFieldExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="90" uuid="82318969-cd27-4b80-bb27-a789e3943b04">
-							<jr:tableHeader height="0" rowSpan="1"/>
-							<jr:tableFooter height="0" rowSpan="1"/>
-							<jr:columnHeader height="30" rowSpan="1">
-								<staticText>
-									<reportElement x="0" y="0" width="90" height="30" uuid="8b46ba3e-615f-4ba7-92b6-4568fe63098b"/>
-									<box leftPadding="3" rightPadding="3">
-										<bottomPen lineWidth="1.0"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" isBold="true" isItalic="false"/>
-									</textElement>
-									<text><![CDATA[Fulfilled Follow Up Feedback (POS)]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="27" rowSpan="1">
-								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="a90d200f-8f1c-4271-bc9c-60c91b23e7fe"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{FulfilledFollowUpFeedbackP}]]></textFieldExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="90" uuid="58359549-0299-40e1-88fd-cd911916b659">
-							<jr:tableHeader height="0" rowSpan="1"/>
-							<jr:tableFooter height="0" rowSpan="1"/>
-							<jr:columnHeader height="30" rowSpan="1">
-								<staticText>
-									<reportElement x="0" y="0" width="90" height="30" uuid="e113697d-dd2e-43dc-897f-dcc1630af5b6"/>
-									<box leftPadding="3" rightPadding="3">
-										<bottomPen lineWidth="1.0"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" isBold="true" isItalic="false"/>
-									</textElement>
-									<text><![CDATA[Fulfilled Follow Up Feedback (Neg)]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:columnFooter height="0" rowSpan="1"/>
-							<jr:detailCell height="27" rowSpan="1">
-								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" uuid="d3cedd8e-93bb-4959-9224-b37cf5ef43fb"/>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="Open Sans"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{FulfilledFollowUpFeedbackN}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
