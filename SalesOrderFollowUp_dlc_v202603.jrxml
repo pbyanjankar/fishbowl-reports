@@ -607,14 +607,8 @@ customer.name,so.num]]>
 		<field name="EstimateFollowUp2Feedback" class="java.lang.String"/>
 		<field name="EstimateFollowUp3Feedback" class="java.lang.String"/>
 		<field name="SOFollowUpFeedback" class="java.lang.String"/>
-		<field name="AgeingFollowUpFeedback" class="java.lang.String"/>
-		<field name="FulfilledFollowUpFeedbackN" class="java.lang.String"/>
-		<field name="FulfilledFollowUpFeedbackP" class="java.lang.String"/>
 		<field name="OrderPaymentWarehouse" class="java.lang.String"/>
 		<field name="DAYSSINCECREATION" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="NextSOFollowUpDate" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="AgedOut" class="java.lang.String"/>
@@ -1269,6 +1263,7 @@ FROM
     INNER JOIN customer ON customer.id = so.customerid
     INNER JOIN sostatus ON sostatus.id = so.statusid
     INNER JOIN soitem ON soitem.soid = so.id
+    LEFT OUTER JOIN paymentterms ON so.paymenttermsid = paymentterms.id
     LEFT OUTER JOIN (
       		SELECT soId, SUM(amount) AS totalPaid
       		FROM posTransaction
@@ -1330,6 +1325,60 @@ FROM (
 WHERE rn = 1
 ORDER BY rev
 ) AS efu_audit ON efu_audit.id = so.id
+
+-- Estimate Follow UP BY 2
+LEFT OUTER JOIN (
+  SELECT
+    id,
+    rev,
+    username,
+    efu_2,
+    prev_efu_2
+FROM (
+    SELECT
+        id,
+        rev,
+        username,
+        efu_2,
+        prev_efu_2,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
+    FROM so_audit_efu_2
+    WHERE
+        (efu_2 IS NOT NULL AND prev_efu_2 IS NULL)
+        OR (efu_2 IS NULL AND prev_efu_2 IS NOT NULL)
+        OR efu_2 <> prev_efu_2
+) AS t
+WHERE rn = 1
+ORDER BY rev
+) AS efu_audit_2 ON efu_audit_2.id = so.id
+
+-- Estimate Follow UP BY 3
+LEFT OUTER JOIN (
+  SELECT
+    id,
+    rev,
+    username,
+    efu_3,
+    prev_efu_3
+FROM (
+    SELECT
+        id,
+        rev,
+        username,
+        efu_3,
+        prev_efu_3,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY rev DESC) AS rn
+    FROM so_audit_efu_3
+    WHERE
+        (efu_3 IS NOT NULL AND prev_efu_3 IS NULL)
+        OR (efu_3 IS NULL AND prev_efu_3 IS NOT NULL)
+        OR efu_3 <> prev_efu_3
+) AS t
+WHERE rn = 1
+ORDER BY rev
+) AS efu_audit_3 ON efu_audit_3.id = so.id
+
+
 
 
 -- SO Follow UP BY
