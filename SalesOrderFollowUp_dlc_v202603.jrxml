@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderFollowUpDLCV2" pageWidth="4200" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="4140" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesOrderFollowUpDLCV2026.03" pageWidth="4200" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="4140" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -152,6 +152,24 @@
 			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="MarketingData" class="java.lang.String" isForPrompting="false"/>
+		<parameter name="SOTotalMaximum" class="java.lang.Double" isForPrompting="false">
+			<property name="Group" value="SO Total Filter"/>
+			<defaultValueExpression><![CDATA["999999999999"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="SOTotalMinimum" class="java.lang.Double" isForPrompting="false">
+			<property name="Group" value="SO Total Filter"/>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DaysSinceCreationMin" class="java.lang.Integer" isForPrompting="false">
+			<property name="Group" value="Days Creation Filter"/>
+			<property name="Sort" value="1"/>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DaysSinceCreationMax" class="java.lang.Integer" isForPrompting="false">
+			<property name="Group" value="Days Creation Filter"/>
+			<property name="Sort" value="2"/>
+			<defaultValueExpression><![CDATA["999999"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[WITH
 
@@ -315,8 +333,8 @@ ffu_audit.username as luser,
 CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
 CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
 CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback') AS EstimateFollowUpFeedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #2 Feedback') AS EstimateFollowUp2Feedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #3 Feedback') AS EstimateFollowUp3Feedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback #2') AS EstimateFollowUp2Feedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback #3') AS EstimateFollowUp3Feedback,
 CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up Feedback') AS SOFollowUpFeedback,
 
 if(postCatch.totalPaid IS NULL, "False", "True") AS HASPAYMENT
@@ -547,6 +565,8 @@ WHERE
      AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
 and
 coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like $P{MarketingData}
+AND so.totalprice between $P{SOTotalMinimum} and $P{SOTotalMaximum}
+AND datediff(CURDATE(), so.datecreated) between $P{DaysSinceCreationMin} AND $P{DaysSinceCreationMax}
 ORDER BY
 customer.name,so.num]]>
 		</queryString>
@@ -1088,6 +1108,22 @@ ORDER BY
 			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="MarketingData" class="java.lang.String" isForPrompting="false"/>
+		<parameter name="SOTotalMaximum" class="java.lang.Double" isForPrompting="false">
+			<defaultValueExpression><![CDATA["999999999999"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="SOTotalMinimum" class="java.lang.Double" isForPrompting="false">
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DaysSinceCreationMin" class="java.lang.Integer" isForPrompting="false">
+			<property name="Group" value="Days Creation Filter"/>
+			<property name="Sort" value="1"/>
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DaysSinceCreationMax" class="java.lang.Integer" isForPrompting="false">
+			<property name="Group" value="Days Creation Filter"/>
+			<property name="Sort" value="2"/>
+			<defaultValueExpression><![CDATA["999999"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[WITH
 
@@ -1251,8 +1287,8 @@ coalesce(CustomFieldByName(so.CUSTOMFIELDS, 'Canceled / Voided Reason'),'') as c
 CASE WHEN CustomFieldByName(so.CUSTOMFIELDS, 'Has Design') = 'true' THEN 'Yes' ELSE 'No' END AS HasDesign,
 CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data') AS MarketingData,
 CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback') AS EstimateFollowUpFeedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #2 Feedback') AS EstimateFollowUp2Feedback,
-CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up #3 Feedback') AS EstimateFollowUp3Feedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up FeedbacK #2') AS EstimateFollowUp2Feedback,
+CustomFieldByName(so.CUSTOMFIELDS, 'Estimate Follow Up Feedback #3') AS EstimateFollowUp3Feedback,
 CustomFieldByName(so.CUSTOMFIELDS, 'SO Follow Up Feedback') AS SOFollowUpFeedback,
 if(postCatch.totalPaid IS NULL, "False", "True") AS HASPAYMENT
 FROM
@@ -1478,7 +1514,8 @@ WHERE
      AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
 and
 coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like $P{MarketingData}
-
+AND so.totalprice between $P{SOTotalMinimum} and $P{SOTotalMaximum}
+AND datediff(CURDATE(), so.datecreated) between $P{DaysSinceCreationMin} AND $P{DaysSinceCreationMax}
 UNION ALL
 
 SELECT xo.shiptoattn,xo.num AS so,xo.dateissued,xostatus.name AS STATUS,
@@ -1772,6 +1809,26 @@ rtype,1,2]]>
 		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="MarketingData" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SOTotalMaximum" class="java.lang.Double" isForPrompting="false">
+		<property name="Group" value="SO Total Filter"/>
+		<property name="Sort" value="2"/>
+		<defaultValueExpression><![CDATA["999999999999"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SOTotalMinimum" class="java.lang.Double" isForPrompting="false">
+		<property name="Group" value="SO Total Filter"/>
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DaysSinceCreationMin" class="java.lang.Integer" isForPrompting="false">
+		<property name="Group" value="Days Creation Filter"/>
+		<property name="Sort" value="1"/>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DaysSinceCreationMax" class="java.lang.Integer" isForPrompting="false">
+		<property name="Group" value="Days Creation Filter"/>
+		<property name="Sort" value="2"/>
+		<defaultValueExpression><![CDATA["999999"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
     COMPANY.NAME AS COMPANY
@@ -2485,6 +2542,7 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{est2}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -2563,6 +2621,7 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{est3}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -3625,6 +3684,7 @@ WHERE id = 1]]>
 										<font fontName="Open Sans"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{est2}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
