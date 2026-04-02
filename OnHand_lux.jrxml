@@ -172,6 +172,10 @@
 		<parameter name="productNum" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="ShowActivePartsOnly" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
 PART.NUM AS PARTNUM,
@@ -205,7 +209,7 @@ FROM part
      LEFT JOIN tagtrackingview ON tagtrackingview.tagid = tag.id AND tagTrackingView.typeID <> 40
 
 WHERE part.typeid = 10
-  AND part.activeFlag = 1
+  AND if($P{ShowActivePartsOnly}=true, part.activeFlag = 1, 1=1)
   AND (tagtrackingview.typeid != 40 OR tagtrackingview.typeid IS NULL)
   AND COALESCE(part.trackingflag, 0) IN (1,$P!{ckShowPartsWithoutTracking})
   AND part.num LIKE $P{partNum}
@@ -421,6 +425,10 @@ ORDER BY LocationGroup, UPPER($P!{cbOrderBy}), UPPER(part.num)]]>
 	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ShowActivePartsOnly" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT company.name AS company
 
@@ -468,7 +476,7 @@ WHERE id = 1]]>
 			<componentElement>
 				<reportElement key="table" x="0" y="0" width="732" height="47" uuid="90396323-a69d-47a3-a86c-53eb38f169e0"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="OnHandInfo" uuid="77017dde-2841-4060-95f5-b88cacb351ec">
+					<datasetRun subDataset="OnHandInfo" uuid="51f7fb92-a3f5-47fd-b982-62dbc8b9424a">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<datasetParameter name="locationGroupID">
 							<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
@@ -523,6 +531,9 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<datasetParameter name="productNum">
 							<datasetParameterExpression><![CDATA[$P{productNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ShowActivePartsOnly">
+							<datasetParameterExpression><![CDATA[$P{ShowActivePartsOnly}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
