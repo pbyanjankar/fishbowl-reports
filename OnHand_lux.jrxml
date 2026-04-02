@@ -66,7 +66,7 @@
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<parameter name="colPartDescription" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<parameter name="colQty" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
@@ -311,7 +311,7 @@ ORDER BY LocationGroup, UPPER($P!{cbOrderBy}), UPPER(part.num)]]>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<parameter name="colPartDescription" class="java.lang.Boolean" isForPrompting="false">
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<parameter name="colQty" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
