@@ -205,6 +205,7 @@ FROM part
      LEFT JOIN tagtrackingview ON tagtrackingview.tagid = tag.id AND tagTrackingView.typeID <> 40
 
 WHERE part.typeid = 10
+  AND part.activeFlag = 1
   AND (tagtrackingview.typeid != 40 OR tagtrackingview.typeid IS NULL)
   AND COALESCE(part.trackingflag, 0) IN (1,$P!{ckShowPartsWithoutTracking})
   AND part.num LIKE $P{partNum}
