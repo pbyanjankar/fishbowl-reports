@@ -76,6 +76,7 @@ trackinginfo.info = $P{LotNumber};]]>
 date(mo.datecompleted) AS MODATE,
 mo.num AS MONUM,
 uom.code AS uom,
+product.num AS FINISHEDPRODUCT,
 coalesce(result.lotQtyOnHand,0) AS QTYONHAND,
 SUM(woitem.qtyUsed) AS qtyUsed,
 SUM(woitem.qtyScrapped) AS qtyScrapped
@@ -85,6 +86,13 @@ FROM woitem
   INNER JOIN mo ON mo.id = moitem.moid
   INNER JOIN part ON woitem.partid = part.id
   INNER JOIN uom ON woitem.uomid = uom.id
+ INNER JOIN bomitem ON bomitem.stageBomId = moitem.bomid
+  INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10 AND finishItem.bomid = bomitem.bomid
+  INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
+  LEFT JOIN product ON product.partid = finishwoitem.partid
+
+
+
 LEFT OUTER JOIN (
     select
         sum(tag.qty) as lotQtyOnHand
@@ -121,6 +129,7 @@ GROUP BY 1,2,3,4;]]>
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="qtyOnHand" class="java.lang.Double"/>
+		<field name="FINISHEDPRODUCT" class="java.lang.String"/>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -132,6 +141,9 @@ GROUP BY 1,2,3,4;]]>
 		</variable>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
 			<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
+		</variable>
+		<variable name="totalused" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{qtyUsed}]]></variableExpression>
 		</variable>
 	</subDataset>
 	<subDataset name="finishedgoods" uuid="638d8b94-f7f1-4ff3-8e24-3ca84d3afd7e">
@@ -161,7 +173,7 @@ INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagel
 INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
 INNER JOIN uom ON uom.id = finishwoitem.uomid
 INNER JOIN part ON part.id = finishwoitem.partid
-LEFT JOIN product ON product.id = product.partid
+LEFT JOIN product ON product.partid = finishwoitem.partid
 LEFT OUTER JOIN trackinginfo finishgoodtrackinginfo ON finishgoodtrackinginfo.recordid = finishwoitem.id AND finishgoodtrackinginfo.tableid =  -355941248 AND finishgoodtrackinginfo.parttrackingid = 1
 LEFT OUTER JOIN trackinginfo ti ON ti.info = finishgoodtrackinginfo.info AND ti.tableid = 1555030112 AND finishgoodtrackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
 LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
@@ -670,10 +682,10 @@ Received]]></text>
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="555" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+					<jr:columnGroup width="745" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
 						<jr:columnHeader height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="555" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
+								<reportElement x="0" y="0" width="745" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
 								<box leftPadding="3" bottomPadding="3">
 									<bottomPen lineWidth="1.25"/>
 								</box>
@@ -697,6 +709,7 @@ Received]]></text>
 									<text><![CDATA[MO Date]]></text>
 								</staticText>
 							</jr:columnHeader>
+							<jr:columnFooter height="20" rowSpan="1"/>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="cb46e08d-18d8-4233-a842-0d7c6c3a3fd7"/>
@@ -725,6 +738,7 @@ Received]]></text>
 									<text><![CDATA[MO ID]]></text>
 								</staticText>
 							</jr:columnHeader>
+							<jr:columnFooter height="20" rowSpan="1"/>
 							<jr:detailCell height="18" rowSpan="1">
 								<box>
 									<leftPen lineWidth="0.0"/>
@@ -743,6 +757,48 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
+						<jr:column width="100" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="100" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Finished Product]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="20" rowSpan="1">
+								<staticText>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="a986665b-69e2-4875-aabc-3c79cccaccdd"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Total Used]]></text>
+								</staticText>
+							</jr:columnFooter>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FINISHEDPRODUCT}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 						<jr:column width="85" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
@@ -757,6 +813,19 @@ Received]]></text>
 									<text><![CDATA[Qty]]></text>
 								</staticText>
 							</jr:columnHeader>
+							<jr:columnFooter height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="85" height="20" uuid="daa7c4cf-33c7-4922-ae01-1e2986e28579"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.0" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Top">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{totalused}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:columnFooter>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="85" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
@@ -771,87 +840,32 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="40" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
+						<jr:column width="380" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="40" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
-									<box>
+									<reportElement mode="Opaque" x="0" y="0" width="380" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
+									<box leftPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
 									<text><![CDATA[UOM]]></text>
 								</staticText>
 							</jr:columnHeader>
+							<jr:columnFooter height="20" rowSpan="1"/>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="380" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
-									<textElement textAlignment="Center" verticalAlignment="Top">
+									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="8"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{uom}]]></textFieldExpression>
 									<patternExpression><![CDATA[$V{CostDecimal}]]></patternExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="110" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
-							<jr:tableFooter height="0" rowSpan="1"/>
-							<jr:columnHeader height="31" rowSpan="1">
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="110" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
-									<box rightPadding="3">
-										<bottomPen lineWidth="0.75"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" size="9" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Qty Remaining]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="18" rowSpan="1">
-								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="110" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
-									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
-										<bottomPen lineWidth="0.75" lineColor="#000000"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Top">
-										<font fontName="Open Sans" size="8"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{qtyOnHand}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
-								</textField>
-							</jr:detailCell>
-						</jr:column>
-						<jr:column width="140" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
-							<jr:tableFooter height="0" rowSpan="1"/>
-							<jr:columnHeader height="31" rowSpan="1">
-								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="140" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
-									<box rightPadding="3">
-										<bottomPen lineWidth="0.75"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Bottom">
-										<font fontName="Open Sans" size="9" isBold="true"/>
-									</textElement>
-									<text><![CDATA[Inventory Adjustments]]></text>
-								</staticText>
-							</jr:columnHeader>
-							<jr:detailCell height="18" rowSpan="1">
-								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
-									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
-										<bottomPen lineWidth="0.75" lineColor="#000000"/>
-									</box>
-									<textElement textAlignment="Center" verticalAlignment="Top">
-										<font fontName="Open Sans" size="8"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$F{qtyScrapped}]]></textFieldExpression>
-									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -867,10 +881,10 @@ Received]]></text>
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="724" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+					<jr:columnGroup width="746" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
 						<jr:columnHeader height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="724" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
+								<reportElement x="0" y="0" width="745" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
 								<box leftPadding="3" bottomPadding="3">
 									<bottomPen lineWidth="1.25"/>
 								</box>
@@ -1142,11 +1156,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="60" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
+						<jr:column width="82" uuid="3bd16c04-753d-4e67-88e9-ea96372a02d6">
 							<jr:tableFooter height="1" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
+									<reportElement mode="Opaque" x="0" y="0" width="81" height="31" backcolor="#EAEAEA" uuid="e22a5bea-5049-4d9f-92bc-84196c05378b"/>
 									<box rightPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -1158,7 +1172,7 @@ Received]]></text>
 							</jr:columnHeader>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="82" height="18" uuid="b874911e-ce0f-4b3a-8fa1-a4af4f26fd8e"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
