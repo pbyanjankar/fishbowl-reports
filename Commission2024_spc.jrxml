@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Commission2024 SPC" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cf596ac9-850b-4b49-825c-0e686a61d324">
+	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.x" value="93"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dateRange1ReportDate" class="java.util.Date"/>
+	<parameter name="dateRange2ReportDate" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="Debug" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IncludeCost" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbRepName" class="java.lang.String">
+		<parameterDescription><![CDATA['%',All,'Thillens',Thillens,'Chad F',Chad F,'SPC',SPC,'Brinks I-Deposit',Brinks I-Deposit,'Fax',Fax,'Monthly',Monthly,'Rapid Armored',Rapid Armored,'Standard',Standard,'Brent M',Brent M,'Ashley W',Ashley W,'Vic R',Vic R,'Robert Kodner. RK',Robert Kodner. RK]]></parameterDescription>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SO.ID,
+	CUSTOMER.NAME,
+	SO.NUM,
+	SOITEM.ID AS SOITEMID,
+    COALESCE(CAST(FIXES.DESCRIPTION AS DECIMAL), IF(COALESCE(IF(SOITEM.TOTALCOST = 0, POITEM.TOTALCOST,SOITEM.TOTALCOST),0)=0,PART.STDCOST * COALESCE(UC.FACTOR,1) * SOITEM.QTYTOFULFILL,COALESCE(IF(SOITEM.TOTALCOST = 0, POITEM.TOTALCOST,SOITEM.TOTALCOST),0)))  AS COST,
+	SOITEM.TOTALPRICE AS PRICE,
+	SOITEM.TOTALPRICE - COALESCE(CAST(FIXES.DESCRIPTION AS DECIMAL),IF(COALESCE(IF(SOITEM.TOTALCOST = 0, POITEM.TOTALCOST,SOITEM.TOTALCOST),0)=0,PART.STDCOST * COALESCE(UC.FACTOR,1) * SOITEM.QTYTOFULFILL,COALESCE(IF(SOITEM.TOTALCOST = 0, POITEM.TOTALCOST,SOITEM.TOTALCOST),0))) AS PROFIT,
+	SOITEM.DESCRIPTION,
+	SOITEM.PRODUCTNUM,
+	customfieldbyid(customer.customfields, 46) AS REPNAME,
+	SO.DATEISSUED,
+	FIXES.DESCRIPTION
+	FROM SO
+INNER JOIN SOITEM ON SOITEM.SOID = SO.ID
+INNER JOIN PRODUCT ON PRODUCT.ID = SOITEM.PRODUCTID
+INNER JOIN PART ON PART.ID = PRODUCT.PARTID
+INNER JOIN CUSTOMER ON CUSTOMER.ID = SO.CUSTOMERID
+
+
+LEFT JOIN CUSTOMLISTITEM FIXES ON FIXES.NAME = SOITEM.ID AND FIXES.LISTID = 10
+LEFT JOIN UOMCONVERSION UC ON UC.FROMUOMID = PART.UOMID AND UC.TOUOMID = SOITEM.UOMID
+
+LEFT JOIN OBJECTTOOBJECT SOTOPO ON SOTOPO.RECORDID1 = SOITEM.ID AND SOTOPO.TYPEID = 10
+LEFT JOIN POITEM ON POITEM.ID = SOTOPO.RECORDID2
+WHERE
+	PART.TYPEID < 40 AND
+	SO.STATUSID > 10 AND
+	SO.DATEISSUED between $P{dateRange1ReportDate} AND DATE_SUB($P{dateRange2ReportDate}, INTERVAL 1 SECOND) AND
+COALESCE(customfieldbyid(customer.customfields, 46), ' ') LIKE ($P!{cbRepName})
+
+
+
+ORDER BY
+	CUSTOMER.NAME,
+	SO.NUM]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="NUM" class="java.lang.String"/>
+	<field name="SOITEMID" class="java.lang.Integer"/>
+	<field name="COST" class="java.lang.Double"/>
+	<field name="PRICE" class="java.lang.Double"/>
+	<field name="PROFIT" class="java.lang.Double"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="PRODUCTNUM" class="java.lang.String"/>
+	<field name="REPNAME" class="java.lang.String"/>
+	<field name="DATEISSUED" class="java.sql.Timestamp"/>
+	<variable name="COST_1" class="java.lang.Double" resetType="Group" resetGroup="Order Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{COST}]]></variableExpression>
+	</variable>
+	<variable name="PRICE_1" class="java.lang.Double" resetType="Group" resetGroup="Order Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
+	</variable>
+	<variable name="PROFIT_1" class="java.lang.Double" resetType="Group" resetGroup="Order Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{PROFIT}]]></variableExpression>
+	</variable>
+	<variable name="PROFIT_2" class="java.lang.Double" resetType="Group" resetGroup="Customer Name" calculation="Sum">
+		<variableExpression><![CDATA[$F{PROFIT}]]></variableExpression>
+	</variable>
+	<variable name="PRICE_2" class="java.lang.Double" resetType="Group" resetGroup="Customer Name" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
+	</variable>
+	<variable name="COST_2" class="java.lang.Double" resetType="Group" resetGroup="Customer Name" calculation="Sum">
+		<variableExpression><![CDATA[$F{COST}]]></variableExpression>
+	</variable>
+	<variable name="PRICE_3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRICE}]]></variableExpression>
+	</variable>
+	<variable name="PROFIT_3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{PROFIT}]]></variableExpression>
+	</variable>
+	<variable name="COST_3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{COST}]]></variableExpression>
+	</variable>
+	<variable name="COST_4" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[$F{COST}]]></variableExpression>
+	</variable>
+	<group name="Customer Name">
+		<groupExpression><![CDATA[$F{NAME}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField>
+					<reportElement x="0" y="0" width="100" height="15" uuid="ec565331-0a4f-49e3-92fe-d806b320969c"/>
+					<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="374" y="0" width="64" height="15" uuid="02fa9503-af30-4ff8-b5e9-d4ad5cbdb546">
+						<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+					</reportElement>
+					<text><![CDATA[Cost]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="440" y="0" width="64" height="15" uuid="b1f1fe17-e9a8-4dfa-aa3f-45762da4c0c5">
+						<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+					</reportElement>
+					<text><![CDATA[Price]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="505" y="0" width="64" height="15" uuid="221f9f5f-db84-44ae-854c-ef4621a8f3d8"/>
+					<text><![CDATA[Profit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="220" y="0" width="100" height="15" uuid="28114e84-3288-4d8d-bc31-deb384a11118"/>
+					<text><![CDATA[Product #]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="0" width="100" height="15" uuid="238b43f0-4363-4460-8468-8a5af53c0851"/>
+					<text><![CDATA[Order #]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="220" y="0" width="100" height="15" uuid="26518849-6f53-4e21-9f26-bb7bc1994ff6"/>
+					<textElement>
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Customer Total]]></text>
+				</staticText>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="505" y="0" width="62" height="15" uuid="7a0f8661-d1d2-4ec5-bfc4-0dc09e93bb7e"/>
+					<textElement>
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PROFIT_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="440" y="0" width="64" height="15" uuid="28cc233b-ff3f-4448-ab4b-a75bc520afdf">
+						<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PRICE_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="374" y="0" width="64" height="15" uuid="7c161531-ec0a-4530-b567-80f38a3eb449">
+						<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{COST_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Order Number">
+		<groupExpression><![CDATA[$F{NUM}]]></groupExpression>
+		<groupHeader>
+			<band height="17" splitType="Prevent">
+				<textField>
+					<reportElement x="110" y="2" width="100" height="15" uuid="d69ead27-b667-4125-9841-46e60adf9e5e"/>
+					<textFieldExpression><![CDATA[$F{NUM}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="99" y="2" width="1" height="15" uuid="fca061b2-46a1-407b-833f-864a9a508ab1"/>
+				</line>
+				<line>
+					<reportElement x="99" y="2" width="468" height="1" uuid="ff6f86b4-86a7-4995-8224-c5fa871a2edd"/>
+				</line>
+				<line>
+					<reportElement x="567" y="2" width="1" height="15" uuid="4ea03e93-f31d-42f6-b03a-507f04d8d842"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16" splitType="Prevent">
+				<printWhenExpression><![CDATA[$F{COST}+$F{PRICE}+$F{PROFIT} != $V{COST_1} +$V{PRICE_1}+$V{PROFIT_1}]]></printWhenExpression>
+				<staticText>
+					<reportElement x="220" y="0" width="100" height="15" uuid="77184321-c4a4-4a43-8432-fae711a3f98f"/>
+					<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="374" y="0" width="64" height="15" uuid="79f75896-3725-42f3-ae8e-3c72b4d9576e">
+						<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+					</reportElement>
+					<textFieldExpression><![CDATA[$V{COST_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="440" y="0" width="64" height="15" uuid="ac9e8ffd-2bbf-403c-9579-68da313d7d12">
+						<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+					</reportElement>
+					<textFieldExpression><![CDATA[$V{PRICE_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="505" y="0" width="64" height="15" uuid="5283021b-6ba0-442f-baf6-e8ac7b706d05"/>
+					<textFieldExpression><![CDATA[$V{PROFIT_1}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="200" y="0" width="368" height="1" uuid="1c8e684f-33eb-41ac-ae38-e0ca17e6cda9"/>
+				</line>
+				<line>
+					<reportElement x="99" y="0" width="1" height="15" uuid="fe35936c-9434-433c-835a-80e78797e5fb"/>
+				</line>
+				<line>
+					<reportElement x="100" y="15" width="468" height="1" uuid="add3c066-e5e8-48f9-910f-16d0cfe9a002"/>
+				</line>
+				<line>
+					<reportElement x="567" y="0" width="1" height="15" uuid="ab34163b-ef2f-4fc7-aa8d-52c5236d7496"/>
+				</line>
+			</band>
+			<band height="1" splitType="Prevent">
+				<printWhenExpression><![CDATA[$F{COST}+$F{PRICE}+$F{PROFIT} == $V{COST_1} +$V{PRICE_1}+$V{PROFIT_1}]]></printWhenExpression>
+				<line>
+					<reportElement x="100" y="0" width="468" height="1" uuid="2962a08c-3c5d-4ca9-aa6c-17a484f3c768"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="27" width="567" height="30" uuid="c092cf00-c8f2-4320-8b02-00f6a7e67dff"/>
+			</rectangle>
+			<textField evaluationTime="Report" pattern="¤ #,##0.00">
+				<reportElement x="372" y="42" width="64" height="15" uuid="79610969-41f2-4eff-833d-dc0718012890">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COST_3}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="¤ #,##0.00">
+				<reportElement x="438" y="42" width="64" height="15" uuid="6e2e6bd3-e4b4-409e-85cf-dd0792dadff2">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PRICE_3}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="¤ #,##0.00">
+				<reportElement x="503" y="42" width="64" height="15" uuid="718a63ed-fcf2-4533-abc3-4a4ec608e9c2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PROFIT_3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="347" height="20" uuid="4f02c369-d5ce-4f13-b72a-7c0f359e4da0"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REPNAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="438" y="27" width="64" height="15" uuid="5c602646-0fad-45ba-a993-90920f8ffc60">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="27" width="64" height="15" uuid="697171af-458a-4dff-8a9c-fe1942096685">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="503" y="27" width="64" height="15" uuid="d89deb73-ca91-457e-9a3c-233532c26a04"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="-1" y="42" width="60" height="15" uuid="cc3102b8-6589-42af-a362-09bd4bbea585"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange1ReportDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="91" y="42" width="60" height="15" uuid="1df4a6bc-095c-4603-8961-991cec0e4393"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateRange2ReportDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="59" y="42" width="32" height="15" uuid="5fda3c12-7e41-4cad-af12-e8b9f5c95baf"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="152" height="20" uuid="1da3c653-adc9-4044-af47-d38570432148"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Commission Report.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="27" width="100" height="15" uuid="fc1727b7-cef0-4461-bba6-1be4b7c4ebea"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="27" width="64" height="15" uuid="b9ca9630-1643-49f5-a864-c1acb8d42e5b">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Percent]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="#,##0.00 %">
+				<reportElement x="290" y="42" width="64" height="15" uuid="ed5db17e-d4ad-4480-836c-b005ad9a6a7e">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PROFIT_3}/$V{PRICE_3}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="15" splitType="Prevent">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="374" y="0" width="64" height="15" uuid="96a31845-312e-4a89-9004-971f992a2b10">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{COST}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="440" y="0" width="64" height="15" uuid="a7067df4-8b7e-43fe-8006-4a36a4d20150">
+					<printWhenExpression><![CDATA[$P{IncludeCost}]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{PRICE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="505" y="0" width="64" height="15" uuid="fbc4f8f7-7f86-4351-b9ae-bbe7500dbd8b"/>
+				<textFieldExpression><![CDATA[$F{PROFIT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="99" y="0" width="1" height="15" uuid="f8360c27-34ad-43f3-badc-4df1c1f232b3"/>
+			</line>
+			<textField>
+				<reportElement x="220" y="0" width="100" height="15" uuid="1cb63fbd-f464-4bc7-a556-38b56d535ad5"/>
+				<textFieldExpression><![CDATA[$F{PRODUCTNUM}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="567" y="0" width="1" height="15" uuid="9d8ef2bf-b722-4fd7-8322-f3b93bf0be5c"/>
+			</line>
+			<textField>
+				<reportElement x="120" y="0" width="100" height="15" forecolor="#FFFFFF" backcolor="#660000" uuid="e1974518-6605-491d-af14-4ebeb2761472">
+					<printWhenExpression><![CDATA[$P{Debug} && ($F{COST}==0)]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{SOITEMID}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="16" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
