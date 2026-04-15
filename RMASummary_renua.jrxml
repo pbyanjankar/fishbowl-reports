@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="968"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -89,12 +89,13 @@
     RMAITEM.QTY AS RMAITEMQTY, UOM.CODE AS RMAITEMUOMCODE, RMAITEMTYPE.NAME AS RMAITEMTYPE, ISSUE.NAME AS RMAITEMISSUE,
     RESOLUTION.NAME AS RMAITEMRESOLUTION, SUB.NUM AS RMAITEMSUBPRODUCTNUM, SUB.DESCRIPTION AS RMAITEMSUBPRODUCTDESCRIPTION,
     RMAITEM.CROSSSHIPFLAG AS RMAITEMCROSSSHIPFLAG, RMAITEM.SHIPFLAG AS RMAITEMSHIPFLAG, RMAITEM.RETURNFLAG AS RMAITEMRETURNFLAG,
-    VENDOR.NAME AS RMAITEMVENDORNAME, RMAITEM.VENDORRMA AS RMAITEMVENDORRMA, RMAITEM.DATERESOLVED AS RMADATERESOLVED,
+    RMAITEM.VENDORRMA AS RMAITEMVENDORRMA, RMAITEM.DATERESOLVED AS RMADATERESOLVED,
     RMAITEM.NOTE AS RMAITEMNOTE,
     COMPANY.NAME AS COMPANY,
     DATEDIFF(CURRENT_DATE, RMA.DATECREATED) AS RMATAT,
     DATEDIFF(CURRENT_DATE, RMAITEM.DATERESOLVED) AS RMAITEMRESOLVEDTAT,
     result2.num AS PONUMBER,
+    result2.VENDORNAME,
     sysuser.username AS CREATEDBY,
     so.num AS SONUMBER
 
@@ -106,7 +107,7 @@ FROM customer, rmastatus, locationgroup, rma
     LEFT JOIN customlistitem resolution ON rmaitem.resolutionid = resolution.id
     LEFT JOIN rmaitemtype ON rmaitem.typeid = rmaitemtype.id
     LEFT JOIN product AS sub ON rmaitem.productsubid = sub.id
-    LEFT JOIN vendor ON rmaitem.vendorid = vendor.id
+
 
     LEFT OUTER JOIN (SELECT t.ID, t.UserID
 		FROM rma_aud t
@@ -122,7 +123,7 @@ FROM customer, rmastatus, locationgroup, rma
 
     JOIN company ON company.id = 1
     LEFT OUTER JOIN
-	(SELECT po.num, result.rmaitemId FROM trackinginfosn
+	(SELECT po.num, vendor.name AS VENDORNAME, result.rmaitemId FROM trackinginfosn
 		INNER JOIN
 			(SELECT trackinginfosn.serialNum, trackinginfo.recordId AS rmaitemId  FROM trackinginfo
     		           INNER JOIN trackinginfosn ON trackinginfo.id = trackinginfosn.trackinginfoid
@@ -132,6 +133,7 @@ FROM customer, rmastatus, locationgroup, rma
 		INNER JOIN receiptitem ON receiptitem.id = trackingInfo.recordid
 		INNER JOIN poitem ON poitem.id = receiptitem.poitemid
 		INNER JOIN po ON poitem.poid = po.id
+       		LEFT OUTER JOIN vendor ON vendor.id = po.vendorid
 	) AS result2 ON result2.rmaitemId = rmaitem.id
 
 
@@ -172,7 +174,7 @@ ORDER BY locationgroup.name, $P!{ckOrderByCustomer}, rma.num, rmaitem.linenum]]>
 	<field name="RMAITEMCROSSSHIPFLAG" class="java.lang.Boolean"/>
 	<field name="RMAITEMSHIPFLAG" class="java.lang.Boolean"/>
 	<field name="RMAITEMRETURNFLAG" class="java.lang.Boolean"/>
-	<field name="RMAITEMVENDORNAME" class="java.lang.String"/>
+	<field name="VENDORNAME" class="java.lang.String"/>
 	<field name="RMAITEMVENDORRMA" class="java.lang.String"/>
 	<field name="RMADATERESOLVED" class="java.sql.Timestamp"/>
 	<field name="RMAITEMNOTE" class="java.lang.String"/>
@@ -599,7 +601,7 @@ ORDER BY locationgroup.name, $P!{ckOrderByCustomer}, rma.num, rmaitem.linenum]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{RMAITEMVENDORNAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VENDORNAME}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" mode="Transparent" x="1160" y="0" width="62" height="14" uuid="58ef03d9-b5d1-4dd2-80cb-fcf9b5606da9"/>
@@ -706,7 +708,7 @@ ORDER BY locationgroup.name, $P!{ckOrderByCustomer}, rma.num, rmaitem.linenum]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{RMAITEMRESOLVEDTAT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{RMAITEMRESOLVEDTAT} - $F{RMATAT}]]></textFieldExpression>
 				<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="##0.##" isBlankWhenNull="true">
