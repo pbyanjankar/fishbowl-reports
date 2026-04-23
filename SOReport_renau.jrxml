@@ -787,6 +787,11 @@ WHERE 	so.id = $P{soId}]]>
 			<parameterDescription><![CDATA[Display field]]></parameterDescription>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
+		<parameter name="IsInvoice" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tooltip" value="When this checkbox is checked, the title of the report will be changed to &quot;Invoice&quot;."/>
+			<property name="Group" value="Other Settings"/>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT DISTINCT
     SOITEM.ID AS ITEMID,
@@ -3608,7 +3613,7 @@ $F{TOTALPRICE}]]></variableExpression>
 (($P{ShowLineItemNotes} && !($F{NOTE} == null || $F{NOTE}.equals(""))) ?
     "\n  " + $F{NOTE}:
     "")
-+ ($F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "") ]]></textFieldExpression>
++ ($P{IsInvoice} && $F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "") ]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -4204,7 +4209,7 @@ $F{CURRENCYCODE} + "\n" + ($P{FieldTitle:TotalPrice}.equals("%") ? "Total Price"
     "\n  " + $F{NOTE}:
     "")
 
-+ ($F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "") ]]></textFieldExpression>
++ ($P{IsInvoice} && $F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "") ]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -4908,7 +4913,7 @@ $F{CURRENCYCODE} + "\n" + ($P{FieldTitle:TotalPrice}.equals("%") ? "Total Price"
     "\n  " + $F{NOTE}:
     "")
 
-+ ($F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "") ]]></textFieldExpression>
++ ($P{IsInvoice} && $F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "") ]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
