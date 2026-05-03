@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="1286"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Sun May 03 18:45:03 NPT 2026"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -155,12 +155,12 @@
 		<parameter name="SOTotalMaximum" class="java.lang.Double" isForPrompting="false">
 			<property name="Group" value="SO Total Filter"/>
 			<property name="Sort" value="2"/>
-			<defaultValueExpression><![CDATA[999999999999.00]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[999999]]></defaultValueExpression>
 		</parameter>
 		<parameter name="SOTotalMinimum" class="java.lang.Double" isForPrompting="false">
 			<property name="Group" value="SO Total Filter"/>
 			<property name="Sort" value="1"/>
-			<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 		</parameter>
 		<parameter name="DaysSinceCreationMin" class="java.lang.Integer" isForPrompting="false">
 			<property name="Group" value="Days Creation Filter"/>
@@ -170,7 +170,7 @@
 		<parameter name="DaysSinceCreationMax" class="java.lang.Integer" isForPrompting="false">
 			<property name="Group" value="Days Creation Filter"/>
 			<property name="Sort" value="2"/>
-			<defaultValueExpression><![CDATA[999999]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[99999]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[WITH
@@ -567,8 +567,9 @@ WHERE
      AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
 and
 coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like $P{MarketingData}
-AND so.totalprice between $P{SOTotalMinimum} and $P{SOTotalMaximum}
+AND so.totalprice between $P!{SOTotalMinimum} and $P!{SOTotalMaximum}
 AND datediff(CURDATE(), so.datecreated) between $P{DaysSinceCreationMin} AND $P{DaysSinceCreationMax}
+
 ORDER BY
 customer.name,so.num]]>
 		</queryString>
@@ -1113,12 +1114,12 @@ ORDER BY
 		<parameter name="SOTotalMaximum" class="java.lang.Double" isForPrompting="false">
 			<property name="Group" value="SO Total Filter"/>
 			<property name="Sort" value="2"/>
-			<defaultValueExpression><![CDATA[999999999999.00]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[999999]]></defaultValueExpression>
 		</parameter>
 		<parameter name="SOTotalMinimum" class="java.lang.Double" isForPrompting="false">
 			<property name="Group" value="SO Total Filter"/>
 			<property name="Sort" value="1"/>
-			<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 		</parameter>
 		<parameter name="DaysSinceCreationMin" class="java.lang.Integer" isForPrompting="false">
 			<property name="Group" value="Days Creation Filter"/>
@@ -1128,7 +1129,7 @@ ORDER BY
 		<parameter name="DaysSinceCreationMax" class="java.lang.Integer" isForPrompting="false">
 			<property name="Group" value="Days Creation Filter"/>
 			<property name="Sort" value="2"/>
-			<defaultValueExpression><![CDATA[999999]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[99999]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[WITH
@@ -1520,8 +1521,9 @@ WHERE
      AND COALESCE(stateconst.name,'') LIKE $P!{cbShipToState/Province}
 and
 coalesce(CustomFieldByName(customer.CUSTOMFIELDS, 'Marketing Data'),'') like $P{MarketingData}
-AND so.totalprice between $P{SOTotalMinimum} and $P{SOTotalMaximum}
+AND so.totalprice between $P!{SOTotalMinimum} and $P!{SOTotalMaximum}
 AND datediff(CURDATE(), so.datecreated) between $P{DaysSinceCreationMin} AND $P{DaysSinceCreationMax}
+
 UNION ALL
 
 SELECT xo.shiptoattn,xo.num AS so,xo.dateissued,xostatus.name AS STATUS,
@@ -1818,12 +1820,12 @@ rtype,1,2]]>
 	<parameter name="SOTotalMaximum" class="java.lang.Double" isForPrompting="false">
 		<property name="Group" value="SO Total Filter"/>
 		<property name="Sort" value="2"/>
-		<defaultValueExpression><![CDATA[999999999999.00]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[999999]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SOTotalMinimum" class="java.lang.Double" isForPrompting="false">
 		<property name="Group" value="SO Total Filter"/>
 		<property name="Sort" value="1"/>
-		<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DaysSinceCreationMin" class="java.lang.Integer" isForPrompting="false">
 		<property name="Group" value="Days Creation Filter"/>
@@ -1833,7 +1835,7 @@ rtype,1,2]]>
 	<parameter name="DaysSinceCreationMax" class="java.lang.Integer" isForPrompting="false">
 		<property name="Group" value="Days Creation Filter"/>
 		<property name="Sort" value="2"/>
-		<defaultValueExpression><![CDATA[999999]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[99999]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
