@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ShippingInvoice" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="980b5f42-001e-4020-9180-09b37a24f1c4">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="128"/>
+	<property name="ireport.y" value="257"/>
 	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -222,9 +222,6 @@ ORDER BY SoItem.soLineItem]]>
 	? ""
 	: $F{PRODUCTDESCRIPTION})]]></variableExpression>
 		</variable>
-		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
-			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
-		</variable>
 		<variable name="QtyOrdered" class="java.lang.Double">
 			<variableExpression><![CDATA[($F{QTYTOFULFILL} == null) ? new Double(0) : $F{QTYTOFULFILL}]]></variableExpression>
 		</variable>
@@ -236,17 +233,11 @@ ORDER BY SoItem.soLineItem]]>
 		<variable name="TrackingInfo" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[((($P{module} == null) || ($F{SHIPITEMID} == null)) ? "" : ((com.evnt.eve.modules.ReportHelperModule) $P{module}).getAllShipItemTrackingInfo("ShipItem", $F{SHIPITEMID}.toString()))]]></variableExpression>
 		</variable>
-		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
-			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
-		</variable>
-		<variable name="CostDecimal" class="java.lang.String" resetType="None">
-			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
-		</variable>
 		<variable name="TotalsDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_TOTAL")]]></variableExpression>
 		</variable>
 		<variable name="CanDisplaySymbol" class="java.lang.Boolean">
-			<variableExpression><![CDATA[$F{SYMBOL} == null || $F{SYMBOL}.equals("") || new java.awt.Font("Open Sans", java.awt.Font.PLAIN ,1).canDisplay(com.fbi.sdk.constants.setup.CurrencySymbolConst.getConstant($F{SYMBOL}).getSymbol().charAt(0))]]></variableExpression>
+			<variableExpression><![CDATA[false]]></variableExpression>
 			<initialValueExpression><![CDATA[true]]></initialValueExpression>
 		</variable>
 		<variable name="isMultiCurrency" class="java.lang.Boolean">
@@ -256,6 +247,19 @@ ORDER BY SoItem.soLineItem]]>
 			<variableExpression><![CDATA[$F{SOITEMTYPEID} == 80 ?
 $V{Line} : $V{Line} + 1]]></variableExpression>
 			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA["$ #,##0.00"]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA["#,##0.#####"]]></variableExpression>
+		</variable>
+		<variable name="CostDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA["$ #,##0.00"]]></variableExpression>
+		</variable>
+		<variable name="CanDisplaySymbol_1" class="java.lang.Boolean">
+			<variableExpression><![CDATA[$F{SYMBOL} == null || $F{SYMBOL}.equals("") || new java.awt.Font("Open Sans", java.awt.Font.PLAIN ,1).canDisplay(com.fbi.sdk.constants.setup.CurrencySymbolConst.getConstant($F{SYMBOL}).getSymbol().charAt(0))]]></variableExpression>
+			<initialValueExpression><![CDATA[true]]></initialValueExpression>
 		</variable>
 		<group name="ITEMID">
 			<groupExpression><![CDATA[$F{postsoitemid}]]></groupExpression>
@@ -564,22 +568,39 @@ ORDER BY SoItem.soLineItem;]]>
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT COMPANY.NAME AS COMPANY, SO.ID AS SOID, SO.NUM AS SONUM, SO.CUSTOMERCONTACT, SO.CUSTOMERPO, SO.BILLTOADDRESS, SHIPNUMTABLE.SHIPTOADDRESS,
-    SO.BILLTONAME, SHIPNUMTABLE.SHIPTONAME, SO.BILLTOCITY, SHIPNUMTABLE.SHIPTOCITY, BILLSTATE.NAME AS BILLTOSTATE, SHIPNUMTABLE.SHIPTOSTATE,
-    SO.BILLTOZIP, SHIPNUMTABLE.SHIPTOZIP, BILLCOUNTRY.NAME AS BILLCOUNTRY, SHIPNUMTABLE.SHIPCOUNTRY,
-TRIM(LEADING 'S' FROM SHIPNUMTABLE.SHIPNUM) AS SHIPNUM,
-    SO.LOCATIONGROUPID, COALESCE(SO.NOTE, '') AS SONOTE, SO.CUSTOMERID, CAST(SHIPNUMTABLE.DATESHIPPED AS DATE) AS DATESHIPPED,
-    SO.CURRENCYRATE,CURRENCY.CODE AS CURRENCYCODE, CURRENCY.SYMBOL AS SYMBOL,
-    SUM(postsoitem.totalprice) AS SUBTOTAL,
-    SUM((CASE SOITEM.TAXABLEFLAG WHEN 1 THEN SO.TAXRATE ELSE 0 END) * POSTSOITEM.TOTALPRICE) AS TAXRATE,
-    SUM((CASE SOITEM.TAXABLEFLAG
-            WHEN 1
-            THEN POSTSOITEM.TOTALPRICE * COALESCE(SO.TAXRATE, 0) / SO.CURRENCYRATE
-            ELSE 0.0
-        END)) AS CURRENCYTAXTOTAL,
-    SUM((postsoitem.totalprice) / SO.CURRENCYRATE) AS CURRENCYSUBTOTAL,
-    SUM(((postsoitem.totalprice) / SO.CURRENCYRATE)
-        + ((CASE SOITEM.TAXABLEFLAG WHEN 1 THEN SO.TAXRATE ELSE 0 END) * (postsoitem.totalprice)) / SO.CURRENCYRATE) AS CURRENCYGRANDTOTAL, HOMECURRENCY.SYMBOL AS HOMECURRENCYSYMBOL, HOMECURRENCY.CODE AS HOMECURRENCYCODE, ship.id AS SHIPID, so.phone, so.email, COALESCE(contact.datus,'') AS fax,
+		<![CDATA[SELECT
+
+    COMPANY.NAME AS COMPANY,
+    SO.ID AS SOID,
+    SO.NUM AS SONUM,
+    SO.CUSTOMERCONTACT,
+    SO.CUSTOMERPO,
+    SO.BILLTOADDRESS,
+    SHIPNUMTABLE.SHIPTOADDRESS,
+    SO.BILLTONAME,
+    SHIPNUMTABLE.SHIPTONAME,
+    SO.BILLTOCITY,
+    SHIPNUMTABLE.SHIPTOCITY,
+    BILLSTATE.NAME AS BILLTOSTATE,
+    SHIPNUMTABLE.SHIPTOSTATE,
+    SO.BILLTOZIP,
+    SHIPNUMTABLE.SHIPTOZIP,
+    BILLCOUNTRY.NAME AS BILLCOUNTRY,
+    SHIPNUMTABLE.SHIPCOUNTRY,
+    TRIM(LEADING 'S' FROM SHIPNUMTABLE.SHIPNUM) AS SHIPNUM,
+    SO.LOCATIONGROUPID,
+    COALESCE(SO.NOTE, '') AS SONOTE,
+    SO.CUSTOMERID,
+    CAST(SHIPNUMTABLE.DATESHIPPED AS DATE) AS DATESHIPPED,
+    SO.CURRENCYRATE,
+    CURRENCY.CODE AS CURRENCYCODE,
+    CURRENCY.SYMBOL AS SYMBOL,
+HOMECURRENCY.SYMBOL AS HOMECURRENCYSYMBOL,
+HOMECURRENCY.CODE AS HOMECURRENCYCODE,
+ship.id AS SHIPID,
+ so.phone,
+so.email,
+COALESCE(contact.datus,'') AS fax,
 COALESCE(currency.symbol,homecurrency.symbol,91) AS coalesceSymbol,
 paymentterms.name as paymenttermname,
 paymentterms.typeid as paymenttermtypeid,
@@ -590,7 +611,17 @@ companyaddress.address AS COMPANYADDRESS,
 companyaddress.city AS COMPANYCITY,
 companyaddress.zip AS COMPANYZIP,
 companystate.code AS COMPANYSTATE,
-companycountry.name AS COMPANYCOUNTRY
+companycountry.name AS COMPANYCOUNTRY,
+    SUM(postsoitem.totalprice) AS SUBTOTAL,
+    SUM((CASE SOITEM.TAXABLEFLAG WHEN 1 THEN SO.TAXRATE ELSE 0 END) * POSTSOITEM.TOTALPRICE) AS TAXRATE,
+    SUM((CASE SOITEM.TAXABLEFLAG
+            WHEN 1
+            THEN POSTSOITEM.TOTALPRICE * COALESCE(SO.TAXRATE, 0) / SO.CURRENCYRATE
+            ELSE 0.0
+        END)) AS CURRENCYTAXTOTAL,
+    SUM((postsoitem.totalprice) / SO.CURRENCYRATE) AS CURRENCYSUBTOTAL,
+    SUM(((postsoitem.totalprice) / SO.CURRENCYRATE)
+        + ((CASE SOITEM.TAXABLEFLAG WHEN 1 THEN SO.TAXRATE ELSE 0 END) * (postsoitem.totalprice)) / SO.CURRENCYRATE) AS CURRENCYGRANDTOTAL
 FROM PostSo
     INNER JOIN PostSoItem ON PostSo.id = PostSoItem.postSoId
     LEFT JOIN ShipItem ON PostSoItem.shipItemId = ShipItem.id
@@ -630,11 +661,7 @@ FROM PostSo
 WHERE PostSo.id = $P!{postSoId}
   AND SoItem.typeId != 40
 
-GROUP BY Company.name, So.id, So.num, So.customerContact, So.customerPo, So.billToAddress,
-    So.billToName, So.billToCity, shipnumtable.shiptocity, BillState.name,
-    So.billToZip,  shipnumtable.shiptozip, BillCountry.name,  shipnumtable.shipcountry, ShipNumTable.shipNum,
-    So.locationGroupId, So.note, So.customerId, ShipNumTable.dateShipped,
-    So.currencyRate, Currency.code, Currency.symbol, Company.id, So.taxRate, HomeCurrency.symbol, HomeCurrency.code
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42
 
 ORDER BY COALESCE(ship.shiptoname, 'ZZZZ')]]>
 	</queryString>
@@ -725,13 +752,13 @@ ORDER BY COALESCE(ship.shiptoname, 'ZZZZ')]]>
 		<variableExpression><![CDATA[(($F{CUSTOMERPO} != null) && (!$F{CUSTOMERPO}.equals(""))) ? "PO Number: " + $F{CUSTOMERPO} : ""]]></variableExpression>
 	</variable>
 	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
-		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		<variableExpression><![CDATA["$ #,##0.00"]]></variableExpression>
 	</variable>
 	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
-		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		<variableExpression><![CDATA["#,##0.#####"]]></variableExpression>
 	</variable>
 	<variable name="CostDecimal" class="java.lang.String" resetType="None">
-		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_COST")]]></variableExpression>
+		<variableExpression><![CDATA["$ #,##0.00"]]></variableExpression>
 	</variable>
 	<variable name="taxTotal" class="java.lang.Double">
 		<variableExpression><![CDATA[com.evnt.eve.modules.ReportHelperModule.getRoundedMoneyValue($F{TAXRATE} < 0 ? 0.0 : $F{TAXRATE} , true)]]></variableExpression>
@@ -740,7 +767,7 @@ ORDER BY COALESCE(ship.shiptoname, 'ZZZZ')]]>
 		<variableExpression><![CDATA[com.evnt.eve.modules.ReportHelperModule.getRoundedMoneyValue($F{SUBTOTAL}.doubleValue(), true)]]></variableExpression>
 	</variable>
 	<variable name="TotalsDecimal" class="java.lang.String" resetType="None">
-		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_TOTAL")]]></variableExpression>
+		<variableExpression><![CDATA["$ #,##0.00"]]></variableExpression>
 	</variable>
 	<variable name="isMultiCurrency" class="java.lang.Boolean">
 		<variableExpression><![CDATA[com.evnt.eve.modules.CurrencyModule.isMultiCurrency()]]></variableExpression>
@@ -766,7 +793,7 @@ ORDER BY COALESCE(ship.shiptoname, 'ZZZZ')]]>
 		<initialValueExpression><![CDATA[true]]></initialValueExpression>
 	</variable>
 	<variable name="DateFormat" class="java.lang.String" resetType="None">
-		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		<variableExpression><![CDATA["MM/dd/yyyy"]]></variableExpression>
 	</variable>
 	<group name="CustomerAddress">
 		<groupExpression><![CDATA[new Integer(1)]]></groupExpression>
@@ -926,7 +953,7 @@ ORDER BY COALESCE(ship.shiptoname, 'ZZZZ')]]>
 				</textElement>
 				<textFieldExpression><![CDATA["Invoice Number"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement positionType="Float" x="483" y="46" width="69" height="17" uuid="4f58ac34-6443-41da-9751-fa87b163e928"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -1659,7 +1686,7 @@ $F{PRODUCTNUMBER}]]></textFieldExpression>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Zebra" height="14" rowSpan="1">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="#,##0.#####" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="44" height="13" uuid="802fb5bb-639f-41a5-9e34-347621af8db1"/>
 								<box topPadding="0"/>
 								<textElement textAlignment="Right" verticalAlignment="Top">
@@ -1669,7 +1696,6 @@ $F{PRODUCTNUMBER}]]></textFieldExpression>
 || $F{SOITEMTYPE}.equalsIgnoreCase("Discount Percentage")
 ? "0" :
 $F{QTYORDERED}]]></textFieldExpression>
-								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1690,7 +1716,7 @@ $F{QTYORDERED}]]></textFieldExpression>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Zebra" height="14" rowSpan="1">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="#,##0.#####" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="44" height="13" uuid="3f4bbb7b-4b79-484b-874d-4fa8febceaed"/>
 								<box topPadding="0"/>
 								<textElement textAlignment="Right" verticalAlignment="Top">
@@ -1702,7 +1728,6 @@ $F{QTYORDERED}]]></textFieldExpression>
 || $F{PRODUCTNUMBER}.equalsIgnoreCase("N-CUS-DEP")
 || ($F{PARTTYPEID} != null &&  $F{PARTTYPEID} == 20)
 ? "0" : $F{QTYSHIPPED}]]></textFieldExpression>
-								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1729,7 +1754,7 @@ B/O]]></text>
 								<leftPen lineWidth="0.0"/>
 								<rightPen lineWidth="0.0"/>
 							</box>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="#,##0.#####" isBlankWhenNull="true">
 								<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="13" uuid="83b42c7c-2e28-4c73-a3ff-4d53733db23a"/>
 								<box topPadding="0"/>
 								<textElement textAlignment="Right" verticalAlignment="Top">
@@ -1742,7 +1767,6 @@ B/O]]></text>
 || ($F{PARTTYPEID} != null &&  $F{PARTTYPEID} == 20)
 ?
 "0" : $F{QTYREMAINING}]]></textFieldExpression>
-								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1769,7 +1793,7 @@ B/O]]></text>
 								<leftPen lineWidth="0.0"/>
 								<rightPen lineWidth="0.0"/>
 							</box>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="$ #,##0.00" isBlankWhenNull="true">
 								<reportElement style="Zebra" x="0" y="0" width="56" height="13" uuid="5311e2e9-6d2c-4115-ac28-8e91b25b1f77"/>
 								<box topPadding="0"/>
 								<textElement textAlignment="Right" verticalAlignment="Top">
@@ -1780,7 +1804,6 @@ B/O]]></text>
 || $F{SOITEMTYPE}.equalsIgnoreCase("Discount Percentage")
 || $F{PRODUCTNUMBER}.equalsIgnoreCase("N-CUS-DEP") ?
 $F{POSTTOTALPRICE} : $F{UNITPRICE}]]></textFieldExpression>
-								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1808,7 +1831,7 @@ Price]]></text>
 								<leftPen lineWidth="0.0"/>
 								<rightPen lineWidth="0.0"/>
 							</box>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="$ #,##0.00" isBlankWhenNull="true">
 								<reportElement style="Zebra" x="0" y="0" width="78" height="13" uuid="8deee181-59d7-40f6-9657-472d5e9c00a0"/>
 								<box topPadding="0"/>
 								<textElement textAlignment="Right" verticalAlignment="Top">
@@ -1819,7 +1842,6 @@ Price]]></text>
 || $F{SOITEMTYPE}.equalsIgnoreCase("Discount Percentage")
 || $F{PRODUCTNUMBER}.equalsIgnoreCase("N-CUS-DEP") ?
 $F{POSTTOTALPRICE} : $F{EXTENDEDPRICE}]]></textFieldExpression>
-								<patternExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1954,7 +1976,7 @@ $F{POSTTOTALPRICE} : $F{EXTENDEDPRICE}]]></textFieldExpression>
 					<jr:column width="145" uuid="adcb0f31-02c2-4bfd-a66a-3b20e07e1140">
 						<printWhenExpression><![CDATA[!$P{ShowHomeCurrencyTotals} || !$V{isMultiCurrency} || $F{CURRENCYCODE} == null]]></printWhenExpression>
 						<jr:detailCell height="58" rowSpan="1">
-							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="$ #,##0.00" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="28" width="145" height="14" backcolor="#EAEAEA" uuid="9d2474c3-ed50-4cca-82e2-cbce6920312f"/>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -1966,9 +1988,8 @@ $F{POSTTOTALPRICE} : $F{EXTENDEDPRICE}]]></textFieldExpression>
 								<textFieldExpression><![CDATA[$V{CanDisplaySymbol} ?
 com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($P{coalesceSymbol}, $P{SubTotal} + $P{currencyTaxTotal}, $V{TotalsDecimal})
 : new DecimalFormat($V{totalsDecimalNoSymbol}).format($P{SubTotal} + $P{currencyTaxTotal})]]></textFieldExpression>
-								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 							</textField>
-							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="$ #,##0.00" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="14" width="145" height="14" backcolor="#FFFFFF" uuid="15445530-8ad9-4f62-9807-0803407ccd47"/>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -1980,9 +2001,8 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($P{coalesce
 								<textFieldExpression><![CDATA[$V{CanDisplaySymbol} ?
 com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($P{coalesceSymbol}, $P{currencyTaxTotal}, $V{TotalsDecimal})
 : new DecimalFormat($V{totalsDecimalNoSymbol}).format($P{currencyTaxTotal})]]></textFieldExpression>
-								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 							</textField>
-							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="$ #,##0.00" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="0" width="145" height="14" backcolor="#EAEAEA" uuid="4adae6a1-9e1d-4b9f-883c-22e1a742a4f0"/>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -1994,9 +2014,8 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($P{coalesce
 								<textFieldExpression><![CDATA[$V{CanDisplaySymbol} ?
 com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($P{coalesceSymbol}, $P{SubTotal}, $V{TotalsDecimal})
 : new DecimalFormat($V{totalsDecimalNoSymbol}).format($P{SubTotal})]]></textFieldExpression>
-								<patternExpression><![CDATA[$V{TotalsDecimal}]]></patternExpression>
 							</textField>
-							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
 								<reportElement mode="Opaque" x="0" y="42" width="145" height="14" backcolor="#FFFFFF" uuid="022af20f-6a3d-45c6-921c-50fa0fe25210"/>
 								<box rightPadding="3">
 									<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -2008,7 +2027,6 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($P{coalesce
 								<textFieldExpression><![CDATA[$P{PAYMENTTERMNAME}.equals( "Prepay" ) || $P{PAYMENTTERMNAME}.equals( "CIA" ) ? "Paid" :
 $P{PAYMENTTERMTYPEID}==10 ? $P{PAYMENTDUEDATE}  :
 $P{PAYMENTTERMTYPEID}==50 && $P{PAYMENTTERMNAME}.equals( "Prepay" ) == false ? $P{PAYMENTDUEDATE} : ""]]></textFieldExpression>
-								<patternExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

@@ -17,7 +17,7 @@
 		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/server/reports/custom/NPBShippingInvoiceV3_automate/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/server/reports/Custom/NPBShippingInvoiceV3_automate/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="module" class="java.lang.Object" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
