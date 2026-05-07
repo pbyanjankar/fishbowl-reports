@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NPBShippingInvoiceV3" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="980b5f42-001e-4020-9180-09b37a24f1c4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri Mar 27 10:15:47 MDT 2015"/>
+	<parameter name="ShowCountry" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBillToPhone" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBillToFax" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBillToEmail" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/server/reports/Custom/NPBShippingInvoiceV3_automate/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="shipID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colSalesPerson" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Order Sales Person]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colPaymentTerms" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Order Payment Terms]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colFOBPoint" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Order FOB Point]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colShippingTerms" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Order Shipping Terms]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colShipVia" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Order Carrier]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colReqShipDate" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Order Requested Ship Date]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colItemLineNumber" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Item Line Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colType" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Item Type]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colItemNumberAndDescription" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Item Number And Description]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colUnitPrice" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Item Unit Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colQtyShipped" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Item Qty Shipped]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colExtendedPrice" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[Item Extended Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderNumber" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[SO,SO Number,PO,Customer PO Number,Ship,Ship Number]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Ship"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colCurrencyUnitPrice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<parameterDescription><![CDATA[Item Currency Unit Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colCurrencyExtendedPrice" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<parameterDescription><![CDATA[Item Currency Extended Price]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colOrderCurrency" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<parameterDescription><![CDATA[Order Currency]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colOrderCurrencyRate" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<parameterDescription><![CDATA[Order Currency Rate]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowHomeCurrencyTotals" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCurrencyTotals" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<defaultValueExpression><![CDATA[Boolean.getBoolean("Multi Currency")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowDeliverySignature" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCompanyName" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colItemDescription" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colItemNumber" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbLogoAlignment" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[top,Top,left,Left]]></parameterDescription>
+		<defaultValueExpression><![CDATA["left"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="InvoiceTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ProformaTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTotals" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="!Multi Currency"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colTaxCode" class="java.lang.Boolean" isForPrompting="false">
+		<property name="QBVersion" value="!US"/>
+		<parameterDescription><![CDATA[Item Tax Code]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colTaxAmount" class="java.lang.Boolean" isForPrompting="false">
+		<property name="QBVersion" value="!US"/>
+		<parameterDescription><![CDATA[Item Tax Amount]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colItemCurrencyTax" class="java.lang.Boolean" isForPrompting="false">
+		<property name="show" value="Multi Currency"/>
+		<property name="QBVersion" value="!US"/>
+		<parameterDescription><![CDATA[Item Currency Tax Amount]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCartonInfo" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IncludeKitsInItemNumbering" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowNote" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Use this shipping invoice for multiple cartons"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowCompanyAddress" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowRemitToChangeNote" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowStartAndEndForBatchPrinting" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<property name="Tooltip" value="Choose to show Start and End for batchprinting"/>
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+PostSo.id AS POSTSOID,
+ship.STATUSID,
+SO.NUM AS SONUM,
+SO.CUSTOMERPO,
+TRIM(LEADING 'S' FROM ship.num) AS SHIPNUM
+FROM ship
+INNER JOIN ShipItem ON Ship.id = ShipItem.shipId
+LEFT OUTER JOIN so ON ship.soid = so.id
+LEFT JOIN PostSoItem ON PostSoItem.shipItemId = ShipItem.id
+LEFT JOIN PostSo ON PostSo.id = PostSoItem.postSoId
+WHERE ShipItem.shipId = $P{shipID}
+
+LIMIT 1]]>
+	</queryString>
+	<field name="POSTSOID" class="java.lang.Integer"/>
+	<field name="STATUSID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SHIPNUM" class="java.lang.String"/>
+	<field name="CUSTOMERPO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SONUM" class="java.lang.String"/>
+	<variable name="country" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("country", "US")]]></variableExpression>
+	</variable>
+	<variable name="ORDERNUMBER" class="java.lang.String">
+		<variableExpression><![CDATA[$P{cbOrderNumber}.equals("Ship") ?
+                    $F{SHIPNUM} :
+                    ($P{cbOrderNumber}.equals("SO") ?
+                        $F{SONUM} :
+                        ($F{CUSTOMERPO} == null || $F{CUSTOMERPO}.length() < 1 ?
+                           $F{SONUM} :
+                           $F{CUSTOMERPO})
+                   )]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="108" splitType="Stretch">
+			<subreport runToBottom="true">
+				<reportElement x="0" y="0" width="612" height="108" uuid="dbbe18e0-6687-46dd-95ac-2df0a0eb06d3"/>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<subreportParameter name="colShippingTerms">
+					<subreportParameterExpression><![CDATA[$P{colShippingTerms}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colPaymentTerms">
+					<subreportParameterExpression><![CDATA[$P{colPaymentTerms}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="shipID">
+					<subreportParameterExpression><![CDATA[$P{shipID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colQtyShipped">
+					<subreportParameterExpression><![CDATA[$P{colQtyShipped}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colCurrencyExtendedPrice">
+					<subreportParameterExpression><![CDATA[$P{colCurrencyExtendedPrice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colItemLineNumber">
+					<subreportParameterExpression><![CDATA[$P{colItemLineNumber}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colItemNumberAndDescription">
+					<subreportParameterExpression><![CDATA[$P{colItemNumberAndDescription}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowHomeCurrencyTotals">
+					<subreportParameterExpression><![CDATA[$P{ShowHomeCurrencyTotals}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colShipVia">
+					<subreportParameterExpression><![CDATA[$P{colShipVia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowRemitToChangeNote">
+					<subreportParameterExpression><![CDATA[$P{ShowRemitToChangeNote}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowDeliverySignature">
+					<subreportParameterExpression><![CDATA[$P{ShowDeliverySignature}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCompanyAddress">
+					<subreportParameterExpression><![CDATA[$P{ShowCompanyAddress}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowBillToEmail">
+					<subreportParameterExpression><![CDATA[$P{ShowBillToEmail}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="path">
+					<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colOrderCurrency">
+					<subreportParameterExpression><![CDATA[$P{colOrderCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCompanyName">
+					<subreportParameterExpression><![CDATA[$P{ShowCompanyName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowBillToFax">
+					<subreportParameterExpression><![CDATA[$P{ShowBillToFax}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colOrderCurrencyRate">
+					<subreportParameterExpression><![CDATA[$P{colOrderCurrencyRate}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="module">
+					<subreportParameterExpression><![CDATA[$P{module}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colExtendedPrice">
+					<subreportParameterExpression><![CDATA[$P{colExtendedPrice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colFOBPoint">
+					<subreportParameterExpression><![CDATA[$P{colFOBPoint}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowBillToPhone">
+					<subreportParameterExpression><![CDATA[$P{ShowBillToPhone}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colSalesPerson">
+					<subreportParameterExpression><![CDATA[$P{colSalesPerson}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colUnitPrice">
+					<subreportParameterExpression><![CDATA[$P{colUnitPrice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cbOrderNumber">
+					<subreportParameterExpression><![CDATA[$P{cbOrderNumber}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colCurrencyUnitPrice">
+					<subreportParameterExpression><![CDATA[$P{colCurrencyUnitPrice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCurrencyTotals">
+					<subreportParameterExpression><![CDATA[$P{ShowCurrencyTotals}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="postSoId">
+					<subreportParameterExpression><![CDATA[$F{POSTSOID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colType">
+					<subreportParameterExpression><![CDATA[$P{colType}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="colReqShipDate">
+					<subreportParameterExpression><![CDATA[$P{colReqShipDate}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ShowCountry">
+					<subreportParameterExpression><![CDATA[$P{ShowCountry}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{path} + "subShippingInvoice_US.jasper"]]></subreportExpression>
+			</subreport>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="612" height="17" uuid="53232f8f-9b9a-40c3-ac2d-12e99fb10352">
+					<printWhenExpression><![CDATA[$P{ShowStartAndEndForBatchPrinting}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["■■■■■■START INVOICE " + $V{ORDERNUMBER} + " "  + "(PAGE 1 OF " + $V{PAGE_NUMBER}+") ■■■■■■"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-44" mode="Transparent" x="561" y="0" width="31" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="0536905e-ff17-43a1-bc2e-5cb24e51448e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-43" mode="Transparent" x="352" y="0" width="209" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="a30ea830-7bd0-4061-83fc-172b9adca245">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="4">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="34">
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="612" height="15" uuid="3108257d-c326-4a22-b979-bef90d854574">
+					<printWhenExpression><![CDATA[$P{ShowStartAndEndForBatchPrinting}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Open Sans" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["■■■■■■END INVOICE " + $V{ORDERNUMBER} + " "  + "(PAGE "+$V{PAGE_NUMBER}+" OF " + $V{PAGE_NUMBER}+")■■■■■■"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-43" mode="Transparent" x="352" y="1" width="209" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="62f95c81-2488-4bb9-921b-446dd0a8c689">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="4">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-44" mode="Transparent" x="561" y="1" width="31" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="57ca18e4-d6dc-47d4-b588-5359b7f0b52d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>
