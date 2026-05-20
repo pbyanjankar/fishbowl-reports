@@ -67,6 +67,10 @@
 			<parameterDescription><![CDATA[all,All,1,Active,0,Inactive]]></parameterDescription>
 			<defaultValueExpression><![CDATA["all"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
     CUSTOMER.NAME AS CUSTOMER,
@@ -179,6 +183,10 @@ ORDER BY
 		<property name="Group" value="Type an alternate title for this report"/>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Filters"/>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
     COMPANY.NAME AS COMPANY
@@ -244,7 +252,7 @@ WHERE id = 1]]>
 			<componentElement>
 				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="732" height="56" uuid="3a69cb21-719d-4127-9ee5-3f37c4fd5bf2"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="SOInfo" uuid="f209e378-a08b-4a5f-b31f-81c95ef9cb5b">
+					<datasetRun subDataset="SOInfo" uuid="941d6d20-ef29-40ac-bef4-3afacc48027d">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<datasetParameter name="ckClosedShort">
 							<datasetParameterExpression><![CDATA[$P{ckClosedShort}]]></datasetParameterExpression>
@@ -272,6 +280,9 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<datasetParameter name="cbCustomerStatus">
 							<datasetParameterExpression><![CDATA[$P{cbCustomerStatus}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="customerGroupID">
+							<datasetParameterExpression><![CDATA[$P{customerGroupID}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
@@ -378,7 +389,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
@@ -400,7 +411,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
 									<font fontName="Open Sans" size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Date of Last Date]]></text>
+								<text><![CDATA[Date of Last Order]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
