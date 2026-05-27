@@ -63,6 +63,7 @@
     SO.NUM AS SONUMBER,
     CUSTOMER.NAME AS CUSTOMER,
     SO.dateIssued AS DATEISSUED,
+    SO.dateCompleted AS DATECOMPLETED,
     sostatus.name AS SOSTATUS,
     CURRENCY.SYMBOL,
     SUM((soitem.unitprice * soitem.qtytofulfill) + soitem.adjustamount) AS ORDERED,
@@ -95,6 +96,7 @@ ORDER BY
 		<field name="SOSTATUS" class="java.lang.String"/>
 		<field name="ORDERED" class="java.lang.Double"/>
 		<field name="ORDEREDTAX" class="java.lang.Double"/>
+		<field name="DATECOMPLETED" class="java.sql.Timestamp"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -243,10 +245,10 @@ WHERE id = 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="90" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="80" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -258,7 +260,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" forecolor="#000099" uuid="dc840077-142d-4c19-85ce-9eefdf39e3c1"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" forecolor="#000099" uuid="dc840077-142d-4c19-85ce-9eefdf39e3c1"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
@@ -271,10 +273,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="160" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
+					<jr:column width="150" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="160" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
+								<reportElement x="0" y="0" width="150" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -286,7 +288,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="18" forecolor="#000099" uuid="318617e7-06ea-4a32-af57-1a12c5ebde0c"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="150" height="18" forecolor="#000099" uuid="318617e7-06ea-4a32-af57-1a12c5ebde0c"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
@@ -299,10 +301,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="d1d28d9f-b3eb-472c-8b47-4f3c65b1f255">
+					<jr:column width="80" uuid="d1d28d9f-b3eb-472c-8b47-4f3c65b1f255">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="04278120-cb35-4b73-a179-33d1d4b7c263"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="04278120-cb35-4b73-a179-33d1d4b7c263"/>
 								<box>
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -314,7 +316,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="b6ee0e6d-8435-4a46-bbb3-5fc213b0d070"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="b6ee0e6d-8435-4a46-bbb3-5fc213b0d070"/>
 								<box>
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
@@ -326,10 +328,37 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="80" uuid="d1d28d9f-b3eb-472c-8b47-4f3c65b1f255">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="04278120-cb35-4b73-a179-33d1d4b7c263"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Date Fulfilled]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="b6ee0e6d-8435-4a46-bbb3-5fc213b0d070"/>
+								<box>
+									<bottomPen lineWidth="0.25" lineColor="#999999"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Open Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DATECOMPLETED}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -341,7 +370,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
@@ -352,10 +381,10 @@ WHERE id = 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="90" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -367,7 +396,7 @@ WHERE id = 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField pattern="" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
@@ -382,7 +411,7 @@ $F{ORDERED}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="82" uuid="70541880-baf4-4b0a-a431-5450101bb799">
+					<jr:column width="72" uuid="70541880-baf4-4b0a-a431-5450101bb799">
 						<jr:tableFooter height="0" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.0"/>
@@ -390,7 +419,7 @@ $F{ORDERED}]]></textFieldExpression>
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="82" height="30" uuid="410a6ca8-57c4-4663-a880-98adf0e96265"/>
+								<reportElement x="0" y="0" width="72" height="30" uuid="410a6ca8-57c4-4663-a880-98adf0e96265"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -402,7 +431,7 @@ $F{ORDERED}]]></textFieldExpression>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="82" height="18" isPrintWhenDetailOverflows="true" uuid="d84848c7-19f4-4581-afdf-e99c884ae907"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="18" isPrintWhenDetailOverflows="true" uuid="d84848c7-19f4-4581-afdf-e99c884ae907"/>
 								<box leftPadding="1" rightPadding="1">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
@@ -417,10 +446,10 @@ $F{ORDEREDTAX}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="120" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+					<jr:column width="100" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="120" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<reportElement x="0" y="0" width="100" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -432,7 +461,7 @@ $F{ORDEREDTAX}]]></textFieldExpression>
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="18" uuid="e5c1bc97-5bb2-41b5-a311-94c913accb88"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="0.25" lineColor="#999999"/>
 								</box>
