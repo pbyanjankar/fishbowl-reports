@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.026316236461414"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="271"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -516,21 +516,6 @@ WHERE SO.NUM = $P{soNum}]]>
 					<text><![CDATA[Ship Date]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-11" positionType="Float" mode="Transparent" x="274" y="20" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6cbbb3bd-3f63-4a34-8951-ce70d199933a"/>
-					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-						<pen lineWidth="0.0"/>
-						<topPen lineWidth="0.0"/>
-						<leftPen lineWidth="0.0"/>
-						<bottomPen lineWidth="0.0"/>
-						<rightPen lineWidth="0.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
-						<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{VENDORPO}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 					<reportElement key="textField-11" positionType="Float" mode="Transparent" x="90" y="20" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fdff8afd-d53b-4799-a4df-64adb6e8a67e"/>
 					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 						<pen lineWidth="0.0"/>
@@ -605,6 +590,13 @@ WHERE SO.NUM = $P{soNum}]]>
 					</textElement>
 					<text><![CDATA[P.O. No.]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="274" y="20" width="92" height="20" uuid="1463e846-7431-4fbd-aa6b-48c24740a700"/>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CUSTOMERCONTACT}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 	</group>
@@ -887,7 +879,7 @@ WHERE SO.NUM = $P{soNum}]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textElement textAlignment="Center">
-									<font fontName="SansSerif" size="10"/>
+									<font fontName="SansSerif" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{QTYTOFULFILL}]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
@@ -922,7 +914,7 @@ WHERE SO.NUM = $P{soNum}]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textElement>
-									<font fontName="SansSerif" size="10"/>
+									<font fontName="SansSerif" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PRODUCTNUM}]]></textFieldExpression>
 								<anchorNameExpression><![CDATA["ProductNum"]]></anchorNameExpression>
@@ -958,7 +950,7 @@ WHERE SO.NUM = $P{soNum}]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textElement>
-									<font fontName="SansSerif" size="10"/>
+									<font fontName="SansSerif" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PRODUCTDESC} +
 ($F{ITEMNOTE}.length()==0 ? "" : "\n"+ $F{ITEMNOTE})]]></textFieldExpression>
@@ -996,7 +988,7 @@ WHERE SO.NUM = $P{soNum}]]>
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<textElement textAlignment="Center">
-									<font fontName="SansSerif" size="10"/>
+									<font fontName="SansSerif" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{CONDISH}]]></textFieldExpression>
 							</textField>
@@ -1009,7 +1001,7 @@ WHERE SO.NUM = $P{soNum}]]>
 	<lastPageFooter>
 		<band height="190">
 			<staticText>
-				<reportElement key="staticText-1" mode="Transparent" x="350" y="0" width="200" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="f0ce9eb1-1d3b-4c8b-8ac1-59546163f552"/>
+				<reportElement key="staticText-1" mode="Transparent" x="235" y="0" width="170" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="f0ce9eb1-1d3b-4c8b-8ac1-59546163f552"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1024,7 +1016,7 @@ WHERE SO.NUM = $P{soNum}]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" mode="Transparent" x="275" y="0" width="75" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="392a938a-4f8f-48cf-9b27-d120e611d8c8"/>
+				<reportElement key="staticText-1" mode="Transparent" x="172" y="0" width="63" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="392a938a-4f8f-48cf-9b27-d120e611d8c8"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1039,7 +1031,7 @@ WHERE SO.NUM = $P{soNum}]]>
 				<text><![CDATA[Signature]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" mode="Transparent" x="0" y="0" width="75" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="2f1d0078-1eb4-4cd6-a482-6d5448096fe0"/>
+				<reportElement key="staticText-1" mode="Transparent" x="0" y="0" width="30" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="2f1d0078-1eb4-4cd6-a482-6d5448096fe0"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1054,7 +1046,7 @@ WHERE SO.NUM = $P{soNum}]]>
 				<text><![CDATA[Print]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" mode="Transparent" x="75" y="0" width="200" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="c01149ce-5708-4466-bf88-5357a5329634"/>
+				<reportElement key="staticText-1" mode="Transparent" x="30" y="0" width="142" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="c01149ce-5708-4466-bf88-5357a5329634"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1267,6 +1259,24 @@ WHERE SO.NUM = $P{soNum}]]>
 				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
 					<font fontName="SansSerif" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="0" width="40" height="30" uuid="a6869ba2-3475-43ba-a4e1-4937c55a46f4"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="105" height="30" uuid="a006e14b-6de7-4f2f-82b3-e8156708ba26"/>
+				<box leftPadding="2" rightPadding="2">
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="9"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
