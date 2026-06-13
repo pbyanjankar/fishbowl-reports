@@ -72,9 +72,11 @@
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<parameter name="col3%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Sort" value="2"/>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<parameter name="col5%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Sort" value="3"/>
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<parameter name="ckIncludeReturns" class="java.lang.String" isForPrompting="false">
@@ -82,6 +84,18 @@
 			<property name="Tab" value="Gross Sales Filter"/>
 			<parameterDescription><![CDATA[20,0]]></parameterDescription>
 			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="col1%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Sort" value="1"/>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="col6%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Sort" value="4"/>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="col10%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Sort" value="5"/>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
@@ -182,6 +196,15 @@ ORDER BY
 			<property name="Tab" value="Gross Sales Filter"/>
 			<parameterDescription><![CDATA[20,0]]></parameterDescription>
 			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="col1%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="col6%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="col10%Rebate" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
@@ -295,6 +318,15 @@ ORDER BY
 		<property name="Group" value="Filters"/>
 		<parameterDescription><![CDATA[20,0]]></parameterDescription>
 		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="col1%Rebate" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="col6%Rebate" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="col10%Rebate" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -414,10 +446,10 @@ LIMIT 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="150" uuid="e8b781ca-1efe-461b-bcf4-e36d5d6d2a9a">
+					<jr:column width="140" uuid="e8b781ca-1efe-461b-bcf4-e36d5d6d2a9a">
 						<jr:tableFooter height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="150" height="20" uuid="54211930-c314-43db-afce-5504c7b6db24"/>
+								<reportElement x="0" y="0" width="140" height="20" uuid="54211930-c314-43db-afce-5504c7b6db24"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3">
 									<topPen lineWidth="1.0"/>
 								</box>
@@ -429,7 +461,7 @@ LIMIT 1]]>
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="150" height="30" uuid="6c6541ac-448a-4acd-b3a9-d9e270442676"/>
+								<reportElement x="0" y="0" width="140" height="30" uuid="6c6541ac-448a-4acd-b3a9-d9e270442676"/>
 								<box>
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -446,7 +478,7 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="150" height="20" uuid="81ff3917-1165-4f00-ba7c-aaa01ec60489"/>
+								<reportElement x="0" y="0" width="140" height="20" uuid="81ff3917-1165-4f00-ba7c-aaa01ec60489"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textFieldExpression><![CDATA[$F{GROUPBY}]]></textFieldExpression>
 							</textField>
@@ -489,11 +521,11 @@ LIMIT 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="a999bbce-9146-439c-828d-d046e8dcc789">
+					<jr:column width="72" uuid="a999bbce-9146-439c-828d-d046e8dcc789">
 						<printWhenExpression><![CDATA[$P{colQtyPosted}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="607122a8-839f-4a82-8c4f-53d55619e171"/>
+								<reportElement x="0" y="0" width="72" height="30" uuid="607122a8-839f-4a82-8c4f-53d55619e171"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -505,7 +537,7 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="100" height="20" uuid="5b4b9a7a-d7a2-4dfd-9447-0f88057c23c6"/>
+								<reportElement x="0" y="0" width="72" height="20" uuid="5b4b9a7a-d7a2-4dfd-9447-0f88057c23c6"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$F{QTYPOSTED}]]></textFieldExpression>
@@ -513,11 +545,35 @@ LIMIT 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
+					<jr:column width="70" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
+						<printWhenExpression><![CDATA[$P{col1%Rebate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[1% Rebate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="20" uuid="ba0f650e-64f3-4dc5-b962-d815d36abb77"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE} * 0.01]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
 						<printWhenExpression><![CDATA[$P{col3%Rebate}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -529,7 +585,7 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="100" height="20" uuid="ba0f650e-64f3-4dc5-b962-d815d36abb77"/>
+								<reportElement x="0" y="0" width="80" height="20" uuid="ba0f650e-64f3-4dc5-b962-d815d36abb77"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Right"/>
 								<textFieldExpression><![CDATA[$F{TOTALPRICE} * 0.03]]></textFieldExpression>
@@ -537,11 +593,11 @@ LIMIT 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="42555978-00cf-40bd-832a-bd8983d21749">
+					<jr:column width="90" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
 						<printWhenExpression><![CDATA[$P{col5%Rebate}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="6774e443-db3e-4b2a-a1cb-72e39e40af72"/>
+								<reportElement x="0" y="0" width="90" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -553,10 +609,58 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="100" height="20" uuid="6f0ffeaf-7fe3-4bcb-b80e-090aefaac0b0"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="ba0f650e-64f3-4dc5-b962-d815d36abb77"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Right"/>
-								<textFieldExpression><![CDATA[$F{TOTALPRICE}*0.05]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE} * 0.05]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="82267fbc-d44c-4371-897d-eec9f53aa2ce">
+						<printWhenExpression><![CDATA[$P{col6%Rebate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="12f73f03-ac3d-4550-ad2c-aaca7408e75a"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[6% Rebate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="ba0f650e-64f3-4dc5-b962-d815d36abb77"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE} * 0.06]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="42555978-00cf-40bd-832a-bd8983d21749">
+						<printWhenExpression><![CDATA[$P{col10%Rebate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="6774e443-db3e-4b2a-a1cb-72e39e40af72"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[10% Rebate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="6f0ffeaf-7fe3-4bcb-b80e-090aefaac0b0"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE}*0.10]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
@@ -612,10 +716,10 @@ LIMIT 1]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="150" uuid="3b43478a-42b8-42fa-97ec-54c4fd4fabbd">
+					<jr:column width="140" uuid="3b43478a-42b8-42fa-97ec-54c4fd4fabbd">
 						<jr:tableFooter height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="150" height="20" uuid="72f33328-2c2b-4464-97df-f07bec048694"/>
+								<reportElement x="0" y="0" width="140" height="20" uuid="72f33328-2c2b-4464-97df-f07bec048694"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3">
 									<topPen lineWidth="1.0"/>
 								</box>
@@ -627,7 +731,7 @@ LIMIT 1]]>
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="150" height="30" uuid="5d9fbd08-b564-4e59-8eaf-ced73f9a8637"/>
+								<reportElement x="0" y="0" width="140" height="30" uuid="5d9fbd08-b564-4e59-8eaf-ced73f9a8637"/>
 								<box>
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -639,7 +743,7 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="150" height="20" uuid="bf090394-1621-4148-9e66-f4fa5841a39b"/>
+								<reportElement x="0" y="0" width="140" height="20" uuid="bf090394-1621-4148-9e66-f4fa5841a39b"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textFieldExpression><![CDATA[$F{GROUPBY}]]></textFieldExpression>
 							</textField>
@@ -682,11 +786,11 @@ LIMIT 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="410e93e2-81ac-4925-87c1-c74927188d2e">
+					<jr:column width="72" uuid="410e93e2-81ac-4925-87c1-c74927188d2e">
 						<printWhenExpression><![CDATA[$P{colQtyPosted}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="d67702c5-61bf-4460-b4d1-684daa70522b"/>
+								<reportElement x="0" y="0" width="72" height="30" uuid="d67702c5-61bf-4460-b4d1-684daa70522b"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -698,7 +802,7 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="100" height="20" uuid="fa01304c-b28b-417c-8a24-1d5cb082689f"/>
+								<reportElement x="0" y="0" width="72" height="20" uuid="fa01304c-b28b-417c-8a24-1d5cb082689f"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$F{QTYPOSTED}]]></textFieldExpression>
@@ -706,11 +810,35 @@ LIMIT 1]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="9134c0ac-4ce4-4f9a-8b3b-18c48d0f2c1d">
+					<jr:column width="70" uuid="9134c0ac-4ce4-4f9a-8b3b-18c48d0f2c1d">
+						<printWhenExpression><![CDATA[$P{col1%Rebate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="24440c90-428b-4c2f-8641-b61d74ac413b"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[1% Rebate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="20" uuid="ac1bf8d3-59d3-4ece-805c-f9301befb4d2"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE} * 0.01]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="7a1c345d-78c1-4a2c-80f7-922691766ff9">
 						<printWhenExpression><![CDATA[$P{col3%Rebate}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="24440c90-428b-4c2f-8641-b61d74ac413b"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="c007a436-9db1-4efb-aee3-1b2db443f484"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -722,19 +850,19 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="100" height="20" uuid="ac1bf8d3-59d3-4ece-805c-f9301befb4d2"/>
+								<reportElement x="0" y="0" width="80" height="20" uuid="3d0a4a27-a8e3-4159-a9ce-2438a3bff181"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Right"/>
-								<textFieldExpression><![CDATA[$F{TOTALPRICE} * 0.03]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE}*0.03]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="7a1c345d-78c1-4a2c-80f7-922691766ff9">
+					<jr:column width="90" uuid="7a1c345d-78c1-4a2c-80f7-922691766ff9">
 						<printWhenExpression><![CDATA[$P{col5%Rebate}]]></printWhenExpression>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="100" height="30" uuid="c007a436-9db1-4efb-aee3-1b2db443f484"/>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c007a436-9db1-4efb-aee3-1b2db443f484"/>
 								<box leftPadding="3" rightPadding="3">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -746,10 +874,58 @@ LIMIT 1]]>
 						</jr:columnHeader>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="100" height="20" uuid="3d0a4a27-a8e3-4159-a9ce-2438a3bff181"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="3d0a4a27-a8e3-4159-a9ce-2438a3bff181"/>
 								<box topPadding="3" leftPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Right"/>
 								<textFieldExpression><![CDATA[$F{TOTALPRICE}*0.05]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7a1c345d-78c1-4a2c-80f7-922691766ff9">
+						<printWhenExpression><![CDATA[$P{col6%Rebate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c007a436-9db1-4efb-aee3-1b2db443f484"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[6% Rebate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="3d0a4a27-a8e3-4159-a9ce-2438a3bff181"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE}*0.06]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7a1c345d-78c1-4a2c-80f7-922691766ff9">
+						<printWhenExpression><![CDATA[$P{col10%Rebate}]]></printWhenExpression>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c007a436-9db1-4efb-aee3-1b2db443f484"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[10% Rebate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="3d0a4a27-a8e3-4159-a9ce-2438a3bff181"/>
+								<box topPadding="3" leftPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{TOTALPRICE}*0.10]]></textFieldExpression>
 								<patternExpression><![CDATA[$V{PriceDecimal}]]></patternExpression>
 							</textField>
 						</jr:detailCell>
