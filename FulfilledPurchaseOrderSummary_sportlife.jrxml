@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="371"/>
+	<property name="ireport.x" value="367"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -99,6 +99,9 @@
 		<property name="Group" value="Item Type"/>
 		<parameterDescription><![CDATA[40,0]]></parameterDescription>
 		<defaultValueExpression><![CDATA["40"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="col3%Discount" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -199,7 +202,9 @@ $V{subtotal}]]></textFieldExpression>
 					<hyperlinkReferenceExpression><![CDATA[$F{Group}]]></hyperlinkReferenceExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Group" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3b185afa-789b-4218-b0a9-b39363974c34"/>
+					<reportElement key="textField" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="3b185afa-789b-4218-b0a9-b39363974c34">
+						<printWhenExpression><![CDATA[$P{col3%Discount}]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -254,7 +259,9 @@ $V{subtotal}]]></textFieldExpression>
 					<text><![CDATA[Sub Total:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="9825231e-39f6-4a55-b1f0-0aa0c1c0d9d2"/>
+					<reportElement key="textField" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="9825231e-39f6-4a55-b1f0-0aa0c1c0d9d2">
+						<printWhenExpression><![CDATA[$P{col3%Discount}]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -366,7 +373,9 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 				<textFieldExpression><![CDATA[$P{cbGroupBy}.equals("locationgroup.name") ? "Vendor" : "Location Group"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="element-95" style="12b" stretchType="RelativeToTallestObject" mode="Transparent" x="650" y="0" width="82" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1bc85d37-f91c-4f7d-bbb5-757b6def8ea5"/>
+				<reportElement key="element-95" style="12b" stretchType="RelativeToTallestObject" mode="Transparent" x="650" y="0" width="82" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1bc85d37-f91c-4f7d-bbb5-757b6def8ea5">
+					<printWhenExpression><![CDATA[$P{col3%Discount}]]></printWhenExpression>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -436,7 +445,9 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{SYMBOL},
 				<textFieldExpression><![CDATA[$P{cbGroupBy}.equals("locationgroup.name") ?  $F{VENDORNAME} : $F{LG}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="0fa89f26-b76d-4e72-9627-d3c0ead08f0f"/>
+				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="0fa89f26-b76d-4e72-9627-d3c0ead08f0f">
+					<printWhenExpression><![CDATA[$P{col3%Discount}]]></printWhenExpression>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
 				</box>
@@ -535,7 +546,9 @@ $V{reportTotal}]]></textFieldExpression>
 				<text><![CDATA[Grand Total:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-3" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="d300438a-6241-4a8e-8385-19d94a8ce23b"/>
+				<reportElement key="textField-3" mode="Transparent" x="650" y="0" width="82" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="d300438a-6241-4a8e-8385-19d94a8ce23b">
+					<printWhenExpression><![CDATA[$P{col3%Discount}]]></printWhenExpression>
+				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
