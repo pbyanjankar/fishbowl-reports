@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="233"/>
+	<property name="ireport.y" value="1081"/>
 	<property name="ireport.callouts" value="##Wed Aug 10 12:18:02 CST 2022"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -5991,7 +5991,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
 				<textElement verticalAlignment="Bottom" markup="styled">
 					<font fontName="Open Sans" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{FooterMessage}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{FooterMessageCustom}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" positionType="Float" mode="Transparent" x="279" y="126" width="69" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c271b897-5f2d-4c7b-8d4e-0f44f3f42cc4">
