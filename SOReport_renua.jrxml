@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1001"/>
+	<property name="ireport.y" value="233"/>
 	<property name="ireport.callouts" value="##Wed Aug 10 12:18:02 CST 2022"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -787,6 +787,11 @@ WHERE 	so.id = $P{soId}]]>
 			<parameterDescription><![CDATA[Display field]]></parameterDescription>
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
+		<parameter name="IsInvoice" class="java.lang.Boolean" isForPrompting="false">
+			<property name="Tooltip" value="When this checkbox is checked, the title of the report will be changed to &quot;Invoice&quot;."/>
+			<property name="Group" value="Other Settings"/>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT DISTINCT
     SOITEM.ID AS ITEMID,
@@ -860,8 +865,9 @@ WHERE 	so.id = $P{soId}]]>
           IF(STR_TO_DATE($P!{CustomField:Item3}, '%Y-%m-%d %H:%i:%s') IS NULL, 0, 1) AS socf3DateBoolean,
           IF(STR_TO_DATE($P!{CustomField:Item1}, '%Y-%m-%d %H:%i:%s') IS NULL, NULL, $P!{CustomField:Item1}) AS socf1Date,
           IF(STR_TO_DATE($P!{CustomField:Item2}, '%Y-%m-%d %H:%i:%s') IS NULL, NULL, $P!{CustomField:Item2}) AS socf2Date,
-          IF(STR_TO_DATE($P!{CustomField:Item3}, '%Y-%m-%d %H:%i:%s') IS NULL, NULL, $P!{CustomField:Item3}) AS socf3Date
+          IF(STR_TO_DATE($P!{CustomField:Item3}, '%Y-%m-%d %H:%i:%s') IS NULL, NULL, $P!{CustomField:Item3}) AS socf3Date,
 
+tinfo.SERIALNUMBER AS SERIALNUMBER
 
 FROM so
     INNER JOIN soitem ON so.id = soitem.soid
@@ -884,6 +890,16 @@ FROM so
                     join objecttoobject on objecttoobject.recordid1 = soitem.id and objecttoobject.typeid = 30
                     where soitem.showitemflag = 0
                     group by parentID) as collapsedKitInfo on collapsedKitInfo.parentID = soitem.id and soitem.typeid = 80 and soitem.totalprice = 0
+
+   LEFT OUTER JOIN (SELECT soitem.id AS soitemid, GROUP_CONCAT(COALESCE(trackinginfosn.serialnum,'') SEPARATOR ', ') SERIALNUMBER
+	FROM so
+	INNER JOIN soitem ON so.id = soitem.soid
+	INNER JOIN pickitem ON (so.id = pickitem.orderid AND pickitem.ordertypeid = 20 AND soitem.id = pickitem.soitemid AND pickitem.statusid IN (30,40))
+	INNER JOIN trackinginfo ON trackinginfo.tableid = -1515431424 AND trackinginfo.recordid = pickitem.id
+   	INNER JOIN trackinginfosn ON trackinginfosn.trackinginfoid = trackinginfo.id
+	WHERE so.id = $P{soId}
+	GROUP BY soitem.id
+	) tinfo ON tinfo.soitemid = soitem.id
 
 WHERE so.id = $P{soId}
 AND soitem.showitemflag = 1
@@ -977,6 +993,7 @@ ORDER BY soitem.solineitem]]>
 		<field name="socf1Date" class="java.sql.Timestamp"/>
 		<field name="socf2Date" class="java.sql.Timestamp"/>
 		<field name="socf3Date" class="java.sql.Timestamp"/>
+		<field name="SERIALNUMBER" class="java.lang.String"/>
 		<variable name="ItemNum" class="java.lang.String">
 			<variableExpression><![CDATA[($F{KITPARENTLINE} == null ? "" : "     ") +
 ($F{PRODUCTNUM} == null || $F{PRODUCTNUM}.length() < 1 ?
@@ -3598,7 +3615,8 @@ $F{TOTALPRICE}]]></variableExpression>
 								<textFieldExpression><![CDATA[$V{ItemDesc} +
 (($P{ShowLineItemNotes} && !($F{NOTE} == null || $F{NOTE}.equals(""))) ?
     "\n  " + $F{NOTE}:
-    "")]]></textFieldExpression>
+    "")
++ ($P{IsInvoice} && $F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "")]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -4192,7 +4210,9 @@ $F{CURRENCYCODE} + "\n" + ($P{FieldTitle:TotalPrice}.equals("%") ? "Total Price"
 								<textFieldExpression><![CDATA[$V{ItemDesc} +
 (($P{ShowLineItemNotes} && !($F{NOTE} == null || $F{NOTE}.equals(""))) ?
     "\n  " + $F{NOTE}:
-    "")]]></textFieldExpression>
+    "")
+
++ ($P{IsInvoice} && $F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "")]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -4894,7 +4914,9 @@ $F{CURRENCYCODE} + "\n" + ($P{FieldTitle:TotalPrice}.equals("%") ? "Total Price"
 								<textFieldExpression><![CDATA[$V{ItemDesc} +
 (($P{ShowLineItemNotes} && !($F{NOTE} == null || $F{NOTE}.equals(""))) ?
     "\n  " + $F{NOTE}:
-    "")]]></textFieldExpression>
+    "")
+
++ ($P{IsInvoice} && $F{SERIALNUMBER}.length() > 0 ? "\nSN(s): " + $F{SERIALNUMBER} : "")]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -5969,7 +5991,7 @@ com.fbi.sdk.constants.setup.CurrencySymbolConst.getFormattedCurrency($F{HOMECURR
 				<textElement verticalAlignment="Bottom" markup="styled">
 					<font fontName="Open Sans" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{FooterMessageCustom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{FooterMessage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" positionType="Float" mode="Transparent" x="279" y="126" width="69" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="c271b897-5f2d-4c7b-8d4e-0f44f3f42cc4">
