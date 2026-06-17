@@ -74,13 +74,14 @@ trackinginfo.info = $P{LotNumber};]]>
 		<queryString>
 			<![CDATA[SELECT
 date(mo.datecompleted) AS MODATE,
-mo.num AS MONUM,
+wo.num AS MONUM,
 uom.code AS uom,
 product.num AS FINISHEDPRODUCT,
 coalesce(result.lotQtyOnHand,0) AS QTYONHAND,
-SUM(woitem.qtyUsed) AS qtyUsed,
-SUM(woitem.qtyScrapped) AS qtyScrapped
+woitem.qtyUsed AS qtyUsed,
+woitem.qtyScrapped AS qtyScrapped
 FROM woitem
+  INNER JOIN wo ON woitem.woid = wo.id
   INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
   INNER JOIN moitem ON woitem.moitemid = moitem.id
   INNER JOIN mo ON mo.id = moitem.moid
@@ -113,7 +114,7 @@ LEFT OUTER JOIN (
 
 WHERE
 trackinginfo.info = $P{LotNumber}
-GROUP BY 1,2,3,4;]]>
+;]]>
 		</queryString>
 		<field name="MODATE" class="java.sql.Timestamp">
 			<fieldDescription><![CDATA[]]></fieldDescription>
@@ -735,7 +736,7 @@ Received]]></text>
 									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
-									<text><![CDATA[MO ID]]></text>
+									<text><![CDATA[Batch MO ID]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter height="20" rowSpan="1"/>
