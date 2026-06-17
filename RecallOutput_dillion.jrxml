@@ -75,7 +75,7 @@ trackinginfo.info = $P{LotNumber};]]>
 			<![CDATA[SELECT
 date(mo.datecompleted) AS MODATE,
 wo.num AS BATCHMONUM,
-finishwo.num AS FINISHEDBATCHMOID,
+finishwo.num AS FINISHEDPRODUCTMOID,
 uom.code AS uom,
 product.num AS FINISHEDPRODUCT,
 coalesce(result.lotQtyOnHand,0) AS QTYONHAND,
@@ -133,7 +133,7 @@ trackinginfo.info = $P{LotNumber}
 		</field>
 		<field name="qtyOnHand" class="java.lang.Double"/>
 		<field name="FINISHEDPRODUCT" class="java.lang.String"/>
-		<field name="FINISHEDBATCHMOID" class="java.lang.String">
+		<field name="FINISHEDPRODUCTMOID" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
@@ -774,7 +774,7 @@ Received]]></text>
 									<textElement verticalAlignment="Bottom">
 										<font fontName="Open Sans" size="9" isBold="true"/>
 									</textElement>
-									<text><![CDATA[Finished Batch MO ID]]></text>
+									<text><![CDATA[Finished Product MO ID]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter height="20" rowSpan="1"/>
@@ -792,7 +792,7 @@ Received]]></text>
 									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="8"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{FINISHEDBATCHMOID}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{FINISHEDPRODUCTMOID}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
