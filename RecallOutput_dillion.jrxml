@@ -74,7 +74,8 @@ trackinginfo.info = $P{LotNumber};]]>
 		<queryString>
 			<![CDATA[SELECT
 date(mo.datecompleted) AS MODATE,
-wo.num AS MONUM,
+wo.num AS BATCHMONUM,
+finishwo.num AS FINISHEDBATCHMOID,
 uom.code AS uom,
 product.num AS FINISHEDPRODUCT,
 coalesce(result.lotQtyOnHand,0) AS QTYONHAND,
@@ -90,6 +91,7 @@ FROM woitem
  INNER JOIN bomitem ON bomitem.stageBomId = moitem.bomid
   INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10 AND finishItem.bomid = bomitem.bomid
   INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
+  INNER JOIN wo AS finishwo ON finishwo.id = finishwoitem.woid
   LEFT JOIN product ON product.partid = finishwoitem.partid
 
 
@@ -119,7 +121,7 @@ trackinginfo.info = $P{LotNumber}
 		<field name="MODATE" class="java.sql.Timestamp">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="MONUM" class="java.lang.String">
+		<field name="BATCHMONUM" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="qtyUsed" class="java.lang.Double">
@@ -131,6 +133,9 @@ trackinginfo.info = $P{LotNumber}
 		</field>
 		<field name="qtyOnHand" class="java.lang.Double"/>
 		<field name="FINISHEDPRODUCT" class="java.lang.String"/>
+		<field name="FINISHEDBATCHMOID" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
 		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
 		</variable>
@@ -683,7 +688,7 @@ Received]]></text>
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="745" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
+					<jr:columnGroup width="746" uuid="e3c27214-6859-487d-93c4-7233fb850d28">
 						<jr:columnHeader height="22" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="745" height="22" uuid="2039dca6-f2a2-4dc2-bfca-ed15393e3855"/>
@@ -754,7 +759,40 @@ Received]]></text>
 									<textElement verticalAlignment="Top">
 										<font fontName="Open Sans" size="8"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{MONUM}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{BATCHMONUM}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="120" uuid="d17fc924-fa31-413c-adb3-dc239e5e00d4">
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="120" height="31" backcolor="#EAEAEA" uuid="2ca98696-d536-443c-b024-2dbbcab59e37"/>
+									<box leftPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement verticalAlignment="Bottom">
+										<font fontName="Open Sans" size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Finished Batch MO ID]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="20" rowSpan="1"/>
+							<jr:detailCell height="18" rowSpan="1">
+								<box>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="18" uuid="e5f5b3e9-3343-4e9d-9544-e015dd0bdde6"/>
+									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement verticalAlignment="Top">
+										<font fontName="Open Sans" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FINISHEDBATCHMOID}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -841,11 +879,11 @@ Received]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="380" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
+						<jr:column width="261" uuid="b7989b8d-d062-48e7-807c-2e766396e919">
 							<jr:tableFooter height="0" rowSpan="1"/>
 							<jr:columnHeader height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="380" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
+									<reportElement mode="Opaque" x="0" y="0" width="260" height="31" backcolor="#EAEAEA" uuid="6013afe3-fa15-4349-8b63-72db475a0dc1"/>
 									<box leftPadding="3">
 										<bottomPen lineWidth="0.75"/>
 									</box>
@@ -858,7 +896,7 @@ Received]]></text>
 							<jr:columnFooter height="20" rowSpan="1"/>
 							<jr:detailCell height="18" rowSpan="1">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="380" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="260" height="18" uuid="30b12ef6-0f6c-48af-abe8-09cec1f3d653"/>
 									<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 										<bottomPen lineWidth="0.75" lineColor="#000000"/>
 									</box>
