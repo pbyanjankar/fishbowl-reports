@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SameDayShipmentsLUX" pageWidth="1242" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1182" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SameDayShipmentsLUX" pageWidth="1342" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1282" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="69b73100-c2f4-46bc-9fa3-a62a5fcabb9b">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="394"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Tue May 12 09:31:56 NPT 2026"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -62,6 +62,9 @@
 		<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
+		<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
 		<queryString>
 			<![CDATA[SELECT
     SO.NUM AS SONUMBER,
@@ -80,7 +83,8 @@ and memo.recordid = so.id order by datecreated desc limit 1
 ),'') as MEMO,
 customer.name AS CUSTOMERNAME,
 concat(sysuser.firstname, " ", sysuser.lastname) AS SALESPERSON,
-so.customerpo AS CUSTOMERPO
+so.customerpo AS CUSTOMERPO,
+qbclass.name AS CLASS
 FROM
     so
     INNER JOIN soitem ON soitem.soid = so.id
@@ -90,12 +94,14 @@ FROM
     LEFT OUTER JOIN memo ON memo.recordId = so.id AND memo.tableid = '1012013120'
     LEFT OUTER JOIN customer ON customer.id = so.customerId
     LEFT OUTER JOIN sysuser ON sysuser.id = so.salesmanId
+    LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
 WHERE
     so.num LIKE $P{soNum}
     AND COALESCE(product.num,'') LIKE $P{productNum}
     AND $P!{cbApplyDateFilter} BETWEEN $P{dateRange1} AND $P{dateRange2}
     AND customer.id LIKE $P{customerID}
     AND COALESCE(sysuser.username,'') LIKE $P{salesPerson}
+    AND qbclass.id LIKE $P{qbClassID}
 ORDER BY
     1,2]]>
 		</queryString>
@@ -110,6 +116,7 @@ ORDER BY
 		<field name="CUSTOMERNAME" class="java.lang.String"/>
 		<field name="CUSTOMERPO" class="java.lang.String"/>
 		<field name="SALESPERSON" class="java.lang.String"/>
+		<field name="CLASS" class="java.lang.String"/>
 		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
 			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
 		</variable>
@@ -170,6 +177,9 @@ ORDER BY
 	<parameter name="salesPerson" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="qbClassID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
     COMPANY.NAME AS COMPANY
@@ -189,7 +199,7 @@ WHERE id = 1]]>
 	<pageHeader>
 		<band height="64" splitType="Prevent">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="0" y="40" width="1182" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
+				<reportElement key="" mode="Transparent" x="0" y="40" width="1282" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="94c5defb-2209-45a7-8e8b-2f0794306a3d">
 					<printWhenExpression><![CDATA[true]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
@@ -208,7 +218,7 @@ WHERE id = 1]]>
 (new SimpleDateFormat($V{DateFormat})).format($P{dateRange2})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="0" width="1182" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
+				<reportElement key="" x="0" y="0" width="1282" height="18" uuid="37929e84-e98f-4dd3-97bb-54fc9b6f5b5e"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Open Sans" size="13" isBold="true"/>
@@ -216,7 +226,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" x="0" y="54" width="1182" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
+				<reportElement key="" x="0" y="54" width="1282" height="10" uuid="47bc6157-4181-4988-893c-38b83e3baf98"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement>
 					<font fontName="Open Sans"/>
@@ -224,7 +234,7 @@ WHERE id = 1]]>
 				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" mode="Transparent" x="0" y="18" width="1182" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
+				<reportElement key="" mode="Transparent" x="0" y="18" width="1282" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="3c2c1bfd-2155-4bce-953c-e63b64e61e04"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -236,7 +246,7 @@ WHERE id = 1]]>
 	<detail>
 		<band height="56">
 			<componentElement>
-				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="1182" height="56" uuid="3a69cb21-719d-4127-9ee5-3f37c4fd5bf2"/>
+				<reportElement key="Don&apos;t Show Details" x="0" y="0" width="1282" height="56" uuid="3a69cb21-719d-4127-9ee5-3f37c4fd5bf2"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="SOInfo" uuid="a9717b74-a487-4a64-a68e-35e4388b84e4">
 						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
@@ -355,6 +365,32 @@ WHERE id = 1]]>
 									<font fontName="Open Sans"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{SALESPERSON}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="6771b652-e65e-449a-a93c-659b3b4a917f">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="a156cb17-f1c1-457a-a4f6-c17eb3c3b61e"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Open Sans" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Class]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="18" forecolor="#000000" uuid="dc840077-142d-4c19-85ce-9eefdf39e3c1"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="0.25" lineColor="#999999"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Open Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CLASS}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -554,7 +590,7 @@ Date Fulfilled]]></text>
 	<pageFooter>
 		<band height="18" splitType="Prevent">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="951" y="3" width="210" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
+				<reportElement key="" mode="Transparent" x="1050" y="3" width="210" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f2a60207-d5ef-464a-9ee1-cea13307187c">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="4">
@@ -570,7 +606,7 @@ Date Fulfilled]]></text>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
-				<reportElement key="" mode="Transparent" x="1161" y="3" width="21" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
+				<reportElement key="" mode="Transparent" x="1260" y="3" width="21" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ed3dbc3c-3d28-4c1c-b533-1d67ed250faa">
 					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="0" rightPadding="0">
