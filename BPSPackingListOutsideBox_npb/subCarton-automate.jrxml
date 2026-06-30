@@ -126,7 +126,7 @@ ORDER BY shipcarton.cartonnum]]>
 					<font fontName="Open Sans" size="12" isBold="true" isUnderline="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FieldTitle:CartonInfo}.equals("%") ? System.getProperty("DefaultContainer", "Carton") + " Info" : $P{FieldTitle:CartonInfo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[System.getProperty("DefaultContainer", "Carton") ]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -143,7 +143,7 @@ ORDER BY shipcarton.cartonnum]]>
 					<font fontName="Open Sans" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FieldTitle:Carton#}.equals("%") ? System.getProperty("DefaultContainer", "Carton") + " #" : $P{FieldTitle:Carton#}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[System.getProperty("DefaultContainer", "Carton") + " #"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField-12" style="10b" mode="Opaque" x="368" y="0" width="184" height="14" forecolor="#000000" backcolor="#EAEAEA" uuid="1326f497-cff3-4003-ab2c-79801bede21f"/>
@@ -156,7 +156,7 @@ ORDER BY shipcarton.cartonnum]]>
 					<font fontName="Open Sans" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FieldTitle:Tracking#}.equals("%") ? "Tracking #" : $P{FieldTitle:Tracking#}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Tracking #"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="184" y="0" width="184" height="14" backcolor="#EAEAEA" uuid="99886a70-7bf4-4bcc-968d-fa8624ae9199"/>
@@ -166,7 +166,7 @@ ORDER BY shipcarton.cartonnum]]>
 				<textElement verticalAlignment="Bottom" markup="none">
 					<font fontName="Open Sans" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FieldTitle:Weight}.equals("%") ? "Weight" : $P{FieldTitle:Weight}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Weight"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -301,7 +301,7 @@ ORDER BY shipcarton.cartonnum]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="Open Sans" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FieldTitle:TotalWeight}.equals("%") ? "Total Weight:" : $P{FieldTitle:TotalWeight}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ "Total Weight:" ]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField-9" mode="Transparent" x="368" y="0" width="184" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="e02d2eff-bf48-4cae-8ef6-ba1d355c969a"/>
@@ -315,9 +315,8 @@ ORDER BY shipcarton.cartonnum]]>
 					<font fontName="Open Sans" size="10" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FieldTitle:TotalWeight}.equals("%") ? System.getProperty("DefaultContainer", "Carton") + " " + "Count: " + $V{totalCount} : $P{FieldTitle:TotalWeight} + ": " + $V{totalCount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[System.getProperty("DefaultContainer", "Carton") + " " + "Count: " + $V{totalCount}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
 </jasperReport>
-

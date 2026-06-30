@@ -605,6 +605,16 @@
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
+	<parameter name="UPCBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FieldTitle:UPCBarcode" class="java.lang.String" isForPrompting="false">
+		<property name="Tab" value="Field Titles"/>
+		<property name="Group" value="Items"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[UPC]]></parameterDescription>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
     SHIP.ID AS SHIPID,

@@ -43,9 +43,6 @@
 			<style mode="Opaque" backcolor="#EAEAEA" pattern="" fontName="Open Sans"/>
 		</conditionalStyle>
 	</style>
-	<style name="Barcode" hAlign="Center" vAlign="Middle">
-		<box topPadding="0"/>
-	</style>
 	<subDataset name="SOLineItems" uuid="dcf1f484-f0f3-4f9f-9f94-106b3d8297e6">
 		<parameter name="ISSUBREPORTONLY" class="java.lang.String" isForPrompting="false"/>
 		<parameter name="SOID" class="java.lang.String" isForPrompting="false">
@@ -79,13 +76,13 @@
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<parameter name="QtyOrdered" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<parameter name="QtyShipped" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<parameter name="QtyRemaining" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<parameter name="UnitPrice" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
@@ -238,16 +235,7 @@
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<parameter name="UPC" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
-		</parameter>
-		<parameter name="FieldTitle:UPCBarcode" class="java.lang.String" isForPrompting="false">
-			<property name="Tab" value="Field Titles"/>
-			<property name="Group" value="Items"/>
-			<property name="Sort" value="2"/>
-			<parameterDescription><![CDATA[UPC]]></parameterDescription>
-		</parameter>
-		<parameter name="UPCBarcode" class="java.lang.Boolean" isForPrompting="false">
-			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT GROUP_CONCAT(IF(SHIPITEM.SHIPID = $P!{ShipID}, SHIPITEM.ID, NULL)) AS SHIPITEMID,
@@ -418,13 +406,13 @@ ORDER BY soitem.solineitem
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<parameter name="QtyOrdered" class="java.lang.Boolean" isForPrompting="false">
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<parameter name="QtyShipped" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<parameter name="QtyRemaining" class="java.lang.Boolean" isForPrompting="false">
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UnitPrice" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
@@ -582,15 +570,6 @@ ORDER BY soitem.solineitem
 	<parameter name="UPC" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
-	<parameter name="FieldTitle:UPCBarcode" class="java.lang.String" isForPrompting="false">
-		<property name="Tab" value="Field Titles"/>
-		<property name="Group" value="Items"/>
-		<property name="Sort" value="2"/>
-		<parameterDescription><![CDATA[UPC]]></parameterDescription>
-	</parameter>
-	<parameter name="UPCBarcode" class="java.lang.Boolean" isForPrompting="false">
-		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[SELECT NAME FROM company WHERE id = 1]]>
 	</queryString>
@@ -607,7 +586,7 @@ ORDER BY soitem.solineitem
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="1490" uuid="6bd677a7-5c4a-47e1-9bb3-9aeaf3b69616">
+					<jr:columnGroup width="1416" uuid="6bd677a7-5c4a-47e1-9bb3-9aeaf3b69616">
 						<jr:column width="32" uuid="7176a664-bf3d-49b3-b5d0-8db32f284f42">
 							<printWhenExpression><![CDATA[$P{LineNumber}]]></printWhenExpression>
 							<jr:groupHeader groupName="New Column Header">
@@ -627,18 +606,18 @@ ORDER BY soitem.solineitem
 											<font fontName="Open Sans" isBold="true"/>
 											<paragraph lineSpacing="Single"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:Line#}.equals("%") ? "Line\n#" : $P{FieldTitle:Line#}]]></textFieldExpression>
+										<textFieldExpression><![CDATA["Line\n#"]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="32" height="18" uuid="fee92f9c-3b32-417c-8afc-454affdc34b1"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="32" height="13" uuid="fee92f9c-3b32-417c-8afc-454affdc34b1"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Center" verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -669,9 +648,9 @@ ORDER BY soitem.solineitem
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="8065cb0b-cd04-4bbf-a764-b8aed57a3055"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="8065cb0b-cd04-4bbf-a764-b8aed57a3055"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Center" verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -706,13 +685,13 @@ ORDER BY soitem.solineitem
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="299" height="18" uuid="6ae324ac-ada7-479b-8f61-5e2d0d3357e8"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="299" height="13" uuid="6ae324ac-ada7-479b-8f61-5e2d0d3357e8"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -740,14 +719,14 @@ ORDER BY soitem.solineitem
 											<font fontName="Open Sans" isBold="true"/>
 											<paragraph lineSpacing="Single"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:Part#}.equals("%") ? "Part #" : $P{FieldTitle:Part#}]]></textFieldExpression>
+										<textFieldExpression><![CDATA["Part #"]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="82" height="18" uuid="66638c31-64de-48dd-8bba-a493ecb7eeaf"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="82" height="13" uuid="66638c31-64de-48dd-8bba-a493ecb7eeaf"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -773,14 +752,14 @@ ORDER BY soitem.solineitem
 											<font fontName="Open Sans" isBold="true"/>
 											<paragraph lineSpacing="Single"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:Description}.equals("%") ? "Description" : $P{FieldTitle:Description}]]></textFieldExpression>
+										<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="217" height="18" uuid="f3c6b6ba-cc3a-45dd-a779-7450e128bfc9"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="217" height="13" uuid="f3c6b6ba-cc3a-45dd-a779-7450e128bfc9"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -808,60 +787,20 @@ ORDER BY soitem.solineitem
 											<font fontName="Open Sans" isBold="true"/>
 											<paragraph lineSpacing="Single"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:UPC}.equals("%") ? "UPC" : $P{FieldTitle:UPC}]]></textFieldExpression>
+										<textFieldExpression><![CDATA["UPC"]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="18" uuid="66638c31-64de-48dd-8bba-a493ecb7eeaf"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="13" uuid="66638c31-64de-48dd-8bba-a493ecb7eeaf"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{UPC}]]></textFieldExpression>
 									</textField>
-								</jr:cell>
-							</jr:groupFooter>
-							<jr:detailCell height="0" rowSpan="1"/>
-						</jr:column>
-						<jr:column width="74" uuid="669a81a6-40d0-42da-8797-8a46e81c402c">
-							<printWhenExpression><![CDATA[$P{UPCBarcode}]]></printWhenExpression>
-							<jr:groupHeader groupName="New Column Header">
-								<jr:cell height="27" rowSpan="1">
-									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement key="textField-11" style="10b" mode="Opaque" x="0" y="0" width="74" height="27" forecolor="#000000" backcolor="#EAEAEA" uuid="faa58fb5-e978-4ea5-afb9-96f4dd8e2d69"/>
-										<box leftPadding="3" rightPadding="3">
-											<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-											<bottomPen lineWidth="0.5"/>
-											<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-										</box>
-										<textElement verticalAlignment="Bottom" rotation="None">
-											<font fontName="Open Sans" isBold="true"/>
-											<paragraph lineSpacing="Single"/>
-										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:UPCBarcode}.equals("%") ? "UPC" : $P{FieldTitle:UPCBarcode}]]></textFieldExpression>
-									</textField>
-								</jr:cell>
-							</jr:groupHeader>
-							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
-									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="18" uuid="a2788d94-01c1-4ba7-9811-8805f6fa65e2"/>
-										<box leftPadding="3" rightPadding="3"/>
-										<textElement verticalAlignment="Top">
-											<font fontName="Open Sans"/>
-										</textElement>
-									</textField>
-									<componentElement>
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="18" isPrintWhenDetailOverflows="true" uuid="6703261d-8352-4b78-b934-b2cac48699a9">
-											<printWhenExpression><![CDATA[$F{UPC}!=null && $F{UPC}.length()>0]]></printWhenExpression>
-										</reportElement>
-										<jr:barbecue type="Code128B" drawText="true" checksumRequired="false" barWidth="0" evaluationTime="Report">
-											<jr:codeExpression><![CDATA[$F{UPC}]]></jr:codeExpression>
-										</jr:barbecue>
-									</componentElement>
 								</jr:cell>
 							</jr:groupFooter>
 							<jr:detailCell height="0" rowSpan="1"/>
@@ -881,14 +820,14 @@ ORDER BY soitem.solineitem
 											<font fontName="Open Sans" isBold="true"/>
 											<paragraph lineSpacing="Single"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:CustomerPartNumber}.equals("%") ? "Customer Part #" : $P{FieldTitle:CustomerPartNumber}]]></textFieldExpression>
+										<textFieldExpression><![CDATA["Customer Part #"]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="18" uuid="66638c31-64de-48dd-8bba-a493ecb7eeaf"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="13" uuid="66638c31-64de-48dd-8bba-a493ecb7eeaf"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -919,9 +858,9 @@ ORDER BY soitem.solineitem
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="ca2c36ab-2767-4d37-ba16-c5dd4b495901"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="ca2c36ab-2767-4d37-ba16-c5dd4b495901"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Center" verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
@@ -956,13 +895,13 @@ ORDER BY soitem.solineitem
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<rectangle>
-										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="73" height="18" backcolor="#EAEAEA" uuid="52886f58-7942-43c8-b378-71c046b0bc01">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="73" height="13" backcolor="#EAEAEA" uuid="52886f58-7942-43c8-b378-71c046b0bc01">
 											<printWhenExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
 										</reportElement>
 										<graphicElement>
@@ -970,7 +909,7 @@ ORDER BY soitem.solineitem
 										</graphicElement>
 									</rectangle>
 									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement key="textField-3" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="46" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="d82bb816-c4f2-4a4d-abb7-e231bfcce483"/>
+										<reportElement key="textField-3" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="46" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="d82bb816-c4f2-4a4d-abb7-e231bfcce483"/>
 										<box leftPadding="3" rightPadding="0"/>
 										<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 											<font fontName="Open Sans" size="9"/>
@@ -1011,18 +950,18 @@ ORDER BY soitem.solineitem
 											<font fontName="Open Sans" isBold="true"/>
 											<paragraph lineSpacing="Single"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$P{FieldTitle:QtyShipped}.equals("%") ? "Qty\nShipped" : $P{FieldTitle:QtyShipped}]]></textFieldExpression>
+										<textFieldExpression><![CDATA["Qty\nShipped"]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<rectangle>
-										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="73" height="18" backcolor="#EAEAEA" uuid="bbd04ca2-b92c-4b86-9a71-e28a9de166bd">
+										<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="73" height="13" backcolor="#EAEAEA" uuid="bbd04ca2-b92c-4b86-9a71-e28a9de166bd">
 											<printWhenExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
 										</reportElement>
 										<graphicElement>
@@ -1030,7 +969,7 @@ ORDER BY soitem.solineitem
 										</graphicElement>
 									</rectangle>
 									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement key="textField-4" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="46" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="61ed4f50-ead2-48db-9dd8-072cad4bc543"/>
+										<reportElement key="textField-4" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="46" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="61ed4f50-ead2-48db-9dd8-072cad4bc543"/>
 										<box leftPadding="3" rightPadding="0"/>
 										<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 											<font fontName="Open Sans" size="9"/>
@@ -1040,7 +979,7 @@ ORDER BY soitem.solineitem
 										<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
 									</textField>
 									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement key="textField-8" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="46" y="0" width="27" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="e1112c3d-6d22-4500-a751-a1a11ebe5f7b"/>
+										<reportElement key="textField-8" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="46" y="0" width="27" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="e1112c3d-6d22-4500-a751-a1a11ebe5f7b"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 											<font fontName="Open Sans" size="9"/>
@@ -1076,13 +1015,13 @@ ORDER BY soitem.solineitem
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<rectangle>
-										<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="73" height="18" backcolor="#EAEAEA" uuid="6b07ace9-3608-4f0b-9582-a3c6e12f46d6">
+										<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="73" height="13" backcolor="#EAEAEA" uuid="6b07ace9-3608-4f0b-9582-a3c6e12f46d6">
 											<printWhenExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
 										</reportElement>
 										<graphicElement>
@@ -1090,7 +1029,7 @@ ORDER BY soitem.solineitem
 										</graphicElement>
 									</rectangle>
 									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement key="textField-7" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="46" y="0" width="28" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="6bbddf7e-a96e-4fc9-b4d3-1d4c86bc962d"/>
+										<reportElement key="textField-7" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="46" y="0" width="28" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="6bbddf7e-a96e-4fc9-b4d3-1d4c86bc962d"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 											<font fontName="Open Sans" size="9"/>
@@ -1099,7 +1038,7 @@ ORDER BY soitem.solineitem
 										<textFieldExpression><![CDATA[$F{UOMCODE}]]></textFieldExpression>
 									</textField>
 									<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-										<reportElement key="textField-5" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="46" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="d4acba52-916b-4827-8dcc-aa438a4a0612"/>
+										<reportElement key="textField-5" style="Zebra" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="46" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="d4acba52-916b-4827-8dcc-aa438a4a0612"/>
 										<box leftPadding="3" rightPadding="0"/>
 										<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 											<font fontName="Open Sans" size="9"/>
@@ -1140,13 +1079,13 @@ $F{QTYTOFULFILL}-$F{KitProductQtyShipped}:
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<rectangle>
-										<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="73" height="18" backcolor="#EAEAEA" uuid="4bdce465-a429-413b-ab6f-2671994e6b13">
+										<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="73" height="13" backcolor="#EAEAEA" uuid="4bdce465-a429-413b-ab6f-2671994e6b13">
 											<printWhenExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
 										</reportElement>
 										<graphicElement>
@@ -1154,7 +1093,7 @@ $F{QTYTOFULFILL}-$F{KitProductQtyShipped}:
 										</graphicElement>
 									</rectangle>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="18" uuid="06458ea8-14de-4aac-9541-500d89a73e22"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="13" uuid="06458ea8-14de-4aac-9541-500d89a73e22"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Right">
 											<font fontName="Open Sans" size="9"/>
@@ -1193,13 +1132,13 @@ $F{UNITPRICE}]]></textFieldExpression>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<box>
 										<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
 										<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
 									</box>
 									<rectangle>
-										<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="73" height="18" backcolor="#EAEAEA" uuid="be95d274-98c0-4642-a9cb-86ff5b923553">
+										<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="73" height="13" backcolor="#EAEAEA" uuid="be95d274-98c0-4642-a9cb-86ff5b923553">
 											<printWhenExpression><![CDATA[$V{PAGE_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
 										</reportElement>
 										<graphicElement>
@@ -1207,7 +1146,7 @@ $F{UNITPRICE}]]></textFieldExpression>
 										</graphicElement>
 									</rectangle>
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="18" uuid="ff03d2db-b54e-4040-aa63-e77c836b8e8a"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="13" uuid="ff03d2db-b54e-4040-aa63-e77c836b8e8a"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Right">
 											<font fontName="Open Sans" size="9"/>
@@ -1242,9 +1181,9 @@ $F{UNITPRICE}* $V{QtyShipped}]]></textFieldExpression>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:groupFooter groupName="soLineItemGroup">
-								<jr:cell height="18" rowSpan="1">
+								<jr:cell height="13" rowSpan="1">
 									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="18" uuid="3022df38-23e3-497d-b1b3-0f0047c35e29"/>
+										<reportElement style="Zebra" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="3022df38-23e3-497d-b1b3-0f0047c35e29"/>
 										<box leftPadding="3" rightPadding="3"/>
 										<textElement textAlignment="Center" verticalAlignment="Top">
 											<font fontName="Open Sans" size="9"/>
