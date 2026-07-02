@@ -597,13 +597,17 @@
 	</parameter>
 	<parameter name="UPC" class="java.lang.Boolean" isForPrompting="false">
 		<property name="Tab" value="Hide/Show"/>
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowStartAndEndForBatchPrinting" class="java.lang.Boolean" isForPrompting="false">
 		<property name="Group" value="Other Settings"/>
 		<property name="Tooltip" value="Choose to show Start and End for batchprinting"/>
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UPCBarcode" class="java.lang.Boolean" isForPrompting="false">
+		<property name="Tab" value="Hide/Show"/>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
