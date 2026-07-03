@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DaysSinceLastOrderReportDILLON" pageWidth="1100" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1040" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="c93956d1-d9cc-4a2b-b65a-909b29be7849">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri Dec 16 15:32:56 MST 2022"/>
+	<subDataset name="Table Dataset 1" uuid="22adddab-b59d-462d-b61f-a97ab26cfd39">
+		<parameter name="module" class="java.lang.Objexct" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="path" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowInactiveCustomers" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[0,1]]></parameterDescription>
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+		</parameter>
+		<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Column Sorting"/>
+			<property name="Sort" value="4"/>
+			<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+			<property name="Group" value="Select a date field and enter a date range"/>
+			<parameterDescription><![CDATA[This Month]]></parameterDescription>
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Column Sorting"/>
+			<property name="Sort" value="3"/>
+			<parameterDescription><![CDATA[customer.name $P!{cbOrder},Customer,stateconst.code $P!{cbOrder},State/Province,maxso.LastOrderScheduledDate $P!{cbOrder},Last Order Schedule Date]]></parameterDescription>
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT customer.name AS CUSTOMER,
+       maxso.lastorderscheduleddate AS LastOrderScheduledDate,
+       address.address AS ADDRESS,
+       zip AS ZIPCODE,
+       address.city AS CITY,
+       stateconst.code AS STATE,
+       coalesce(contact.datus, '') as EMAIL,
+       group_concat(accountgroup.name) as ACCOUNTGROUP
+FROM customer
+     LEFT OUTER JOIN accountgrouprelation ON customer.accountid = accountgrouprelation.accountid
+     LEFT OUTER JOIN accountgroup ON accountgrouprelation.groupid = accountgroup.id
+     LEFT OUTER JOIN address ON customer.accountid = address.accountid AND address.typeid = 50 AND address.defaultflag = true
+     LEFT OUTER JOIN stateconst On address.stateid = stateconst.id
+     LEFT OUTER JOIN countryconst ON countryconst.id = address.countryid
+	 LEFT OUTER JOIN contact ON contact.accountId = customer.accountid AND contact.typeid=60 AND contact.addressid = address.id AND contact.defaultflag = true
+     INNER JOIN company ON company.id = 1
+     LEFT OUTER JOIN (SELECT max(so.datefirstship) AS lastorderscheduleddate, so.customerid
+                 FROM so
+                 WHERE so.statusid IN (10,20,25,60,70)
+                 GROUP BY so.customerid) AS maxso ON customer.id = maxso.customerid
+     LEFT OUTER JOIN (SELECT DISTINCT so.customerid AS customerId
+                 FROM so
+                 WHERE so.statusid IN (10,20,25,60,70)
+		  AND so.datefirstship BETWEEN $P{dateRange1}  AND $P{dateRange2}
+                ) AS sofilter ON customer.id = sofilter.customerid
+
+
+WHERE sofilter.customerId IS NULL
+  AND customer.activeFlag IN (1, $P!{ckShowInactiveCustomers})
+  AND customer.id LIKE $P{customerID}
+
+GROUP BY 1,2,3,4,5,6,7
+
+ORDER BY $P!{cbSortBy}]]>
+		</queryString>
+		<field name="CUSTOMER" class="java.lang.String"/>
+		<field name="LastOrderScheduledDate" class="java.sql.Timestamp"/>
+		<field name="STATE" class="java.lang.String"/>
+		<field name="ACCOUNTGROUP" class="java.lang.String"/>
+		<field name="EMAIL" class="java.lang.String"/>
+		<field name="ZIPCODE" class="java.lang.String"/>
+		<field name="CITY" class="java.lang.String"/>
+		<field name="ADDRESS" class="java.lang.String"/>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Prints a list of customers that have not purchased within the selected period."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Program Files/Fishbowl/Server/reports/WorkOrder/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowInactiveCustomers" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<parameterDescription><![CDATA[0,1]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Other Settings"/>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSortBy" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="3"/>
+		<parameterDescription><![CDATA[customer.name $P!{cbOrder},Customer,stateconst.code $P!{cbOrder},State/Province,maxso.LastOrderScheduledDate $P!{cbOrder},Last Order Schedule Date]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrder" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Column Sorting"/>
+		<property name="Sort" value="4"/>
+		<parameterDescription><![CDATA[ASC,Ascending,DESC,Descending]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange1" class="java.util.Date" isForPrompting="false">
+		<property name="Group" value="Select a date field and enter a date range"/>
+		<parameterDescription><![CDATA[This Month]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateRange2" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT company.name AS company FROM company WHERE id = 1]]>
+	</queryString>
+	<field name="company" class="java.lang.String"/>
+	<variable name="DateFormat" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-15" x="0" y="0" width="1040" height="18" uuid="76287755-33ad-4124-b9e6-a5479b140d1c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-7" mode="Transparent" x="0" y="18" width="1040" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="d8abd792-6c38-4c48-8c54-0bfc1b12fd3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%") ? "Dormant Customers" : $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="0" y="0" width="1040" height="50" uuid="54940819-da70-4945-a579-3bf6296bb522"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="be875199-1dad-416d-a3b7-11d42874997b">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="208" uuid="f0d88b6a-a26a-4b93-82fe-7739872f266d">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="208" height="30" forecolor="#000000" backcolor="#999999" uuid="6aa4cfe2-d0d4-41a0-8eec-769b9dce6984"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Customer]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="208" height="13" forecolor="#000099" uuid="b253a418-107d-45bf-87e5-b746387bf486"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CUSTOMER}]]></textFieldExpression>
+								<anchorNameExpression><![CDATA["CustomerName"]]></anchorNameExpression>
+								<hyperlinkReferenceExpression><![CDATA[$F{CUSTOMER}]]></hyperlinkReferenceExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="58199d0a-ed46-492c-b2ea-4b1b31033899">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="9afcc385-2470-42f2-bd0d-209a036d99e0"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Customer Group]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="ac2d8b09-8139-47b2-96bb-bcde71675c73"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ACCOUNTGROUP}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="5fe9031a-e9bf-4ea9-850e-6aa7fee63054">
+						<jr:columnHeader height="30" rowSpan="1">
+							<textField>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="120" height="30" forecolor="#000000" backcolor="#999999" uuid="4063e40b-2b1d-4010-a5de-03d8cab5056c"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None" markup="none">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Address"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="13" uuid="b881f308-d1cb-4f4d-ab6e-b167db460951"/>
+								<box leftPadding="3" rightPadding="0">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="58199d0a-ed46-492c-b2ea-4b1b31033899">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="9afcc385-2470-42f2-bd0d-209a036d99e0"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[City]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="ac2d8b09-8139-47b2-96bb-bcde71675c73"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CITY}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="e1318a29-925b-49e8-b249-639e2e0c8b10">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="100" height="30" forecolor="#000000" backcolor="#999999" uuid="9915cc5f-fff2-4cdb-9623-4fbcd37313a3"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Zip]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="13" uuid="43ab9840-fd3d-4b36-9a98-456199778dd9"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ZIPCODE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="e1318a29-925b-49e8-b249-639e2e0c8b10">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="100" height="30" forecolor="#000000" backcolor="#999999" uuid="9915cc5f-fff2-4cdb-9623-4fbcd37313a3"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[State]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="13" uuid="43ab9840-fd3d-4b36-9a98-456199778dd9"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STATE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="160" uuid="93fbb3cc-6416-4919-8000-ea7936222d29">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="160" height="30" forecolor="#000000" backcolor="#999999" uuid="23987e40-411e-47ba-90ee-4aff25fa01b5"/>
+								<box leftPadding="3" rightPadding="3">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Email]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="13" forecolor="#000000" uuid="33f2400e-bc62-44b8-afba-4fde98f1ce01"/>
+								<box leftPadding="3" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{EMAIL}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9f7a65e7-a92e-4b98-9adb-447904bb7df9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="90" height="30" forecolor="#000000" backcolor="#999999" uuid="63e4693c-8997-42b0-984c-5b8c56c88298"/>
+								<box leftPadding="0">
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement verticalAlignment="Bottom" rotation="None">
+									<font fontName="Open Sans" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Last Order Scheduled Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="13" uuid="1c62c034-2854-4790-ae2f-6774d05d963d"/>
+								<box leftPadding="0" rightPadding="3">
+									<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+								</box>
+								<textElement>
+									<font fontName="Open Sans" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{LastOrderScheduledDate}]]></textFieldExpression>
+								<patternExpression><![CDATA[$V{DateFormat}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" mode="Transparent" x="548" y="0" width="470" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="397cc9fa-84fb-40d2-b66d-c933290dfeae">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="3">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-24" mode="Transparent" x="1018" y="0" width="22" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="17e9a075-25df-4c6e-b1c4-469822989ec3">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-22" mode="Transparent" x="0" y="0" width="208" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="22b82dc8-799c-4675-b3bb-92beb6d44ae4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
