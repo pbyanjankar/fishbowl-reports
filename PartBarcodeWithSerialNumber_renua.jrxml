@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartBarcodeWithSerialNumberRENUA" pageWidth="144" pageHeight="72" whenNoDataType="AllSectionsNoDetail" columnWidth="138" leftMargin="3" rightMargin="3" topMargin="3" bottomMargin="3" uuid="eed30b19-2960-4623-96fa-feaa956801e0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartBarcodeFindBySerialNumberRENUA" pageWidth="144" pageHeight="72" whenNoDataType="AllSectionsNoDetail" columnWidth="138" leftMargin="3" rightMargin="3" topMargin="3" bottomMargin="3" uuid="eed30b19-2960-4623-96fa-feaa956801e0">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="4.0"/>
-	<property name="ireport.x" value="9"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Thu Jul 02 12:02:21 MDT 2020\ncallouts.1.text=Version 1 4/28/15\nRev 7/2/2020 - added margins.\ncallouts.1.bounds=-1,88,148,64"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -13,18 +13,24 @@
 	<style name="18" fontName="SansSerif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="barcode" hAlign="Center" vAlign="Middle"/>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Part Barcode with Serial Number"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="partNum" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Part Barcode find by Serial Number"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SerialNumber" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT part.num
-FROM part
-WHERE UPPER(part.num) = UPPER($P{partNum})]]>
+		<![CDATA[SELECT part.num AS NUM, serialnum.serialnum AS SERIALNUM
+FROM
+tag
+    JOIN part ON tag.partid = part.id
+    LEFT JOIN parttotracking ON part.id = parttotracking.partid AND parttotracking.parttrackingId = 4
+    LEFT JOIN parttracking ON parttotracking.parttrackingid = parttracking.id
+    LEFT OUTER JOIN serial ON tag.id = serial.tagid
+    LEFT OUTER JOIN serialnum ON serial.id = serialnum.serialid AND parttracking.id = serialnum.parttrackingid
+
+WHERE part.id > 0
+    AND UPPER(serialnum.serialnum) = UPPER($P{SerialNumber});]]>
 	</queryString>
 	<field name="NUM" class="java.lang.String"/>
+	<field name="SERIALNUM" class="java.lang.String"/>
 	<variable name="DateFormat" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
 	</variable>
@@ -81,12 +87,12 @@ WHERE UPPER(part.num) = UPPER($P{partNum})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Serial Number: " + $P{SerialNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Serial Number: " + $F{SERIALNUM}]]></textFieldExpression>
 			</textField>
 			<componentElement>
 				<reportElement style="barcode" x="0" y="43" width="138" height="23" uuid="1d96d795-6e38-4f56-8761-cfaac15afe56"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128B" drawText="false" checksumRequired="false" barWidth="0">
-					<jr:codeExpression><![CDATA[$P{SerialNumber}]]></jr:codeExpression>
+					<jr:codeExpression><![CDATA[$F{SERIALNUM}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 		</band>
