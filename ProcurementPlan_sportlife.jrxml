@@ -1,0 +1,1383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProcurementPlanSPORTLIFE" pageWidth="1584" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1524" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="b4bab102-fcdc-4009-b520-9423c729cc9b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="9" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14" fontName="Open Sans" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10b" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12b" fontName="Open Sans" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="14b" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="16b" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18b" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="24b" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10i" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="12i" fontName="Open Sans" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="10bu" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header1" fontName="Open Sans" fontSize="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header2" fontName="Open Sans" fontSize="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="header3" fontName="Open Sans" fontSize="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="addressHeader" fontName="Open Sans" fontSize="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="date" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="type" fontName="Open Sans" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="address" fontName="Open Sans" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="column_head" fontName="Open Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="body" isDefault="true" fontName="Open Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="note" isDefault="true" fontName="Open Sans" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<subDataset name="reorder" uuid="78680b9a-c5c6-455d-bd47-f9e80b270232">
+		<parameter name="module" class="java.lang.Object" isForPrompting="false">
+			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colLatestVendor" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowAllItems" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ckShowInactiveParts" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[0,1]]></parameterDescription>
+			<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowPartsWithBOM" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowPartsWithoutBOM" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ShowTimeStamp" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colPartDescription" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colUOM" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOnHand" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colAvailable" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOnOrder" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colAllocated" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colOrderUpTo" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colNeeded" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colReorderLvl" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="CompanyWide" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productTree1" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="productTree2" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="colPart" class="java.lang.Boolean" isForPrompting="false">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+			<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbSortOrder" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA["product.num","Product Number","part.num","Part Number","vendor.name","Vendor Name", "QTY", "On Hand Qty","ALERTLEVEL","Alert Level"]]></parameterDescription>
+			<defaultValueExpression><![CDATA["product.number"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT DISTINCT
+    LOCATIONGROUP.NAME,
+    PART.NUM AS PART,
+    product.num AS PRODUCTNUMBER,
+    UOM.CODE AS UOMCODE,
+    COALESCE(LocLGQOH.qoh, 0) AS QTY,
+    COALESCE(qtyAllocated.qty, 0) AS ALLOCATED,
+    COALESCE(qtyonorder.qty, 0) AS ONORDER,
+    COALESCE(qtynotavailable.qty,0) AS NOTAVAILABLE,
+    COALESCE(qtyDropship.qty,0) AS DROPSHIP,
+    PARTREORDER.REORDERPOINT AS REORDERPOINT,
+    PARTREORDER.ORDERUPTOLEVEL AS ORDERUPTOLEVEL,
+    PART.DESCRIPTION,
+    VENDOR.NAME AS VENDOR,
+    part.abccode,
+    product.description AS PRODUCTDESCRIPTION,
+    product.price AS PRODUCTPRICE,
+    vendorparts.lastCost AS VENDORLASTCOST,
+
+
+if(coalesce(soldYTD.QtySold,0)<0, 0, coalesce(soldYTD.QtySold,0)) AS SOLDATLG,
+if(coalesce(soldAtOtherLG.QtySold,0)<0, 0, coalesce(soldAtOtherLG.QtySold,0)) AS SOLDATOTHERLG,
+  DATE_FORMAT(CURDATE(), '%b %Y') AS CURRENTMONTH,
+  DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%b %Y') AS `CURRENTMONTH-1`,
+  DATE_FORMAT(CURDATE() - INTERVAL 2 MONTH, '%b %Y') AS `CURRENTMONTH-2`,
+  DATE_FORMAT(CURDATE() - INTERVAL 3 MONTH, '%b %Y') AS `CURRENTMONTH-3`,
+if(coalesce(previousMonthSold.QtySold,0)<0, 0, coalesce(previousMonthSold.QtySold,0)) AS `CURRENTMONTH-1SOLDATLG`,
+if(coalesce(previousMonthSoldAtOtherLG.QtySold,0)<0, 0, coalesce(previousMonthSoldAtOtherLG.QtySold,0)) AS `CURRENTMONTH-1SOLDATOTHERLG`,
+
+if(coalesce(CurrentMinus2MonthSold.QtySold,0)<0, 0, coalesce(CurrentMinus2MonthSold.QtySold,0)) AS `CURRENTMONTH-2SOLDATLG`,
+if(coalesce(CurrentMinus2MonthSoldAtOtherLG.QtySold,0)<0, 0, coalesce(CurrentMinus2MonthSoldAtOtherLG.QtySold,0)) AS `CURRENTMONTH-2SOLDATOTHERLG`,
+
+if(coalesce(CurrentMinus3MonthSold.QtySold,0)<0, 0, coalesce(CurrentMinus3MonthSold.QtySold,0)) AS `CURRENTMONTH-3SOLDATLG`,
+if(coalesce(CurrentMinus3MonthSoldAtOtherLG.QtySold,0)<0, 0, coalesce(CurrentMinus3MonthSoldAtOtherLG.QtySold,0)) AS `CURRENTMONTH-3SOLDATOTHERLG`
+
+
+FROM part
+    LEFT JOIN product ON product.partId = part.id
+    LEFT JOIN locationgroup ON locationgroup.id IN ($P!{locationGroupID})
+    LEFT JOIN partreorder ON locationgroup.id = partreorder.locationgroupid AND part.id = partreorder.partid
+    LEFT JOIN uom ON part.uomid = uom.id
+    LEFT JOIN qtyonhand ON (part.id = qtyonhand.partid AND locationgroup.id = qtyonhand.locationgroupid)
+    LEFT JOIN qtyallocated ON (part.id = qtyallocated.partid AND locationgroup.id = qtyallocated.locationgroupid)
+    LEFT JOIN qtyonorder ON (part.id = qtyonorder.partid AND locationgroup.id = qtyonorder.locationgroupid)
+    LEFT JOIN qtynotavailable ON (part.id = qtynotavailable.partid AND locationgroup.id = qtynotavailable.locationgroupid)
+    LEFT JOIN qtydropship ON (part.id = qtydropship.partid AND locationgroup.id = qtydropship.locationgroupid)
+    LEFT JOIN vendorparts ON part.id = vendorparts.partid AND vendorparts.defaultflag = 1
+    LEFT JOIN vendor ON vendorparts.vendorid = vendor.id
+
+-- Start OF SALES Current Month - CUSTOMER WITH same LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold,
+		so.locationgroupid AS LGID
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+ 	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 0 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL -1 MONTH, '%Y-%m-01')
+	         AND qbclass.name = CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS soldYTD ON part.id = soldYTD.partid
+
+
+-- END OF SALES Current Month - CUSTOMER WITH same LG && Warehouse Zone 1
+
+-- START OF SALES Current Month - CUSTOMER WITH different LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 0 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL -1 MONTH, '%Y-%m-01')
+	         AND qbclass.name <> CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS  soldAtOtherLG ON part.id = soldAtOtherLG.partid
+
+
+-- END OF SALES Current Month - CUSTOMER WITH different LG && Warehouse Zone 1
+
+-- Start OF SALES Previous Month - CUSTOMER WITH same LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold,
+		so.locationgroupid AS LGID
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+ 	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL 0 MONTH, '%Y-%m-01')
+	         AND qbclass.name = CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS previousMonthSold ON part.id = previousMonthSold.partid
+
+
+-- END OF SALES Previous Month - CUSTOMER WITH same LG && Warehouse Zone 1
+
+-- START OF SALES Previous Month - CUSTOMER WITH different LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL 0 MONTH, '%Y-%m-01')
+	         AND qbclass.name <> CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS  previousMonthSoldAtOtherLG ON part.id = previousMonthSoldAtOtherLG.partid
+
+
+-- End OF SALES Previous Month - CUSTOMER WITH different LG && Warehouse Zone 1
+
+-- Start OF SALES Current Month - 2  - CUSTOMER WITH same LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold,
+		so.locationgroupid AS LGID
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+ 	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 2 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01')
+	         AND qbclass.name = CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS CurrentMinus2MonthSold ON part.id = CurrentMinus2MonthSold.partid
+
+
+-- END OF SALES CurrentMonthMinus2 Month - CUSTOMER WITH same LG && Warehouse Zone 1
+
+-- START OF SALES CurrentMonthMinus2 Month - CUSTOMER WITH different LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 2 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01')
+	         AND qbclass.name <> CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS  CurrentMinus2MonthSoldAtOtherLG ON part.id = CurrentMinus2MonthSoldAtOtherLG.partid
+
+
+-- Ens OF SALES Current Minus 2 Months - CUSTOMER WITH different LG && Warehouse Zone 1
+
+
+-- Start OF SALES Current Minus 3 Months - CUSTOMER WITH same LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold,
+		so.locationgroupid AS LGID
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+ 	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 3 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL 2 MONTH, '%Y-%m-01')
+	         AND qbclass.name = CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS CurrentMinus3MonthSold ON part.id = CurrentMinus3MonthSold.partid
+
+
+-- END OF SALES Current Month Minus 3  - CUSTOMER WITH same LG && Warehouse Zone 1
+
+-- START OF SALES Current Month Minus 3 - CUSTOMER WITH different LG && Warehouse Zone 1
+
+LEFT OUTER JOIN ( SELECT product.partid AS PartID,
+		SUM(
+		CASE WHEN soitem.typeid = 20
+     		THEN -1 * ((soitem.qtyfulfilled  * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+     		ELSE  ((soitem.qtyfulfilled * COALESCE(UOMCONVERSION.MULTIPLY,1)) / COALESCE(UOMCONVERSION.FACTOR,1))
+		END) AS QtySold
+                 FROM soitem
+                 LEFT JOIN product ON soitem.productid = product.id
+                 LEFT JOIN so ON so.id = soitem.soid
+	       LEFT JOIN part ON product.partid = part.id
+	       LEFT JOIN uomconversion ON (uomconversion.touomid = part.uomid AND uomconversion.fromuomid = soitem.uomid)
+	       LEFT JOIN customer ON customer.id = so.customerId
+        	       LEFT OUTER JOIN qbclass ON qbclass.id = so.qbclassid
+                WHERE soitem.qtyfulfilled > 0
+                   AND soitem.datelastfulfillment >= DATE_FORMAT(CURDATE() - INTERVAL 3 MONTH, '%Y-%m-01')
+  	         AND soitem.datelastfulfillment < DATE_FORMAT(CURDATE() - INTERVAL 2 MONTH, '%Y-%m-01')
+	         AND qbclass.name <> CustomFieldByName(customer.customfields, "Warehouse Zone 1")
+                   AND CustomFieldByName(customer.customfields, "Warehouse Zone 1") LIKE (SELECT concat(locationgroup.name, " ", "Warehouse") FROM LocationGroup WHERE LocationGroup.id IN ($P!{locationGroupID}))
+                GROUP BY product.partid
+) AS  CurrentMinus3MonthSoldAtOtherLG ON part.id = CurrentMinus3MonthSoldAtOtherLG.partid
+
+
+-- End OF SALES Previous Month - CUSTOMER WITH different LG && Warehouse Zone 1
+
+
+LEFT OUTER JOIN (SELECT
+        			sum(tag.qty) AS qoh,
+        			locationgroup.id AS lgid,
+        			tag.partId AS partId
+   		 FROM
+       			 tag
+		 INNER JOIN location ON tag.locationId=location.id AND (location.activeFlag = true OR location.pickable=true OR location.countedAsAvailable=true)
+		 INNER JOIN locationgroup ON location.locationgroupid = locationgroup.id
+		 WHERE
+			tag.typeId in (30 , 40)
+        		GROUP BY locationgroup.id, tag.partid) AS LocLGQOH ON LocLGQOH.partid = part.id AND LocLGQOH.lgid = locationgroup.id
+
+
+
+
+WHERE part.id != 0
+  AND part.num LIKE $P{partNum}
+  AND part.activeflag IN (1,$P!{ckShowInactiveParts})
+  AND (partreorder.locationgroupid IN ($P!{locationGroupID}) OR partreorder.locationgroupid IS NULL)
+
+ORDER BY LOCATIONGROUP.NAME, $P!{cbOrderBy} $P!{cbSortOrder}, product.num;]]>
+		</queryString>
+		<field name="PART" class="java.lang.String"/>
+		<field name="UOMCODE" class="java.lang.String"/>
+		<field name="QTY" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ALLOCATED" class="java.lang.Double"/>
+		<field name="ONORDER" class="java.lang.Double"/>
+		<field name="NOTAVAILABLE" class="java.lang.Double"/>
+		<field name="DROPSHIP" class="java.lang.Double"/>
+		<field name="REORDERPOINT" class="java.lang.Double"/>
+		<field name="ORDERUPTOLEVEL" class="java.lang.Double"/>
+		<field name="DESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="VENDOR" class="java.lang.String"/>
+		<field name="abccode" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="PRODUCTNUMBER" class="java.lang.String"/>
+		<field name="PRODUCTDESCRIPTION" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="PRODUCTPRICE" class="java.lang.Double"/>
+		<field name="VENDORLASTCOST" class="java.lang.Double"/>
+		<field name="SOLDATLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SOLDATOTHERLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CURRENTMONTH" class="java.lang.String"/>
+		<field name="CURRENTMONTH-1" class="java.lang.String"/>
+		<field name="CURRENTMONTH-2" class="java.lang.String"/>
+		<field name="CURRENTMONTH-3" class="java.lang.String"/>
+		<field name="CURRENTMONTH-1SOLDATLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CURRENTMONTH-1SOLDATOTHERLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CURRENTMONTH-2SOLDATLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CURRENTMONTH-2SOLDATOTHERLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CURRENTMONTH-3SOLDATLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CURRENTMONTH-3SOLDATOTHERLG" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<variable name="DateFormat" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[(System.getProperty("REPORT_DATE_FORMAT"))]]></variableExpression>
+		</variable>
+		<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+		</variable>
+		<variable name="Available" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[new Double($F{QTY}.doubleValue() - $F{ALLOCATED}.doubleValue() - $F{NOTAVAILABLE}.doubleValue() + $F{DROPSHIP}.doubleValue())]]></variableExpression>
+		</variable>
+		<variable name="Needed" class="java.lang.Double" resetType="None">
+			<variableExpression><![CDATA[($F{QTY}.doubleValue() + $F{ONORDER}.doubleValue() - $F{ALLOCATED}.doubleValue()- $F{NOTAVAILABLE}) <= $F{REORDERPOINT}.doubleValue() ?
+($F{QTY}.doubleValue() + $F{ONORDER}.doubleValue() - $F{ALLOCATED}.doubleValue()-$F{NOTAVAILABLE}) <= $F{ORDERUPTOLEVEL}.doubleValue() ?
+    new Double($F{ORDERUPTOLEVEL}.doubleValue() - ($F{QTY}.doubleValue() + $F{ONORDER}.doubleValue() - $F{ALLOCATED}.doubleValue()-$F{NOTAVAILABLE})) :
+    new Double(0)
+: new Double(0)]]></variableExpression>
+		</variable>
+		<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+			<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="module" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Replicates the functionality of the Monitor Module (Company Wide). Watches must be created in the Monitor Module. A few extensions are Product cost (Vendor last cost), Retail Price (Product Price)"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../Inventory/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="partNum" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowInactiveParts" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[0,1]]></parameterDescription>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colLatestVendor" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ShowTimeStamp" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ReportTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="colPartDescription" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colUOM" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colOnHand" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colAvailable" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colOnOrder" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colAllocated" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colOrderUpTo" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colNeeded" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colReorderLvl" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="colPart" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbOrderBy" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["product.num","Product Number","part.num","Part Number","vendor.name","Vendor Name", "QTY", "On Hand Qty","ALERTLEVEL","Alert Level"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["product.number"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbSortOrder" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["ASC","Ascending","DESC","Descending"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["ASC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="locationGroupID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+ COMPANY.NAME AS COMPANY,
+ locationgroup.name AS LGNAME
+FROM
+company
+LEFT JOIN locationgroup ON locationgroup.id IN ($P!{locationGroupID})
+WHERE company.id = 1]]>
+	</queryString>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="LGNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="QtyDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_QTY")]]></variableExpression>
+	</variable>
+	<variable name="PriceDecimal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[System.getProperty("REPORT_DECIMAL_PRICE")]]></variableExpression>
+	</variable>
+	<group name="LocationWide">
+		<groupHeader>
+			<band height="63">
+				<componentElement>
+					<reportElement key="table_company_wide" x="0" y="0" width="1524" height="28" uuid="9a899ab4-dd55-4129-a6db-d24cb81ac606"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="reorder" uuid="23605414-cab9-4700-bf67-981dbf99b52b">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ckShowInactiveParts">
+								<datasetParameterExpression><![CDATA[$P{ckShowInactiveParts}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="partNum">
+								<datasetParameterExpression><![CDATA[$P{partNum}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colPartDescription">
+								<datasetParameterExpression><![CDATA[$P{colPartDescription}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colUOM">
+								<datasetParameterExpression><![CDATA[$P{colUOM}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colOnHand">
+								<datasetParameterExpression><![CDATA[$P{colOnHand}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colAvailable">
+								<datasetParameterExpression><![CDATA[$P{colAvailable}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colOnOrder">
+								<datasetParameterExpression><![CDATA[$P{colOnOrder}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colAllocated">
+								<datasetParameterExpression><![CDATA[$P{colAllocated}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colOrderUpTo">
+								<datasetParameterExpression><![CDATA[$P{colOrderUpTo}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colNeeded">
+								<datasetParameterExpression><![CDATA[$P{colNeeded}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colReorderLvl">
+								<datasetParameterExpression><![CDATA[$P{colReorderLvl}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="colPart">
+								<datasetParameterExpression><![CDATA[$P{colPart}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbOrderBy">
+								<datasetParameterExpression><![CDATA[$P{cbOrderBy}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="cbSortOrder">
+								<datasetParameterExpression><![CDATA[$P{cbSortOrder}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="locationGroupID">
+								<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="92" uuid="d057103c-a977-47f3-8b12-6be1b43381f6">
+							<printWhenExpression><![CDATA[$P{colLatestVendor}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="92" height="28" backcolor="#EAEAEA" uuid="d06ea303-faea-4aff-8ce2-6965275999c5"/>
+									<box leftPadding="3" bottomPadding="2"/>
+									<textElement textAlignment="Left" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Default Vendor]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="92" height="14" forecolor="#000099" uuid="3412da26-7b1a-4579-ab23-98a292374310"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{VENDOR}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["VendorName"]]></anchorNameExpression>
+									<hyperlinkReferenceExpression><![CDATA[$F{VENDOR}]]></hyperlinkReferenceExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="7e35a585-2a92-47f9-95e2-021982ab9896">
+							<printWhenExpression><![CDATA[$P{colPart}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="28" backcolor="#EAEAEA" uuid="0bba4515-df9c-4147-ae6e-207bf4a43ad4"/>
+									<box leftPadding="3" bottomPadding="2"/>
+									<textElement verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Part]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="14" forecolor="#000099" uuid="ee3a9bc0-4014-4a8f-8d0b-475ca67bbc4a"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PART}]]></textFieldExpression>
+									<anchorNameExpression><![CDATA["PartNum"]]></anchorNameExpression>
+									<hyperlinkReferenceExpression><![CDATA[$F{PART}]]></hyperlinkReferenceExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="160" uuid="29b223cf-6513-42e3-9ab3-1b5e29541b97">
+							<printWhenExpression><![CDATA[$P{colPartDescription}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="160" height="28" backcolor="#EAEAEA" uuid="7ab925e5-1a77-446a-b671-03a165d4647d"/>
+									<box leftPadding="3" bottomPadding="2"/>
+									<textElement textAlignment="Left" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Part Description]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="160" height="14" uuid="ff57b8e5-2781-47ff-8b02-e2927bc86fa6"/>
+									<box leftPadding="3" rightPadding="3"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="40" uuid="3a6d6ca8-b60e-40fb-a945-57fdc51e870e">
+							<printWhenExpression><![CDATA[$P{colUOM}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="40" height="28" backcolor="#EAEAEA" uuid="da2b4dc5-75d7-40c9-9c81-c2218265c164"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[UOM]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="14" uuid="0d279069-0c2f-4d4b-81d3-beaa558800bd"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{UOMCODE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="0652d276-3c8f-444c-9e9e-4055f4f0973d">
+							<printWhenExpression><![CDATA[$P{colAvailable}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="50" height="28" backcolor="#EAEAEA" uuid="fcccdc54-8ed8-4b97-acda-c028ae151710"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Available]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="14" uuid="889c7563-3bff-4448-83e2-cad8bba91677"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{Available} < 0 ? 0 : $V{Available}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="84b6a735-c6f3-4632-94a3-b58d8378e283">
+							<printWhenExpression><![CDATA[$P{colOnOrder}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="50" height="28" backcolor="#EAEAEA" uuid="307cf936-ae00-4ebe-bf0a-6386df07561a"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[On Order]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="14" uuid="dd7ff741-79e9-4659-af4b-a15f31cad741"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ONORDER}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="45" uuid="b7d1889b-e2e3-41a2-b989-e2a9d4c8707a">
+							<printWhenExpression><![CDATA[$P{colOnHand}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="45" height="28" backcolor="#EAEAEA" uuid="687876d0-d4e5-4972-a95b-d3f973f9749d"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[On Hand]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="45" height="14" uuid="c3528c4b-4898-4ff3-b47e-0d1db022931b"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="4d21dea4-d5e6-4027-85a9-c021d4f0a0a0">
+							<printWhenExpression><![CDATA[$P{colAllocated}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="50" height="28" backcolor="#EAEAEA" uuid="4db483e6-6e0f-42b2-86c5-49f66b40094d"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Allocated]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="14" uuid="6c4148b0-67ca-403d-8a66-89ef92b7cddb"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ALLOCATED}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="f465c6e9-b471-4235-9ddf-f24be77a5c9b">
+							<printWhenExpression><![CDATA[$P{colOrderUpTo}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="28" backcolor="#EAEAEA" uuid="eb3809eb-e8f9-4396-ba1b-bef89f8d3e16"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Order Up To]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="14" uuid="86978d17-0407-4f4b-9700-71eba2c8ac69"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ORDERUPTOLEVEL}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="45" uuid="dc5deb9a-c451-44e7-b4e0-3b2f1d2bdce3">
+							<printWhenExpression><![CDATA[$P{colNeeded}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="45" height="28" backcolor="#EAEAEA" uuid="21011168-1bc0-4fce-877c-0c56adb62b82"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Needed]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="45" height="14" uuid="6ee91433-b83a-468d-8c4c-3d4bf1df5d98"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{Needed}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="45" uuid="f4973ace-efd6-4afd-be84-8ffedcacba6a">
+							<printWhenExpression><![CDATA[$P{colReorderLvl}]]></printWhenExpression>
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="45" height="28" backcolor="#EAEAEA" uuid="b7f5b6cc-e287-4cb0-a022-ea17de5ae608"/>
+									<box bottomPadding="2"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Reorder Lvl]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="45" height="14" uuid="7f165323-0ced-4b96-ba06-a6d93cee5e08"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans" size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{REORDERPOINT}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="72" uuid="9d12b8cf-e503-4433-9ee9-121d91b8e411">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="72" height="28" backcolor="#EAEAEA" uuid="ce572098-b8d7-47db-871e-3806831b1824"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-3} + " Month Sold at LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="14" uuid="60637c74-c1ab-414e-81d6-03da02ac77f6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-3SOLDATLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="7da613ab-101d-48fe-bf67-fe2fc171a7f7">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="68" height="28" backcolor="#EAEAEA" uuid="6898e49d-8905-47d1-ae11-3a6cd26a6799"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-3}+" Sold at Other LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="14" uuid="b01ff501-817a-410b-96f9-671407716d9f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-3SOLDATOTHERLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="72" uuid="9d12b8cf-e503-4433-9ee9-121d91b8e411">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="72" height="28" backcolor="#EAEAEA" uuid="ce572098-b8d7-47db-871e-3806831b1824"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-2} + " Month Sold at LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="14" uuid="60637c74-c1ab-414e-81d6-03da02ac77f6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-2SOLDATLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="7da613ab-101d-48fe-bf67-fe2fc171a7f7">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="68" height="28" backcolor="#EAEAEA" uuid="6898e49d-8905-47d1-ae11-3a6cd26a6799"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-2}+" Sold at Other LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="14" uuid="b01ff501-817a-410b-96f9-671407716d9f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-2SOLDATOTHERLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="72" uuid="9d12b8cf-e503-4433-9ee9-121d91b8e411">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="72" height="28" backcolor="#EAEAEA" uuid="ce572098-b8d7-47db-871e-3806831b1824"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-1} + " Month Sold at LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="14" uuid="60637c74-c1ab-414e-81d6-03da02ac77f6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-1SOLDATLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="7da613ab-101d-48fe-bf67-fe2fc171a7f7">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="68" height="28" backcolor="#EAEAEA" uuid="6898e49d-8905-47d1-ae11-3a6cd26a6799"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-1}+" Sold at Other LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="14" uuid="b01ff501-817a-410b-96f9-671407716d9f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH-1SOLDATOTHERLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="72" uuid="9d12b8cf-e503-4433-9ee9-121d91b8e411">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="72" height="28" backcolor="#EAEAEA" uuid="ce572098-b8d7-47db-871e-3806831b1824"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH} + " Month Sold at LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="14" uuid="60637c74-c1ab-414e-81d6-03da02ac77f6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{SOLDATLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="7da613ab-101d-48fe-bf67-fe2fc171a7f7">
+							<jr:columnHeader height="28" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="68" height="28" backcolor="#EAEAEA" uuid="6898e49d-8905-47d1-ae11-3a6cd26a6799"/>
+									<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+										<font fontName="Open Sans" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CURRENTMONTH}+" Sold at Other LG"]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:detailCell height="14" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="14" uuid="b01ff501-817a-410b-96f9-671407716d9f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Open Sans"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{SOLDATOTHERLG}]]></textFieldExpression>
+									<patternExpression><![CDATA[$V{QtyDecimal}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Prevent">
+			<textField>
+				<reportElement key="staticText-9" mode="Transparent" x="0" y="18" width="1524" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="7f1b48cf-cd14-4ac0-8518-489b1d9de518"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Open Sans" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}.equals("%")
+? "Procurement Plan Report"
+: $P{ReportTitle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-16" x="0" y="0" width="1524" height="18" uuid="b385e194-6b55-4819-a304-54de60f25b45"/>
+				<textElement>
+					<font fontName="Open Sans" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="40" width="1524" height="14" uuid="28e31329-90c9-4e2f-978e-c1c67d476df0"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LGNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Prevent"/>
+	</pageHeader>
+	<pageFooter>
+		<band height="14" splitType="Prevent">
+			<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="1434" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="f41f0fdb-7d6c-4be0-a394-a0e6cc110e91">
+					<printWhenExpression><![CDATA[$P{ShowTimeStamp}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG)).format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="1434" y="0" width="68" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="cae94473-1397-44a7-af3b-bc554453c4ea">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="4">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="1502" y="0" width="22" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="d327e869-793f-4480-a4eb-8a262976a803">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement verticalAlignment="Bottom" rotation="None">
+					<font fontName="Open Sans" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
