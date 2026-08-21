@@ -478,7 +478,7 @@ ORDER BY LOCATIONGROUP.NAME, $P!{cbOrderBy} $P!{cbSortOrder}, product.num;]]>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Replicates the functionality of the Monitor Module (Company Wide). Watches must be created in the Monitor Module. A few extensions are Product cost (Vendor last cost), Retail Price (Product Price)"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["Reorder Ratio and Ship from matching location group against customer's Wholesale Zone 1 and Different Location Group than customer's Wholesale Zone 1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="path" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["../Inventory/"]]></defaultValueExpression>
