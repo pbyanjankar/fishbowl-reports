@@ -35,7 +35,7 @@
 		<parameter name="module" class="java.lang.Object" isForPrompting="false">
 			<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 		</parameter>
-		<parameter name="colLatestVendor" class="java.lang.Boolean" isForPrompting="false">
+		<parameter name="colDefaultVendor" class="java.lang.Boolean" isForPrompting="false">
 			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 		</parameter>
 		<parameter name="partNum" class="java.lang.String" isForPrompting="false">
@@ -115,6 +115,10 @@
 		</parameter>
 		<parameter name="locationGroupID" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
+			<property name="Group" value="Filters"/>
+			<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT DISTINCT
@@ -399,6 +403,7 @@ WHERE part.id != 0
   AND part.num LIKE $P{partNum}
   AND part.activeflag IN (1,$P!{ckShowInactiveParts})
   AND (partreorder.locationgroupid IN ($P!{locationGroupID}) OR partreorder.locationgroupid IS NULL)
+  AND if($P{vendorID}='%', 1=1, vendor.id LIKE '$P!{vendorID}')
 
 ORDER BY LOCATIONGROUP.NAME, $P!{cbOrderBy} $P!{cbSortOrder}, product.num;]]>
 		</queryString>
@@ -490,7 +495,7 @@ ORDER BY LOCATIONGROUP.NAME, $P!{cbOrderBy} $P!{cbSortOrder}, product.num;]]>
 		<parameterDescription><![CDATA[0,1]]></parameterDescription>
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="colLatestVendor" class="java.lang.Boolean" isForPrompting="false">
+	<parameter name="colDefaultVendor" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ShowTimeStamp" class="java.lang.Boolean" isForPrompting="false">
@@ -546,6 +551,9 @@ ORDER BY LOCATIONGROUP.NAME, $P!{cbOrderBy} $P!{cbSortOrder}, product.num;]]>
 	<parameter name="locationGroupID" class="java.lang.String">
 		<defaultValueExpression><![CDATA["-1"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="vendorID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
  COMPANY.NAME AS COMPANY,
@@ -571,7 +579,7 @@ WHERE company.id = 1]]>
 				<componentElement>
 					<reportElement key="table_company_wide" x="0" y="0" width="1524" height="28" uuid="9a899ab4-dd55-4129-a6db-d24cb81ac606"/>
 					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-						<datasetRun subDataset="reorder" uuid="23605414-cab9-4700-bf67-981dbf99b52b">
+						<datasetRun subDataset="reorder" uuid="916961e8-4612-434b-8548-337049abfe62">
 							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 							<datasetParameter name="ckShowInactiveParts">
 								<datasetParameterExpression><![CDATA[$P{ckShowInactiveParts}]]></datasetParameterExpression>
@@ -618,10 +626,13 @@ WHERE company.id = 1]]>
 							<datasetParameter name="locationGroupID">
 								<datasetParameterExpression><![CDATA[$P{locationGroupID}]]></datasetParameterExpression>
 							</datasetParameter>
+							<datasetParameter name="vendorID">
+								<datasetParameterExpression><![CDATA[$P{vendorID}]]></datasetParameterExpression>
+							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 						<jr:column width="92" uuid="d057103c-a977-47f3-8b12-6be1b43381f6">
-							<printWhenExpression><![CDATA[$P{colLatestVendor}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{colDefaultVendor}]]></printWhenExpression>
 							<jr:columnHeader height="28" rowSpan="1">
 								<box>
 									<pen lineWidth="0.5"/>
