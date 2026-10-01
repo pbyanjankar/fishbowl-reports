@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CustomerAddressLabelsDILLON" columnCount="3" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="189" columnSpacing="8" leftMargin="14" rightMargin="14" topMargin="36" bottomMargin="36" uuid="45d512dd-e19c-4b7f-b7ab-346deb939cfd">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="SansSerif" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="18" fontName="SansSerif" fontSize="18" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Customer Address Labels for Avery 5960 Labels"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="customerGroupID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckShowCountry" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckOnlyInGroup" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[1,0]]></parameterDescription>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT CUSTOMER.NAME AS CUSTOMERNAME, ADDRESS.NAME AS ADDRESSNAME, ADDRESS.ADDRESS AS ADDRESS,
+    ADDRESS.CITY AS CITY, ADDRESS.ZIP AS ZIP, COALESCE(STATECONST.CODE,'') AS STATEABBR, STATECONST.NAME AS STATENAME,
+    COALESCE(COUNTRYCONST.ABBREVIATION,'') AS COUNTRYABBR, COUNTRYCONST.NAME AS COUNTRYNAME
+
+FROM address
+    INNER JOIN customer ON customer.accountid = address.accountid
+    LEFT OUTER JOIN stateconst ON stateconst.id = address.stateid
+    LEFT OUTER JOIN countryconst ON countryconst.id = address.countryid
+    LEFT OUTER JOIN accountgrouprelation ON address.accountid = accountgrouprelation.accountid
+    LEFT OUTER JOIN accountgroup ON accountgroup.id = accountgrouprelation.groupid
+
+WHERE customer.name != 'Point of Sale'
+  AND (accountgroup.id IN ($P!{customerGroupID}) OR (CASE WHEN $P!{ckOnlyInGroup} = 0 THEN accountgroup.id ELSE 1 END) IS NULL)
+  AND address.typeid = 50
+
+ORDER BY 2]]>
+	</queryString>
+	<field name="CUSTOMERNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADDRESSNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CITY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ZIP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATEABBR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COUNTRYABBR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COUNTRYNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="0" y="0" width="188" height="72" forecolor="#000000" backcolor="#FFFFFF" uuid="e54ff9d9-9c32-4092-9c34-f5b7b1a71d36"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Open Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUSTOMERNAME} + "\n" +
+$F{ADDRESS} + "\n" +
+$F{CITY} + ", " + $F{STATEABBR} + "   " + $F{ZIP} +
+($P{ckShowCountry}.equals("1") ? "\n" + $F{COUNTRYNAME} : "")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
