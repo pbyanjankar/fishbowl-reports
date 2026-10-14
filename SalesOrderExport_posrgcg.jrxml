@@ -135,6 +135,7 @@ WHERE
   AND soitem.typeid IN (10,11,12,$P{ckIncludeReturns},21,60,80)
   AND COALESCE(product.num,'') LIKE $P{productNum}
   AND so.statusid IN ($P{ckEstimate}, $P{ckIssued}, $P{ckInProgress}, $P{ckFulfilled}, $P{ckClosedShort}, $P{ckVoided}, $P{ckExpired}, $P{ckCancelled})
+  AND product.num NOT IN ("Thank you for your order!", "LABOR.","We can help with all of your IT life cycle needs.", "Tech Labor")
 
 ORDER BY 3]]>
 	</queryString>
