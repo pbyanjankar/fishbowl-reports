@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecallOutputFinishedProductsDillion" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="7ad7244c-ca05-420e-9cad-ab81ce9adfb9">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="438"/>
+	<property name="ireport.x" value="297"/>
 	<property name="ireport.y" value="41"/>
 	<subDataset name="finishedgoods" uuid="638d8b94-f7f1-4ff3-8e24-3ca84d3afd7e">
 		<parameter name="LotNumber" class="java.lang.String"/>
@@ -17,10 +17,10 @@ mo.num AS MONUM,
 mo.dateCompleted AS MODATECOMPLETED,
 uom.code AS UOM,
 finishgoodtrackinginfo.info AS FGLOTNUMBER,
-sum(finishwoitem.qtyTarget) AS FGQtyProduced,
-coalesce(sum(shipitem.qtyShipped),0) AS FGQtyShipped,
-coalesce(sum(finishwoitem.qtyScrapped),0) AS qtyScrapped,
-sum(finishwoitem.qtyTarget) - coalesce(sum(shipitem.qtyShipped),0) AS FGQtyRemaining
+finishwoitem.qtyTarget AS FGQtyProduced,
+0 AS FGQtyShipped,
+0 AS qtyScrapped,
+0 AS FGQtyRemaining
 FROM woitem
 INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
 INNER JOIN moitem ON moitem.id = woitem.moitemid
@@ -32,11 +32,8 @@ INNER JOIN uom ON uom.id = finishwoitem.uomid
 INNER JOIN part ON part.id = finishwoitem.partid
 LEFT JOIN product ON product.partid = finishwoitem.partid
 LEFT OUTER JOIN trackinginfo finishgoodtrackinginfo ON finishgoodtrackinginfo.recordid = finishwoitem.id AND finishgoodtrackinginfo.tableid =  -355941248 AND finishgoodtrackinginfo.parttrackingid = 1
-LEFT OUTER JOIN trackinginfo ti ON ti.info = finishgoodtrackinginfo.info AND ti.tableid = 1555030112 AND finishgoodtrackinginfo.tableid =  -355941248 AND ti.parttrackingid = 1
-LEFT OUTER JOIN shipitem ON ti.recordId = shipitem.id
 WHERE
-trackinginfo.info = $P{LotNumber}
-GROUP BY 1,2,3,4,5,6,7,8, 9, 10]]>
+trackinginfo.info = $P{LotNumber}]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="MODATECOMPLETED" class="java.sql.Timestamp">
