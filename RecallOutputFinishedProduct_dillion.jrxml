@@ -7,33 +7,37 @@
 		<parameter name="LotNumber" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[SELECT
-moitem.bomid AS stagedBomid,
-finishItem.bomid AS parentbomId,
-part.num AS FINISHEDPART,
-product.num AS FINISHEDProduct,
-part.description AS PARTDESCRIPTION,
-product.description AS PRODUCTDESCRIPTION,
-mo.num AS MONUM,
-mo.dateCompleted AS MODATECOMPLETED,
-uom.code AS UOM,
-finishgoodtrackinginfo.info AS FGLOTNUMBER,
-finishwoitem.qtyTarget AS FGQtyProduced,
+ mo.dateCompleted AS MODATECOMPLETED,
+ part.num AS FINISHEDPART,
+ finishItem.bomid AS parentbomId,
+ part.description AS PARTDESCRIPTION,
+ product.description AS PRODUCTDESCRIPTION,
+ mo.num AS MONUM,
+ mo.dateCompleted AS MODATECOMPLETED,
+ uom.code AS UOM,
+ finishgoodtrackinginfo.info AS FGLOTNUMBER,
+ finishwoitem.qtyTarget AS FGQtyProduced,
 0 AS FGQtyShipped,
 0 AS qtyScrapped,
 0 AS FGQtyRemaining
+FROM
+(SELECT DISTINCT mo.num AS MONUM,  mo.dateCompleted AS MODATECOMPLETED, mo.id AS moid, bomitem.bomId AS bomId,
+moitem.bomid AS stagedBomid
 FROM woitem
 INNER JOIN trackinginfo ON trackinginfo.recordid = woitem.id AND trackinginfo.tableid =  -355941248 AND parttrackingid = 1
 INNER JOIN moitem ON moitem.id = woitem.moitemid
 INNER JOIN mo ON moitem.moid = mo.id
 INNER JOIN bomitem ON bomitem.stageBomId = moitem.bomid
-INNER JOIN moitem AS finishItem ON finishItem.moid = mo.id AND finishItem.stagelevel =1 AND finishItem.typeid =10 AND finishItem.bomid = bomitem.bomid
+WHERE
+trackinginfo.info = $P{LotNumber} ) AS t
+INNER JOIN mo ON t.moid = mo.id
+INNER JOIN moitem AS finishItem ON finishItem.moid = t.moid AND finishItem.stagelevel =1 AND finishItem.typeid =10 AND finishItem.bomid = t.bomid
 INNER JOIN woitem finishwoitem ON finishItem.id = finishwoitem.moitemid
 INNER JOIN uom ON uom.id = finishwoitem.uomid
 INNER JOIN part ON part.id = finishwoitem.partid
-LEFT JOIN product ON product.partid = finishwoitem.partid
-LEFT OUTER JOIN trackinginfo finishgoodtrackinginfo ON finishgoodtrackinginfo.recordid = finishwoitem.id AND finishgoodtrackinginfo.tableid =  -355941248 AND finishgoodtrackinginfo.parttrackingid = 1
-WHERE
-trackinginfo.info = $P{LotNumber}]]>
+INNER JOIN product ON product.partid = finishwoitem.partid
+INNER JOIN trackinginfo finishgoodtrackinginfo ON finishgoodtrackinginfo.recordid = finishwoitem.id AND finishgoodtrackinginfo.tableid =  -355941248 AND finishgoodtrackinginfo.parttrackingid = 1
+]]>
 		</queryString>
 		<field name="FINISHEDPART" class="java.lang.String"/>
 		<field name="MODATECOMPLETED" class="java.sql.Timestamp">
