@@ -49,6 +49,9 @@
 	<parameter name="ShowFooter" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ShowInactiveProducts" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 product.NUM AS PRODUCTNUMBER,
@@ -56,13 +59,13 @@ product.price AS PRICE,
 COALESCE(partcost.AVGCOST, 0) AS AVERAGECOST,
 COMPANY.NAME AS COMPANY,
 CURRENCY.SYMBOL
-
 FROM part
 LEFT OUTER JOIN partcost ON partcost.partid = part.id
 INNER JOIN product ON product.partId = part.id
 JOIN company ON company.id = 1
 LEFT JOIN currency ON currency.homeCurrency = 1
-WHERE UPPER(product.num) LIKE UPPER($P{productNum})]]>
+WHERE UPPER(product.num) LIKE UPPER($P{productNum})
+AND if($P!{ShowInactiveProducts},1=1,product.activeflag = 1)]]>
 	</queryString>
 	<field name="PRODUCTNUMBER" class="java.lang.String"/>
 	<field name="AVERAGECOST" class="java.lang.Double"/>
