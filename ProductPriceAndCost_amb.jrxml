@@ -38,7 +38,7 @@
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
 	<parameter name="REPORTDESCRIPTION" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["List Products and their Price and Average Costs."]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["List Products and their Price and Average Costs. Show products with a quantity of 1 or more on hand, and only show products with a price of $.01 or more"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="productNum" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
@@ -63,9 +63,14 @@ FROM part
 LEFT OUTER JOIN partcost ON partcost.partid = part.id
 INNER JOIN product ON product.partId = part.id
 JOIN company ON company.id = 1
-LEFT JOIN currency ON currency.homeCurrency = 1
+LEFT OUTER JOIN currency ON currency.homeCurrency = 1
+LEFT OUTER JOIN (SELECT partId, SUM(qtyonhand.qty) AS qoh
+                FROM qtyonhand
+                GROUP BY qtyonhand.partId) AS result ON result.partId = part.Id
 WHERE UPPER(product.num) LIKE UPPER($P{productNum})
 AND if($P!{ShowInactiveProducts},1=1,product.activeflag = 1)
+AND coalesce(qoh,0) >= 1
+AND coalesce(product.price, 0) >= 0.01
 ORDER BY product.num ASC;]]>
 	</queryString>
 	<field name="PRODUCTNUMBER" class="java.lang.String"/>
