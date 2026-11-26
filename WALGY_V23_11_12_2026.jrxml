@@ -3,7 +3,7 @@
 	<property name="net.sf.jasperreports.default.font.name" value="Arial"/>
 	<property name="walgy.version" value="V22.0-DRAFT"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="276"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cbLocationGroup" class="java.lang.String" isForPrompting="false">
 		<property name="Group" value="Warehouse Filter"/>
@@ -180,32 +180,38 @@ LEFT JOIN (
       AND ($P{cbExcludeInactiveLG} = 'No' OR IL.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE activeFlag = 0))
     GROUP BY IL.locationGroupId
 ) PICKED ON PICKED.LOCATION_GROUP_ID = LG.ID
-/* Shipping-based Packed Proxy (SO only): shipped item quantity by ship.dateShipped.
-   NO carton join (avoids multiplicative rows); ONE shipitem belongs to one ship.
-   This intentionally counts shipment output, not actual Pack Module steps.
-   Current state: reopened shipments not currently Shipped are not counted. */
+/* Packed (audit-based): SO shipments counted on the date they FIRST reached
+   status 20 (Packed), taken from ship_aud + revinfo. Quantity = shipitem.qtyShipped
+   as currently stored. No carton join, so no row multiplication. */
 LEFT JOIN (
     SELECT
         S.locationGroupId AS LOCATION_GROUP_ID,
-        SUM(CASE WHEN S.dateShipped >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+        SUM(CASE WHEN RI.timestamp >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
                  THEN SI.qtyShipped ELSE 0 END) AS UNITS_PACKED_Y,
         SUM(SI.qtyShipped) AS UNITS_PACKED_M
     FROM ship S
     INNER JOIN shipitem SI ON SI.shipId = S.id
-    WHERE S.statusId = 30
-      AND S.soId IS NOT NULL
-      AND S.dateShipped >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-01')
-      AND S.dateShipped < CURDATE()
+    INNER JOIN ship_aud SA ON SA.id = S.id AND SA.statusId = 20
+    INNER JOIN revinfo RI ON RI.id = SA.rev
+    WHERE S.soId IS NOT NULL
       AND SI.qtyShipped > 0
+      AND RI.timestamp >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-01')
+      AND RI.timestamp <  CURDATE()
+      /* First Packed revision only, so a re-packed shipment isn't counted twice */
+      AND NOT EXISTS (
+          SELECT 1 FROM ship_aud SA0
+          WHERE SA0.id = SA.id
+            AND SA0.statusId = 20
+            AND SA0.rev < SA.rev
+      )
       AND ($P{cbLocationGroup} = '%' OR S.locationGroupId =
            (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
-      AND S.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
       AND ($P{cbExcludeInactiveLG} = 'No' OR S.locationGroupId NOT IN
            (SELECT ID FROM locationgroup WHERE activeFlag = 0))
     GROUP BY S.locationGroupId
 ) SHIP_PROXY ON SHIP_PROXY.LOCATION_GROUP_ID = LG.ID
-LEFT JOIN (
 
+LEFT JOIN (
 SELECT
         PK.locationgroupid AS LOCATION_GROUP_ID,
         SUM(CASE WHEN RI.timestamp >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN PI.qty ELSE 0 END) AS UNITS_ASSEMBLED_Y,
@@ -365,7 +371,7 @@ ORDER BY R.LOCATION_GROUP_NAME, R.DATE_SORT]]>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Yesterday: " + new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date(System.currentTimeMillis()-86400000L)) + "   |   Packed = shipped SO units (proxy, NOT Pack Module)   |   Total includes proxy"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Yesterday: " + new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date(System.currentTimeMillis()-86400000L)) + "   |   Packed = SO units on shipments first set to Packed status"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -439,7 +445,7 @@ ORDER BY R.LOCATION_GROUP_NAME, R.DATE_SORT]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Packed (SO Ship Proxy)]]></text>
+				<text><![CDATA[Packed]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="550" y="0" width="78" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="69f3e288-0c41-42a7-a588-13a78685926c"/>
