@@ -445,7 +445,7 @@ ORDER BY R.LOCATION_GROUP_NAME, R.DATE_SORT]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Packed]]></text>
+				<text><![CDATA[Units Packed]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="550" y="0" width="78" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="69f3e288-0c41-42a7-a588-13a78685926c"/>
