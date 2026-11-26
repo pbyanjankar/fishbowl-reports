@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WALGY_V2026_11_Shipping_Proxy_ReadOnly" pageWidth="1010" pageHeight="595" orientation="Landscape" columnWidth="970" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9fb2f3bc-56ef-412a-bc33-b2d24e9083e2">
+	<property name="net.sf.jasperreports.default.font.name" value="Arial"/>
+	<property name="walgy.version" value="V22.0-DRAFT"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cbLocationGroup" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Warehouse Filter"/>
+		<property name="Sort" value="1"/>
+		<parameterDescription><![CDATA[%,All Location Groups,ATX,ATX,ATX (OLD),ATX (OLD),DC (OLD),DC (OLD),JAX,JAX,JAX (OLD),JAX (OLD),NOLA,NOLA,NSH,NSH,ORL,ORL,ORL (OLD),ORL (OLD),TPA,TPA]]></parameterDescription>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cbExcludeInactiveLG" class="java.lang.String" isForPrompting="false">
+		<property name="Group" value="Warehouse Filter"/>
+		<property name="Sort" value="2"/>
+		<parameterDescription><![CDATA[Yes,Yes,No,No]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Yes"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[/* WALGY V22.1 | Shipping-based Packed Proxy | READ-ONLY SELECT.
+   Report uses yesterday / MTD through yesterday / linear projected month-end.
+   Packed PROXY: SO shipments currently Shipped (ship.statusId=30),
+   ship.dateShipped as date, SUM(positive shipitem.qtyShipped).
+   This is shipped quantity, NOT verified Fishbowl Pack Module activity.
+   Status, UOM, and other V21 inherited formulas require business QA.
+   No INSERT/UPDATE/DELETE/DDL, no temporary tables or session changes.
+   CustomFieldByName is an existing function and must be separately audited.
+*/
+SELECT R.*,
+       (COALESCE(R.PO_UNITS_RECEIVED,0)+COALESCE(R.TO_UNITS_RECEIVED,0)+COALESCE(R.UNITS_STOCKED,0)+COALESCE(R.UNITS_MOVED,0)+COALESCE(R.UNITS_PICKED,0)+COALESCE(R.UNITS_PACKED,0)+COALESCE(R.SO_UNITS_SHIPPED,0)+COALESCE(R.TO_UNITS_SHIPPED,0)+COALESCE(R.UNITS_ASSEMBLED,0)-COALESCE(R.UNITS_VOIDED,0)) AS TOTAL_UNITS_HANDLED,
+       CASE WHEN COALESCE(R.LCD_OPPORTUNITY,0)=0 THEN NULL ELSE COALESCE(R.LCD_COMPLETED,0)/COALESCE(R.LCD_OPPORTUNITY,0) END AS LCD_PCT,
+       CASE WHEN COALESCE(R.LOC_AUDIT_OPPORTUNITY,0)=0 THEN NULL ELSE COALESCE(R.LOC_AUDIT_COMPLETED,0)/COALESCE(R.LOC_AUDIT_OPPORTUNITY,0) END AS LOC_PCT,
+       COALESCE(R.ADJ_INC_QTY,0)+COALESCE(R.ADJ_DEC_QTY,0) AS TOTAL_ADJ_QTY
+FROM (
+    SELECT
+        B.LOCATION_GROUP_NAME,
+        DT.DATE_TYPE,
+        DT.DATE_SORT,
+        CASE DT.DATE_SORT WHEN 1 THEN B.PO_UNITS_RECEIVED_Y WHEN 2 THEN B.PO_UNITS_RECEIVED_M WHEN 3 THEN ROUND(B.PO_UNITS_RECEIVED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS PO_UNITS_RECEIVED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.TO_UNITS_RECEIVED_Y WHEN 2 THEN B.TO_UNITS_RECEIVED_M WHEN 3 THEN ROUND(B.TO_UNITS_RECEIVED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS TO_UNITS_RECEIVED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.UNITS_STOCKED_Y WHEN 2 THEN B.UNITS_STOCKED_M WHEN 3 THEN ROUND(B.UNITS_STOCKED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS UNITS_STOCKED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.UNITS_MOVED_Y WHEN 2 THEN B.UNITS_MOVED_M WHEN 3 THEN ROUND(B.UNITS_MOVED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS UNITS_MOVED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.UNITS_PICKED_Y WHEN 2 THEN B.UNITS_PICKED_M WHEN 3 THEN ROUND(B.UNITS_PICKED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS UNITS_PICKED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.UNITS_PACKED_Y WHEN 2 THEN B.UNITS_PACKED_M WHEN 3 THEN ROUND(B.UNITS_PACKED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS UNITS_PACKED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.SO_UNITS_SHIPPED_Y WHEN 2 THEN B.SO_UNITS_SHIPPED_M WHEN 3 THEN ROUND(B.SO_UNITS_SHIPPED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS SO_UNITS_SHIPPED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.TO_UNITS_SHIPPED_Y WHEN 2 THEN B.TO_UNITS_SHIPPED_M WHEN 3 THEN ROUND(B.TO_UNITS_SHIPPED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS TO_UNITS_SHIPPED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.UNITS_ASSEMBLED_Y WHEN 2 THEN B.UNITS_ASSEMBLED_M WHEN 3 THEN ROUND(B.UNITS_ASSEMBLED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS UNITS_ASSEMBLED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.UNITS_VOIDED_Y WHEN 2 THEN B.UNITS_VOIDED_M WHEN 3 THEN ROUND(B.UNITS_VOIDED_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS UNITS_VOIDED,
+        CASE WHEN DT.DATE_SORT=1 THEN B.LCD_OPPORTUNITY ELSE NULL END AS LCD_OPPORTUNITY,
+        CASE WHEN DT.DATE_SORT=1 THEN B.LCD_COMPLETED ELSE NULL END AS LCD_COMPLETED,
+        CASE WHEN DT.DATE_SORT=1 THEN B.LOC_AUDIT_OPPORTUNITY ELSE NULL END AS LOC_AUDIT_OPPORTUNITY,
+        CASE WHEN DT.DATE_SORT=1 THEN B.LOC_AUDIT_COMPLETED ELSE NULL END AS LOC_AUDIT_COMPLETED,
+        CASE DT.DATE_SORT WHEN 1 THEN B.ADJ_INC_QTY_Y WHEN 2 THEN B.ADJ_INC_QTY_M WHEN 3 THEN ROUND(B.ADJ_INC_QTY_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS ADJ_INC_QTY,
+        CASE DT.DATE_SORT WHEN 1 THEN B.ADJ_DEC_QTY_Y WHEN 2 THEN B.ADJ_DEC_QTY_M WHEN 3 THEN ROUND(B.ADJ_DEC_QTY_M / NULLIF(DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY)),0) * DAY(LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 1 DAY))),0) END AS ADJ_DEC_QTY
+    FROM (
+
+SELECT
+    LG.ID AS LOCATION_GROUP_ID,
+    LG.NAME AS LOCATION_GROUP_NAME,
+    COALESCE(RCV.PO_UNITS_RECEIVED_Y,0) AS PO_UNITS_RECEIVED_Y,
+    COALESCE(RCV.PO_UNITS_RECEIVED_M,0) AS PO_UNITS_RECEIVED_M,
+    COALESCE(RCV.TO_UNITS_RECEIVED_Y,0) AS TO_UNITS_RECEIVED_Y,
+    COALESCE(RCV.TO_UNITS_RECEIVED_M,0) AS TO_UNITS_RECEIVED_M,
+    COALESCE(INV.UNITS_STOCKED_Y,0) AS UNITS_STOCKED_Y,
+    COALESCE(INV.UNITS_STOCKED_M,0) AS UNITS_STOCKED_M,
+    COALESCE(INV.UNITS_MOVED_Y,0) AS UNITS_MOVED_Y,
+    COALESCE(INV.UNITS_MOVED_M,0) AS UNITS_MOVED_M,
+    COALESCE(PICKED.UNITS_PICKED_Y,0) AS UNITS_PICKED_Y,
+    COALESCE(PICKED.UNITS_PICKED_M,0) AS UNITS_PICKED_M,
+    COALESCE(SHIP_PROXY.UNITS_PACKED_Y,0) AS UNITS_PACKED_Y,
+    COALESCE(SHIP_PROXY.UNITS_PACKED_M,0) AS UNITS_PACKED_M,
+    COALESCE(INV.UNITS_VOIDED_Y,0) AS UNITS_VOIDED_Y,
+    COALESCE(INV.UNITS_VOIDED_M,0) AS UNITS_VOIDED_M,
+    COALESCE(INV.SO_UNITS_SHIPPED_Y,0) AS SO_UNITS_SHIPPED_Y,
+    COALESCE(INV.SO_UNITS_SHIPPED_M,0) AS SO_UNITS_SHIPPED_M,
+    COALESCE(INV.TO_UNITS_SHIPPED_Y,0) AS TO_UNITS_SHIPPED_Y,
+    COALESCE(INV.TO_UNITS_SHIPPED_M,0) AS TO_UNITS_SHIPPED_M,
+    COALESCE(ASM.UNITS_ASSEMBLED_Y,0) AS UNITS_ASSEMBLED_Y,
+    COALESCE(ASM.UNITS_ASSEMBLED_M,0) AS UNITS_ASSEMBLED_M,
+    COALESCE(INV.ADJ_INC_QTY_Y,0) AS ADJ_INC_QTY_Y,
+    COALESCE(INV.ADJ_INC_QTY_M,0) AS ADJ_INC_QTY_M,
+    COALESCE(INV.ADJ_DEC_QTY_Y,0) AS ADJ_DEC_QTY_Y,
+    COALESCE(INV.ADJ_DEC_QTY_M,0) AS ADJ_DEC_QTY_M,
+    LCD.LCD_OPPORTUNITY,
+    LCD.LCD_COMPLETED,
+    LA.LOC_AUDIT_OPPORTUNITY,
+    LA.LOC_AUDIT_COMPLETED
+FROM locationgroup LG
+LEFT JOIN (
+
+SELECT
+        LOCGRP.ID AS LOCATION_GROUP_ID,
+        LOCGRP.NAME AS LOCATION_GROUP_NAME,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND IL.CHANGEQTY > 0 AND (BEGTYPE.NAME = 'Receiving' OR UPPER(BEGLOC.NAME) LIKE '*STOCKING%') AND ENDTYPE.NAME = 'Stock' AND ENDLOC.NAME NOT LIKE '*%' AND BEGLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.LOCATIONGROUPID = LOCGRP.ID) AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN IL.CHANGEQTY ELSE 0 END) AS UNITS_STOCKED_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND IL.CHANGEQTY > 0 AND (BEGTYPE.NAME = 'Receiving' OR UPPER(BEGLOC.NAME) LIKE '*STOCKING%') AND ENDTYPE.NAME = 'Stock' AND ENDLOC.NAME NOT LIKE '*%' AND BEGLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.LOCATIONGROUPID = LOCGRP.ID) THEN IL.CHANGEQTY ELSE 0 END) AS UNITS_STOCKED_M,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND IL.CHANGEQTY > 0 AND ((BEGTYPE.NAME = 'Stock' AND BEGLOC.NAME NOT LIKE '*%') OR UPPER(BEGLOC.NAME) LIKE '*MOVING%') AND ENDTYPE.NAME = 'Stock' AND ENDLOC.NAME NOT LIKE '*%' AND BEGLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.LOCATIONGROUPID = LOCGRP.ID AND BEGLOC.ID <> ENDLOC.ID) AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN IL.CHANGEQTY ELSE 0 END) AS UNITS_MOVED_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND IL.CHANGEQTY > 0 AND ((BEGTYPE.NAME = 'Stock' AND BEGLOC.NAME NOT LIKE '*%') OR UPPER(BEGLOC.NAME) LIKE '*MOVING%') AND ENDTYPE.NAME = 'Stock' AND ENDLOC.NAME NOT LIKE '*%' AND BEGLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.LOCATIONGROUPID = LOCGRP.ID AND BEGLOC.ID <> ENDLOC.ID) THEN IL.CHANGEQTY ELSE 0 END) AS UNITS_MOVED_M,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND BEGLOC.NAME = CONCAT('*PICKED (',LOCGRP.NAME,')') AND ENDLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.NAME LIKE CONCAT(LOCGRP.NAME,' %')) AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN IL.CHANGEQTY ELSE 0 END) AS UNITS_VOIDED_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND BEGLOC.NAME = CONCAT('*PICKED (',LOCGRP.NAME,')') AND ENDLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.NAME LIKE CONCAT(LOCGRP.NAME,' %')) THEN IL.CHANGEQTY ELSE 0 END) AS UNITS_VOIDED_M,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Ship') AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN ABS(IL.CHANGEQTY) ELSE 0 END) AS SO_UNITS_SHIPPED_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Ship') THEN ABS(IL.CHANGEQTY) ELSE 0 END) AS SO_UNITS_SHIPPED_M,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND BEGLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.NAME = 'Transit') AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN IL.CHANGEQTY ELSE 0 END) AS TO_UNITS_SHIPPED_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Yield' AND BEGLOC.LOCATIONGROUPID = LOCGRP.ID AND ENDLOC.NAME = 'Transit') THEN IL.CHANGEQTY ELSE 0 END) AS TO_UNITS_SHIPPED_M,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Adjust increase quantity') AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN ABS(IL.CHANGEQTY) ELSE 0 END) AS ADJ_INC_QTY_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION = 'Adjust increase quantity') THEN ABS(IL.CHANGEQTY) ELSE 0 END) AS ADJ_INC_QTY_M,
+        SUM(CASE WHEN (ILT.DESCRIPTION IN ('Adjust decrease quantity','Adjust scrap')) AND IL.EVENTDATE >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN ABS(IL.CHANGEQTY) ELSE 0 END) AS ADJ_DEC_QTY_Y,
+        SUM(CASE WHEN (ILT.DESCRIPTION IN ('Adjust decrease quantity','Adjust scrap')) THEN ABS(IL.CHANGEQTY) ELSE 0 END) AS ADJ_DEC_QTY_M
+    FROM INVENTORYLOG IL
+    INNER JOIN LOCATIONGROUP LOCGRP ON IL.LOCATIONGROUPID = LOCGRP.ID /* warehouse */
+    INNER JOIN INVENTORYLOGTYPE ILT ON IL.TYPEID = ILT.ID
+    LEFT JOIN LOCATION BEGLOC ON IL.BEGLOCATIONID = BEGLOC.ID
+    LEFT JOIN LOCATION ENDLOC ON IL.ENDLOCATIONID = ENDLOC.ID
+    LEFT JOIN LOCATIONTYPE BEGTYPE ON BEGTYPE.ID = BEGLOC.TYPEID
+    LEFT JOIN LOCATIONTYPE ENDTYPE ON ENDTYPE.ID = ENDLOC.TYPEID
+    WHERE IL.EVENTDATE >= DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL 1 DAY),'%Y-%m-01')
+      AND IL.EVENTDATE < CURDATE()
+      AND ILT.DESCRIPTION IN ('Yield','Ship','Adjust increase quantity','Adjust decrease quantity','Adjust scrap')
+      /* Direct fact-table ID filter lets a single selected warehouse prune INVENTORYLOG early. */
+      AND ($P{cbLocationGroup} = '%' OR IL.LOCATIONGROUPID = (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
+      AND IL.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+      AND ($P{cbExcludeInactiveLG} = 'No' OR IL.LOCATIONGROUPID NOT IN (SELECT ID FROM locationgroup WHERE activeFlag = 0))
+    GROUP BY LOCGRP.ID, LOCGRP.NAME
+
+ ) INV ON INV.LOCATION_GROUP_ID = LG.ID
+/* Receipt item based PO and TO quantities. Keep independent from INVENTORYLOG.
+   Status codes 30/40 and order types 10/40 require final verification. */
+LEFT JOIN (
+    SELECT
+        RCV.locationGroupId AS LOCATION_GROUP_ID,
+        SUM(CASE WHEN RI.orderTypeId = 10
+                  AND RI.dateReceived >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                 THEN RI.qty ELSE 0 END) AS PO_UNITS_RECEIVED_Y,
+        SUM(CASE WHEN RI.orderTypeId = 10
+                 THEN RI.qty ELSE 0 END) AS PO_UNITS_RECEIVED_M,
+        SUM(CASE WHEN RI.orderTypeId = 40
+                  AND RI.dateReceived >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                 THEN RI.qty ELSE 0 END) AS TO_UNITS_RECEIVED_Y,
+        SUM(CASE WHEN RI.orderTypeId = 40
+                 THEN RI.qty ELSE 0 END) AS TO_UNITS_RECEIVED_M
+    FROM receiptitem RI
+    INNER JOIN receipt RCV ON RCV.id = RI.receiptId
+    WHERE RI.dateReceived >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-01')
+      AND RI.dateReceived < CURDATE()
+      AND RI.qty > 0
+      AND RI.statusId IN (30,40)
+      AND RI.orderTypeId IN (10,40)
+      AND ($P{cbLocationGroup} = '%' OR RCV.locationGroupId = (SELECT id FROM locationgroup WHERE name = $P{cbLocationGroup} LIMIT 1))
+      AND RCV.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+      AND ($P{cbExcludeInactiveLG} = 'No' OR RCV.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE activeFlag = 0))
+    GROUP BY RCV.locationGroupId
+) RCV ON RCV.LOCATION_GROUP_ID = LG.ID
+/* Positive pick-related Yield into a Shipping-type destination.
+   Using pickitem linkage prevents unrelated Yield from being counted;
+   Location Type works for both *PICKED bins and ORL's Shipping bin. */
+LEFT JOIN (
+    SELECT
+        IL.locationGroupId AS LOCATION_GROUP_ID,
+        SUM(CASE WHEN IL.eventDate >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                 THEN IL.changeQty ELSE 0 END) AS UNITS_PICKED_Y,
+        SUM(IL.changeQty) AS UNITS_PICKED_M
+    FROM inventorylog IL
+    INNER JOIN pickitem PI ON PI.id = IL.recordId
+    INNER JOIN pick PK ON PK.id = PI.pickId
+    INNER JOIN location BEGLOC ON BEGLOC.id = IL.begLocationId
+    INNER JOIN location ENDLOC ON ENDLOC.id = IL.endLocationId
+    INNER JOIN locationtype BEGTYPE ON BEGTYPE.id = BEGLOC.typeId
+    INNER JOIN locationtype ENDTYPE ON ENDTYPE.id = ENDLOC.typeId
+    WHERE IL.typeId = 40
+      AND IL.tableId = -1515431424
+      AND IL.changeQty > 0
+      AND PK.typeId = 10
+      AND PK.locationGroupId = IL.locationGroupId
+      AND BEGTYPE.name <> 'Shipping'
+      AND ENDTYPE.name = 'Shipping'
+      AND IL.eventDate >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-01')
+      AND IL.eventDate < CURDATE()
+      AND ($P{cbLocationGroup} = '%' OR IL.locationGroupId = (SELECT id FROM locationgroup WHERE name = $P{cbLocationGroup} LIMIT 1))
+      AND IL.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+      AND ($P{cbExcludeInactiveLG} = 'No' OR IL.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE activeFlag = 0))
+    GROUP BY IL.locationGroupId
+) PICKED ON PICKED.LOCATION_GROUP_ID = LG.ID
+/* Shipping-based Packed Proxy (SO only): shipped item quantity by ship.dateShipped.
+   NO carton join (avoids multiplicative rows); ONE shipitem belongs to one ship.
+   This intentionally counts shipment output, not actual Pack Module steps.
+   Current state: reopened shipments not currently Shipped are not counted. */
+LEFT JOIN (
+    SELECT
+        S.locationGroupId AS LOCATION_GROUP_ID,
+        SUM(CASE WHEN S.dateShipped >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                 THEN SI.qtyShipped ELSE 0 END) AS UNITS_PACKED_Y,
+        SUM(SI.qtyShipped) AS UNITS_PACKED_M
+    FROM ship S
+    INNER JOIN shipitem SI ON SI.shipId = S.id
+    WHERE S.statusId = 30
+      AND S.soId IS NOT NULL
+      AND S.dateShipped >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-01')
+      AND S.dateShipped < CURDATE()
+      AND SI.qtyShipped > 0
+      AND ($P{cbLocationGroup} = '%' OR S.locationGroupId =
+           (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
+      AND S.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+      AND ($P{cbExcludeInactiveLG} = 'No' OR S.locationGroupId NOT IN
+           (SELECT ID FROM locationgroup WHERE activeFlag = 0))
+    GROUP BY S.locationGroupId
+) SHIP_PROXY ON SHIP_PROXY.LOCATION_GROUP_ID = LG.ID
+LEFT JOIN (
+
+SELECT
+        PK.locationgroupid AS LOCATION_GROUP_ID,
+        SUM(CASE WHEN RI.timestamp >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) THEN PI.qty ELSE 0 END) AS UNITS_ASSEMBLED_Y,
+        SUM(PI.qty) AS UNITS_ASSEMBLED_M
+    FROM pick PK
+    INNER JOIN pickitem PI ON PI.pickid = PK.id
+    INNER JOIN part P ON P.id = PI.partid
+    INNER JOIN soitem SI ON SI.id = PI.soitemid
+    INNER JOIN soitemstatus SIS ON SIS.id = SI.statusid
+    INNER JOIN soitem_aud SIA ON SIA.id = SI.id AND SIA.statusid = 40
+    INNER JOIN revinfo RI ON RI.id = SIA.rev
+    WHERE ($P{cbLocationGroup} = '%' OR PK.locationgroupid = (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
+      AND PK.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+      AND ($P{cbExcludeInactiveLG} = 'No' OR PK.locationgroupid NOT IN (SELECT ID FROM locationgroup WHERE activeFlag = 0))
+      AND RI.timestamp >= DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL 1 DAY),'%Y-%m-01')
+      AND RI.timestamp < CURDATE()
+      AND UPPER(COALESCE(CustomFieldByName(P.CUSTOMFIELDS,'Part Category'),'')) = 'SERVICE'
+      AND SIS.name IN ('Picked','Fulfilled')
+      /* First Picked audit revision only. Restricting to current-month revisions
+         first avoids a full historical SOITEM_AUD aggregation for All Locations. */
+      AND NOT EXISTS (
+          SELECT 1
+          FROM soitem_aud SIA0
+          WHERE SIA0.id = SIA.id
+            AND SIA0.statusid = 40
+            AND SIA0.rev < SIA.rev
+      )
+    GROUP BY PK.locationgroupid
+
+) ASM ON ASM.LOCATION_GROUP_ID = LG.ID
+LEFT JOIN (
+
+SELECT
+        X.LOCATION_GROUP_ID,
+        /* Opportunity = all Low Inventory dataset rows in Stock locations
+           with total On Hand between 1 and 5. */
+        COUNT(*) AS LCD_OPPORTUNITY,
+        /* Completed = Stock rows whose location-specific LCD is within 7 days
+           of the report run date. */
+        SUM(CASE WHEN X.LCD_DATE >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+                  AND X.LCD_DATE < DATE_ADD(CURDATE(),INTERVAL 1 DAY)
+                 THEN 1 ELSE 0 END) AS LCD_COMPLETED
+    FROM (
+        SELECT
+            LG.ID AS LOCATION_GROUP_ID,
+            P.num AS PART_NUM,
+            L.name AS LOCATION_NAME,
+            STR_TO_DATE(
+                CASE LG.name
+                    WHEN 'ATX' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (ATX)')
+                    WHEN 'JAX' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (JAX)')
+                    WHEN 'NOLA' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (NOLA)')
+                    WHEN 'NSH' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (NSH)')
+                    WHEN 'ORL' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (ORL)')
+                    WHEN 'TPA' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (TPA)')
+                    WHEN 'DC' THEN CustomFieldByName(P.CUSTOMFIELDS,'LCD (DC)')
+                    ELSE NULL
+                END,
+                '%m/%d/%Y'
+            ) AS LCD_DATE
+        FROM part P
+        INNER JOIN tag T ON T.partid = P.id
+        INNER JOIN location L ON L.id = T.locationid
+        INNER JOIN locationgroup LG ON LG.id = L.locationgroupid /* storage position -> warehouse */
+        INNER JOIN locationtype LT ON LT.id = L.typeid
+        INNER JOIN (
+            SELECT QIT.partId, QIT.locationGroupId, SUM(QIT.qtyOnHand) AS totalOnHand
+            FROM qtyInventoryTotals QIT
+            WHERE ($P{cbLocationGroup} = '%' OR QIT.locationGroupId = (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
+              AND QIT.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+              AND ($P{cbExcludeInactiveLG} = 'No' OR QIT.locationGroupId NOT IN (SELECT ID FROM locationgroup WHERE activeFlag = 0))
+            GROUP BY QIT.partId, QIT.locationGroupId
+            HAVING SUM(QIT.qtyOnHand) BETWEEN 1 AND 5
+        ) IT ON IT.partId = P.id AND IT.locationGroupId = LG.id
+        WHERE LT.name = 'Stock'
+          AND ($P{cbLocationGroup} = '%' OR L.locationgroupid = (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
+      	AND L.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+          AND ($P{cbExcludeInactiveLG} = 'No' OR L.locationgroupid NOT IN (SELECT ID FROM locationgroup WHERE activeFlag = 0))
+          AND ($P{cbLocationGroup} = '%' OR LG.NAME = $P{cbLocationGroup})
+        GROUP BY LG.ID, LG.name, P.num, L.name, P.CUSTOMFIELDS
+    ) X
+    GROUP BY X.LOCATION_GROUP_ID
+
+) LCD ON LCD.LOCATION_GROUP_ID = LG.ID
+LEFT JOIN (
+
+SELECT
+        LG.ID AS LOCATION_GROUP_ID,
+        /* Opportunity = active Stock locations in the selected Location Group. */
+        COUNT(DISTINCT CASE WHEN LT.name = 'Stock'
+                 THEN LX.ID ELSE NULL END) AS LOC_AUDIT_OPPORTUNITY,
+        /* Completed = Stock locations audited within the last 30 days. */
+        COUNT(DISTINCT CASE WHEN LT.name = 'Stock'
+                  AND LX.LAST_AUDIT_DATE >= DATE_SUB(CURDATE(),INTERVAL 30 DAY)
+                  AND LX.LAST_AUDIT_DATE < DATE_ADD(CURDATE(),INTERVAL 1 DAY)
+                 THEN LX.ID ELSE NULL END) AS LOC_AUDIT_COMPLETED
+    FROM (
+        SELECT L.ID, L.locationgroupid, L.typeid,
+               STR_TO_DATE(CustomFieldByName(L.CUSTOMFIELDS,'Last Audit Date'),'%m/%d/%Y') AS LAST_AUDIT_DATE
+        FROM location L
+        WHERE L.activeFlag = 1
+          AND ($P{cbLocationGroup} = '%' OR L.locationgroupid = (SELECT ID FROM locationgroup WHERE NAME = $P{cbLocationGroup} LIMIT 1))
+      	AND L.locationGroupId NOT IN (SELECT id FROM locationgroup WHERE name LIKE '%(OLD)')
+          AND ($P{cbExcludeInactiveLG} = 'No' OR L.locationgroupid NOT IN (SELECT ID FROM locationgroup WHERE activeFlag = 0))
+    ) LX
+    INNER JOIN locationgroup LG ON LG.id = LX.locationgroupid
+    LEFT JOIN locationtype LT ON LT.id = LX.typeid
+    GROUP BY LG.ID
+
+) LA ON LA.LOCATION_GROUP_ID = LG.ID
+WHERE ($P{cbLocationGroup} = '%' OR LG.NAME = $P{cbLocationGroup})
+      AND ($P{cbExcludeInactiveLG} = 'No' OR LG.activeFlag = 1)
+      AND LG.NAME NOT LIKE '%(OLD)'
+    ) B
+    CROSS JOIN (
+        SELECT 'Yesterday' AS DATE_TYPE, 1 AS DATE_SORT
+        UNION ALL SELECT 'MTD', 2
+        UNION ALL SELECT 'Projected', 3
+    ) DT
+) R
+ORDER BY R.LOCATION_GROUP_NAME, R.DATE_SORT]]>
+	</queryString>
+	<field name="LOCATION_GROUP_NAME" class="java.lang.String"/>
+	<field name="DATE_TYPE" class="java.lang.String"/>
+	<field name="DATE_SORT" class="java.lang.Long"/>
+	<field name="PO_UNITS_RECEIVED" class="java.math.BigDecimal"/>
+	<field name="TO_UNITS_RECEIVED" class="java.math.BigDecimal"/>
+	<field name="UNITS_STOCKED" class="java.math.BigDecimal"/>
+	<field name="UNITS_MOVED" class="java.math.BigDecimal"/>
+	<field name="UNITS_PICKED" class="java.math.BigDecimal"/>
+	<field name="UNITS_PACKED" class="java.math.BigDecimal"/>
+	<field name="SO_UNITS_SHIPPED" class="java.math.BigDecimal"/>
+	<field name="TO_UNITS_SHIPPED" class="java.math.BigDecimal"/>
+	<field name="UNITS_ASSEMBLED" class="java.math.BigDecimal"/>
+	<field name="TOTAL_UNITS_HANDLED" class="java.math.BigDecimal"/>
+	<field name="LCD_OPPORTUNITY" class="java.math.BigDecimal"/>
+	<field name="LCD_COMPLETED" class="java.math.BigDecimal"/>
+	<field name="LCD_PCT" class="java.math.BigDecimal"/>
+	<field name="LOC_AUDIT_OPPORTUNITY" class="java.math.BigDecimal"/>
+	<field name="LOC_AUDIT_COMPLETED" class="java.math.BigDecimal"/>
+	<field name="LOC_PCT" class="java.math.BigDecimal"/>
+	<field name="ADJ_INC_QTY" class="java.math.BigDecimal"/>
+	<field name="ADJ_DEC_QTY" class="java.math.BigDecimal"/>
+	<field name="TOTAL_ADJ_QTY" class="java.math.BigDecimal"/>
+	<field name="UNITS_VOIDED" class="java.math.BigDecimal"/>
+	<title>
+		<band height="58">
+			<staticText>
+				<reportElement x="0" y="0" width="970" height="26" uuid="0c734568-b890-49d1-8682-3a47fde60fcf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Warehouse Activity by Location Group (WALGY V2026.11)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="30" width="970" height="18" uuid="4a36ba82-2fe7-4158-b3a7-c7d4cde054b2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Yesterday: " + new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date(System.currentTimeMillis()-86400000L)) + "   |   Packed = shipped SO units (proxy, NOT Pack Module)   |   Total includes proxy"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="42">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="120" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="c63ef3fc-6861-417f-bf9c-6cff501a7a63"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Location Group]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="120" y="0" width="80" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="2b2fb1af-791b-41fa-a5a2-98305d53d8cb"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="0" width="78" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="4a0e2fa2-7af8-4849-818b-5bd5a2d794be"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Units Received]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="278" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="3c99072b-88d7-4789-ae3f-2ffbe18c6d04"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Units Stocked]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="346" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="c3eb45f5-8808-40cd-8d14-0a6b6cdb9168"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Units Moved]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="414" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="848403f7-ec1e-4915-8154-d4921bf7bfcf"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Units Picked]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="482" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="8f25f88c-7d65-47fe-a009-48c597d22a7a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Packed (SO Ship Proxy)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="550" y="0" width="78" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="69f3e288-0c41-42a7-a588-13a78685926c"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total  Units Shipped]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="628" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="a0468976-9758-4f9a-a2bb-873577585bc1"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Units Assembled]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="696" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="c097d454-8f31-440f-9f08-c78421f43ab9"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total (Incl. Proxy)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="764" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="5d3b56c3-698d-4e61-aa91-82a89110f7b6"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LCD %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="832" y="0" width="68" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="5af9000c-2d9a-46e7-8a8e-1eaec1360ef7"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOC %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="900" y="0" width="70" height="42" forecolor="#FFFFFF" backcolor="#000000" uuid="5cf41599-a17e-4cea-b9ee-478d2318d19a"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#808080"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Qty of Adjustments]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField>
+				<reportElement x="0" y="0" width="120" height="22" uuid="002e6908-3a0c-466d-8b9e-9d1c1031031f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATE_TYPE}.equals("Yesterday") ? $F{LOCATION_GROUP_NAME} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="80" height="22" uuid="aae63ec3-fab2-4159-9931-589b0be7c54f"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATE_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="78" height="22" uuid="db9b0987-6f97-4378-961e-cff8b1fa4f7c"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PO_UNITS_RECEIVED}.add($F{TO_UNITS_RECEIVED})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="278" y="0" width="68" height="22" uuid="30d7eadc-efd6-49c7-8ca2-d76b67245d85"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNITS_STOCKED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="346" y="0" width="68" height="22" uuid="4ffa5bd3-261f-4c6e-a9b3-8ce9234757e4"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNITS_MOVED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="414" y="0" width="68" height="22" uuid="b9dd23a7-82be-470b-9871-7ce83e366a6b"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNITS_PICKED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="482" y="0" width="68" height="22" backcolor="#F1F5F9" uuid="eebd5511-6f1b-4039-a6a5-04bec9478939"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNITS_PACKED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="550" y="0" width="78" height="22" uuid="1ea46db2-d76a-4fb2-998f-2bced4b1af68"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SO_UNITS_SHIPPED}.add($F{TO_UNITS_SHIPPED})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="628" y="0" width="68" height="22" uuid="0bf0fd1e-458b-42fc-96b5-e2bbf60db078"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNITS_ASSEMBLED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="696" y="0" width="68" height="22" uuid="f315edaf-b9ff-4f91-bbd9-24058c28fb35"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_UNITS_HANDLED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.0%" isBlankWhenNull="true">
+				<reportElement x="764" y="0" width="68" height="22" uuid="8652d226-c6e4-40c7-87ba-c46cd60183e5"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LCD_PCT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="900" y="0" width="70" height="22" uuid="4065aadc-6bed-4320-a469-ae525a6870a3"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_ADJ_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.0%" isBlankWhenNull="true">
+				<reportElement x="832" y="0" width="68" height="22" uuid="591e2a83-5207-46ad-9f3e-721828ddedf8"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#BFBFBF"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOC_PCT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18">
+			<textField>
+				<reportElement x="1664" y="2" width="100" height="14" uuid="0c376961-351c-4a1f-b446-9da1875660b2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
